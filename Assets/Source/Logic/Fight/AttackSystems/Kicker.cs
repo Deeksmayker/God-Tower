@@ -11,7 +11,7 @@ public class Kicker : MonoCache, IMeleeAttacker
 
     [Header("Impact")]
     [SerializeField] private int damage = 1;
-    [SerializeField] private float payoffPower;
+    [SerializeField] private Vector3 payoffPowerVector;
 
     [Header("Timers")]
     [SerializeField] private float preparingTime;
@@ -77,7 +77,11 @@ public class Kicker : MonoCache, IMeleeAttacker
 
         if (_attackHitsContainer[0] is not null && !_isHitAnything)
         {
-            _mover.AddVelocity(new Vector3(-GetAttackDirection().x, 1, -GetAttackDirection().z) * payoffPower);
+            _mover.SetVerticalVelocity(payoffPowerVector.y);
+            _mover.AddVelocity(new Vector3(
+                -GetAttackDirection().x * payoffPowerVector.x,
+                0,
+                -GetAttackDirection().z * payoffPowerVector.z));
             _isHitAnything = true;
         }
     }

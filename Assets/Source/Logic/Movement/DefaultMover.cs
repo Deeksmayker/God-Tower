@@ -10,8 +10,8 @@ public class DefaultMover : MonoCache, IMover
     [SerializeField] private bool alignMovementWithRotation;
     
     [SerializeField] private float targetHorizontalSpeed = 15;
-    [SerializeField] private float groundHorizontalAcceleration;
-    [SerializeField] private float airHorizontalAcceleration;
+    [SerializeField] private float groundHorizontalAcceleration = 75;
+    [SerializeField] private float airHorizontalAcceleration = 25;
     
     private CharacterController _ch;
 
@@ -45,7 +45,7 @@ public class DefaultMover : MonoCache, IMover
             var acceleration = IsGrounded() ? groundHorizontalAcceleration : airHorizontalAcceleration;
             if (!horizontalInputDirection.x.Equals(0) && !Mathf.Sign(horizontalInputDirection.x).Equals(Mathf.Sign(_velocity.x)) ||
                 !horizontalInputDirection.z.Equals(0) && !Mathf.Sign(horizontalInputDirection.z).Equals(Mathf.Sign(_velocity.z)))
-                acceleration *= 2;
+                acceleration *= 5;
             acceleration *= Time.deltaTime;
 
             var desiredVelocity = horizontalInputDirection * targetHorizontalSpeed;
@@ -85,6 +85,11 @@ public class DefaultMover : MonoCache, IMover
     public void AddVerticalVelocity(float addedVelocity)
     {
         _velocity.y += addedVelocity;
+    }
+
+    public void SetVelocity(Vector3 newVelocity)
+    {
+        _velocity = newVelocity;
     }
 
     public void AddVelocity(Vector3 addedVelocityVector)

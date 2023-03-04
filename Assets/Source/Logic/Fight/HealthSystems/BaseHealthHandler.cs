@@ -8,8 +8,11 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
     [SerializeField] private bool canDie = true;
     [SerializeField] private int health;
     [SerializeField] private int weakPointDamageMultiplier = 2;
+    [SerializeField] private float damageImmuneTime = 0.1f;
 
     private int _maxHealth;
+
+    private float _timer;
     
     private ITakeHit[] _hitTakers;
     private IWeakPoint[] _weakPoints;
@@ -49,14 +52,28 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
             _weakPoints[i].OnWeakPointHit -= HandleWeakPointHit;
         }
     }
+
+    protected override void Run()
+    {
+        if (_timer > 0)
+            _timer -= Time.deltaTime;
+    }
     
     public void HandleHit(int damage)
     {
+        if (_timer > 0)
+            return;
+        Debug.Log("NormalHit");
+        _timer = damageImmuneTime;
         RemoveHealth(damage);
     }
 
     public void HandleWeakPointHit(int baseDamage)
     {
+        if (_timer > 0)
+            return;
+        Debug.Log("Weak point hit");
+        _timer = damageImmuneTime;
         RemoveHealth(baseDamage * weakPointDamageMultiplier);
     }
 
