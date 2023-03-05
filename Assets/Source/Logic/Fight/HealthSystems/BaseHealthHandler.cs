@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
+using Zenject;
 
 public class BaseHealthHandler : MonoCache, IHealthHandler
 {
@@ -13,7 +15,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
     private int _maxHealth;
 
     private float _timer;
-    
+
     private ITakeHit[] _hitTakers;
     private IWeakPoint[] _weakPoints;
     
@@ -63,7 +65,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
     {
         if (_timer > 0)
             return;
-        Debug.Log("NormalHit");
+        
         _timer = damageImmuneTime;
         RemoveHealth(damage);
     }
@@ -72,13 +74,16 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
     {
         if (_timer > 0)
             return;
-        Debug.Log("Weak point hit");
+        
         _timer = damageImmuneTime;
         RemoveHealth(baseDamage * weakPointDamageMultiplier);
     }
 
     public void Die()
     {
+        if (!canDie)
+            return;
+        
         OnDie?.Invoke();
         NightPool.Despawn(this);
     }

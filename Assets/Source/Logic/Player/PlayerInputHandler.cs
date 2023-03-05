@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoCache
     private IMover _mover;
     private IJumper _jumper;
     private IMeleeAttacker _meleeAttacker;
+    private IActiveAbility _activeAbility;
     //private PickUpDetector _pickUpDetector;
     //private Thrower _thrower;
     
@@ -21,6 +22,7 @@ public class PlayerInputHandler : MonoCache
         _playerInput = Get<PlayerInput>();
         _jumper = Get<IJumper>();
         _meleeAttacker = Get<IMeleeAttacker>();
+        _activeAbility = GetComponentInChildren<IActiveAbility>();
         //_pickUpDetector = GetComponentInChildren<PickUpDetector>();
         //_thrower = GetComponentInChildren<Thrower>();
     }
@@ -41,6 +43,8 @@ public class PlayerInputHandler : MonoCache
         {
             _meleeAttacker.SetInput(_playerInput.actions["Kick"].WasPressedThisFrame());
         }
+        
+        _activeAbility.SetInput(_playerInput.actions["RightAttack"].IsInProgress());
         
         /*if (_pickUpDetector != null)
         {
