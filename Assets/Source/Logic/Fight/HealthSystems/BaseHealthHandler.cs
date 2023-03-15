@@ -5,21 +5,28 @@ using NTC.Global.Pool;
 using UnityEngine;
 using Zenject;
 
-public class BaseHealthHandler : MonoCache, IHealthHandler
+public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbilityOpportunity
 {
     [SerializeField] private bool canDie = true;
     [SerializeField] private int health;
     [SerializeField] private int weakPointDamageMultiplier = 2;
     [SerializeField] private float damageImmuneTime = 0.1f;
+    [SerializeField] private float dyingDuration = 5;
 
     private int _maxHealth;
 
     private float _timer;
+    private float _dyingTimer;
+
+    private bool _dying;
 
     private ITakeHit[] _hitTakers;
     private IWeakPoint[] _weakPoints;
-    
-    public event Action OnDie;
+
+    public event Action OnDying;
+    public event Action OnDied;
+    public event Action OnCanGiveAbility;
+    public event Action OnNotCanGiveAbility;
 
     private void Awake()
     {
@@ -59,6 +66,15 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
     {
         if (_timer > 0)
             _timer -= Time.deltaTime;
+
+        if (_dyingTimer > 0 || _dying)
+        {
+            _dyingTimer -= Time.deltaTime;
+            if (_dyingTimer <= 0)
+            {
+                Die();
+            }
+        }
     }
     
     public void HandleHit(int damage)
@@ -79,12 +95,20 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
         RemoveHealth(baseDamage * weakPointDamageMultiplier);
     }
 
+    public void StartDying()
+    {
+        _dying = true;
+        _dyingTimer = dyingDuration;
+        OnDying?.Invoke();
+        OnCanGiveAbility?.Invoke();
+    }
+
     public void Die()
     {
         if (!canDie)
             return;
         
-        OnDie?.Invoke();
+        OnDied?.Invoke();
         NightPool.Despawn(this);
     }
 
@@ -97,7 +121,12 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
     public void RemoveHealth(int removeValue)
     {
         health -= removeValue;
-        if (health <= 0)
+        if (health <= 0 && !_dying)
+        {
+            StartDying();
+        }
+
+        if (health < -10)
         {
             Die();
         }
@@ -112,4 +141,6 @@ public class BaseHealthHandler : MonoCache, IHealthHandler
     {
         return health;
     }
+
+
 }

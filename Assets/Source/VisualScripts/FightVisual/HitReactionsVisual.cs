@@ -14,12 +14,14 @@ public class HitReactionsVisual : MonoCache
     private MeshRenderer[] _meshRenderers;
     private ITakeHit[] _hitTakers;
     private IWeakPoint[] _weakPoints;
+    private IHealthHandler _healthHandler;
 
     private void Awake()
     {
         _meshRenderers = GetComponentsInChildren<MeshRenderer>();
         _hitTakers = GetComponentsInChildren<ITakeHit>();
         _weakPoints = GetComponentsInChildren<IWeakPoint>();
+        _healthHandler = GetComponentInParent<IHealthHandler>();
 
         _propertyBlock = new MaterialPropertyBlock();
     }
@@ -34,19 +36,23 @@ public class HitReactionsVisual : MonoCache
     
     protected override void OnEnabled()
     {
+        _healthHandler.OnDying += HandleDying;
+        
         for (var i = 0; i < _hitTakers.Length; i++)
         {
-            _hitTakers[i].OnTakeHit += HandleHit;
+            //_hitTakers[i].OnTakeHit += HandleHit;
         }
         
         for (var i = 0; i < _weakPoints.Length; i++)
         {
-            _weakPoints[i].OnWeakPointHit += HandleWeakPointHit;
+            //_weakPoints[i].OnWeakPointHit += HandleWeakPointHit;
         }
     }
 
     protected override void OnDisabled()
     {
+        _healthHandler.OnDying += HandleDying;
+
         for (var i = 0; i < _hitTakers.Length; i++)
         {
             _hitTakers[i].OnTakeHit -= HandleHit;
@@ -56,6 +62,11 @@ public class HitReactionsVisual : MonoCache
         {
             _weakPoints[i].OnWeakPointHit -= HandleWeakPointHit;
         }
+    }
+
+    private void HandleDying()
+    {
+        HandleHit(1);
     }
 
     private void HandleHit(int damage)

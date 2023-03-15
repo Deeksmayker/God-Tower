@@ -2,10 +2,12 @@
 
 public interface IHealthHandler
 {
-    public event Action OnDie;
+    public event Action OnDying;
+    public event Action OnDied;
 
     public void HandleHit(int damage);
     public void HandleWeakPointHit(int baseDamage);
+    public void StartDying();
     public void Die();
 
     public void AddHealth(int addValue);
