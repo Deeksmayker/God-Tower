@@ -8,12 +8,12 @@ using Zenject;
 public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbilityOpportunity
 {
     [SerializeField] private bool canDie = true;
-    [SerializeField] private int health;
+    [SerializeField] private float health;
     [SerializeField] private int weakPointDamageMultiplier = 2;
     [SerializeField] private float damageImmuneTime = 0.1f;
     [SerializeField] private float dyingDuration = 5;
 
-    private int _maxHealth;
+    private float _maxHealth;
 
     private float _timer;
     private float _dyingTimer;
@@ -77,7 +77,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         }
     }
     
-    public void HandleHit(int damage)
+    public void HandleHit(float damage)
     {
         if (_timer > 0)
             return;
@@ -86,7 +86,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         RemoveHealth(damage);
     }
 
-    public void HandleWeakPointHit(int baseDamage)
+    public void HandleWeakPointHit(float baseDamage)
     {
         if (_timer > 0)
             return;
@@ -112,13 +112,13 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         NightPool.Despawn(this);
     }
 
-    public void AddHealth(int addValue)
+    public void AddHealth(float addValue)
     {
         health += addValue;
         health = Mathf.Clamp(health, 0, _maxHealth);
     }
 
-    public void RemoveHealth(int removeValue)
+    public void RemoveHealth(float removeValue)
     {
         health -= removeValue;
         if (health <= 0 && !_dying)
@@ -132,12 +132,12 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         }
     }
 
-    public void SetHealth(int value)
+    public void SetHealth(float value)
     {
         health = value;
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }

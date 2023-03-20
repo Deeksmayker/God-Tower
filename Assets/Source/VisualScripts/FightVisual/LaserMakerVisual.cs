@@ -35,7 +35,6 @@ public class LaserMakerVisual : MonoCache
         var trace = NightPool.Spawn(laserTrace, hit.point);
         trace.SetPosition(0, _laserMaker.GetStartPoint());
         trace.SetPosition(1, hit.point);
-        Debug.Log("To hit taker");
     }
 
     private void HandleEnvironmentHit(RaycastHit hit)

@@ -43,9 +43,15 @@ public class PlayerInputHandler : MonoCache
         {
             _meleeAttacker.SetInput(_playerInput.actions["Kick"].WasPressedThisFrame());
         }
+
+        if (_abilitiesHandler != null)
+        {
+            _abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
+            _abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
+            _abilitiesHandler.SetLeftStealInput(_playerInput.actions["LeftSteal"].WasPressedThisFrame());
+            _abilitiesHandler.SetLeftAbilityInput(_playerInput.actions["LeftAttack"].IsInProgress());
+        }
         
-        _abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
-        _abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
         
         /*if (_pickUpDetector != null)
         {

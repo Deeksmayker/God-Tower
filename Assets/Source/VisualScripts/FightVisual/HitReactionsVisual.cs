@@ -69,7 +69,7 @@ public class HitReactionsVisual : MonoCache
         HandleHit(1);
     }
 
-    private void HandleHit(int damage)
+    private void HandleHit(float damage)
     {
         for (var i = 0; i < _meshRenderers.Length; i++)
         {
@@ -81,7 +81,7 @@ public class HitReactionsVisual : MonoCache
         }
     }
 
-    private void HandleWeakPointHit(int baseDamage)
+    private void HandleWeakPointHit(float baseDamage)
     {
         for (var i = 0; i < _meshRenderers.Length; i++)
         {
