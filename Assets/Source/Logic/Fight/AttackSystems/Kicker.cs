@@ -11,6 +11,7 @@ public class Kicker : MonoCache, IMeleeAttacker
 
     [Header("Impact")]
     [SerializeField] private int damage = 1;
+    [SerializeField] private float forwardRecoilBeforePunch;
     [SerializeField] private Vector3 payoffPowerVector;
 
     [Header("Timers")]
@@ -19,7 +20,8 @@ public class Kicker : MonoCache, IMeleeAttacker
     [SerializeField] private float cooldown;
 
     private Collider[] _attackHitsContainer = new Collider[10];
-    
+
+    private bool _canAttack = true;
     private bool _attackInput;
     private bool _isHitAnything;
 
@@ -40,6 +42,9 @@ public class Kicker : MonoCache, IMeleeAttacker
 
     protected override void Run()
     {
+        if (!_canAttack)
+            return;
+        
         if (NeedToAttack())
             SetAttackStateToNext();
 
@@ -59,6 +64,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     [ContextMenu("Imitate Kick")]
     public void PerformAttack()
     {
+        
         Array.Clear(_attackHitsContainer, 0, _attackHitsContainer.Length);
 
         var hitBoxCenter = directionTarget.position + directionTarget.forward * (hitBoxSize.z / 2.0f);
@@ -117,6 +123,7 @@ public class Kicker : MonoCache, IMeleeAttacker
                 break;
             case MeleeAttackStates.Attacking:
                 OnStartAttack?.Invoke();
+                _mover.AddVelocity(GetAttackDirection() * forwardRecoilBeforePunch);
                 _timer = GetAttackDuration();
                 break;
             case MeleeAttackStates.Cooldown:
@@ -125,6 +132,16 @@ public class Kicker : MonoCache, IMeleeAttacker
                 _timer = GetAttackCooldown();
                 break;
         }
+    }
+
+    public void AllowAttack()
+    {
+        _canAttack = true;
+    }
+
+    public void DisallowAttack()
+    {
+        _canAttack = false;
     }
 
     public MeleeAttackStates GetCurrentAttackState()

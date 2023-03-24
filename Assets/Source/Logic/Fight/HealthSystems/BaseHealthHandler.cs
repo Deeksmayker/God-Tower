@@ -23,6 +23,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     private ITakeHit[] _hitTakers;
     private IWeakPoint[] _weakPoints;
 
+    public event Action<float> OnHealthChanged;
     public event Action OnDying;
     public event Action OnDied;
     public event Action OnCanGiveAbility;
@@ -114,13 +115,13 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void AddHealth(float addValue)
     {
-        health += addValue;
+        SetHealth(health + addValue);
         health = Mathf.Clamp(health, 0, _maxHealth);
     }
 
     public void RemoveHealth(float removeValue)
     {
-        health -= removeValue;
+        SetHealth(health - removeValue);
         if (health <= 0 && !_dying)
         {
             StartDying();
@@ -135,6 +136,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     public void SetHealth(float value)
     {
         health = value;
+        OnHealthChanged?.Invoke(health);
     }
 
     public float GetHealth()

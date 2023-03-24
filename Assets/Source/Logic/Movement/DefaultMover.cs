@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using NTC.Global.Cache;
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(CharacterController))]
 public class DefaultMover : MonoCache, IMover
 {
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckRadius;
+    
     [SerializeField] private bool alignMovementWithRotation;
+    [SerializeField] private bool rotateByVelocityVector;
     
     [SerializeField] private float targetHorizontalSpeed = 15;
     [SerializeField] private float groundHorizontalAcceleration = 75;
     [SerializeField] private float airHorizontalAcceleration = 25;
     
     private CharacterController _ch;
+    private NavMeshAgent _aiAgent;
 
     private Vector2 _horizontalInput;
     private Vector3 _velocity;
@@ -23,6 +29,7 @@ public class DefaultMover : MonoCache, IMover
     private void Awake()
     {
         _ch = Get<CharacterController>();
+        _aiAgent = Get<NavMeshAgent>();
     }
 
     protected override void Run()
@@ -59,7 +66,17 @@ public class DefaultMover : MonoCache, IMover
             
         }
         
-        _ch.Move(_velocity * Time.deltaTime);
+        if (_ch != null)
+            _ch.Move(_velocity * Time.deltaTime);
+        else if (_aiAgent != null)
+            _aiAgent.Move(_velocity * Time.deltaTime);
+        
+        if (rotateByVelocityVector)
+        {
+            if (_aiAgent.velocity == Vector3.zero)
+                return;
+            transform.rotation = Quaternion.LookRotation(_aiAgent.velocity);
+        }
     }
 
     private bool NeedToChangeHorizontalSpeed(float desiredSpeed, float actualSpeed)
@@ -104,7 +121,7 @@ public class DefaultMover : MonoCache, IMover
 
     public float GetVelocityMagnitude()
     {
-        return _ch.velocity.magnitude;
+        return _ch != null ? _ch.velocity.magnitude : _aiAgent.velocity.magnitude;
     }
 
     public Vector3 GetVelocity()
@@ -119,6 +136,12 @@ public class DefaultMover : MonoCache, IMover
 
     public bool IsGrounded()
     {
-        return _ch.isGrounded;
+        return Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
     }
 }

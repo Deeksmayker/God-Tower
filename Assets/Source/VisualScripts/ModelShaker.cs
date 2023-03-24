@@ -41,7 +41,6 @@ public class ModelShaker : MonoCache
         else if (_durableShaking)
         {
             var currentIntensity = Mathf.Lerp(0, _durableMaxIntensity, _durableLerpTimer);
-            Debug.Log(currentIntensity);
             var shakeDisplacement = Mathf.Sin(Time.time * currentIntensity) * _durableAmount;
             transform.localPosition =
                 _originalPosition + new Vector3(shakeDisplacement, shakeDisplacement, shakeDisplacement);
@@ -56,7 +55,6 @@ public class ModelShaker : MonoCache
 
     public void StartRapidShaking(float duration, float intensity, float amount)
     {
-        Debug.Log("Rapid");
         _rapidTimer = duration;
         _rapidIntensity = intensity;
         _rapidAmount = amount;

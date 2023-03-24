@@ -18,6 +18,8 @@ public interface IMeleeAttacker
     public void PerformAttack();
     public void SetInput(bool input);
     public void SetAttackStateToNext();
+    public void AllowAttack();
+    public void DisallowAttack();
     public MeleeAttackStates GetCurrentAttackState();
     public float GetAttackPrepareTime();
     public float GetAttackDuration();
