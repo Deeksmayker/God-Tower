@@ -34,14 +34,14 @@ public class LaserMakerVisual : MonoCache
     {
         var trace = NightPool.Spawn(laserTrace, hit.point);
         trace.SetPosition(0, _laserMaker.GetStartPoint());
-        trace.SetPosition(1, hit.point);
+        trace.SetPosition(1, _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance);
     }
 
     private void HandleEnvironmentHit(RaycastHit hit)
     {
         var trace = NightPool.Spawn(laserTrace, hit.point);
         trace.SetPosition(0, _laserMaker.GetStartPoint());
-        trace.SetPosition(1, hit.point);
+        trace.SetPosition(1, _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance);
         //place for some particles
     }
 

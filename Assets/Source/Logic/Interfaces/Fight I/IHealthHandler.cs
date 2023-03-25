@@ -7,7 +7,6 @@ public interface IHealthHandler
     public event Action OnDied;
 
     public void HandleHit(float damage);
-    public void HandleWeakPointHit(float baseDamage);
     public void StartDying();
     public void Die();
 

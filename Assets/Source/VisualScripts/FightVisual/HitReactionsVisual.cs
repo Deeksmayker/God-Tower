@@ -57,11 +57,6 @@ public class HitReactionsVisual : MonoCache
         {
             _hitTakers[i].OnTakeHit -= HandleHit;
         }
-        
-        for (var i = 0; i < _weakPoints.Length; i++)
-        {
-            _weakPoints[i].OnWeakPointHit -= HandleWeakPointHit;
-        }
     }
 
     private void HandleDying()

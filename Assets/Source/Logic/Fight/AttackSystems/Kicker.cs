@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NTC.Global.Cache;
 using UnityEngine;
 using static IMeleeAttacker;
@@ -20,6 +21,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     [SerializeField] private float cooldown;
 
     private Collider[] _attackHitsContainer = new Collider[10];
+    private List<int> _objectsAlreadyTakeHit = new();
 
     private bool _canAttack = true;
     private bool _attackInput;
@@ -76,9 +78,24 @@ public class Kicker : MonoCache, IMeleeAttacker
         {
             if (_attackHitsContainer[i] is null)
                 break;
+            
+            Debug.Log(_attackHitsContainer[i].name);
+            Debug.Log(_attackHitsContainer[i].transform.parent);
+            
+            var hitParentHash = _attackHitsContainer[i].transform.parent.GetHashCode();
+
+            if (_objectsAlreadyTakeHit.Contains(hitParentHash))
+                continue;
+            _objectsAlreadyTakeHit.Add(hitParentHash);
+            
             var hitPosition = _attackHitsContainer[i].ClosestPoint(hitBoxCenter);
-            _attackHitsContainer[i].GetComponent<IWeakPoint>()?.TakeWeakPointHit(damage, hitPosition);
-            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition);
+
+            var hitType = HitTypes.NormalPoint;
+
+            if (_attackHitsContainer[i].GetComponent<IWeakPoint>() != null)
+                hitType = HitTypes.WeakPoint;
+            
+            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, hitType);
         }
 
         if (_attackHitsContainer[0] is not null && !_isHitAnything)
@@ -128,6 +145,7 @@ public class Kicker : MonoCache, IMeleeAttacker
                 break;
             case MeleeAttackStates.Cooldown:
                 OnEndAttack?.Invoke();
+                _objectsAlreadyTakeHit.Clear();
                 _isHitAnything = false;
                 _timer = GetAttackCooldown();
                 break;

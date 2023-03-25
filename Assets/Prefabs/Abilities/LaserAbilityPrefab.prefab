@@ -45,19 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573a7b2e68944ebdac34f9fc6c5801f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitTakerLayers:
-    serializedVersion: 2
-    m_Bits: 129
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
-  radius: 0.4
-  distance: 300
   damage: 1
   maxCharges: 7
   defaultTimeToCharge: 1
   chargeTimeDecreaseMultiplier: 0.704
   dumpingDelay: 0.2
   cooldown: 0.2
+  hitTakerLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  environmentLayers:
+    serializedVersion: 2
+    m_Bits: 513
+  radius: 0.8
+  distance: 300
 --- !u!114 &3216269069128228424
 MonoBehaviour:
   m_ObjectHideFlags: 0

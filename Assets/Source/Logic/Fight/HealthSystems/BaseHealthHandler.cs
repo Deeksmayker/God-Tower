@@ -9,7 +9,6 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 {
     [SerializeField] private bool canDie = true;
     [SerializeField] private float health;
-    [SerializeField] private int weakPointDamageMultiplier = 2;
     [SerializeField] private float damageImmuneTime = 0.1f;
     [SerializeField] private float dyingDuration = 5;
 
@@ -43,11 +42,6 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         {
             _hitTakers[i].OnTakeHit += HandleHit;
         }
-        
-        for (var i = 0; i < _weakPoints.Length; i++)
-        {
-            _weakPoints[i].OnWeakPointHit += HandleWeakPointHit;
-        }
     }
 
     protected override void OnDisabled()
@@ -55,11 +49,6 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         for (var i = 0; i < _hitTakers.Length; i++)
         {
             _hitTakers[i].OnTakeHit -= HandleHit;
-        }
-        
-        for (var i = 0; i < _weakPoints.Length; i++)
-        {
-            _weakPoints[i].OnWeakPointHit -= HandleWeakPointHit;
         }
     }
 
@@ -85,15 +74,6 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         
         _timer = damageImmuneTime;
         RemoveHealth(damage);
-    }
-
-    public void HandleWeakPointHit(float baseDamage)
-    {
-        if (_timer > 0)
-            return;
-        
-        _timer = damageImmuneTime;
-        RemoveHealth(baseDamage * weakPointDamageMultiplier);
     }
 
     public void StartDying()

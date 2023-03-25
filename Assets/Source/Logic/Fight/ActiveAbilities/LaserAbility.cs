@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 public class LaserAbility : DefaultActiveAbility, IMakeLaser
 {
     [SerializeField] private LayerMask hitTakerLayers;
+    [SerializeField] private LayerMask environmentLayers;
 
     [SerializeField] private float radius = 0.4f;
     [SerializeField] private float distance = 300f;
@@ -30,26 +31,28 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
 
         if (Physics.SphereCast(startPoint, radius, GetPerformDirection(), out var hitInfo, distance, hitTakerLayers))
         {
-            if (hitInfo.transform.TryGetComponent<IWeakPoint>(out var weakPoint))
-            {
-                OnHitToHitTaker?.Invoke(hitInfo);
-                weakPoint.TakeWeakPointHit(damage, hitInfo.point);
-            }
+            var hitTransform = hitInfo.transform;
+            
+            var hitType = HitTypes.NormalPoint;
 
-            else if (hitInfo.transform.TryGetComponent<ITakeHit>(out var hitTaker))
+            if (hitTransform.GetComponent<IWeakPoint>() != null)
             {
-                OnHitToHitTaker?.Invoke(hitInfo);
-                hitTaker.TakeHit(damage, hitInfo.point);
-            }
-
-            else
-            {
-                OnEnvironmentHit?.Invoke(hitInfo);
+                hitType = HitTypes.WeakPoint;
             }
             
+            if (hitInfo.transform.TryGetComponent<ITakeHit>(out var hitTaker))
+            {
+                OnHitToHitTaker?.Invoke(hitInfo);
+                hitTaker.TakeHit(damage, hitInfo.point, hitType);
+                return;
+            }
+        }
+
+        if (Physics.Raycast(GetStartPoint(), GetPerformDirection(), out var envHitInfo, distance, environmentLayers))
+        {
+            OnEnvironmentHit?.Invoke(envHitInfo);
             return;
         }
-        
 
         OnMissHit?.Invoke();
     }
