@@ -12,7 +12,6 @@ public class DefaultMover : MonoCache, IMover
     [SerializeField] private float groundCheckRadius;
     
     [SerializeField] private bool alignMovementWithRotation;
-    [SerializeField] private bool rotateByVelocityVector;
     
     [SerializeField] private float targetHorizontalSpeed = 15;
     [SerializeField] private float groundHorizontalAcceleration = 75;
@@ -70,13 +69,6 @@ public class DefaultMover : MonoCache, IMover
             _ch.Move(_velocity * Time.deltaTime);
         else if (_aiAgent != null)
             _aiAgent.Move(_velocity * Time.deltaTime);
-        
-        if (rotateByVelocityVector)
-        {
-            if (_aiAgent.velocity == Vector3.zero)
-                return;
-            transform.rotation = Quaternion.LookRotation(_aiAgent.velocity);
-        }
     }
 
     private bool NeedToChangeHorizontalSpeed(float desiredSpeed, float actualSpeed)

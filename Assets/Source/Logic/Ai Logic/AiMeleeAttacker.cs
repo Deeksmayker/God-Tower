@@ -11,18 +11,24 @@ public class AiMeleeAttacker : MonoCache, IAiMeleeAttackController
 
     private bool _canAttack = true;
 
+    private IAiController _aiController;
     private IMeleeAttacker _meleeAttacker;
 
     private void Awake()
     {
         _meleeAttacker = Get<IMeleeAttacker>();
+        _aiController = Get<IAiController>();
     }
 
     protected override void Run()
     {
         if (NeedToAttack())
         {
-            StartAttack();
+            TryAttack();
+        }
+        else
+        {
+            _meleeAttacker.SetInput(false);
         }
     }
 
@@ -42,9 +48,10 @@ public class AiMeleeAttacker : MonoCache, IAiMeleeAttackController
         }
     }
 
-    public void StartAttack()
+    public void TryAttack()
     {
-        _meleeAttacker.SetInput(true);
+        if (_aiController.CanAttack())
+            _meleeAttacker.SetInput(true);
     }
 
     public void AllowAttack()

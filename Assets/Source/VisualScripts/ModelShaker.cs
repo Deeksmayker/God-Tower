@@ -1,6 +1,7 @@
 ﻿using System;
 using NTC.Global.Cache;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ModelShaker : MonoCache
 {
@@ -30,20 +31,19 @@ public class ModelShaker : MonoCache
         {
             var shakeDisplacement = Mathf.Sin(Time.time * _rapidIntensity) * _rapidAmount;
             transform.localPosition =
-                _originalPosition + new Vector3(shakeDisplacement, shakeDisplacement, shakeDisplacement);
+                _originalPosition + new Vector3(shakeDisplacement, shakeDisplacement, shakeDisplacement) + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * _rapidAmount;
             _rapidTimer -= Time.deltaTime;
             if (_rapidTimer <= 0)
             {
                 transform.localPosition = _originalPosition;
             }
         }
-        
         else if (_durableShaking)
         {
             var currentIntensity = Mathf.Lerp(0, _durableMaxIntensity, _durableLerpTimer);
             var shakeDisplacement = Mathf.Sin(Time.time * currentIntensity) * _durableAmount;
             transform.localPosition =
-                _originalPosition + new Vector3(shakeDisplacement, shakeDisplacement, shakeDisplacement);
+                _originalPosition + new Vector3(shakeDisplacement, shakeDisplacement, shakeDisplacement) + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * _durableAmount;
         }
 
         if (_durableShaking)
@@ -52,6 +52,7 @@ public class ModelShaker : MonoCache
             _durableLerpTimer = Mathf.Clamp01(_durableLerpTimer);
         }
     }
+
 
     public void StartRapidShaking(float duration, float intensity, float amount)
     {

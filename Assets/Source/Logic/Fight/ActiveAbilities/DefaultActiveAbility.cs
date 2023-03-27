@@ -112,6 +112,15 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         OnPerform?.Invoke();
     }
 
+    public void PerformWithDelay(float delay)
+    {
+        if (_reloadTimer > 0)
+            return;
+        OnStartDumping?.Invoke();
+        Invoke(nameof(PerformAbility), delay);
+        _reloadTimer = cooldown;
+    }
+
     public void SetInput(bool value)
     {
         if (_input && !value)

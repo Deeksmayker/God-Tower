@@ -9,6 +9,7 @@ public interface IActiveAbility
     
     public void ChargeAbility();
     public void PerformAbility();
+    public void PerformWithDelay(float delay);
     public void SetInput(bool value);
     public void SetRotationTarget(Transform rotationTarget);
     public void SetShootPoint(Transform shootPoint);

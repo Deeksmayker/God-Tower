@@ -7,14 +7,17 @@ using UnityEngine.AI;
 public class DefaultAiGroundPlayerChaser : MonoCache, IAiMovementController
 {
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private bool rotateByMoveVector = true;
 
     private Transform _playerTransform;
     
     private NavMeshAgent _agent;
+    private IMover _mover;
 
     private void Awake()
     {
         _agent = Get<NavMeshAgent>();
+        _mover = Get<IMover>();
         _playerTransform = Physics.OverlapSphere(transform.position, 1000, playerLayer)[0].transform;
     }
 
@@ -24,7 +27,8 @@ public class DefaultAiGroundPlayerChaser : MonoCache, IAiMovementController
         {
             health.OnDying += Stop;
         }
-        
+
+        _agent.updateRotation = false;
     }
 
     protected override void OnDisabled()
@@ -41,6 +45,11 @@ public class DefaultAiGroundPlayerChaser : MonoCache, IAiMovementController
         {
             SetMoveTarget(_playerTransform.position);
         }
+        
+        if (rotateByMoveVector && !_agent.velocity.Equals(Vector3.zero))
+        {
+            transform.rotation = Quaternion.LookRotation(_agent.velocity, Vector3.up);
+        }
     }
 
     public void SetMoveTarget(Vector3 target)
@@ -56,6 +65,11 @@ public class DefaultAiGroundPlayerChaser : MonoCache, IAiMovementController
     public void ResumeMoving()
     {
         _agent.isStopped = false;
+    }
+
+    public void SetRotationToVelocityVector(bool value)
+    {
+        rotateByMoveVector = value;
     }
 
     private void FindPlayer()

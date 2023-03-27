@@ -78,10 +78,7 @@ public class Kicker : MonoCache, IMeleeAttacker
         {
             if (_attackHitsContainer[i] is null)
                 break;
-            
-            Debug.Log(_attackHitsContainer[i].name);
-            Debug.Log(_attackHitsContainer[i].transform.parent);
-            
+
             var hitParentHash = _attackHitsContainer[i].transform.parent.GetHashCode();
 
             if (_objectsAlreadyTakeHit.Contains(hitParentHash))
