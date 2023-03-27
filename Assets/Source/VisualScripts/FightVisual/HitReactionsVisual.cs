@@ -1,11 +1,13 @@
 ﻿using System;
 using NTC.Global.Cache;
+using NTC.Global.Pool;
 using UnityEngine;
 
 
 public class HitReactionsVisual : MonoCache
 {
     [SerializeField] private float colorChangeDuration;
+    [SerializeField] private ParticleSystem hitParticles;
 
     private float _timer;
 
@@ -13,14 +15,12 @@ public class HitReactionsVisual : MonoCache
     
     private MeshRenderer[] _meshRenderers;
     private ITakeHit[] _hitTakers;
-    private IWeakPoint[] _weakPoints;
     private IHealthHandler _healthHandler;
 
     private void Awake()
     {
         _meshRenderers = GetComponentsInChildren<MeshRenderer>();
         _hitTakers = GetComponentsInChildren<ITakeHit>();
-        _weakPoints = GetComponentsInChildren<IWeakPoint>();
         _healthHandler = GetComponentInParent<IHealthHandler>();
 
         _propertyBlock = new MaterialPropertyBlock();
@@ -40,12 +40,7 @@ public class HitReactionsVisual : MonoCache
         
         for (var i = 0; i < _hitTakers.Length; i++)
         {
-            //_hitTakers[i].OnTakeHit += HandleHit;
-        }
-        
-        for (var i = 0; i < _weakPoints.Length; i++)
-        {
-            //_weakPoints[i].OnWeakPointHit += HandleWeakPointHit;
+            _hitTakers[i].OnTakeHitWithPosition += HandleHit;
         }
     }
 
@@ -55,16 +50,11 @@ public class HitReactionsVisual : MonoCache
 
         for (var i = 0; i < _hitTakers.Length; i++)
         {
-            _hitTakers[i].OnTakeHit -= HandleHit;
+            _hitTakers[i].OnTakeHitWithPosition -= HandleHit;
         }
     }
 
     private void HandleDying()
-    {
-        HandleHit(1);
-    }
-
-    private void HandleHit(float damage)
     {
         for (var i = 0; i < _meshRenderers.Length; i++)
         {
@@ -74,6 +64,11 @@ public class HitReactionsVisual : MonoCache
             _propertyBlock.SetColor("_EmissionColor", Color.red * 10);
             _meshRenderers[i].SetPropertyBlock(_propertyBlock);
         }
+    }
+
+    private void HandleHit(Vector3 pos)
+    {
+        NightPool.Spawn(hitParticles, pos, Quaternion.identity);
     }
 
     private void HandleWeakPointHit(float baseDamage)
