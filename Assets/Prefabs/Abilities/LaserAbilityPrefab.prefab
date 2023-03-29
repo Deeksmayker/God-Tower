@@ -45,13 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573a7b2e68944ebdac34f9fc6c5801f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infinite: 0
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
   damage: 1
-  maxCharges: 7
-  defaultTimeToCharge: 1
-  chargeTimeDecreaseMultiplier: 0.704
-  dumpingDelay: 0.2
+  dumpShootChargesCount: 7
+  holdTimeToDump: 2
+  dumpingShootsDelay: 0.2
+  abilityLifetime: 10
   cooldown: 0.2
   hitTakerLayers:
     serializedVersion: 2

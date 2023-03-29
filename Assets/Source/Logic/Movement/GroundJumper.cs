@@ -13,6 +13,8 @@ public class GroundJumper : MonoCache, IJumper
     
     private IMover _mover;
     private GravityMaker _gravityMaker;
+    
+    public event Action OnJump;
 
     private void Awake()
     {
@@ -29,10 +31,12 @@ public class GroundJumper : MonoCache, IJumper
         }
     }
 
+
     public void Jump(Vector3 direction)
     {
-        var gravityValue = _gravityMaker != null ? _gravityMaker.Gravity : -10;
-        _mover.AddVerticalVelocity(Mathf.Sqrt(jumpHeight * -2f * gravityValue));
+        OnJump?.Invoke();
+        var gravityValue = _gravityMaker != null ? _gravityMaker.RiseGravity : -10;
+        _mover.SetVerticalVelocity(Mathf.Sqrt(jumpHeight * -2f * gravityValue));
     }
 
     public void SetJumpInput(bool value)

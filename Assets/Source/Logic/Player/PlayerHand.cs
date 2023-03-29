@@ -1,9 +1,12 @@
 ﻿using System;
 using NTC.Global.Cache;
+using NTC.Global.Pool;
 using UnityEngine;
 
 public class PlayerHand : MonoCache
 {
+    [SerializeField] private ParticleSystem dumpLoadedParticles;
+    
     private ModelShaker _shaker;
     
     public Action<PlayerHand> OnAbilityPerformed;
@@ -27,10 +30,16 @@ public class PlayerHand : MonoCache
         OnAbilityCharging?.Invoke(this);
     }
 
+    public void HandleAbilityDumpLoaded()
+    {
+        NightPool.Spawn(dumpLoadedParticles, transform.position);
+    }
+
     protected void HandleNewAbility(IActiveAbility ability)
     {
         ability.OnPerform += HandleAbilityPerforming;
-        ability.OnStartDumping += HandleAbilityCharging;
+        ability.OnStartHolding += HandleAbilityCharging;
+        ability.OnDumpLoaded += HandleAbilityDumpLoaded;
     }
 
     public ModelShaker GetShaker()

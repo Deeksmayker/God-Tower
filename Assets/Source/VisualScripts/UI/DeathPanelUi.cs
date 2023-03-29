@@ -42,6 +42,7 @@ public class DeathPanelUi : MonoCache
         }
 
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         deathPanel.SetActive(true);
     }
 

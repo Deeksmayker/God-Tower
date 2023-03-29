@@ -23,12 +23,17 @@ public class DefaultMover : MonoCache, IMover
     private Vector2 _horizontalInput;
     private Vector3 _velocity;
 
+    private float _groundCheckerHeightRelatedPosition;
+
     private bool _isResponseToInput = true;
     
     private void Awake()
     {
         _ch = Get<CharacterController>();
         _aiAgent = Get<NavMeshAgent>();
+
+        if (_ch != null)
+            _groundCheckerHeightRelatedPosition = groundCheckPoint.localPosition.y / _ch.height;
     }
 
     protected override void Run()
@@ -73,7 +78,13 @@ public class DefaultMover : MonoCache, IMover
 
     private bool NeedToChangeHorizontalSpeed(float desiredSpeed, float actualSpeed)
     {
-        return IsGrounded() || !desiredSpeed.Equals(targetHorizontalSpeed) || actualSpeed < desiredSpeed;
+        if (IsGrounded())
+            return true;
+
+        if (desiredSpeed.Equals(0) || !Mathf.Sign(desiredSpeed).Equals(Mathf.Sign(actualSpeed)))
+            return true;
+                                  
+        return Mathf.Abs(desiredSpeed) > Mathf.Abs(actualSpeed);
     }
 
     public void SetHorizontalInput(Vector2 input)
@@ -101,6 +112,12 @@ public class DefaultMover : MonoCache, IMover
         _velocity = newVelocity;
     }
 
+    public void SetHorizontalVelocity(Vector3 newVelocity)
+    {
+        _velocity.x = newVelocity.x;
+        _velocity.z = newVelocity.z;
+    }
+
     public void AddVelocity(Vector3 addedVelocityVector)
     {
         _velocity += addedVelocityVector;
@@ -111,6 +128,13 @@ public class DefaultMover : MonoCache, IMover
         _isResponseToInput = value;
     }
 
+    [ContextMenu("Recalculate ground checker position")]
+    public void RecalculateGroundCheckerPosition()
+    {
+        groundCheckPoint.localPosition = new Vector3(groundCheckPoint.localPosition.x,
+            _groundCheckerHeightRelatedPosition * _ch.height, groundCheckPoint.localPosition.z);
+    }
+
     public float GetVelocityMagnitude()
     {
         return _ch != null ? _ch.velocity.magnitude : _aiAgent.velocity.magnitude;
@@ -119,6 +143,11 @@ public class DefaultMover : MonoCache, IMover
     public Vector3 GetVelocity()
     {
         return _velocity;
+    }
+
+    public Vector2 GetHorizontalInput()
+    {
+        return _horizontalInput;
     }
 
     public float GetHorizontalSpeed()

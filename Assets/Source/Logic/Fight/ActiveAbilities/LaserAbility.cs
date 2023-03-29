@@ -20,7 +20,7 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
 
     protected override void OnEnabled()
     {
-        _remainingCharges = maxCharges;
+        
     }
 
     public override void PerformAbility()

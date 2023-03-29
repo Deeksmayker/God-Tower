@@ -11,6 +11,8 @@ public class PlayerInputHandler : MonoCache
     private IJumper _jumper;
     private IMeleeAttacker _meleeAttacker;
     private AbilitiesHandler _abilitiesHandler;
+    private AirSlamer _slamer;
+    private GroundSlider _slider;
     //private PickUpDetector _pickUpDetector;
     //private Thrower _thrower;
     
@@ -23,6 +25,8 @@ public class PlayerInputHandler : MonoCache
         _jumper = Get<IJumper>();
         _meleeAttacker = Get<IMeleeAttacker>();
         _abilitiesHandler = Get<AbilitiesHandler>();
+        _slamer = Get<AirSlamer>();
+        _slider = Get<GroundSlider>();
         //_pickUpDetector = GetComponentInChildren<PickUpDetector>();
         //_thrower = GetComponentInChildren<Thrower>();
     }
@@ -51,8 +55,16 @@ public class PlayerInputHandler : MonoCache
             _abilitiesHandler.SetLeftStealInput(_playerInput.actions["LeftSteal"].WasPressedThisFrame());
             _abilitiesHandler.SetLeftAbilityInput(_playerInput.actions["LeftAttack"].IsInProgress());
         }
-        
-        
+
+        if (_slamer != null)
+        {
+            _slamer.SetInput(_playerInput.actions["Slam"].WasPressedThisFrame());
+        }
+
+        if (_slider != null)
+        {
+            _slider.SetInput(_playerInput.actions["Slide"].IsInProgress());
+        }
         /*if (_pickUpDetector != null)
         {
             if (_playerInput.actions["PickUp"].WasPressedThisFrame())

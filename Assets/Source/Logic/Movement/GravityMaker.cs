@@ -4,28 +4,32 @@ using UnityEngine;
 
 public class GravityMaker : MonoCache
 {
-    public float Gravity = -30;
+    public float RiseGravity = -50;
+
+    public float FallingGravity = -30;
     //public Vector3 GravityDirection = Vector3.down;
 
-    private IMover _anyMover;
+    private IMover _mover;
 
     private void Awake()
     {
-        _anyMover = Get<IMover>();
+        _mover = Get<IMover>();
     }
 
     protected override void Run()
     {
-        if (_anyMover.IsGrounded() && Gravity < 0)
+        if (_mover.IsGrounded() && RiseGravity < 0)
         {
-            if (_anyMover.GetVelocity().y < 0)
+            if (_mover.GetVelocity().y < 0)
             {
-                _anyMover.SetVerticalVelocity(-1);
+                _mover.SetVerticalVelocity(-10);
             }
 
             return;
         }
 
-        _anyMover.AddVerticalVelocity(Gravity * Time.deltaTime);
+        var gravity = _mover.GetVelocity().y >= 0 ? RiseGravity : FallingGravity;
+        
+        _mover.AddVerticalVelocity(gravity * Time.deltaTime);
     }
 }

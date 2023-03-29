@@ -5,127 +5,154 @@ using UnityEngine;
 
 public class DefaultActiveAbility : MonoCache, IActiveAbility
 {
+    [SerializeField] private bool infinite;
     [SerializeField] protected Transform directionTarget;
     [SerializeField] protected Transform shootStartPoint;
 
     [SerializeField] protected float damage;
-    [SerializeField] protected int maxCharges;
+    
+    [SerializeField] private int dumpShootChargesCount;
 
-    [SerializeField] protected float defaultTimeToCharge;
-    [SerializeField, Range(0.1f, 1f)] protected float chargeTimeDecreaseMultiplier;
-    [SerializeField] protected float dumpingDelay;
-    [SerializeField] protected float cooldown;
+    [SerializeField] private float holdTimeToDump;
+    [SerializeField] private float dumpingShootsDelay;
+    [SerializeField] private float abilityLifetime;
+    [SerializeField] private float cooldown;
 
-    protected float _reloadTimer;
-    protected float _chargingTimer;
-    protected float _dumpingDelayTimer;
+    private int _remainingChargesToShootOnDump;
 
-    protected int _remainingCharges;
-    protected int _chargesLoaded;
+    private float _remainingLifetime;
+    private float _cooldownTimer;
+    private float _chargingTimer;
+    private float _dumpingTimer;
 
-    protected bool _input;
-    protected bool _needToPerform;
+    private bool _input;
+    private bool _needToPerform;
+    private bool _dumping;
+    private bool _dumpLoaded;
     
     public event Action OnPerform;
-    public event Action OnStartDumping;
+    public event Action OnStartHolding;
+    public event Action OnDumpLoaded;
     public event Action OnEmpty;
 
-    protected override void OnEnabled()
+    private void Awake()
     {
-        _remainingCharges = maxCharges;
-        _chargingTimer = 0;
+        _remainingChargesToShootOnDump = dumpShootChargesCount;
+        _remainingLifetime = abilityLifetime;
     }
 
     protected override void Run()
     {
-        if (_needToPerform)
+        if (_dumping)
         {
-            _dumpingDelayTimer = dumpingDelay;
+            DumpAbility();
+            return;
         }
         
-        if (_reloadTimer > 0)
+        if (_cooldownTimer > 0)
         {
-            _reloadTimer -= Time.deltaTime;
+            _cooldownTimer -= Time.deltaTime;
         }
 
-        if (_reloadTimer <= 0 && _input)
+        if (_needToPerform && _cooldownTimer <= 0)
+        {
+            PerformAbility();
+            _cooldownTimer = cooldown;
+        }
+        
+        if (_input)
         {
             ChargeAbility();
         }
-
-        if (_dumpingDelayTimer > 0)
-        {
-            _dumpingDelayTimer -= Time.deltaTime;
-            if (_dumpingDelayTimer <= 0)
-            {
-                PerformAbility();
-                _chargesLoaded--;
-                _remainingCharges--;
-                if (_chargesLoaded > 0)
-                    _dumpingDelayTimer = dumpingDelay;
-                else
-                {
-                    _chargingTimer = 0;
-                }
-
-                if (GetRemainingChargesCount() <= 0)
-                {
-                    OnEmpty?.Invoke();
-                    Destroy(gameObject);
-                }
-            }
-        }
-
-       
-
+        
         _needToPerform = false;
+
+        if (infinite)
+            return;
+        _remainingLifetime -= Time.deltaTime;
+        if (_remainingLifetime <= 0)
+        {
+            if (_chargingTimer >= holdTimeToDump)
+            {
+                _dumping = true;
+                return;
+            }
+            
+            OnEmpty?.Invoke();
+            Destroy(gameObject);
+        }
     }
     
     public void ChargeAbility()
     {
-        if (_chargesLoaded >= GetRemainingChargesCount())
-            return;
-        
         if (_chargingTimer.Equals(0))
         {
-            _chargesLoaded = 1;
-            OnStartDumping?.Invoke();
+            OnStartHolding?.Invoke();
         }
-            
+
         _chargingTimer += Time.deltaTime;
 
-        var currentTimeToCharge = defaultTimeToCharge;
-
-        for (var i = 0; i < _chargesLoaded - 1; i++)
+        if (!_dumpLoaded && _chargingTimer >= holdTimeToDump)
         {
-            currentTimeToCharge += defaultTimeToCharge * chargeTimeDecreaseMultiplier;
-        }
-
-        if (_chargingTimer >= currentTimeToCharge)
-        {
-            _chargesLoaded++;
+            OnDumpLoaded?.Invoke();
+            _dumpLoaded = true;
         }
     }
 
     public virtual void PerformAbility()
     {
+        _chargingTimer = 0;
         OnPerform?.Invoke();
+    }
+
+    public void DumpAbility()
+    {
+        _dumpingTimer -= Time.deltaTime;
+        if (_dumpingTimer > 0)
+            return;
+            
+        PerformAbility();
+        _dumpingTimer = dumpingShootsDelay;
+        _remainingChargesToShootOnDump--;
+
+        if (_remainingChargesToShootOnDump < 0)
+        {
+            if (infinite)
+            {
+                _remainingChargesToShootOnDump = dumpShootChargesCount;
+                _dumping = false;
+                _dumpLoaded = false;
+                return;
+            }
+            
+            OnEmpty?.Invoke();
+            Destroy(gameObject);
+        }
+        
     }
 
     public void PerformWithDelay(float delay)
     {
-        if (_reloadTimer > 0)
+        if (_cooldownTimer > 0)
             return;
-        OnStartDumping?.Invoke();
+        OnStartHolding?.Invoke();
         Invoke(nameof(PerformAbility), delay);
-        _reloadTimer = cooldown;
+        _cooldownTimer = cooldown;
     }
 
     public void SetInput(bool value)
     {
         if (_input && !value)
         {
-            _needToPerform = true;
+            if (_chargingTimer >= holdTimeToDump)
+            {
+                _dumping = true;
+                _dumpingTimer = dumpingShootsDelay;
+            }
+            else
+            {
+                _needToPerform = true;
+            }
         }
         
         _input = value;
@@ -141,10 +168,16 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         shootStartPoint = shootPoint;
     }
 
-    public int GetRemainingChargesCount()
+    public float GetRemainingLifetime()
     {
-        return _remainingCharges;
+        return _remainingLifetime;
     }
+
+    public float GetMaxLifetime()
+    {
+        return abilityLifetime;
+    }
+
 
     public Vector3 GetPerformDirection()
     {

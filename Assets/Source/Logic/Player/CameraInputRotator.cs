@@ -23,6 +23,7 @@ public class CameraInputRotator : MonoCache
         if (hideCursor)
         {
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
