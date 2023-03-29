@@ -406,6 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorChangeDuration: 1
+  hitParticles: {fileID: 2560860679007698351, guid: 5d65d39000b41a54292c5de2f2238f38,
+    type: 3}
 --- !u!1 &5276695167162162896
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0207e8ab29a14290b40d85b25b2a4044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Gravity: -30
+  RiseGravity: -50
+  FallingGravity: -30
 --- !u!114 &5276695168522168768
 MonoBehaviour:
   m_ObjectHideFlags: 0

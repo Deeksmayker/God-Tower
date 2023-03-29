@@ -70,6 +70,8 @@ public class GroundSlider : MonoCache
         _mover.RecalculateGroundCheckerPosition();
         _slideDirection = _mover.GetHorizontalInput().x * transform.right +
                           _mover.GetHorizontalInput().y * transform.forward;
+        if (_slideDirection.Equals(Vector3.zero))
+            _slideDirection = transform.forward;
         _mover.SetHorizontalVelocity(_slideDirection * (_mover.GetVelocity().magnitude / 2 > baseSlideSpeed ? _mover.GetVelocity().magnitude / 2 : baseSlideSpeed));
         _mover.SetInputResponse(false);
     }
