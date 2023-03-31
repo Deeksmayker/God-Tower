@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-
 public static class Timer
 {
     public static IEnumerator TakeActionAfterTime(float seconds, Action action)
