@@ -7,6 +7,8 @@ public class GravityMaker : MonoCache
     public float RiseGravity = -50;
 
     public float FallingGravity = -30;
+
+    [SerializeField] private float changingGravityVelocity = 10;
     //public Vector3 GravityDirection = Vector3.down;
 
     private IMover _mover;
@@ -28,7 +30,7 @@ public class GravityMaker : MonoCache
             return;
         }
 
-        var gravity = _mover.GetVelocity().y >= 0 ? RiseGravity : FallingGravity;
+        var gravity = _mover.GetVelocity().y >= changingGravityVelocity ? RiseGravity : FallingGravity;
         
         _mover.AddVerticalVelocity(gravity * Time.deltaTime);
     }

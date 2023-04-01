@@ -49,18 +49,18 @@ MonoBehaviour:
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
   damage: 1
-  dumpShootChargesCount: 7
+  dumpShootChargesCount: 10
   holdTimeToDump: 2
-  dumpingShootsDelay: 0.2
+  dumpingShootsDelay: 0.1
   abilityLifetime: 10
-  cooldown: 0.5
+  cooldown: 1
   hitTakerLayers:
     serializedVersion: 2
     m_Bits: 128
   environmentLayers:
     serializedVersion: 2
     m_Bits: 513
-  radius: 0.8
+  radius: 1
   distance: 300
 --- !u!114 &3216269069128228424
 MonoBehaviour:

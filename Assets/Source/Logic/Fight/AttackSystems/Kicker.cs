@@ -137,7 +137,7 @@ public class Kicker : MonoCache, IMeleeAttacker
                 break;
             case MeleeAttackStates.Attacking:
                 OnStartAttack?.Invoke();
-                _mover.AddVelocity(GetAttackDirection() * forwardRecoilBeforePunch);
+                MakeForwardRecoil();
                 _timer = GetAttackDuration();
                 break;
             case MeleeAttackStates.Cooldown:
@@ -147,6 +147,14 @@ public class Kicker : MonoCache, IMeleeAttacker
                 _timer = GetAttackCooldown();
                 break;
         }
+    }
+
+    private void MakeForwardRecoil()
+    {
+        var resultVelocity = _mover.GetVelocity();
+        resultVelocity += GetAttackDirection() * forwardRecoilBeforePunch;
+        resultVelocity = resultVelocity.magnitude * GetAttackDirection();
+        _mover.SetVelocity(resultVelocity);
     }
 
     public void AllowAttack()
