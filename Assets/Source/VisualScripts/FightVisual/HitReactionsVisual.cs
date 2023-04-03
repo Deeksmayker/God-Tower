@@ -61,7 +61,7 @@ public class HitReactionsVisual : MonoCache
             _meshRenderers[i].GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetColor("_BaseColor", Color.red);
 
-            _propertyBlock.SetColor("_EmissionColor", Color.red * 10);
+            _propertyBlock.SetColor("_EmissionColor", Color.red * 3);
             _meshRenderers[i].SetPropertyBlock(_propertyBlock);
         }
     }
@@ -77,7 +77,7 @@ public class HitReactionsVisual : MonoCache
         {
             _meshRenderers[i].GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetColor("_BaseColor", Color.red);
-            _propertyBlock.SetColor("_EmissionColor", Color.red * 10);
+            _propertyBlock.SetColor("_EmissionColor", Color.red * 3);
             //propertyBlock.SetColor("_Emission", Color.red);
             _meshRenderers[i].SetPropertyBlock(_propertyBlock);
         }

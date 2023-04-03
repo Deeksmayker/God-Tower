@@ -44,14 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf81ef7db8b42a79146d52d3361fa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infinite: 1
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
   damage: 1
-  maxCharges: 7
-  defaultTimeToCharge: 1
-  chargeTimeDecreaseMultiplier: 0.704
-  dumpingDelay: 0.2
+  dumpShootChargesCount: 5
+  holdTimeToDump: 2
+  dumpingShootsDelay: 0
+  abilityLifetime: 10
   cooldown: 0.2
-  GrenadePrefab: {fileID: 7123938187522302595, guid: 1445668ccc606d84791d29220de31030,
+  GrenadePrefab: {fileID: 8929701607955828243, guid: 1445668ccc606d84791d29220de31030,
     type: 3}
-  TimeBeforeExplosion: 2
+  throwPower: 1

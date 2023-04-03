@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class GrenadeAbility : DefaultActiveAbility
 {
-    [Header("Other Settings")]
-    [SerializeField] private GameObject GrenadePrefab;
+    [Header("Grenade")]
+    [SerializeField] private Grenade GrenadePrefab;
+
+    [SerializeField] private float throwPower = 1;
         
     public override void PerformAbility()
     {
@@ -14,6 +16,6 @@ public class GrenadeAbility : DefaultActiveAbility
 
         var spawnedGrenade = Instantiate(GrenadePrefab, GetStartPoint(), Quaternion.identity);
         spawnedGrenade.transform.position = GetStartPoint();
-        spawnedGrenade.GetComponent<Rigidbody>().AddForce(GetPerformDirection(), ForceMode.Impulse);
+        spawnedGrenade.GetComponent<Rigidbody>().AddForce(GetPerformDirection() * throwPower, ForceMode.Impulse);
     }
 }
