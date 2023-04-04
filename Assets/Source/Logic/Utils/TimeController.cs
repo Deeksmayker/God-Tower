@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class TimeController : MonoBehaviour
+public class TimeController  : MonoBehaviour
 {
-    private float _minTimeScale = 1f;
-    private bool _isPaused = false;
     private List<TimeScaleTimer> _timers = new List<TimeScaleTimer>();
     private TimeScaleTimer _currentTimer;
+    private bool _isPaused = false;
 
     public void SetTimeScale(float timeScale, float duration)
     {
@@ -20,14 +20,17 @@ public class TimeController : MonoBehaviour
         TimeScaleTimer newTimer = new TimeScaleTimer(timeScale, duration);
         _timers.Add(newTimer);
 
-        if (_currentTimer == null || timeScale < _currentTimer.timeScale)
+        // Находим таймер с минимальным значением timeScale
+        TimeScaleTimer timerWithMinTimeScale = _timers.OrderBy(t => t.timeScale).FirstOrDefault();
+
+        if (_currentTimer == null || timerWithMinTimeScale.timeScale < _currentTimer.timeScale)
         {
             if (_currentTimer != null)
             {
                 StopCoroutine(_currentTimer.coroutine);
             }
-            _currentTimer = newTimer;
-            _minTimeScale = timeScale;
+
+            _currentTimer = timerWithMinTimeScale;
             _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
         }
     }
@@ -39,11 +42,15 @@ public class TimeController : MonoBehaviour
         if (!_isPaused && _timers.Count > 0)
         {
             TimeScaleTimer nextTimer = GetNextTimer();
+
             if (nextTimer != null)
             {
                 _currentTimer = nextTimer;
-                _minTimeScale = _currentTimer.timeScale;
                 _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
+            }
+            else
+            {
+                Time.timeScale = 1f;
             }
         }
     }
@@ -51,17 +58,22 @@ public class TimeController : MonoBehaviour
     private TimeScaleTimer GetNextTimer()
     {
         TimeScaleTimer nextTimer = null;
-        foreach (TimeScaleTimer timer in _timers)
+
+        // Находим таймер с минимальным значением timeScale, который еще не закончился
+        foreach (TimeScaleTimer timer in _timers.Where(t => !t.isFinished))
         {
             if (nextTimer == null || timer.timeScale < nextTimer.timeScale)
             {
                 nextTimer = timer;
             }
         }
-        if (nextTimer != null)
+
+        // Удаляем из списка таймеров таймер, который закончился
+        if (nextTimer != null && nextTimer.isFinished)
         {
             _timers.Remove(nextTimer);
         }
+
         return nextTimer;
     }
 
@@ -70,6 +82,7 @@ public class TimeController : MonoBehaviour
         public float timeScale;
         public float duration;
         public Coroutine coroutine;
+        public bool isFinished = false;
 
         public TimeScaleTimer(float timeScale, float duration)
         {
@@ -81,7 +94,7 @@ public class TimeController : MonoBehaviour
         {
             Time.timeScale = timeScale;
             yield return new WaitForSecondsRealtime(duration);
-            Time.timeScale = 1f;
+            isFinished = true;
         }
     }
 }
