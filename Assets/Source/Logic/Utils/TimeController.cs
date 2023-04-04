@@ -7,6 +7,7 @@ public class TimeController : MonoBehaviour
     private float _minTimeScale = 1f;
     private bool _isPaused = false;
     private List<TimeScaleTimer> _timers = new List<TimeScaleTimer>();
+    private TimeScaleTimer _currentTimer;
 
     public void SetTimeScale(float timeScale, float duration)
     {
@@ -19,10 +20,15 @@ public class TimeController : MonoBehaviour
         TimeScaleTimer newTimer = new TimeScaleTimer(timeScale, duration);
         _timers.Add(newTimer);
 
-        if (timeScale < _minTimeScale)
+        if (_currentTimer == null || timeScale < _currentTimer.timeScale)
         {
+            if (_currentTimer != null)
+            {
+                StopCoroutine(_currentTimer.coroutine);
+            }
+            _currentTimer = newTimer;
             _minTimeScale = timeScale;
-            StartCoroutine(newTimer.StartTimer());
+            _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
         }
     }
 
@@ -35,8 +41,9 @@ public class TimeController : MonoBehaviour
             TimeScaleTimer nextTimer = GetNextTimer();
             if (nextTimer != null)
             {
-                _minTimeScale = nextTimer.timeScale;
-                StartCoroutine(nextTimer.StartTimer());
+                _currentTimer = nextTimer;
+                _minTimeScale = _currentTimer.timeScale;
+                _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
             }
         }
     }
