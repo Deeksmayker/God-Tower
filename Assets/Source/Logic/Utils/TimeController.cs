@@ -3,33 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TimeController  : MonoBehaviour
+public class TimeController : MonoBehaviour
 {
     private List<TimeScaleTimer> _timers = new List<TimeScaleTimer>();
-    private TimeScaleTimer _currentTimer;
+    [SerializeField] private TimeScaleTimer _currentTimer;
     private bool _isPaused = false;
 
     public void SetTimeScale(float timeScale, float duration)
     {
-        if (timeScale == 0)
-        {
-            SetPause(true);
-            return;
-        }
-
         TimeScaleTimer newTimer = new TimeScaleTimer(timeScale, duration);
         _timers.Add(newTimer);
 
-        // Находим таймер с минимальным значением timeScale
         TimeScaleTimer timerWithMinTimeScale = _timers.OrderBy(t => t.timeScale).FirstOrDefault();
 
         if (_currentTimer == null || timerWithMinTimeScale.timeScale < _currentTimer.timeScale)
         {
-            if (_currentTimer != null)
-            {
-                StopCoroutine(_currentTimer.coroutine);
-            }
-
             _currentTimer = timerWithMinTimeScale;
             _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
         }
@@ -59,7 +47,6 @@ public class TimeController  : MonoBehaviour
     {
         TimeScaleTimer nextTimer = null;
 
-        // Находим таймер с минимальным значением timeScale, который еще не закончился
         foreach (TimeScaleTimer timer in _timers.Where(t => !t.isFinished))
         {
             if (nextTimer == null || timer.timeScale < nextTimer.timeScale)
@@ -68,7 +55,6 @@ public class TimeController  : MonoBehaviour
             }
         }
 
-        // Удаляем из списка таймеров таймер, который закончился
         if (nextTimer != null && nextTimer.isFinished)
         {
             _timers.Remove(nextTimer);
@@ -83,6 +69,9 @@ public class TimeController  : MonoBehaviour
         public float duration;
         public Coroutine coroutine;
         public bool isFinished = false;
+        public float timer;
+        
+        private bool _isPaused;
 
         public TimeScaleTimer(float timeScale, float duration)
         {
@@ -92,9 +81,13 @@ public class TimeController  : MonoBehaviour
 
         public IEnumerator StartTimer()
         {
-            Time.timeScale = timeScale;
-            yield return new WaitForSecondsRealtime(duration);
-            isFinished = true;
+            timer = 0;
+            while (timer < duration)
+            {
+                if (!_isPaused)
+                    timer += Time.unscaledDeltaTime;
+                yield return null;
+            }
         }
     }
 }
