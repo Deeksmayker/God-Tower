@@ -154,8 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplodeParticle: {fileID: 4865528458557052560, guid: 7e0fe14b5b5c2e94c8cd756c7fc76da4,
     type: 3}
+  BigExplodeParticle: {fileID: 4865528458557052560, guid: 5d3b3eb8df0c29b4a8b4845e33738ad6,
+    type: 3}
   ExplodeRadius: 5
-  Damage: 1
+  Damage: 5
 --- !u!65 &6483870159476539857
 BoxCollider:
   m_ObjectHideFlags: 0
