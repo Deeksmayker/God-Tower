@@ -42,6 +42,11 @@ public class RunnerAiController : MonoCache, IAiController
         _meleeAttacker.OnEndAttack += HandleEndMeleeAttack;
         _rangeAbility.OnStartHolding += HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform += HandlePerformingRangeAttack;
+        
+        if (TryGetComponent<IHealthHandler>(out var health))
+        {
+            health.OnDying += HandleDying;
+        }
     }
 
     protected override void OnDisabled()
@@ -50,6 +55,11 @@ public class RunnerAiController : MonoCache, IAiController
         _meleeAttacker.OnEndAttack -= HandleEndMeleeAttack;
         _rangeAbility.OnStartHolding -= HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform -= HandlePerformingRangeAttack;
+        
+        if (TryGetComponent<IHealthHandler>(out var health))
+        {
+            health.OnDying -= HandleDying;
+        }
     }
 
     protected override void Run()
@@ -61,7 +71,6 @@ public class RunnerAiController : MonoCache, IAiController
             _rangeChargingTimer -= Time.deltaTime;
             if (!_lookedOnTarget && _rangeChargingTimer <= timeBeforeShootToRotateHead)
             {
-                Debug.Log("looking");
                 rotationTarget.transform.DOLookAt(_target.position, 0.1f);
                 _lookedOnTarget = true;
             }
@@ -86,7 +95,6 @@ public class RunnerAiController : MonoCache, IAiController
     
     private void HandleStartChargingRangeAttack()
     {
-        Debug.Log("charging");
         _movementController.Stop();
         _movementController.SetRotationToVelocityVector(false);
         _attacking = true;
@@ -102,6 +110,11 @@ public class RunnerAiController : MonoCache, IAiController
         rotationTarget.transform.DORotate(transform.forward, 0.1f);
         _attacking = false;
         _lookedOnTarget = false;
+    }
+
+    private void HandleDying()
+    {
+        _attacking = true;
     }
 
     public bool CanAttack()

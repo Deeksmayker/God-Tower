@@ -79,7 +79,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             }
             
             OnEmpty?.Invoke();
-            Destroy(gameObject);
+            RemoveAbility();
         }
     }
     
@@ -126,7 +126,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             }
             
             OnEmpty?.Invoke();
-            Destroy(gameObject);
+            RemoveAbility();
         }
         
     }
@@ -156,6 +156,11 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         }
         
         _input = value;
+    }
+
+    public void RemoveAbility()
+    {
+        Destroy(gameObject);
     }
 
     public void SetRotationTarget(Transform rotationTarget)

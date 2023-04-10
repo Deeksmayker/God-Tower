@@ -15,6 +15,7 @@ public interface IActiveAbility
     public void SetInput(bool value);
     public void SetRotationTarget(Transform rotationTarget);
     public void SetShootPoint(Transform shootPoint);
+    public void RemoveAbility();
     public float GetRemainingLifetime();
     public float GetMaxLifetime();
     public Vector3 GetPerformDirection();

@@ -31,12 +31,20 @@ public class AbilitiesHandler : MonoCache
     
     public void SetNewRightAbility(GameObject newAbilityPrefab)
     {
+        if (_rightAbility != null)
+        {
+            _rightAbility.RemoveAbility();
+        }
         SetNewAbility(out _rightAbility, newAbilityPrefab, rightHandShootPoint);
         OnNewRightAbility?.Invoke();
     }
 
     public void SetNewLeftAbility(GameObject newAbilityPrefab)
     {
+        if (_leftAbility != null)
+        {
+            _leftAbility.RemoveAbility();
+        }
         SetNewAbility(out _leftAbility, newAbilityPrefab, leftHandShootPoint);
         OnNewLeftAbility?.Invoke();
     }
@@ -53,7 +61,7 @@ public class AbilitiesHandler : MonoCache
 
     public void SetRightStealInput(bool input)
     {
-        if (!input || _rightAbility != null)
+        if (!input)
             return;
 
         var robbedAbility = CheckForStealAbility();
@@ -65,7 +73,7 @@ public class AbilitiesHandler : MonoCache
 
     public void SetLeftStealInput(bool input)
     {
-        if (!input || _leftAbility != null)
+        if (!input)
             return;
 
         var robbedAbility = CheckForStealAbility();
@@ -93,7 +101,7 @@ public class AbilitiesHandler : MonoCache
     {
         if (newAbilityPrefab.GetComponent<IActiveAbility>() == null)
             Debug.LogError("No ability on \"ability\" prefab");
-        
+
         var ability = Instantiate(newAbilityPrefab, transform);
         abilitySide = ability.GetComponent<IActiveAbility>();
         abilitySide.SetRotationTarget(camRotationTarget);
