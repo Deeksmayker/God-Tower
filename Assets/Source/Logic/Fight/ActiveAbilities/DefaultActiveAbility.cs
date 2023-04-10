@@ -34,6 +34,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     public event Action OnStartHolding;
     public event Action OnDumpLoaded;
     public event Action OnEmpty;
+    public event Action OnDump;
 
     private void Awake()
     {
@@ -110,8 +111,12 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         _dumpingTimer -= Time.deltaTime;
         if (_dumpingTimer > 0)
             return;
-            
-        PerformAbility();
+
+        if (OnDump != null)
+            OnDump.Invoke();
+        else
+            PerformAbility();
+
         _dumpingTimer = dumpingShootsDelay;
         _remainingChargesToShootOnDump--;
 
@@ -128,7 +133,6 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             OnEmpty?.Invoke();
             RemoveAbility();
         }
-        
     }
 
     public void PerformWithDelay(float delay)
@@ -182,8 +186,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     {
         return abilityLifetime;
     }
-
-
+    
     public Vector3 GetPerformDirection()
     {
         return directionTarget.forward;
