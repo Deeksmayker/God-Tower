@@ -23,9 +23,9 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
         
     }
 
-    public override void PerformAbility()
+    public override void PerformAbility(bool isDumping = false)
     {
-        base.PerformAbility();
+        base.PerformAbility(isDumping);
 
         var startPoint = directionTarget.position;
 

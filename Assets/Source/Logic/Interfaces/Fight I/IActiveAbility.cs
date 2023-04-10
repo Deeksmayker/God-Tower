@@ -9,7 +9,7 @@ public interface IActiveAbility
     public event Action OnEmpty;
     
     public void ChargeAbility();
-    public void PerformAbility();
+    public void PerformAbility(bool isDumping = false);
     public void DumpAbility();
     public void PerformWithDelay(float delay);
     public void SetInput(bool value);

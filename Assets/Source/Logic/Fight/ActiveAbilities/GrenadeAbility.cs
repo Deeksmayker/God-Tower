@@ -9,48 +9,29 @@ using Random = UnityEngine.Random;
 
 public class GrenadeAbility : DefaultActiveAbility
 {
+    [FormerlySerializedAs("GrenadePrefab")]
     [Header("Grenade Settings")]
-    [SerializeField] private Grenade GrenadePrefab;
+    [SerializeField] private BaseExplosiveObject baseExplosiveObjectPrefab;
 
     [SerializeField] private float throwPower = 10;
     [SerializeField] private float maxSpread = 30;
     [SerializeField] private int dumpedGrenadeCount = 3;
 
-    protected override void OnEnabled()
+    public override void PerformAbility(bool isDumping = false)
     {
-        OnDump += OnDumpGrenadeAbility;
-    }
-    
-    protected override void OnDisabled()
-    {
-        OnDump -= OnDumpGrenadeAbility;
-    }
+        base.PerformAbility(isDumping);
+        
+        var grenade = Instantiate(baseExplosiveObjectPrefab, GetStartPoint(), directionTarget.rotation);
 
-    public override void PerformAbility()
-    {
-        base.PerformAbility();
-        ThrowGrenades(1);
-    }
-
-    private void OnDumpGrenadeAbility()
-    {
-        ThrowGrenades(dumpedGrenadeCount);
-    }
-    
-    /// <summary>
-    /// Спавнит и придает ускорение гранатам, в количестве <paramref name="countSpawnedGrenade"/>.
-    /// Если гранат больше одной, то придает каждой рандомный разброс.
-    /// </summary>
-    /// <param name="countSpawnedGrenade"> Количество выпускаемых гранат. </param>
-    private void ThrowGrenades(int countSpawnedGrenade)
-    {
-        for (var i = 0; i < countSpawnedGrenade; i++)
+        if (isDumping)
         {
-            var spawnedGrenade = Instantiate(GrenadePrefab, GetStartPoint(), directionTarget.rotation);
-            
-            spawnedGrenade.transform.Rotate(new Vector3(0,
-                countSpawnedGrenade == 1 ? 0 : Random.Range(-maxSpread, maxSpread), 0));
-            spawnedGrenade.GetComponent<Rigidbody>().velocity = spawnedGrenade.transform.forward * throwPower;
+            var randomNumberX = Random.Range(-maxSpread, maxSpread);
+            var randomNumberY = Random.Range(-maxSpread, maxSpread);
+            var randomNumberZ = Random.Range(-maxSpread, maxSpread);
+
+            grenade.transform.Rotate(randomNumberX, randomNumberY, randomNumberZ);
         }
+
+        grenade.Get<Rigidbody>().velocity = grenade.transform.forward * throwPower;
     }
 }

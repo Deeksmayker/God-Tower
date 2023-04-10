@@ -2,6 +2,6 @@
 
 public interface IMakeExplosion
 {
-    public event Action OnBigExplosion;
-    public event Action OnExplosion;
+    public event Action<float> OnBigExplosionWithRadius;
+    public event Action<float> OnExplosionWithRadius;
 }

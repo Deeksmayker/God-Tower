@@ -55,4 +55,6 @@ MonoBehaviour:
   cooldown: 0.2
   GrenadePrefab: {fileID: 8929701607955828243, guid: 1445668ccc606d84791d29220de31030,
     type: 3}
-  throwPower: 1
+  throwPower: 20
+  maxSpread: 30
+  dumpedGrenadeCount: 3

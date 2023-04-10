@@ -100,7 +100,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         }
     }
 
-    public virtual void PerformAbility()
+    public virtual void PerformAbility(bool isDumping = false)
     {
         _chargingTimer = 0;
         OnPerform?.Invoke();
@@ -115,7 +115,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         if (OnDump != null)
             OnDump.Invoke();
         else
-            PerformAbility();
+            PerformAbility(true);
 
         _dumpingTimer = dumpingShootsDelay;
         _remainingChargesToShootOnDump--;
@@ -125,6 +125,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             if (infinite)
             {
                 _remainingChargesToShootOnDump = dumpShootChargesCount;
+                _chargingTimer = 0;
                 _dumping = false;
                 _dumpLoaded = false;
                 return;
@@ -140,8 +141,14 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         if (_cooldownTimer > 0)
             return;
         OnStartHolding?.Invoke();
-        Invoke(nameof(PerformAbility), delay);
+        Invoke(nameof(PerformAbilityWithoutSpread), delay);
         _cooldownTimer = cooldown;
+    }
+    
+    //Костыль нужен потому что нельзя вызвать Invoke если метод принимает параметры, даже если параметр не нужен
+    private void PerformAbilityWithoutSpread()
+    {
+        PerformAbility();
     }
 
     public void SetInput(bool value)

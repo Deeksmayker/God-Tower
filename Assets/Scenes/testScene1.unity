@@ -3884,7 +3884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1777756112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6180,6 +6180,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3998808298923127471}
     m_Modifications:
+    - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
+        type: 3}
+      propertyPath: infinite
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
+        type: 3}
+      propertyPath: throwPower
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
         type: 3}
       propertyPath: directionTarget
