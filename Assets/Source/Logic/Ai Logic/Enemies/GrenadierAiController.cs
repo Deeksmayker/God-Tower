@@ -2,6 +2,7 @@
 using DG.Tweening;
 using NTC.Global.Cache;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrenadierAiController : MonoCache, IAiController
 {
@@ -51,7 +52,30 @@ public class GrenadierAiController : MonoCache, IAiController
 
     private void HandleStartChargingGrenadeAttack()
     {
-        rotationTarget.DOLookAt(_target.position, timeBeforeShootToRotateHead);
+        var pos = rotationTarget.position;
+        var targetPos = _target.position;
+        var distanceToTarget = Vector3.Distance(pos, targetPos);
+        var launchAngle = CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
+            Physics.gravity.y);
+        var launchDirection = Quaternion.Euler(launchAngle, 0, 0f) * Vector3.forward; // Step 3
+        //Vector3 rotatedDirection = rotationTarget.transform.TransformDirection(launchDirection); // Step 4
+        Quaternion targetRotation = Quaternion.LookRotation(targetPos);
+        targetRotation.eulerAngles =
+            new Vector3(launchAngle, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
+       
+        rotationTarget.LookAt(targetPos);
+        rotationTarget.eulerAngles = new Vector3(launchAngle, rotationTarget.rotation.eulerAngles.y, 0);
+        //Debug.Log(rotatedDirection);
+        //rotationTarget.rotation = targetRotation;
+        //rotationTarget.rotation 
+    }
+    
+    float CalculateLaunchAngle(float distanceToTarget, float projectileVelocity, float heightDifference, float gravity)
+    {
+        float angleRad = Mathf.Atan((Mathf.Pow(projectileVelocity, 2f) - Mathf.Sqrt(Mathf.Pow(projectileVelocity, 4f) -
+            gravity * (gravity * Mathf.Pow(distanceToTarget, 2f) +
+                       2f * heightDifference * Mathf.Pow(projectileVelocity, 2f)))) / (gravity * distanceToTarget));
+        return angleRad * Mathf.Rad2Deg; // Convert to degrees before returning
     }
 
     private void HandlePerformingGrenadeAttack()
@@ -66,7 +90,7 @@ public class GrenadierAiController : MonoCache, IAiController
 
     public bool CanAttack()
     {
-        return !Physics.Raycast(transform.position, _target.position - _position,
-            Vector3.Distance(_position, _target.position), environmentLayers);
+        return !Physics.Raycast(rotationTarget.position, _target.position - rotationTarget.position,
+            Vector3.Distance(rotationTarget.position, _target.position), environmentLayers);
     }
 }

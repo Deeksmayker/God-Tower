@@ -34,4 +34,6 @@ public class GrenadeAbility : DefaultActiveAbility
 
         grenade.Get<Rigidbody>().velocity = grenade.transform.forward * throwPower;
     }
+
+    public float GetThrowPower() => throwPower;
 }

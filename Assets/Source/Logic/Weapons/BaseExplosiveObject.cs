@@ -15,6 +15,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     [SerializeField] private float explosionForce;
     [SerializeField] private float bigExplosionRadiusMultiplier = 2;
     [SerializeField, Min(0.0001f)] private float explosionDuration;
+    [SerializeField] private float collisionImmuneDuration = 0.1f;
 
     private float _timer;
 
@@ -55,6 +56,8 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
                 Destroy(gameObject);
             }
         }
+
+        collisionImmuneDuration -= Time.deltaTime;
     }
 
     public void HandleTakeHit(float dmg)
@@ -68,7 +71,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     
     private void OnCollisionEnter(Collision col)
     {
-        if (!explodeOnCollision)
+        if (!explodeOnCollision || collisionImmuneDuration > 0)
             return;
 
         OnExplosionWithRadius?.Invoke(ExplodeRadius);
@@ -77,7 +80,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!explodeOnTrigger)
+        if (!explodeOnTrigger || collisionImmuneDuration > 0)
             return;
 
         OnExplosionWithRadius?.Invoke(ExplodeRadius);

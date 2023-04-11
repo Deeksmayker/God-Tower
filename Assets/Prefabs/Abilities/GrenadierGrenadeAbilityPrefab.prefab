@@ -53,6 +53,8 @@ MonoBehaviour:
   dumpingShootsDelay: 0
   abilityLifetime: 10
   cooldown: 3
-  GrenadePrefab: {fileID: 8929701607955828243, guid: 1445668ccc606d84791d29220de31030,
+  baseExplosiveObjectPrefab: {fileID: 8929701607955828243, guid: 1445668ccc606d84791d29220de31030,
     type: 3}
-  throwPower: 1
+  throwPower: 40
+  maxSpread: 30
+  dumpedGrenadeCount: 3
