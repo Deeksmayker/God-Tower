@@ -57,22 +57,20 @@ public class GrenadierAiController : MonoCache, IAiController
         var targetPos = _target.position;
         var distanceToTarget = Vector3.Distance(pos, targetPos);
 
-        var launchAngle = CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
+        var launchAngle = MathUtils.CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
             Physics.gravity.y);
 
         var mover = _target.GetComponentInParent<IMover>();
         if (mover != null)
         {
-            Debug.Log("mover");
+            
             var moverVelocity = mover.GetVelocity();
             moverVelocity.y = 0;
-            targetPos += moverVelocity * CalculateTimeOfFlight(distanceToTarget, launchAngle * Mathf.Deg2Rad,
+            targetPos += moverVelocity * MathUtils.CalculateFlightTime(pos, targetPos, launchAngle * Mathf.Deg2Rad,
                 _grenadeAbility.GetThrowPower(), Physics.gravity.y);
-            Debug.Log(mover.GetVelocity());
-            Debug.Log(targetPos);
-            
+
             distanceToTarget = Vector3.Distance(pos, targetPos);
-            launchAngle = CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
+            launchAngle = MathUtils.CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
                 Physics.gravity.y);
         }
         
@@ -89,25 +87,6 @@ public class GrenadierAiController : MonoCache, IAiController
         //Debug.Log(rotatedDirection);
         //rotationTarget.rotation = targetRotation;
         //rotationTarget.rotation 
-    }
-    
-    float CalculateLaunchAngle(float distanceToTarget, float projectileVelocity, float heightDifference, float gravity)
-    {
-        float angleRad = Mathf.Atan((Mathf.Pow(projectileVelocity, 2f) - Mathf.Sqrt(Mathf.Pow(projectileVelocity, 4f) -
-            gravity * (gravity * Mathf.Pow(distanceToTarget, 2f) +
-                       2f * heightDifference * Mathf.Pow(projectileVelocity, 2f)))) / (gravity * distanceToTarget));
-        return angleRad * Mathf.Rad2Deg; // Convert to degrees before returning
-    }
-    
-    float CalculateTimeOfFlight(float distanceToTarget, float launchAngleRad, float projectileVelocity, float gravity)
-    {
-        gravity = Mathf.Abs(gravity);
-        float height = Mathf.Abs(_target.position.y - rotationTarget.position.y);
-        
-        float time = (distanceToTarget / (projectileVelocity * Mathf.Cos(launchAngleRad))) +
-                     Mathf.Sqrt(2f * height / gravity) - 1;
-
-        return Mathf.Max(time, 0.1f);
     }
 
     private void HandlePerformingGrenadeAttack()

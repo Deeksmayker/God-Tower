@@ -13,9 +13,9 @@ public class GrenadeAbility : DefaultActiveAbility
     [Header("Grenade Settings")]
     [SerializeField] private BaseExplosiveObject baseExplosiveObjectPrefab;
 
-    [SerializeField] private float throwPower = 10;
+    [SerializeField] private float throwPower = 30;
+    [SerializeField] private float rotationSpeed = 10;
     [SerializeField] private float maxSpread = 30;
-    [SerializeField] private int dumpedGrenadeCount = 3;
 
     public override void PerformAbility(bool isDumping = false)
     {
@@ -33,6 +33,7 @@ public class GrenadeAbility : DefaultActiveAbility
         }
 
         grenade.Get<Rigidbody>().velocity = grenade.transform.forward * throwPower;
+        grenade.Get<Rigidbody>().AddTorque(RandomUtils.GetRandomNormalizedVector() * rotationSpeed);
     }
 
     public float GetThrowPower() => throwPower;
