@@ -45,8 +45,10 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         _hitTakerComponent.OnTakeHit -= HandleTakeHit;
     }
 
+    //private float _lifetime = 0;
     protected override void Run()
     {
+        //_lifetime += Time.deltaTime;
         if (_timer > 0)
         {
             _timer -= Time.deltaTime;
@@ -73,7 +75,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     {
         if (!explodeOnCollision || collisionImmuneDuration > 0)
             return;
-
+        
         OnExplosionWithRadius?.Invoke(ExplodeRadius);
         Explode(ExplodeRadius);
     }
@@ -89,6 +91,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
 
     private void Explode(float radius)
     {
+        //Debug.Log("lifetime - " + _lifetime);
         _timer = explosionDuration;
         GetComponentInChildren<MeshRenderer>().enabled = false;
     }
