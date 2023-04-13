@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using NTC.Global.Cache;
 using Unity.VisualScripting;
@@ -12,11 +13,14 @@ public class GrenadierAiController : MonoCache, IAiController
     [SerializeField] private LayerMask layersToAttack;
     [SerializeField] private LayerMask environmentLayers;
     [SerializeField] private Transform rotationTarget;
+
+    [SerializeField] private float jumpForce = 50;
     
     [Header("Timers")]
     [SerializeField] private float timeBeforeShootToRotateHead = 0.3f;
     [SerializeField] private float timeChangeLocation = 5;
     [SerializeField] private float cantAttackTimeToChangeLocation = 1;
+    [SerializeField] private float prepareJumpTime = 1;
 
     [Inject] private List<GrenadierJumpPoint> _jumpPoints;
 
@@ -30,16 +34,24 @@ public class GrenadierAiController : MonoCache, IAiController
     private Transform _target;
     
     private Vector3 _position;
-    
+    private Vector3 _rotationTargetPosition;
+
+    private IMover _mover;
+    private GravityMaker _gravityMaker;
     private IAiMovementController _movementController;
     private IAiRangeAttackController _rangeAttackController;
     private GrenadeAbility _grenadeAbility;
+
+    public event Action OnStartPreparingJump;
+    public event Action OnJump;
 
     private void Awake()
     {
         _movementController = Get<IAiMovementController>();
         _rangeAttackController = Get<IAiRangeAttackController>();
         _grenadeAbility = GetComponentInChildren<GrenadeAbility>();
+        _mover = Get<IMover>();
+        _gravityMaker = Get<GravityMaker>();
         
         _target = Physics.OverlapSphere(transform.position, 1000, layersToAttack)[0].transform;
     }
@@ -68,6 +80,9 @@ public class GrenadierAiController : MonoCache, IAiController
 
     protected override void Run()
     {
+        _position = transform.position;
+        _rotationTargetPosition = rotationTarget.position;
+        
         if (_jumping)
         {
             _timeOnLocation = 0;
@@ -81,21 +96,62 @@ public class GrenadierAiController : MonoCache, IAiController
         {
             _cantAttackTime += Time.deltaTime;
         }
+
+        if (_timeOnLocation > timeChangeLocation || _cantAttackTime > cantAttackTimeToChangeLocation)
+        {
+            TryFindPositionToJump();
+        }
     }
 
-    private void JumpOnOtherPosition(Vector3 positionToJump)
+    private async UniTask JumpOnOtherPosition(Vector3 positionToJump)
     {
         _jumping = true;
+        OnStartPreparingJump?.Invoke();
+        transform.DOLookAt(positionToJump, prepareJumpTime / 2);
+        await UniTask.Delay(TimeSpan.FromSeconds(prepareJumpTime));
+        var jumpAngle = Mathf.Abs(MathUtils.CalculateHighLaunchAngle(Vector3.Distance(_position, positionToJump), jumpForce,
+            _position.y - positionToJump.y, _gravityMaker.FallingGravity));
+        
+        var directionToTarget = Vector3.Normalize(positionToJump - _position);
+        directionToTarget.y = 0;
+
+        var axis = Vector3.Cross(directionToTarget, Vector3.up);
+        var rotation = Quaternion.AngleAxis(jumpAngle, axis);
+
+        var jumpDirection = rotation * directionToTarget;
+        _mover.SetVelocity(jumpDirection * jumpForce);
+        CheckForGrounded();
+    }
+
+    private async UniTask CheckForGrounded()
+    {
+        await UniTask.Delay(200);
+
+        while (!_mover.IsGrounded())
+        {
+            await UniTask.Delay(100);
+        }
+
+        _jumping = false;
     }
 
     private void TryFindPositionToJump()
     {
         for (var i = 0; i < _jumpPoints.Count; i++)
         {
-            if (CanAttackAtThatPosition(_jumpPoints[i].transform.position) && _currentPoint != null &&
+            var canAttack = CanAttackAtThatPosition(_jumpPoints[i].transform.position);
+            if (canAttack && _currentPoint == null || canAttack && _currentPoint != null &&
                 !_jumpPoints[i].Equals(_currentPoint))
             {
-                JumpOnOtherPosition(_jumpPoints[i].transform.position);
+                if (Physics.Raycast(_jumpPoints[i].transform.position, Vector3.down, out var hit, 10,
+                        environmentLayers))
+                {
+                    _currentPoint = _jumpPoints[i];
+                    JumpOnOtherPosition(hit.point);
+                    return;
+                }
+                
+                
             }
         }
     }
@@ -106,7 +162,7 @@ public class GrenadierAiController : MonoCache, IAiController
         var targetPos = _target.position;
         var distanceToTarget = Vector3.Distance(pos, targetPos);
 
-        var launchAngle = MathUtils.CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
+        var launchAngle = MathUtils.CalculateLowLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
             Physics.gravity.y);
 
         var mover = _target.GetComponentInParent<IMover>();
@@ -119,7 +175,7 @@ public class GrenadierAiController : MonoCache, IAiController
                 _grenadeAbility.GetThrowPower(), Physics.gravity.y);
 
             distanceToTarget = Vector3.Distance(pos, targetPos);
-            launchAngle = MathUtils.CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
+            launchAngle = MathUtils.CalculateLowLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
                 Physics.gravity.y);
         }
 

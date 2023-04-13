@@ -1453,7 +1453,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31800
+  m_Name: pb_Mesh32104
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2357,7 +2357,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31996
+  m_Name: pb_Mesh32322
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2529,7 +2529,7 @@ GameObject:
   m_Layer: 0
   m_Name: GrenadierJumpPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2553,7 +2553,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677657893}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.38373, y: -6.2754884, z: 17.597378}
+  m_LocalPosition: {x: -0.11, y: 0.77, z: 7.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2638,59 +2638,13 @@ MonoBehaviour:
   grenadierJumpPoints:
   - {fileID: 677657894}
   - {fileID: 1017591881}
-  - {fileID: 1352723426}
-  - {fileID: 936710580}
---- !u!1 &936710579
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 936710581}
-  - component: {fileID: 936710580}
-  m_Layer: 0
-  m_Name: GrenadierJumpPoint (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &936710580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936710579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1dc6c4fb0454aa89bf80d5e0c499879, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &936710581
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936710579}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.38373, y: -6.2754884, z: 17.597378}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1338456912}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &998824665
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31842
+  m_Name: pb_Mesh32146
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2862,7 +2816,7 @@ GameObject:
   m_Layer: 0
   m_Name: GrenadierJumpPoint (1)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2886,7 +2840,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017591880}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.38373, y: -6.2754884, z: 17.597378}
+  m_LocalPosition: {x: 3.98, y: -3.7, z: -12.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2982,7 +2936,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31958
+  m_Name: pb_Mesh32282
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3491,54 +3445,8 @@ Transform:
   m_Children:
   - {fileID: 677657895}
   - {fileID: 1017591882}
-  - {fileID: 1352723427}
-  - {fileID: 936710581}
   m_Father: {fileID: 0}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1352723425
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1352723427}
-  - component: {fileID: 1352723426}
-  m_Layer: 0
-  m_Name: GrenadierJumpPoint (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1352723426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1352723425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1dc6c4fb0454aa89bf80d5e0c499879, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1352723427
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1352723425}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.38373, y: -6.2754884, z: 17.597378}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1338456912}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1460831543
 Mesh:
@@ -3546,7 +3454,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31814
+  m_Name: pb_Mesh32118
   serializedVersion: 11
   m_SubMeshes: []
   m_Shapes:
@@ -4335,12 +4243,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1777756117}
-  - component: {fileID: 1777756116}
-  - component: {fileID: 1777756115}
-  - component: {fileID: 1777756114}
   - component: {fileID: 1777756113}
   - component: {fileID: 1777756112}
-  m_Layer: 0
+  - component: {fileID: 1777756120}
+  - component: {fileID: 1777756119}
+  - component: {fileID: 1777756121}
+  m_Layer: 8
   m_Name: GrenadierEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4384,67 +4292,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   rotationTarget: {fileID: 1526667381}
+  jumpForce: 30
   timeBeforeShootToRotateHead: 0.1
-  timeChangeLocation: 5
-  cantAttackTimeToChangeLocation: 0
---- !u!114 &1777756114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777756111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0207e8ab29a14290b40d85b25b2a4044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RiseGravity: -50
-  FallingGravity: -30
-  changingGravityVelocity: 10
---- !u!114 &1777756115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777756111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533a66039625e7144b84d2ed4efd2205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundCheckPoint: {fileID: 725811460}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  groundCheckRadius: 0.5
-  alignMovementWithRotation: 1
-  targetHorizontalSpeed: 15
-  groundHorizontalAcceleration: 75
-  airHorizontalAcceleration: 25
---- !u!195 &1777756116
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777756111}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 1.34
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  timeChangeLocation: 7
+  cantAttackTimeToChangeLocation: 1
+  prepareJumpTime: 1
 --- !u!4 &1777756117
 Transform:
   m_ObjectHideFlags: 0
@@ -4463,6 +4315,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1777756119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777756111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0207e8ab29a14290b40d85b25b2a4044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RiseGravity: -50
+  FallingGravity: -30
+  changingGravityVelocity: 300000
+--- !u!114 &1777756120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777756111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533a66039625e7144b84d2ed4efd2205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckPoint: {fileID: 1777756117}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  groundCheckRadius: 0.5
+  alignMovementWithRotation: 0
+  targetHorizontalSpeed: 15
+  groundHorizontalAcceleration: 75
+  airHorizontalAcceleration: 0
+--- !u!143 &1777756121
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777756111}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.88, z: 0}
 --- !u!1 &1778457550
 GameObject:
   m_ObjectHideFlags: 0
@@ -6366,7 +6280,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31930
+  m_Name: pb_Mesh32256
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
