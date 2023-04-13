@@ -1,16 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using NTC.Global.Cache;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class GrenadierAiController : MonoCache, IAiController
 {
     [SerializeField] private LayerMask layersToAttack;
     [SerializeField] private LayerMask environmentLayers;
     [SerializeField] private Transform rotationTarget;
+    
+    [Header("Timers")]
     [SerializeField] private float timeBeforeShootToRotateHead = 0.3f;
+    [SerializeField] private float timeChangeLocation = 5;
+    [SerializeField] private float cantAttackTimeToChangeLocation = 1;
+
+    [Inject] private List<GrenadierJumpPoint> _jumpPoints;
+
+    private GrenadierJumpPoint _currentPoint;
+    
+    private float _timeOnLocation;
+    private float _cantAttackTime;
+    
+    private bool _jumping;
     
     private Transform _target;
     
@@ -51,6 +66,40 @@ public class GrenadierAiController : MonoCache, IAiController
         }
     }
 
+    protected override void Run()
+    {
+        if (_jumping)
+        {
+            _timeOnLocation = 0;
+            _cantAttackTime = 0;
+            return;
+        }
+
+        _timeOnLocation += Time.deltaTime;
+
+        if (!CanAttack())
+        {
+            _cantAttackTime += Time.deltaTime;
+        }
+    }
+
+    private void JumpOnOtherPosition(Vector3 positionToJump)
+    {
+        _jumping = true;
+    }
+
+    private void TryFindPositionToJump()
+    {
+        for (var i = 0; i < _jumpPoints.Count; i++)
+        {
+            if (CanAttackAtThatPosition(_jumpPoints[i].transform.position) && _currentPoint != null &&
+                !_jumpPoints[i].Equals(_currentPoint))
+            {
+                JumpOnOtherPosition(_jumpPoints[i].transform.position);
+            }
+        }
+    }
+
     private void HandleStartChargingGrenadeAttack()
     {
         var pos = rotationTarget.position;
@@ -73,20 +122,9 @@ public class GrenadierAiController : MonoCache, IAiController
             launchAngle = MathUtils.CalculateLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
                 Physics.gravity.y);
         }
-        
-        
-        //var fl
-        //var launchDirection = Quaternion.Euler(launchAngle, 0, 0f) * Vector3.forward; // Step 3
-        //Vector3 rotatedDirection = rotationTarget.transform.TransformDirection(launchDirection); // Step 4
-        //Quaternion targetRotation = Quaternion.LookRotation(targetPos);
-        //targetRotation.eulerAngles =
-            //new Vector3(launchAngle, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
-       //Debug.Log(CalculateTimeOfFlight(distanceToTarget, launchAngle * Mathf.Deg2Rad, _grenadeAbility.GetThrowPower(), Physics.gravity.y));
+
         rotationTarget.LookAt(targetPos);
         rotationTarget.eulerAngles = new Vector3(launchAngle, rotationTarget.rotation.eulerAngles.y, 0);
-        //Debug.Log(rotatedDirection);
-        //rotationTarget.rotation = targetRotation;
-        //rotationTarget.rotation 
     }
 
     private void HandlePerformingGrenadeAttack()
@@ -103,5 +141,11 @@ public class GrenadierAiController : MonoCache, IAiController
     {
         return !Physics.Raycast(rotationTarget.position, _target.position - rotationTarget.position,
             Vector3.Distance(rotationTarget.position, _target.position), environmentLayers);
+    }
+
+    private bool CanAttackAtThatPosition(Vector3 position)
+    {
+        return !Physics.Raycast(position, _target.position - position,
+            Vector3.Distance(position, _target.position), environmentLayers);
     }
 }

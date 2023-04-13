@@ -25,7 +25,7 @@ public class GrenadeAbility : DefaultActiveAbility
 
         if (isDumping)
         {
-            var randomNumberX = Random.Range(-maxSpread, maxSpread);
+            var randomNumberX = Random.Range(-maxSpread/2, maxSpread/2);
             var randomNumberY = Random.Range(-maxSpread, maxSpread);
             var randomNumberZ = Random.Range(-maxSpread, maxSpread);
 
