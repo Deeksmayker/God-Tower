@@ -1,14 +1,15 @@
 ﻿using System;
-using Cinemachine.Utility;
 using NTC.Global.Pool;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class GrenadeAbility : DefaultActiveAbility
 {
+    [SerializeField] private VisualEffect onShootEffect;
     [FormerlySerializedAs("GrenadePrefab")]
     [Header("Grenade Settings")]
     [SerializeField] private BaseExplosiveObject baseExplosiveObjectPrefab;
@@ -20,6 +21,11 @@ public class GrenadeAbility : DefaultActiveAbility
     public override void PerformAbility(bool isDumping = false)
     {
         base.PerformAbility(isDumping);
+        
+        if (onShootEffect != null)
+        {
+            NightPool.Spawn(onShootEffect, GetStartPoint(), directionTarget.rotation);
+        }
         
         var grenade = Instantiate(baseExplosiveObjectPrefab, GetStartPoint(), directionTarget.rotation);
 

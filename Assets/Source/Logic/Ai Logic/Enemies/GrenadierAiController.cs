@@ -108,7 +108,9 @@ public class GrenadierAiController : MonoCache, IAiController
         _jumping = true;
         OnStartPreparingJump?.Invoke();
         transform.DOLookAt(positionToJump, prepareJumpTime / 2);
+        
         await UniTask.Delay(TimeSpan.FromSeconds(prepareJumpTime));
+        
         var jumpAngle = Mathf.Abs(MathUtils.CalculateHighLaunchAngle(Vector3.Distance(_position, positionToJump), jumpForce,
             _position.y - positionToJump.y, _gravityMaker.FallingGravity));
         
