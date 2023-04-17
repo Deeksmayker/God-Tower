@@ -10,6 +10,8 @@ public class HitReactionsVisual : MonoCache
 {
     [SerializeField] private float colorChangeDuration;
     [SerializeField] private VisualEffect hitVisualEffect;
+    [SerializeField] private VisualEffect dieVisualEffect;
+    
     [SerializeField] private VisualEffect auraEffect;
     [SerializeField] private float hitChangeColorTime = 0.4f;
 
@@ -48,7 +50,8 @@ public class HitReactionsVisual : MonoCache
     protected override void OnEnabled()
     {
         _healthHandler.OnDying += HandleDying;
-        
+        _healthHandler.OnDied += HandleDie;
+
         for (var i = 0; i < _hitTakers.Length; i++)
         {
             _hitTakers[i].OnTakeHitWithPosition += HandleHitBuffer;
@@ -57,7 +60,8 @@ public class HitReactionsVisual : MonoCache
 
     protected override void OnDisabled()
     {
-        _healthHandler.OnDying += HandleDying;
+        _healthHandler.OnDying -= HandleDying;
+        _healthHandler.OnDied -= HandleDie;
 
         for (var i = 0; i < _hitTakers.Length; i++)
         {
@@ -78,6 +82,11 @@ public class HitReactionsVisual : MonoCache
             _propertyBlock.SetColor("_EmissionColor", Color.white * 3);
             _meshRenderers[i].SetPropertyBlock(_propertyBlock);
         }
+    }
+
+    private void HandleDie()
+    {
+        NightPool.Spawn(dieVisualEffect, transform.position, Quaternion.identity);
     }
 
     private void HandleHitBuffer(Vector3 pos)
