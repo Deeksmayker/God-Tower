@@ -5455,6 +5455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3998808300210840913}
   - component: {fileID: 3998808300210842282}
+  - component: {fileID: 2140864504}
   - component: {fileID: 3998808300210842285}
   - component: {fileID: 3998808300210842280}
   - component: {fileID: 3998808298923127472}
@@ -5489,7 +5490,6 @@ Transform:
   - {fileID: 1249313430}
   - {fileID: 421572061}
   - {fileID: 394014187}
-  - {fileID: 1991731610082821784}
   - {fileID: 3998808298746309513}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -5520,6 +5520,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2140864504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef9e94975b748e5a654afd5135d2425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserAbilityPrefab: {fileID: 3216269069128228425, guid: c7af7e11377f74d4e86dc715793dfc00,
+    type: 3}
+  grenadeAbilityPrefab: {fileID: 3232058061232070227, guid: 06f3cea25764ba048a1c32d55a377e3a,
+    type: 3}
+  leftAbility: 1
+  rightAbility: 2
+  infiniteAbilities: 1
 --- !u!114 &3998808300210842285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5767,111 +5786,6 @@ Transform:
   m_Father: {fileID: 3998808298643400548}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &3998808300627663049
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3998808300210840913}
-    m_Modifications:
-    - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: infinite
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: throwPower
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: onShootEffect
-      value: 
-      objectReference: {fileID: 2734764703766690187, guid: 05b7690c940e7dd408bbb6c2d98c904e,
-        type: 3}
-    - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: directionTarget
-      value: 
-      objectReference: {fileID: 3998808300644396507}
-    - target: {fileID: 3232058061232070224, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: shootStartPoint
-      value: 
-      objectReference: {fileID: 35392919}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.7415864
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.8015552
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -7.495239
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232058061232070227, guid: 06f3cea25764ba048a1c32d55a377e3a,
-        type: 3}
-      propertyPath: m_Name
-      value: GrenadeAbilityPrefab
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 06f3cea25764ba048a1c32d55a377e3a, type: 3}
---- !u!4 &1991731610082821784 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3232058061232070225, guid: 06f3cea25764ba048a1c32d55a377e3a,
-    type: 3}
-  m_PrefabInstance: {fileID: 3998808300627663049}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7021654372592599677
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3232058061232070225}
   - component: {fileID: 3232058061232070224}
+  - component: {fileID: 4848148135290412825}
   m_Layer: 0
   m_Name: GrenadeAbilityPrefab
   m_TagString: Untagged
@@ -56,5 +57,20 @@ MonoBehaviour:
   baseExplosiveObjectPrefab: {fileID: 8929701607955828243, guid: 1445668ccc606d84791d29220de31030,
     type: 3}
   throwPower: 20
+  rotationSpeed: 10
   maxSpread: 20
-  dumpedGrenadeCount: 3
+--- !u!114 &4848148135290412825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3232058061232070227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e53881d58d4679ba7aac53a2c7c2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectOnShoot: {fileID: 2734764703766690187, guid: 05b7690c940e7dd408bbb6c2d98c904e,
+    type: 3}
+  inheritSpeed: 0

@@ -169,6 +169,11 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         _input = value;
     }
 
+    public void SetInfinity(bool value)
+    {
+        infinite = value;
+    }
+
     public void RemoveAbility()
     {
         Destroy(gameObject);
@@ -202,5 +207,10 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     public Vector3 GetStartPoint()
     {
         return shootStartPoint.position;
+    }
+
+    public Transform GetRotationTargetTransform()
+    {
+        return directionTarget;
     }
 }

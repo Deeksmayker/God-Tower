@@ -17,11 +17,6 @@ public class AbilitiesHandler : MonoCache
     public Action OnNewAbility;
     public Action OnNewRightAbility;
     public Action OnNewLeftAbility;
-    
-    private void Start()
-    {
-        CheckForAbilitiesOnStart();
-    }
 
     protected override void OnEnabled()
     {
@@ -29,23 +24,23 @@ public class AbilitiesHandler : MonoCache
         OnNewLeftAbility += HandleNewLeftAbility;
     }
     
-    public void SetNewRightAbility(GameObject newAbilityPrefab)
+    public void SetNewRightAbility(GameObject newAbilityPrefab, bool isInfinite = false)
     {
         if (_rightAbility != null)
         {
             _rightAbility.RemoveAbility();
         }
-        SetNewAbility(out _rightAbility, newAbilityPrefab, rightHandShootPoint);
+        SetNewAbility(out _rightAbility, newAbilityPrefab, rightHandShootPoint, isInfinite);
         OnNewRightAbility?.Invoke();
     }
 
-    public void SetNewLeftAbility(GameObject newAbilityPrefab)
+    public void SetNewLeftAbility(GameObject newAbilityPrefab, bool isInfinite = false)
     {
         if (_leftAbility != null)
         {
             _leftAbility.RemoveAbility();
         }
-        SetNewAbility(out _leftAbility, newAbilityPrefab, leftHandShootPoint);
+        SetNewAbility(out _leftAbility, newAbilityPrefab, leftHandShootPoint, isInfinite);
         OnNewLeftAbility?.Invoke();
     }
 
@@ -97,7 +92,7 @@ public class AbilitiesHandler : MonoCache
         return null;
     }
 
-    private void SetNewAbility(out IActiveAbility abilitySide, GameObject newAbilityPrefab, Transform shootPoint)
+    private void SetNewAbility(out IActiveAbility abilitySide, GameObject newAbilityPrefab, Transform shootPoint, bool isInfinite)
     {
         if (newAbilityPrefab.GetComponent<IActiveAbility>() == null)
             Debug.LogError("No ability on \"ability\" prefab");
@@ -106,6 +101,7 @@ public class AbilitiesHandler : MonoCache
         abilitySide = ability.GetComponent<IActiveAbility>();
         abilitySide.SetRotationTarget(camRotationTarget);
         abilitySide.SetShootPoint(shootPoint);
+        abilitySide.SetInfinity(isInfinite);
     }
 
     private void HandleNewRightAbility()
@@ -128,17 +124,6 @@ public class AbilitiesHandler : MonoCache
     private void HandleLeftAbilityEmpty()
     {
         _leftAbility = null;
-    }
-
-    private void CheckForAbilitiesOnStart()
-    {
-        var ability = GetComponentInChildren<IActiveAbility>();
-
-        if (ability != null)
-        {
-            _rightAbility = ability;
-            OnNewRightAbility?.Invoke();
-        }
     }
 
     public IActiveAbility GetRightAbility() => _rightAbility;

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3216269069128228430}
   - component: {fileID: 3216269069128228431}
   - component: {fileID: 3216269069128228424}
+  - component: {fileID: -5936562314676606616}
   m_Layer: 0
   m_Name: LaserAbilityPrefab
   m_TagString: Untagged
@@ -76,3 +77,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserTrace: {fileID: 5840816997172179751, guid: 66f897a5fd0f1f940a6c2bf5dbc84f26,
     type: 3}
+--- !u!114 &-5936562314676606616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216269069128228425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e53881d58d4679ba7aac53a2c7c2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectOnShoot: {fileID: 2734764703766690187, guid: 817180f7c9acd9c4db4a5bcd62f56184,
+    type: 3}
+  inheritSpeed: 0
