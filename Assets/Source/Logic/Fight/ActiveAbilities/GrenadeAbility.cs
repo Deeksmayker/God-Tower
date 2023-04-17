@@ -1,10 +1,10 @@
 ﻿using System;
-using Cinemachine.Utility;
 using NTC.Global.Pool;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class GrenadeAbility : DefaultActiveAbility
@@ -20,7 +20,7 @@ public class GrenadeAbility : DefaultActiveAbility
     public override void PerformAbility(bool isDumping = false)
     {
         base.PerformAbility(isDumping);
-        
+
         var grenade = Instantiate(baseExplosiveObjectPrefab, GetStartPoint(), directionTarget.rotation);
 
         if (isDumping)

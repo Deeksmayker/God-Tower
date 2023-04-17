@@ -24,7 +24,7 @@ public class GravityMaker : MonoCache
         {
             if (_mover.GetVelocity().y < 0)
             {
-                _mover.SetVerticalVelocity(-10);
+                _mover.SetVerticalVelocity(-1);
             }
 
             return;
