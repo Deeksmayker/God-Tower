@@ -1,17 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
 public class CameraTlit : MonoBehaviour
 {
-    public CinemachineVirtualCamera _virtualCamera;
-    public CinemachineComposer _composer;
+
 
     private void Awake()
     {
-        _virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        _composer = _virtualCamera.GetCinemachineComponent<CinemachineComposer>();
     }
 
     public void MakeTiltLeft(float levelOfTilte) // Z
@@ -40,6 +36,5 @@ public class CameraTlit : MonoBehaviour
     {
         float verticalMovement = Input.GetAxis("Vertical");
         currentTiltAngle = Mathf.Clamp(currentTiltAngle - verticalMovement * tiltSpeed, minTiltAngle, maxTiltAngle);
-        _composer.m_TrackedObjectOffset.y = currentTiltAngle;
     }
 }
