@@ -18,13 +18,6 @@ public class CameraShaking : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        StartShake(0.5f, 10);
-        StartShakeWithTime(3, 2f, 5);
-        
-    }
-
     public void StartShake(float amplitude, int frequancy) // amplitude - размах по координатам, frequancy - насколько часто меняется направление (маленькое значение - плавно, большое - часто и резко)
     {
         _isShaking = true; 
