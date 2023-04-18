@@ -5,6 +5,7 @@ public interface IActiveAbility
 {
     public event Action OnPerform;
     public event Action OnStartHolding;
+    public event Action OnEndHolding;
     public event Action OnDumpLoaded;
     public event Action OnEmpty;
     
@@ -22,4 +23,5 @@ public interface IActiveAbility
     public Vector3 GetPerformDirection();
     public Vector3 GetStartPoint();
     public Transform GetRotationTargetTransform();
+    public AbilityTypes GetType();
 }

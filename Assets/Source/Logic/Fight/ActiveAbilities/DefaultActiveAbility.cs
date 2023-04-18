@@ -32,6 +32,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     
     public event Action OnPerform;
     public event Action OnStartHolding;
+    public event Action OnEndHolding;
     public event Action OnDumpLoaded;
     public event Action OnEmpty;
     public event Action OnDump;
@@ -155,6 +156,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     {
         if (_input && !value)
         {
+            OnEndHolding?.Invoke();
             if (_chargingTimer >= holdTimeToDump)
             {
                 _dumping = true;
@@ -212,5 +214,10 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     public Transform GetRotationTargetTransform()
     {
         return directionTarget;
+    }
+
+    public virtual AbilityTypes GetType()
+    {
+        return AbilityTypes.None;
     }
 }

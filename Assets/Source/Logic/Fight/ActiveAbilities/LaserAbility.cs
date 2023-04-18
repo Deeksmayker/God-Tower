@@ -57,6 +57,11 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
         OnMissHit?.Invoke();
     }
 
+    public override AbilityTypes GetType()
+    {
+        return AbilityTypes.Laser;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

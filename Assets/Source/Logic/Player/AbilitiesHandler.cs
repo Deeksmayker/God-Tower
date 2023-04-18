@@ -4,6 +4,13 @@ using NTC.Global.Pool;
 using UnityEngine;
 
 
+public enum AbilityTypes
+{
+    None, 
+    Laser,
+    Grenade
+}
+
 public class AbilitiesHandler : MonoCache
 {
     [SerializeField] private LayerMask layersToSteal;
