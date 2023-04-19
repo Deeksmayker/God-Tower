@@ -26,48 +26,58 @@ public class CameraInerting : MonoBehaviour
 
     private void Update()
     {
-     
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.S))
+        {
+            _inertingSequence.Kill();
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            InertToLeft();
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            InertToRight();
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            InertToBack();
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            InertToForward();
+        }
+
+        
     }
 
-    [ContextMenu("Test InertToRight")]
     public void InertToRight() // x+
     {
         _inertingSequence.Kill();
-        float startedX = cameraTransform.position.x;
 
-        _inertingSequence.Append(cameraTransform.DOMoveX(cameraTransform.position.x + coordinatesForInerting, timeForInerting))
-            .Append(cameraTransform.DOMoveX(startedX, timeForInerting));
+        _inertingSequence.Append(cameraTransform.DOMoveX(cameraTransform.position.x + coordinatesForInerting, timeForInerting));
     }
 
-    [ContextMenu("Test InertToLeft")]
     public void InertToLeft() //  x-
     {
         _inertingSequence.Kill();
-        float startedX = cameraTransform.position.x;
 
-        _inertingSequence.Append(cameraTransform.DOMoveX(cameraTransform.position.x - coordinatesForInerting, timeForInerting))
-            .Append(cameraTransform.DOMoveX(startedX, timeForInerting));
+        _inertingSequence.Append(cameraTransform.DOMoveX(cameraTransform.position.x - coordinatesForInerting, timeForInerting));
     }
 
-    [ContextMenu("Test InertToBack")]
     public void InertToBack() // z-
     {
         _inertingSequence.Kill();
-        float startedZ = cameraTransform.position.z;
 
         _inertingSequence.Append(cameraTransform.DOMoveZ
-            (cameraTransform.position.x - coordinatesForInerting, timeForInerting))
-            .Append(cameraTransform.DOMoveZ(startedZ, timeForInerting));
+            (cameraTransform.position.z - coordinatesForInerting, timeForInerting));
     }
 
-    [ContextMenu("Test InertToForward")]
     public void InertToForward() // z+
     {
         _inertingSequence.Kill();
-        float startedZ = cameraTransform.position.z;
 
         _inertingSequence.Append(cameraTransform.DOMoveZ
-            (cameraTransform.position.x + coordinatesForInerting, timeForInerting))
-            .Append(cameraTransform.DOMoveZ(startedZ, timeForInerting));
+            (cameraTransform.position.z + coordinatesForInerting, timeForInerting));
     }
 }

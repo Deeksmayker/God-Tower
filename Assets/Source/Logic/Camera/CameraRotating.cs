@@ -33,10 +33,6 @@ public class CameraRotating : MonoBehaviour
         cameraTransform.eulerAngles = new Vector3(cameraTransform.eulerAngles.x, cameraTransform.eulerAngles.y, angle);
     }*/
 
-
-
-
-
     public static CameraRotating Instance;
 
     [Inject] private PlayerUnit _player;
@@ -50,6 +46,8 @@ public class CameraRotating : MonoBehaviour
     [SerializeField] private float timeForRotation = 1;
     [SerializeField] private float timeForReturnToStraightPosition = 1;
 
+    private Sequence _inertingSequence;
+
     private void Awake()
     {
         Instance = this;
@@ -58,6 +56,7 @@ public class CameraRotating : MonoBehaviour
     private void Start()
     {
         _mover = _player.Get<IMover>();
+        _inertingSequence = DOTween.Sequence();
     }
 
     private void Update()
@@ -75,67 +74,55 @@ public class CameraRotating : MonoBehaviour
             RotateToBack();
         }
 
-        if(Input.GetKeyUp(KeyCode.A)|| Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
         {
             ReturnToStraightPosition();
         }
     }
 
-    [ContextMenu("Test RotateToRight")]
     public void RotateToRight()// z-=
     {
+
+        //_inertingSequence.Kill();
+
         Vector3 necessaryRotation = new Vector3(cameraTransform.rotation.x,
             cameraTransform.rotation.y, cameraTransform.rotation.z - angleOfRotationForZ);
 
-        cameraTransform.DORotate(necessaryRotation, timeForRotation).SetEase(easeForRotation).OnComplete(() =>
-        {
-            /*cameraTransform.rotation = new Quaternion(cameraTransform.rotation.x - angleOfRotationForX,
-                cameraTransform.rotation.y, cameraTransform.rotation.z, cameraTransform.rotation.w);*/
-        });
+        /*_inertingSequence.Append(cameraTransform.DORotate(necessaryRotation, timeForRotation).SetEase(easeForRotation));*/
 
-
+        cameraTransform.DORotate(necessaryRotation, timeForRotation).SetEase(easeForRotation);
     }
 
-    [ContextMenu("Test RotateToLeft")]
     public void RotateToLeft() // z+=
     {
+        //_inertingSequence.Kill();
+
         Vector3 necessaryRotation = new Vector3(cameraTransform.rotation.x,
             cameraTransform.rotation.y, cameraTransform.rotation.z + angleOfRotationForZ);
 
-        cameraTransform.DORotate(necessaryRotation, timeForRotation).SetEase(easeForRotation).OnComplete(() =>
-        {
-            /*cameraTransform.rotation = new Quaternion(cameraTransform.rotation.x - angleOfRotationForX,
-                cameraTransform.rotation.y, cameraTransform.rotation.z, cameraTransform.rotation.w);*/
-        });
-
+        //_inertingSequence.Append(cameraTransform.DORotate(necessaryRotation, timeForRotation).SetEase(easeForRotation));
+        cameraTransform.DORotate(necessaryRotation, timeForRotation).SetEase(easeForRotation);
 
     }
 
-    [ContextMenu("Test RotateToBack")]
     public void RotateToBack() // x-=
     {
+        //_inertingSequence.Kill();
+
         Vector3 necessaryRotation = new Vector3(cameraTransform.rotation.x - angleOfRotationForX,
             cameraTransform.rotation.y, cameraTransform.rotation.z);
 
-        cameraTransform.DORotate(necessaryRotation, timeForReturnToStraightPosition).SetEase(easeForRotation).OnComplete(() =>
-        {
-            /*cameraTransform.rotation = new Quaternion(cameraTransform.rotation.x - angleOfRotationForX,
-                cameraTransform.rotation.y, cameraTransform.rotation.z, cameraTransform.rotation.w);*/
-        });
+        /*_inertingSequence.Append(cameraTransform.DORotate(necessaryRotation, timeForReturnToStraightPosition).SetEase(easeForRotation));*/
 
-
+        cameraTransform.DORotate(necessaryRotation, timeForReturnToStraightPosition).SetEase(easeForRotation);
     }
 
-    [ContextMenu("Test ReturnToStraightPosition")]
     public void ReturnToStraightPosition()
     {
+        //_inertingSequence.Kill();
+
         Vector3 necessaryRotation = Vector3.zero;
-        cameraTransform.DORotate(necessaryRotation, timeForReturnToStraightPosition).SetEase(easeForReturnToStraightPosition).
-            OnComplete(() =>
-            {
-                /*cameraTransform.rotation = new Quaternion(cameraTransform.rotation.x - angleOfRotationForX,
-                    cameraTransform.rotation.y, cameraTransform.rotation.z, cameraTransform.rotation.w);*/
-            });
-        ;
+        //_inertingSequence.Append(cameraTransform.DORotate(necessaryRotation, timeForReturnToStraightPosition).SetEase(easeForReturnToStraightPosition));
+        cameraTransform.DORotate(necessaryRotation, timeForReturnToStraightPosition).SetEase(easeForReturnToStraightPosition);
     }
 }
