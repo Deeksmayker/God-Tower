@@ -9,8 +9,11 @@ public class PlayerHand : MonoCache
     
     private ModelShaker _shaker;
     
-    public Action<PlayerHand> OnAbilityPerformed;
-    public Action<PlayerHand> OnAbilityCharging;
+    public Action<PlayerHand> OnHandAbilityPerformed;
+    public Action<PlayerHand> OnHandAbilityCharging;
+    public Action<PlayerHand> OnHandEndCharging;
+    public Action<PlayerHand> OnHandEmpty;
+    public Action<PlayerHand, AbilityTypes> OnHandNewAbility;
     
     protected AbilitiesHandler _abilitiesHandler;
 
@@ -22,12 +25,12 @@ public class PlayerHand : MonoCache
     
     public void HandleAbilityPerforming()
     {
-        OnAbilityPerformed?.Invoke(this);
+        OnHandAbilityPerformed?.Invoke(this);
     }
 
     public void HandleAbilityCharging()
     {
-        OnAbilityCharging?.Invoke(this);
+        OnHandAbilityCharging?.Invoke(this);
     }
 
     public void HandleAbilityDumpLoaded()
@@ -35,11 +38,19 @@ public class PlayerHand : MonoCache
         NightPool.Spawn(dumpLoadedParticles, transform.position);
     }
 
+    public void HandleAbilityEmpty()
+    {
+        OnHandEmpty?.Invoke(this);
+    }
+
     protected void HandleNewAbility(IActiveAbility ability)
     {
         ability.OnPerform += HandleAbilityPerforming;
         ability.OnStartHolding += HandleAbilityCharging;
         ability.OnDumpLoaded += HandleAbilityDumpLoaded;
+        ability.OnEmpty += HandleAbilityEmpty;
+        
+        OnHandNewAbility?.Invoke(this, ability.GetType());
     }
 
     public ModelShaker GetShaker()

@@ -154,6 +154,7 @@ public class Kicker : MonoCache, IMeleeAttacker
         var resultVelocity = _mover.GetVelocity();
         resultVelocity += GetAttackDirection() * forwardRecoilBeforePunch;
         resultVelocity = resultVelocity.magnitude * GetAttackDirection();
+        resultVelocity.y = Mathf.Clamp(resultVelocity.y, -100, 10);
         _mover.SetVelocity(resultVelocity);
     }
 

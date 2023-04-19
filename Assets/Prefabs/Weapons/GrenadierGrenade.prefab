@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a95dee64fd0568a41b7c078c2c8150ee, type: 2}
+  - {fileID: 2100000, guid: 938d931da3ef8c240bae1ba58f256709, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,9 +140,9 @@ MonoBehaviour:
   explosionForce: 10
   bigExplosionRadiusMultiplier: 2
   explosionDuration: 0.1
-  collisionImmuneDuration: 0.1
+  collisionImmuneDuration: 0.5
   ExplodeRadius: 5
-  Damage: 5
+  Damage: 30
 --- !u!135 &4823301809095505626
 SphereCollider:
   m_ObjectHideFlags: 0

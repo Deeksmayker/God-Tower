@@ -48,15 +48,15 @@ MonoBehaviour:
   infinite: 0
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
-  damage: 1
+  damage: 10
   dumpShootChargesCount: 5
-  holdTimeToDump: 2
+  holdTimeToDump: 1.5
   dumpingShootsDelay: 0
   abilityLifetime: 10
   cooldown: 0.2
   baseExplosiveObjectPrefab: {fileID: 8929701607955828243, guid: 1445668ccc606d84791d29220de31030,
     type: 3}
-  throwPower: 20
+  throwPower: 30
   rotationSpeed: 10
   maxSpread: 20
 --- !u!114 &4848148135290412825

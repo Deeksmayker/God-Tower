@@ -27,8 +27,10 @@ public class HandsVisual : MonoCache
     {
         for (var i = 0; i < _playerHands.Length; i++)
         {
-            _playerHands[i].OnAbilityPerformed += HandlePerformingAbility;
-            _playerHands[i].OnAbilityCharging += HandleChargingAbility;
+            _playerHands[i].OnHandAbilityPerformed += HandlePerformingAbility;
+            _playerHands[i].OnHandAbilityCharging += HandleChargingAbility;
+            _playerHands[i].OnHandNewAbility += HandleAbilityChangeOnHand;
+            _playerHands[i].OnHandEmpty += HandleEmptyHandAbility;
         }
     }
 
@@ -36,8 +38,31 @@ public class HandsVisual : MonoCache
     {
         for (var i = 0; i < _playerHands.Length; i++)
         {
-            _playerHands[i].OnAbilityPerformed += HandlePerformingAbility;
-            _playerHands[i].OnAbilityCharging -= HandleChargingAbility;
+            _playerHands[i].OnHandAbilityPerformed -= HandlePerformingAbility;
+            _playerHands[i].OnHandAbilityCharging -= HandleChargingAbility;
+            _playerHands[i].OnHandNewAbility -= HandleAbilityChangeOnHand;
+            _playerHands[i].OnHandEmpty -= HandleEmptyHandAbility;
+        }
+    }
+
+    private void HandleEmptyHandAbility(PlayerHand hand)
+    {
+        HandleAbilityChangeOnHand(hand, AbilityTypes.None);
+    }
+
+    private void HandleAbilityChangeOnHand(PlayerHand hand, AbilityTypes type)
+    {
+        switch (type)
+        {
+            case AbilityTypes.None:
+                hand.Get<Animator>().SetTrigger(AnimationConstants.NoAbility);
+                return;
+            case AbilityTypes.Laser:
+                hand.Get<Animator>().SetTrigger(AnimationConstants.LaserAbility);
+                return;
+            case AbilityTypes.Grenade:
+                hand.Get<Animator>().SetTrigger(AnimationConstants.GrenadeAbility);
+                return;
         }
     }
 

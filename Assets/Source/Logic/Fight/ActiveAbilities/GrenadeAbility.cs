@@ -36,5 +36,10 @@ public class GrenadeAbility : DefaultActiveAbility
         grenade.Get<Rigidbody>().AddTorque(RandomUtils.GetRandomNormalizedVector() * rotationSpeed);
     }
 
+    public override AbilityTypes GetType()
+    {
+        return AbilityTypes.Grenade;
+    }
+    
     public float GetThrowPower() => throwPower;
 }
