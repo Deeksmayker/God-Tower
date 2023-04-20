@@ -52,6 +52,7 @@ public class HandsVisual : MonoCache
 
     private void HandleAbilityChangeOnHand(PlayerHand hand, AbilityTypes type)
     {
+        hand.Get<Animator>().SetTrigger("StealAbility");
         switch (type)
         {
             case AbilityTypes.None:
