@@ -1,10 +1,15 @@
 ﻿using System;
+using Code.Global.Animations;
+using DG.Tweening;
 using NTC.Global.Cache;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ModelShaker : MonoCache
 {
+    [SerializeField] private ShakePreset rapidShakePreset;
+    [SerializeField] private ShakePreset durableShakePreset;
+    
     private float _rapidTimer;
     
     private float _durableLerpTimer;
@@ -25,7 +30,7 @@ public class ModelShaker : MonoCache
         _originalPosition = transform.localPosition;
     }
 
-    protected override void Run()
+    /*protected override void Run()
     {
         if (_rapidTimer > 0)
         {
@@ -51,28 +56,28 @@ public class ModelShaker : MonoCache
             _durableLerpTimer += Time.deltaTime / _durableTimeToMaxIntensity;
             _durableLerpTimer = Mathf.Clamp01(_durableLerpTimer);
         }
+    }*/
+
+
+    public void StartRapidShaking()
+    {
+        AnimationShortCuts.ShakePositionAnimation(transform, rapidShakePreset);
     }
 
-
-    public void StartRapidShaking(float duration, float intensity, float amount)
+    public void StartDurableShaking()
     {
-        _rapidTimer = duration;
-        _rapidIntensity = intensity;
-        _rapidAmount = amount;
-    }
-
-    public void StartDurableShaking(float timeToMaxIntensity, float maxIntensity, float amount)
-    {
-        _durableTimeToMaxIntensity = timeToMaxIntensity;
-        _durableMaxIntensity = maxIntensity;
-        _durableAmount = amount;
-        _durableLerpTimer = 0;
         _durableShaking = true;
+        AnimationShortCuts.ShakePositionAnimation(transform, durableShakePreset).OnComplete(() =>
+        {
+            if (_durableShaking)
+            {
+                StartDurableShaking();
+            }
+        });
     }
 
     public void StopDurableShaking()
     {
         _durableShaking = false;
-        transform.localPosition = _originalPosition;
     }
 }

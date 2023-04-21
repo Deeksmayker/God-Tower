@@ -52,17 +52,17 @@ public class HandsVisual : MonoCache
 
     private void HandleAbilityChangeOnHand(PlayerHand hand, AbilityTypes type)
     {
-        hand.Get<Animator>().SetTrigger("StealAbility");
+        hand.GetComponentInChildren<Animator>().SetTrigger("StealAbility");
         switch (type)
         {
             case AbilityTypes.None:
-                hand.Get<Animator>().SetTrigger(AnimationConstants.NoAbility);
+                hand.GetComponentInChildren<Animator>().SetTrigger(AnimationConstants.NoAbility);
                 return;
             case AbilityTypes.Laser:
-                hand.Get<Animator>().SetTrigger(AnimationConstants.LaserAbility);
+                hand.GetComponentInChildren<Animator>().SetTrigger(AnimationConstants.LaserAbility);
                 return;
             case AbilityTypes.Grenade:
-                hand.Get<Animator>().SetTrigger(AnimationConstants.GrenadeAbility);
+                hand.GetComponentInChildren<Animator>().SetTrigger(AnimationConstants.GrenadeAbility);
                 return;
         }
     }
@@ -70,11 +70,11 @@ public class HandsVisual : MonoCache
     private void HandlePerformingAbility(PlayerHand hand)
     {
         hand.GetShaker()?.StopDurableShaking();
-        hand.GetShaker()?.StartRapidShaking(rapidShakeDuration, rapidShakeIntensity, rapidShakeAmount);
+        hand.GetShaker()?.StartRapidShaking();
     }
 
     private void HandleChargingAbility(PlayerHand hand)
     {
-        hand.GetShaker()?.StartDurableShaking(durableTimeToMaxIntensity, durableShakeIntensity, durableShakeAmount);   
+        hand.GetShaker()?.StartDurableShaking();   
     }
 }

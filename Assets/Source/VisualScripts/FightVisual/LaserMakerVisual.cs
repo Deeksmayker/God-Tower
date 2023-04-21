@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class LaserMakerVisual : MonoCache
 {
     [SerializeField] private LaserTrace laserTrace;
+    [SerializeField] private VisualEffect hitEffect;
 
     private float _timer;
     private IMakeLaser _laserMaker;
@@ -40,9 +42,13 @@ public class LaserMakerVisual : MonoCache
     private void HandleEnvironmentHit(RaycastHit hit)
     {
         var trace = NightPool.Spawn(laserTrace, hit.point);
+        var hitPosition = _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance;
         trace.SetPosition(0, _laserMaker.GetStartPoint());
-        trace.SetPosition(1, _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance);
-        //place for some particles
+        trace.SetPosition(1, hitPosition);
+
+        var effect = NightPool.Spawn(hitEffect, hit.point, Quaternion.Euler(Vector3.Reflect(
+            Vector3.Normalize(hitPosition - _laserMaker.GetStartPoint()),
+            hit.normal)));
     }
 
     private void HandleMiss()

@@ -23,7 +23,7 @@ public class CameraRotating : MonoCache
         var desiredZAngle = -input.x * angleOfRotationForZ;
         var desiredXAngle = input.y < 0 ? input.y * angleOfRotationForX : 0;
         
-        var desiredAngles = new Vector3(desiredXAngle, transform.localRotation.eulerAngles.y, desiredZAngle);
+        var desiredAngles = new Vector3(desiredXAngle, transform.localEulerAngles.y, desiredZAngle);
 
         var needRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(desiredAngles), Time.deltaTime * rotationSpeed);
 

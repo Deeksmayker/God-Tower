@@ -7,6 +7,7 @@ public interface IActiveAbility
     public event Action OnStartHolding;
     public event Action OnEndHolding;
     public event Action OnDumpLoaded;
+    public event Action OnDump;
     public event Action OnEmpty;
     
     public void ChargeAbility();

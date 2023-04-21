@@ -18,18 +18,18 @@ public class CameraShaking : MonoBehaviour
         Instance = this;
     }
 
-    public void StartShake(float amplitude, int frequancy) // amplitude - размах по координатам, frequancy - насколько часто меняется направление (маленькое значение - плавно, большое - часто и резко)
+    public void StartShake(float amplitude, int frequency) // amplitude - размах по координатам, frequancy - насколько часто меняется направление (маленькое значение - плавно, большое - часто и резко)
     {
         _isShaking = true; 
 
         _amplitude = amplitude;
-        _frequancy = frequancy;
+        _frequancy = frequency;
 
-        cameraTransform.DOShakePosition(0.1f, amplitude, frequancy, 90, false, false).OnComplete(() =>
+        cameraTransform.DOShakePosition(0.1f, amplitude, frequency, 90, false, false).OnComplete(() =>
         {
             if (_isShaking == true && _isShakingWithTime == false)
             {
-                StartShake(amplitude, frequancy);
+                StartShake(amplitude, frequency);
             }
         });
     }

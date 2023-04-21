@@ -113,10 +113,8 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         if (_dumpingTimer > 0)
             return;
 
-        if (OnDump != null)
-            OnDump.Invoke();
-        else
-            PerformAbility(true);
+        OnDump?.Invoke();
+        PerformAbility(true);
 
         _dumpingTimer = dumpingShootsDelay;
         _remainingChargesToShootOnDump--;
