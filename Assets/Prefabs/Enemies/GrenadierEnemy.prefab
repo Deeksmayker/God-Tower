@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098643311171782792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.608}
+  m_LocalPosition: {x: 0, y: 3.78, z: -2.121}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7636869774268064630}
   m_LocalRotation: {x: -0, y: -0.008725904, z: -0, w: -0.999962}
-  m_LocalPosition: {x: 0.01, y: 3.7800002, z: -0.953}
+  m_LocalPosition: {x: 0.017, y: 0, z: 0.559}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.11626001}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -171,7 +171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7636869774722740883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.7800002, z: -0.987}
+  m_LocalPosition: {x: 0, y: 0, z: 0.545}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -227,6 +227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorChangeDuration: 1
   hitVisualEffect: {fileID: 2734764703766690187, guid: f0e4a1790224a684092357a21997d962,
+    type: 3}
+  dieVisualEffect: {fileID: 2734764703766690187, guid: 84734cda9bd896042854b8c8a35c09a5,
     type: 3}
   auraEffect: {fileID: 1702264983846332877}
   hitChangeColorTime: 0.2
@@ -424,7 +426,7 @@ Transform:
   - {fileID: 7636869775461110964}
   - {fileID: 5084239390394704368}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7636869775631508307
 MonoBehaviour:

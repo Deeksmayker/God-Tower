@@ -30,6 +30,7 @@ public class GrenadierAiController : MonoCache, IAiController
     private float _cantAttackTime;
     
     private bool _jumping;
+    private bool _dead;
     
     private Transform _target;
     
@@ -82,6 +83,9 @@ public class GrenadierAiController : MonoCache, IAiController
     {
         _position = transform.position;
         _rotationTargetPosition = rotationTarget.position;
+
+        if (_dead)
+            return;
         
         if (_jumping)
         {
@@ -152,8 +156,6 @@ public class GrenadierAiController : MonoCache, IAiController
                     JumpOnOtherPosition(hit.point);
                     return;
                 }
-                
-                
             }
         }
     }
@@ -192,18 +194,18 @@ public class GrenadierAiController : MonoCache, IAiController
 
     private void HandleDying()
     {
-        
+        _dead = true;
     }
 
     public bool CanAttack()
     {
-        return !Physics.Raycast(rotationTarget.position, _target.position - rotationTarget.position,
+        return !_dead && !Physics.Raycast(rotationTarget.position, _target.position - rotationTarget.position,
             Vector3.Distance(rotationTarget.position, _target.position), environmentLayers);
     }
 
     private bool CanAttackAtThatPosition(Vector3 position)
     {
-        return !Physics.Raycast(position, _target.position - position,
+        return !_dead && !Physics.Raycast(position, _target.position - position,
             Vector3.Distance(position, _target.position), environmentLayers);
     }
 }

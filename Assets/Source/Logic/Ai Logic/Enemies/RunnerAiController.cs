@@ -13,6 +13,7 @@ public class RunnerAiController : MonoCache, IAiController
 
     private bool _attacking;
     private bool _lookedOnTarget;
+    private bool _dead;
 
     private float _rangeChargingTimer;
 
@@ -88,6 +89,9 @@ public class RunnerAiController : MonoCache, IAiController
 
     private void HandleEndMeleeAttack()
     {
+        if (_dead)
+            return;
+        
         _movementController.ResumeMoving();
         _movementController.SetRotationToVelocityVector(true);
         _attacking = false;
@@ -105,6 +109,9 @@ public class RunnerAiController : MonoCache, IAiController
 
     private void HandlePerformingRangeAttack()
     {
+        if (_dead)
+            return;
+        
         _movementController.ResumeMoving();
         _movementController.SetRotationToVelocityVector(true);
         rotationTarget.transform.DORotate(transform.forward, 0.1f);
@@ -114,12 +121,12 @@ public class RunnerAiController : MonoCache, IAiController
 
     private void HandleDying()
     {
-        _attacking = true;
+        _dead = true;
     }
 
     public bool CanAttack()
     {
-        return !_attacking && !Physics.Raycast(transform.position, _target.position - _position,
+        return !_dead && !_attacking && !Physics.Raycast(transform.position, _target.position - _position,
             Vector3.Distance(_position, _target.position), environmentLayers);
     }
 }

@@ -14,6 +14,10 @@ public class LightIntensityChanger : MonoCache
     private void Awake()
     {
         _light = GetComponentInChildren<Light>();
+    }
+
+    protected override void OnEnabled()
+    {
         _light.intensity = 0;
 
         ChangeLight();

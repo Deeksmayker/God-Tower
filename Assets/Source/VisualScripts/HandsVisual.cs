@@ -31,6 +31,7 @@ public class HandsVisual : MonoCache
             _playerHands[i].OnHandAbilityCharging += HandleChargingAbility;
             _playerHands[i].OnHandNewAbility += HandleAbilityChangeOnHand;
             _playerHands[i].OnHandEmpty += HandleEmptyHandAbility;
+            _playerHands[i].OnHandEndCharging += HandleEndChargingAbility;
         }
     }
 
@@ -42,6 +43,7 @@ public class HandsVisual : MonoCache
             _playerHands[i].OnHandAbilityCharging -= HandleChargingAbility;
             _playerHands[i].OnHandNewAbility -= HandleAbilityChangeOnHand;
             _playerHands[i].OnHandEmpty -= HandleEmptyHandAbility;
+            _playerHands[i].OnHandEndCharging -= HandleEndChargingAbility;
         }
     }
 
@@ -76,5 +78,10 @@ public class HandsVisual : MonoCache
     private void HandleChargingAbility(PlayerHand hand)
     {
         hand.GetShaker()?.StartDurableShaking();   
+    }
+
+    private void HandleEndChargingAbility(PlayerHand hand)
+    {
+        hand.GetShaker()?.StopDurableShaking();
     }
 }

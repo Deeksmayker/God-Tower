@@ -32,17 +32,15 @@ public class ExplosionMakerVisual : MonoCache
     {
         var particle = NightPool.Spawn(explosionEffect, transform.position);
         
-        particle.SetFloat("Radius", radius);
+        particle.SetFloat("Radius", radius * 2);
         particle.SetVector4("Color", normalColor);
-        particle.Play();
     }
 
     private void HandleBigExplosion(float radius)
     {
         var particle = NightPool.Spawn(explosionEffect, transform.position);
         
-        particle.SetFloat("Radius", radius);
+        particle.SetFloat("Radius", radius * 2);
         particle.SetVector4("Color", bigColor);
-        particle.Play();
     }
 }

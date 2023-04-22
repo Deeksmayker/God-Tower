@@ -33,6 +33,11 @@ public class PlayerHand : MonoCache
         OnHandAbilityCharging?.Invoke(this);
     }
 
+    public void HandleAbilityEndCharging()
+    {
+        OnHandEndCharging?.Invoke(this);
+    }
+
     public void HandleAbilityDumpLoaded()
     {
         NightPool.Spawn(dumpLoadedParticles, transform.position);
@@ -47,6 +52,7 @@ public class PlayerHand : MonoCache
     {
         ability.OnPerform += HandleAbilityPerforming;
         ability.OnStartHolding += HandleAbilityCharging;
+        ability.OnEndHolding += HandleAbilityEndCharging;
         ability.OnDumpLoaded += HandleAbilityDumpLoaded;
         ability.OnEmpty += HandleAbilityEmpty;
         

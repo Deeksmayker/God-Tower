@@ -199,6 +199,8 @@ MonoBehaviour:
   colorChangeDuration: 1
   hitVisualEffect: {fileID: 2734764703766690187, guid: f0e4a1790224a684092357a21997d962,
     type: 3}
+  dieVisualEffect: {fileID: 2734764703766690187, guid: 84734cda9bd896042854b8c8a35c09a5,
+    type: 3}
   auraEffect: {fileID: 1256877101}
   hitChangeColorTime: 0.2
 --- !u!1 &1874816136272392087
@@ -262,7 +264,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 938d931da3ef8c240bae1ba58f256709, type: 2}
+  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -345,7 +347,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 938d931da3ef8c240bae1ba58f256709, type: 2}
+  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -430,7 +432,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 938d931da3ef8c240bae1ba58f256709, type: 2}
+  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -612,7 +614,7 @@ Transform:
   - {fileID: 543450652829631992}
   - {fileID: 2027735910}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &5276695168522168781
 NavMeshAgent:
@@ -684,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddc7e42f3b84b43ba85dbcc20b4342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDie: 0
+  canDie: 1
   health: 10
   damageImmuneTime: 0
   dyingDuration: 5
@@ -901,7 +903,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 938d931da3ef8c240bae1ba58f256709, type: 2}
+  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -984,7 +986,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 938d931da3ef8c240bae1ba58f256709, type: 2}
+  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1070,7 +1072,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 938d931da3ef8c240bae1ba58f256709, type: 2}
+  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1146,6 +1148,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5276695168522168769}
     m_Modifications:
+    - target: {fileID: 3216269069128228424, guid: 018332c5dfb565f40afe19b4a5a7c8ee,
+        type: 3}
+      propertyPath: hitEffect
+      value: 
+      objectReference: {fileID: 2734764703766690187, guid: 817180f7c9acd9c4db4a5bcd62f56184,
+        type: 3}
     - target: {fileID: 3216269069128228425, guid: 018332c5dfb565f40afe19b4a5a7c8ee,
         type: 3}
       propertyPath: m_Name
