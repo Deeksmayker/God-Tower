@@ -46,7 +46,7 @@ public class LaserMakerVisual : MonoCache
         trace.SetPosition(0, _laserMaker.GetStartPoint());
         trace.SetPosition(1, hitPosition);
 
-        var effect = NightPool.Spawn(hitEffect, hit.point, Quaternion.Euler(Vector3.Reflect(
+        var effect = NightPool.Spawn(hitEffect, hit.point, Quaternion.LookRotation(Vector3.Reflect(
             Vector3.Normalize(hitPosition - _laserMaker.GetStartPoint()),
             hit.normal)));
     }

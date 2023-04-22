@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2734764703766690186}
   - component: {fileID: 2734764703766690185}
   m_Layer: 0
-  m_Name: LaserReflectEffect
+  m_Name: ExplosionFlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,30 +52,30 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 10
+      - m_Value: 20
         m_Name: MinScale
         m_Overridden: 1
-      - m_Value: 20
+      - m_Value: 40
         m_Name: MaxScale
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: -3, y: -3, z: 5}
+      - m_Value: {x: -5, y: 5, z: -5}
         m_Name: MinStartVelocity
         m_Overridden: 1
-      - m_Value: {x: 3, y: 3, z: 20}
+      - m_Value: {x: 5, y: 10, z: 5}
         m_Name: MaxStartVelocity
         m_Overridden: 1
-      - m_Value: {x: 1, y: 1, z: 2}
+      - m_Value: {x: 5, y: 5, z: 5}
         m_Name: SpawnBoxSize
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 4.584609, y: 0.72673476, z: 0, w: 0}
+      - m_Value: {x: 1.3350782, y: 0.26779768, z: 0, w: 0}
         m_Name: Color
-        m_Overridden: 0
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:

@@ -2,11 +2,12 @@
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ExplosionMakerVisual : MonoCache
 {
-    [SerializeField] private ParticleSystem normalParticles;
-    [SerializeField] private ParticleSystem bigParticles;
+    [SerializeField] private VisualEffect explosionEffect;
+    [SerializeField] private Color normalColor, bigColor;
 
     private IMakeExplosion _explosionMaker;
 
@@ -29,19 +30,19 @@ public class ExplosionMakerVisual : MonoCache
 
     private void HandleExplosion(float radius)
     {
-        var particle = NightPool.Spawn(normalParticles, transform.position);
-        var shape = particle.shape;
-        shape.shapeType = ParticleSystemShapeType.Sphere;
-        shape.radius = radius;
+        var particle = NightPool.Spawn(explosionEffect, transform.position);
+        
+        particle.SetFloat("Radius", radius);
+        particle.SetVector4("Color", normalColor);
         particle.Play();
     }
 
     private void HandleBigExplosion(float radius)
     {
-        var particle = NightPool.Spawn(bigParticles, transform.position);
-        var shape = particle.shape;
-        shape.shapeType = ParticleSystemShapeType.Sphere;
-        shape.radius = radius;
+        var particle = NightPool.Spawn(explosionEffect, transform.position);
+        
+        particle.SetFloat("Radius", radius);
+        particle.SetVector4("Color", bigColor);
         particle.Play();
     }
 }
