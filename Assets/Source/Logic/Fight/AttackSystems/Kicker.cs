@@ -36,6 +36,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     public event Action OnStartPreparingAttack;
     public event Action OnStartAttack;
     public event Action OnEndAttack;
+    public event Action OnHit;
 
     private void Awake()
     {
@@ -93,6 +94,8 @@ public class Kicker : MonoCache, IMeleeAttacker
                 hitType = HitTypes.WeakPoint;
             
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, hitType);
+            
+            OnHit?.Invoke();
         }
 
         if (_attackHitsContainer[0] is not null && !_isHitAnything)

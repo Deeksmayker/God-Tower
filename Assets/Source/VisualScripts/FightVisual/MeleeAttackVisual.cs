@@ -6,6 +6,9 @@ using UnityEngine;
 public class MeleeAttackVisual : MonoCache
 {
     [SerializeField] private Animation animationTarget;
+    [SerializeField] private bool shakeCamera;
+    [SerializeField] private ShakePreset kickShakePreset;
+    [SerializeField] private ShakePreset hitShakePreset;
 
     private Animator _animator;
     private IMeleeAttacker _meleeAttacker;
@@ -20,7 +23,12 @@ public class MeleeAttackVisual : MonoCache
             Debug.LogError("No melee attacker on prefab");  
         }
 
+    }
+
+    protected override void OnEnabled()
+    {
         _meleeAttacker.OnStartPreparingAttack += HandleAttack;
+        _meleeAttacker.OnHit += HandleHit;
     }
     
     private void HandleAttack()
@@ -30,6 +38,19 @@ public class MeleeAttackVisual : MonoCache
         if (_animator != null)
         {
             _animator.SetTrigger("Melee");
+        }
+
+        if (shakeCamera)
+        {
+            CameraService.Instance.ShakeCamera(kickShakePreset);
+        }
+    }
+
+    private void HandleHit()
+    {
+        if (shakeCamera)
+        {
+            CameraService.Instance.ShakeCamera(hitShakePreset);
         }
     }
 }

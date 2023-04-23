@@ -7,7 +7,7 @@ using UnityEngine.VFX;
 
 public class LaserMakerVisual : MonoCache
 {
-    [SerializeField] private LaserTrace laserTrace;
+    [SerializeField] private VisualEffect traceEffect;
     [SerializeField] private VisualEffect hitEffect;
 
     private float _timer;
@@ -34,17 +34,22 @@ public class LaserMakerVisual : MonoCache
 
     private void HandleHitTakerHit(RaycastHit hit)
     {
-        var trace = NightPool.Spawn(laserTrace, hit.point);
-        trace.SetPosition(0, _laserMaker.GetStartPoint());
-        trace.SetPosition(1, _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance);
+        var trace = NightPool.Spawn(traceEffect);
+        var hitPosition = _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance;
+        trace.SetVector3("Pos1", _laserMaker.GetStartPoint());
+        trace.SetVector3("Pos2", hitPosition);
+        
+        var effect = NightPool.Spawn(hitEffect, hit.point, Quaternion.LookRotation(Vector3.Reflect(
+            Vector3.Normalize(hitPosition - _laserMaker.GetStartPoint()),
+            hit.normal)));
     }
 
     private void HandleEnvironmentHit(RaycastHit hit)
     {
-        var trace = NightPool.Spawn(laserTrace, hit.point);
+        var trace = NightPool.Spawn(traceEffect);
         var hitPosition = _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance;
-        trace.SetPosition(0, _laserMaker.GetStartPoint());
-        trace.SetPosition(1, hitPosition);
+        trace.SetVector3("Pos1", _laserMaker.GetStartPoint());
+        trace.SetVector3("Pos2", hitPosition);
 
         var effect = NightPool.Spawn(hitEffect, hit.point, Quaternion.LookRotation(Vector3.Reflect(
             Vector3.Normalize(hitPosition - _laserMaker.GetStartPoint()),
@@ -53,9 +58,9 @@ public class LaserMakerVisual : MonoCache
 
     private void HandleMiss()
     {
-        var trace = NightPool.Spawn(laserTrace, _laserMaker.GetStartPoint());
-        trace.SetPosition(0, _laserMaker.GetStartPoint());
-        trace.SetPosition(1, _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * 100);
+        var trace = NightPool.Spawn(traceEffect);
+        trace.SetVector3("Pos1", _laserMaker.GetStartPoint());
+        trace.SetVector3("Pos2", _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * 100);
     }
     
 }

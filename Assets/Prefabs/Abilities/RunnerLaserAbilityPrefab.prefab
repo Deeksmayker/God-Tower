@@ -74,5 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 769ee80fb6ac40dc8e9d55aa7eb9b8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserTrace: {fileID: 5840816997172179751, guid: 66f897a5fd0f1f940a6c2bf5dbc84f26,
+  traceEffect: {fileID: 7637479311655098315, guid: 5e7d8c7dbf7b4cd4eb2190001aad5e88,
+    type: 3}
+  hitEffect: {fileID: 2734764703766690187, guid: c303081d6fa7a5c49b1ef24bce2d5ece,
     type: 3}

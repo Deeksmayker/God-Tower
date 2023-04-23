@@ -6,6 +6,9 @@ using UnityEngine;
 public class PlayerHand : MonoCache
 {
     [SerializeField] private ParticleSystem dumpLoadedParticles;
+
+    [HideInInspector] public Animator HandAnimator;
+    [HideInInspector] public SkinnedMeshRenderer HandMeshRenderer;
     
     private ModelShaker _shaker;
     
@@ -21,6 +24,8 @@ public class PlayerHand : MonoCache
     {
         _abilitiesHandler = GetComponentInParent<AbilitiesHandler>();
         _shaker = GetComponentInChildren<ModelShaker>();
+        HandAnimator = GetComponentInChildren<Animator>();
+        HandMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
     
     public void HandleAbilityPerforming()

@@ -14,6 +14,7 @@ public interface IMeleeAttacker
     public event Action OnStartPreparingAttack;
     public event Action OnStartAttack;
     public event Action OnEndAttack;
+    public event Action OnHit;
     
     public void PerformAttack();
     public void SetInput(bool input);
