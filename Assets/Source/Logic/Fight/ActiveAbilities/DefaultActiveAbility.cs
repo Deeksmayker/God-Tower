@@ -164,6 +164,8 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             {
                 _needToPerform = true;
             }
+
+            _chargingTimer = 0;
         }
         
         _input = value;

@@ -149,7 +149,7 @@ MonoBehaviour:
   durableTimeToMaxIntensity: 3
   durableShakeIntensity: 50
   durableShakeAmount: 0.02
-  noAbilityColor: {r: 4, g: 4, b: 4, a: 0}
+  noAbilityColor: {r: 2.4913445, g: 2.4913445, b: 2.4913445, a: 0}
   laserAbilityColor: {r: 0, g: 2.1879835, b: 2.1879835, a: 0}
   grenadeAbilityColor: {r: 3.7358491, g: 0.78009593, b: 0, a: 0}
 --- !u!114 &2041626863
@@ -5047,7 +5047,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -7185,6 +7185,7 @@ MonoBehaviour:
   baseSlideSpeed: 25
   speedDecreasingRate: 10
   colliderHeight: 1
+  slidingShake: {fileID: 11400000, guid: 8a44a37dd368a524796c5e13baaeffbf, type: 2}
 --- !u!114 &3998808298923127483
 MonoBehaviour:
   m_ObjectHideFlags: 0

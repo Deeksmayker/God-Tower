@@ -27,4 +27,14 @@ public class CameraService : MonoCache
             AnimationShortCuts.ShakeRotationAnimation(transform, shakeSettings);
         }
     }
+
+    public Tween ShakeCameraPosition(ShakePreset shakePreset)
+    {
+        return AnimationShortCuts.ShakePositionAnimation(transform, shakePreset);
+    }
+    
+    public Tween ShakeCameraRotation(ShakePreset shakePreset)
+    {
+        return AnimationShortCuts.ShakeRotationAnimation(transform, shakePreset);
+    }
 }

@@ -3,10 +3,12 @@ using Zenject;
 
 public class CameraServiceInstaller : MonoInstaller
 {
-    [SerializeField] private CameraService cameraService;
+    private CameraService cameraService;
 
     public override void InstallBindings()
     {
+        cameraService = FindObjectOfType<CameraService>();
+        
         Container.Bind<CameraService>().FromInstance(cameraService).AsSingle().NonLazy();
     }
 

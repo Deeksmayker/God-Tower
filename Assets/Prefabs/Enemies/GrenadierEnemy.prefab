@@ -140,7 +140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7636869774598440321}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.08, z: 0}
+  m_LocalPosition: {x: 0, y: 0.021, z: -0.432}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -426,7 +426,7 @@ Transform:
   - {fileID: 7636869775461110964}
   - {fileID: 5084239390394704368}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7636869775631508307
 MonoBehaviour:
@@ -447,9 +447,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   rotationTarget: {fileID: 5084239390394704368}
-  jumpForce: 30
+  jumpForce: 100
   timeBeforeShootToRotateHead: 0.1
-  timeChangeLocation: 7
+  timeChangeLocation: 5
   cantAttackTimeToChangeLocation: 1
   prepareJumpTime: 1
 --- !u!114 &7636869775631508306
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533a66039625e7144b84d2ed4efd2205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckPoint: {fileID: 7636869775631508311}
+  groundCheckPoint: {fileID: 7636869774598440326}
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RiseGravity: -50
-  FallingGravity: -30
+  FallingGravity: -80
   changingGravityVelocity: 300000
 --- !u!143 &7636869775631508315
 CharacterController:
@@ -525,13 +525,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 4.75
+  m_Radius: 2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.88, z: 0}
+  m_Center: {x: 0, y: 2.51, z: -0.44}
 --- !u!114 &7636869775631508312
 MonoBehaviour:
   m_ObjectHideFlags: 0

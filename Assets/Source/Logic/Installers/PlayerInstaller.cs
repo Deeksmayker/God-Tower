@@ -3,10 +3,12 @@ using Zenject;
 
 public class PlayerInstaller : MonoInstaller
 {
-    [SerializeField] private PlayerUnit playerUnit;
+    private PlayerUnit playerUnit;
     
     public override void InstallBindings()
     {
+        playerUnit = FindObjectOfType<PlayerUnit>();
+        
         Container.Bind<PlayerUnit>().FromInstance(playerUnit).AsSingle().NonLazy();
     }
 }

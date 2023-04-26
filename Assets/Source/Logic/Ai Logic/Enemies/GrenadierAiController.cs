@@ -146,13 +146,15 @@ public class GrenadierAiController : MonoCache, IAiController
         for (var i = 0; i < _jumpPoints.Count; i++)
         {
             var canAttack = CanAttackAtThatPosition(_jumpPoints[i].transform.position);
-            if (canAttack && _currentPoint == null || canAttack && _currentPoint != null &&
-                !_jumpPoints[i].Equals(_currentPoint))
+            if (canAttack && !_jumpPoints[i].IsOccupied())
             {
                 if (Physics.Raycast(_jumpPoints[i].transform.position, Vector3.down, out var hit, 10,
                         environmentLayers))
                 {
+                    if (_currentPoint != null) 
+                        _currentPoint.LeavePoint();
                     _currentPoint = _jumpPoints[i];
+                    _currentPoint.TakePoint();
                     JumpOnOtherPosition(hit.point);
                     return;
                 }

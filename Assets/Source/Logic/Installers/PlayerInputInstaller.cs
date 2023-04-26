@@ -4,10 +4,12 @@ using Zenject;
 
 public class PlayerInputInstaller : MonoInstaller
 {
-    [SerializeField] private PlayerInput playerInput;
+    private PlayerInput playerInput;
     
     public override void InstallBindings()
     {
+        playerInput = FindObjectOfType<PlayerInput>();
+        
         Container.Bind<PlayerInput>().FromInstance(playerInput).AsSingle().NonLazy();
     }
 }

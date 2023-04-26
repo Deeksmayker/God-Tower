@@ -1,4 +1,5 @@
-﻿using NTC.Global.Cache;
+﻿using DG.Tweening;
+using NTC.Global.Cache;
 using UnityEngine;
 
 public class GroundSlider : MonoCache
@@ -8,6 +9,8 @@ public class GroundSlider : MonoCache
  //   [SerializeField] private float slideJumpAddedSpeed;
     [SerializeField] private float speedDecreasingRate;
     [SerializeField] private float colliderHeight;
+
+    [SerializeField] private ShakePreset slidingShake;
 
     private float _defaultHeight;
     
@@ -74,6 +77,17 @@ public class GroundSlider : MonoCache
             _slideDirection = transform.forward;
         _mover.SetHorizontalVelocity(_slideDirection * (_mover.GetVelocity().magnitude / 2 > baseSlideSpeed ? _mover.GetVelocity().magnitude / 2 : baseSlideSpeed));
         _mover.SetInputResponse(false);
+        
+        ShakeCameraOnSliding();
+    }
+
+    private void ShakeCameraOnSliding()
+    {
+        CameraService.Instance.ShakeCameraPosition(slidingShake).OnComplete(() =>
+        {
+            if (_sliding)
+                ShakeCameraOnSliding();
+        });
     }
 
     private void StopSlide()

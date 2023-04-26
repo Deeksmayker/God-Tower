@@ -47,7 +47,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9607843, g: 0.4763069, b: 0, a: 1}
   m_Intensity: 150
-  m_Range: 50
+  m_Range: 100
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -131,9 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1ece0d48f74f30b356008d773f0d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxIntensity: 150
+  maxIntensity: 200
   timeForMaxIntensity: 0.1
-  fadeOutTime: 0.7
+  fadeOutTime: 0.4
 --- !u!1 &2626232667200751999
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +167,7 @@ Transform:
   m_Children:
   - {fileID: 2626232666662137097}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &2626232667200751997
 VisualEffect:

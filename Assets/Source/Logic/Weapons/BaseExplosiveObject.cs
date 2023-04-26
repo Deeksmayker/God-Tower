@@ -82,7 +82,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!explodeOnTrigger || collisionImmuneDuration > 0)
+        if (!explodeOnTrigger)
             return;
 
         OnExplosionWithRadius?.Invoke(ExplodeRadius);

@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -24,7 +25,7 @@ public class HandsVisual : MonoCache
     [SerializeField] private Color laserAbilityColor;
     [ColorUsageAttribute(false, true)]
     [SerializeField] private Color grenadeAbilityColor;
-    
+
     private PlayerHand[] _playerHands;
     private MaterialPropertyBlock _propertyBlock;
 
@@ -69,18 +70,25 @@ public class HandsVisual : MonoCache
         switch (type)
         {
             case AbilityTypes.None:
-                hand.HandAnimator.SetTrigger(AnimationConstants.NoAbility);
+                ChangeHandAnimation(hand, AnimationConstants.NoAbility);
                 ChangeHandColor(hand, noAbilityColor);
                 return;
             case AbilityTypes.Laser:
-                hand.HandAnimator.SetTrigger(AnimationConstants.LaserAbility);
+                ChangeHandAnimation(hand, AnimationConstants.LaserAbility);
                 ChangeHandColor(hand, laserAbilityColor);
                 return;
             case AbilityTypes.Grenade:
-                hand.HandAnimator.SetTrigger(AnimationConstants.GrenadeAbility);
+                ChangeHandAnimation(hand, AnimationConstants.GrenadeAbility);
                 ChangeHandColor(hand, grenadeAbilityColor);
                 return;
         }
+    }
+
+    private async UniTask ChangeHandAnimation(PlayerHand hand, string abilityAnimationName)
+    {
+        hand.HandAnimator.SetBool(abilityAnimationName, true);
+        await UniTask.Delay(500);
+        hand.HandAnimator.SetBool(abilityAnimationName, false);
     }
 
     private void ChangeHandColor(PlayerHand hand, Color color)
