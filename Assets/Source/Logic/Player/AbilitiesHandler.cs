@@ -8,7 +8,8 @@ public enum AbilityTypes
 {
     None, 
     Laser,
-    Grenade
+    Grenade,
+    Homing
 }
 
 public class AbilitiesHandler : MonoCache

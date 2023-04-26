@@ -9,11 +9,13 @@ public class DebugAbilityGiver : MonoCache
     {
         None,
         Laser,
-        Grenade
+        Grenade,
+        Homing
     }
 
     [SerializeField] private GameObject laserAbilityPrefab;
     [SerializeField] private GameObject grenadeAbilityPrefab;
+    [SerializeField] private GameObject homingAbilityPrefab;
 
     [SerializeField] private AbilityTypes leftAbility;
     [SerializeField] private AbilityTypes rightAbility;
@@ -43,6 +45,9 @@ public class DebugAbilityGiver : MonoCache
             case AbilityTypes.Grenade:
                 _abilitiesHandler.SetNewLeftAbility(grenadeAbilityPrefab, infiniteAbilities);
                 return;
+            case AbilityTypes.Homing:
+                _abilitiesHandler.SetNewLeftAbility(homingAbilityPrefab, infiniteAbilities);
+                return;
             default:
                 return;
         }
@@ -58,6 +63,9 @@ public class DebugAbilityGiver : MonoCache
                 return;
             case AbilityTypes.Grenade:
                 _abilitiesHandler.SetNewRightAbility(grenadeAbilityPrefab, infiniteAbilities);
+                return; 
+            case AbilityTypes.Homing:
+                _abilitiesHandler.SetNewRightAbility(homingAbilityPrefab, infiniteAbilities);
                 return; 
             default:
                 return;

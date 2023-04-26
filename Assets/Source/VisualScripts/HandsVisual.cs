@@ -25,6 +25,8 @@ public class HandsVisual : MonoCache
     [SerializeField] private Color laserAbilityColor;
     [ColorUsageAttribute(false, true)]
     [SerializeField] private Color grenadeAbilityColor;
+    [ColorUsageAttribute(false, true)]
+    [SerializeField] private Color homingAbilityColor;
 
     private PlayerHand[] _playerHands;
     private MaterialPropertyBlock _propertyBlock;
@@ -80,6 +82,10 @@ public class HandsVisual : MonoCache
             case AbilityTypes.Grenade:
                 ChangeHandAnimation(hand, AnimationConstants.GrenadeAbility);
                 ChangeHandColor(hand, grenadeAbilityColor);
+                return;
+            case AbilityTypes.Homing:
+                ChangeHandAnimation(hand, AnimationConstants.HomingAbility);
+                ChangeHandColor(hand, homingAbilityColor);
                 return;
         }
     }

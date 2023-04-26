@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
+using NTC.Global.Pool;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public enum HomingState
 {
@@ -13,7 +13,7 @@ public enum HomingState
     Hunting
 }
 
-public class BaseHomingObject : MonoCache, IMakeExplosion
+public class BaseHomingObject : MonoCache
 {
     [SerializeField] private LayerMask layersToHoming;
 
@@ -29,16 +29,11 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
     [SerializeField] private float SuperHomingSpeed = 2f;
     [SerializeField] private float ExplosionForce = 10f;
     [SerializeField] private float ExplosionRadius = 5f;
+    [SerializeField] private BaseExplosiveObject explosivePrefab;
 
     public event Action OnDestroy;
     public event Action OnChangeState;
     public event Action OnSuperHomingActivated;
-    
-    public event Action<float> OnBigExplosionWithRadius;
-    public event Action<float> OnExplosionWithRadius;
-    
-    private List<Collider> attackHitsContainer = new();
-    private List<int> objectsAlreadyTakeHit = new();
 
     private HomingState homingState;
     private bool isSuperHoming;
@@ -59,6 +54,8 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
     protected override void OnEnabled()
     {
         hitTakerComponent.OnTakeHit += HandleTakeHit;
+
+        ChangeStateAfterSeconds(HomingState.Searching, SecondBeforeHoming);
     }
     
     protected override void OnDisabled()
@@ -66,22 +63,11 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
         hitTakerComponent.OnTakeHit -= HandleTakeHit;
     }
 
-    private void Start()
-    {
-        ChangeStateAfterSeconds(HomingState.Searching, SecondBeforeHoming);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (isSuperHoming)
-        {
-            OnExplosionWithRadius?.Invoke(ExplosionRadius);
-            TakeDamageInRadius(ExplosionRadius, Damage);
-        }
-        else
-        {
-            TakeDamage(other, Damage);
-        }
+        if (homingState != HomingState.Hunting)
+            return;
+        DealDamage(other, Damage);
     }
 
     protected override void Run()
@@ -116,11 +102,7 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
 
     private void HandleTakeHit(float damage)
     {
-        Speed *= SuperHomingSpeed;
-        Damage *= SuperHomingDamage;
-        isSuperHoming = true;
-        
-        OnSuperHomingActivated?.Invoke();
+        BecomeSuperHoming();
     }
 
     private void DirectHomingToTarget(GameObject target)
@@ -128,16 +110,37 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
         var direction = target.transform.position - transform.position;
         ownRigidbody.velocity += direction * Speed * Time.fixedDeltaTime;
         ownRigidbody.velocity *= Mathf.Clamp01(1f - Damping * Time.fixedDeltaTime);
+
+        ownRigidbody.rotation = Quaternion.LookRotation(ownRigidbody.velocity);
     }
 
-    private void TakeDamage(Collider other, float damage)
+    private void BecomeSuperHoming()
     {
-        var hitPosition = other.ClosestPoint(transform.position);
+        Speed *= SuperHomingSpeed;
+        Damage *= SuperHomingDamage;
+        isSuperHoming = true;
+        NightPool.Spawn(explosivePrefab, transform);
+        gameObject.AddComponent<ExplosiveObjectController>();
+
+        OnSuperHomingActivated?.Invoke();
+    }
+
+    private void DealDamage(Collider other, float damage)
+    {
+        var hitPosition = transform.position;
 
         var hitType = HitTypes.NormalPoint;
 
         if (other.GetComponent<IWeakPoint>() != null)
             hitType = HitTypes.WeakPoint;
+
+        if (other.TryGetComponent<BaseExplosiveObject>(out var explosive))
+        {
+            explosive.MakeBigExplosion();
+            BecomeSuperHoming();
+            homingState = HomingState.Searching;
+            return;
+        }
 
         if (other.TryGetComponent<ITakeHit>(out var takeHit))
         {
@@ -147,6 +150,7 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
         }
     }
 
+/*
     private void TakeDamageInRadius(float radius, float damage)
     {
         attackHitsContainer = Physics.OverlapSphere(transform.position, 
@@ -177,6 +181,7 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
             attackHitsContainer[i].GetComponent<IMover>()?.AddVelocity((hitTransform.position - transform.position).normalized * ExplosionForce);
         }
     }
+*/
 
     private async UniTask ChangeStateAfterSeconds(HomingState homingState, float seconds)
     {
@@ -188,14 +193,10 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
 
     private GameObject FindFavorableTarget()
     {
-        attackHitsContainer = Physics.OverlapSphere(transform.position, 
-            SearchRadius, layersToHoming).ToList();
+        var targets = Physics.OverlapSphere(transform.position, 
+            SearchRadius, layersToHoming).Select(x => x.gameObject).ToArray();
 
-        var targets = attackHitsContainer
-            .Where(x => x)
-            .Select(x => x.gameObject).ToList();
-
-        for (int i = 0; i < targets.Count; i++)
+        for (int i = 0; i < targets.Length; i++)
         {
             if (targets[i].layer is 11) // PlayerProjectile
                 return targets[i];
@@ -207,14 +208,14 @@ public class BaseHomingObject : MonoCache, IMakeExplosion
         return FindClosestTarget(targets);
     }
 
-    private GameObject FindClosestTarget(List<GameObject> points)
+    private GameObject FindClosestTarget(GameObject[] points)
     {
         if (points == null) return null;
 
         var distance = Mathf.Infinity;
         GameObject closest = null;
 
-        for (int i = 0; i < points.Count; i++)
+        for (int i = 0; i < points.Length; i++)
         {
             var diff = points[i].transform.position - transform.position;
             var curDistance = diff.sqrMagnitude;

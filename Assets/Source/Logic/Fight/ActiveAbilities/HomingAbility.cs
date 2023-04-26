@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HomingAbility : DefaultActiveAbility
@@ -23,5 +21,10 @@ public class HomingAbility : DefaultActiveAbility
         }
         
         homing.Get<Rigidbody>().velocity = (homing.transform.forward + 0.5f * homing.transform.up) * 10;
+    }
+
+    public override AbilityTypes GetType()
+    {
+        return AbilityTypes.Homing;
     }
 }
