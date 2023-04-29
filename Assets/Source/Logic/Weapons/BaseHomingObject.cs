@@ -16,6 +16,7 @@ public enum HomingState
 public class BaseHomingObject : MonoCache
 {
     [SerializeField] private LayerMask layersToHoming;
+    [SerializeField] private LayerMask enemyLayers;
 
     [Header ("General Homing Settings")]
     [SerializeField] private float Damage = 5f;
@@ -123,7 +124,7 @@ public class BaseHomingObject : MonoCache
         ownRigidbody.rotation = Quaternion.LookRotation(ownRigidbody.velocity);
     }
 
-    private void BecomeSuperHoming()
+    public void BecomeSuperHoming()
     {
         if (_isSuperHoming)
             return;
@@ -134,6 +135,7 @@ public class BaseHomingObject : MonoCache
         gameObject.AddComponent<ExplosiveObjectController>();
         _isSuperHoming = true;
         homingState = HomingState.Searching;
+        layersToHoming = enemyLayers;
 
         OnSuperHomingActivated?.Invoke();
     }
@@ -191,7 +193,7 @@ public class BaseHomingObject : MonoCache
             if (_targets[i].gameObject.layer is 11 && !_targets[i].TryGetComponent<BaseHomingObject>(out var homing)) // PlayerProjectile
                 return _targets[i].transform;
             
-            if (_targets[i].gameObject.layer is 12) // EnemyProjectile
+            if (_targets[i].gameObject.layer is 12 && !_targets[i].TryGetComponent<BaseHomingObject>(out var hominge)) // EnemyProjectile
                 return _targets[i].transform;
         }
         

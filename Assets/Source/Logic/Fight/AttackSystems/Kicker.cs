@@ -20,6 +20,10 @@ public class Kicker : MonoCache, IMeleeAttacker
     [SerializeField] private float attackDuration;
     [SerializeField] private float cooldown;
 
+    [Header("Parry")]
+    [SerializeField] private bool allowParry = true;
+    [SerializeField] private float parryProjectileBoostVelocity = 70;
+
     private Collider[] _attackHitsContainer = new Collider[10];
     private List<int> _objectsAlreadyTakeHit = new();
 
@@ -37,6 +41,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     public event Action OnStartAttack;
     public event Action OnEndAttack;
     public event Action OnHit;
+    public event Action OnParry;
 
     private void Awake()
     {
@@ -80,7 +85,12 @@ public class Kicker : MonoCache, IMeleeAttacker
             if (_attackHitsContainer[i] is null)
                 break;
 
-            var hitParentHash = _attackHitsContainer[i].transform.parent.GetHashCode();
+            var hitTransform = _attackHitsContainer[i].transform;
+
+            if (hitTransform.parent is not null)
+                hitTransform = hitTransform.parent;
+            
+            var hitParentHash = hitTransform.GetHashCode();
 
             if (_objectsAlreadyTakeHit.Contains(hitParentHash))
                 continue;
@@ -90,9 +100,22 @@ public class Kicker : MonoCache, IMeleeAttacker
 
             var hitType = HitTypes.NormalPoint;
 
-            if (_attackHitsContainer[i].TryGetComponent<BaseExplosiveObject>(out var explosive))
+            if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseExplosiveObject>(out var explosive))
             {
-                
+                explosive.MakeExplosiveSuper();
+                explosive.RestoreCollisionImmune();
+                var direction = GetAttackDirection();
+                direction.y -= 0.1f;
+                explosive.Rb.velocity = direction * parryProjectileBoostVelocity;
+                OnParry?.Invoke();
+                return;
+            }
+
+            if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseHomingObject>(out var homing))
+            {
+                homing.BecomeSuperHoming();
+                OnParry?.Invoke();
+                return;
             }
 
             if (_attackHitsContainer[i].GetComponent<IWeakPoint>() != null)

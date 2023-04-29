@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using NTC.Global.Cache;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BaseExplosiveObject : MonoCache, IMakeExplosion
 {
     [SerializeField] private LayerMask layersToExplode;
+    [SerializeField] private LayerMask superExplosionLayers;
 
     [SerializeField] private bool explodeOnCollision = true;
     [SerializeField] private bool explodeOnTrigger = true;
@@ -129,6 +131,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     public void MakeExplosiveSuper()
     {
         _isSuper = true;
+        layersToExplode = superExplosionLayers;
     }
 
     private void DamageEveryoneInRadius(float radius)
@@ -162,6 +165,11 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(Damage, hitPosition, hitType);
             _attackHitsContainer[i].GetComponent<IMover>()?.AddVelocity((hitTransform.position - transform.position).normalized * explosionForce);
         }
+    }
+
+    public void RestoreCollisionImmune()
+    {
+        collisionImmuneDuration = 0.1f;
     }
 
     private void OnDrawGizmos()

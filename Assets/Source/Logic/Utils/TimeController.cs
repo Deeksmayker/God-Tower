@@ -1,17 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using NTC.Global.Cache;
 using UnityEngine;
 
-public class TimeController : MonoBehaviour
+public class TimeController : MonoCache
 {
     private List<TimeScaleTimer> _timers = new List<TimeScaleTimer>();
     [SerializeField] private TimeScaleTimer _currentTimer;
     private bool _isPaused = false;
 
-    public void SetTimeScale(float timeScale, float duration)
+    public async UniTask SetTimeScale(float timeScale, float duration)
     {
-        TimeScaleTimer newTimer = new TimeScaleTimer(timeScale, duration);
+        Time.timeScale = timeScale;
+
+        await UniTask.Delay(TimeSpan.FromSeconds(duration), DelayType.UnscaledDeltaTime);
+
+        Time.timeScale = 1;
+
+        /*TimeScaleTimer newTimer = new TimeScaleTimer(timeScale, duration);
         _timers.Add(newTimer);
 
         TimeScaleTimer timerWithMinTimeScale = _timers.OrderBy(t => t.timeScale).FirstOrDefault();
@@ -20,7 +29,7 @@ public class TimeController : MonoBehaviour
         {
             _currentTimer = timerWithMinTimeScale;
             _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
-        }
+        }*/
     }
 
     public void SetPause(bool isPaused)

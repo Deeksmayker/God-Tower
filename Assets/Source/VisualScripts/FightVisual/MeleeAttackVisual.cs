@@ -1,21 +1,24 @@
 ﻿using System;
 using NTC.Global.Cache;
+using NTC.Global.Pool;
 using UnityEngine;
+using UnityEngine.VFX;
 
 
 public class MeleeAttackVisual : MonoCache
 {
     [SerializeField] private Animation animationTarget;
+    [SerializeField] private VisualEffect parryEffect;
     [SerializeField] private bool shakeCamera;
     [SerializeField] private ShakePreset kickShakePreset;
     [SerializeField] private ShakePreset hitShakePreset;
 
     private Animator _animator;
-    private IMeleeAttacker _meleeAttacker;
+    private Kicker _meleeAttacker;
 
     private void Awake()
     {
-        _meleeAttacker = GetComponentInParent<IMeleeAttacker>(); ;
+        _meleeAttacker = GetComponentInParent<Kicker>(); ;
         _animator = GetComponentInParent<Animator>();
 
         if (_meleeAttacker is null)
@@ -29,6 +32,14 @@ public class MeleeAttackVisual : MonoCache
     {
         _meleeAttacker.OnStartPreparingAttack += HandleAttack;
         _meleeAttacker.OnHit += HandleHit;
+        _meleeAttacker.OnParry += HandleParry;
+    }
+
+    protected override void OnDisabled()
+    {
+        _meleeAttacker.OnStartPreparingAttack -= HandleAttack;
+        _meleeAttacker.OnHit -= HandleHit;
+        _meleeAttacker.OnParry -= HandleParry;
     }
     
     private void HandleAttack()
@@ -52,5 +63,13 @@ public class MeleeAttackVisual : MonoCache
         {
             CameraService.Instance.ShakeCamera(hitShakePreset);
         }
+    }
+
+    private void HandleParry()
+    {
+        var effect = NightPool.Spawn(parryEffect, transform.position + _meleeAttacker.GetAttackDirection(),
+            Quaternion.LookRotation(_meleeAttacker.GetAttackDirection()));
+        
+        HandleHit();
     }
 }

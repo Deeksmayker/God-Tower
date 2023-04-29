@@ -135,17 +135,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layersToExplode:
     serializedVersion: 2
-    m_Bits: 3200
+    m_Bits: 7296
+  superExplosionLayers:
+    serializedVersion: 2
+    m_Bits: 7296
   explodeOnCollision: 1
   explodeOnTrigger: 1
   destroyOnExplosion: 1
   disableMeshOnExplosion: 1
+  ExplodeRadius: 5
+  Damage: 10
   explosionForce: 10
   bigExplosionRadiusMultiplier: 2
   explosionDuration: 0.1
   collisionImmuneDuration: 0.1
-  ExplodeRadius: 5
-  Damage: 10
+  Rb: {fileID: 0}
 --- !u!135 &4823301809095505626
 SphereCollider:
   m_ObjectHideFlags: 0
