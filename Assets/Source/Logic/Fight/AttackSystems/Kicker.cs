@@ -90,6 +90,11 @@ public class Kicker : MonoCache, IMeleeAttacker
 
             var hitType = HitTypes.NormalPoint;
 
+            if (_attackHitsContainer[i].TryGetComponent<BaseExplosiveObject>(out var explosive))
+            {
+                
+            }
+
             if (_attackHitsContainer[i].GetComponent<IWeakPoint>() != null)
                 hitType = HitTypes.WeakPoint;
             

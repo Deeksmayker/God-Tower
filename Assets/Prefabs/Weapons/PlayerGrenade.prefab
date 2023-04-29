@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5014089233099295981}
   - component: {fileID: 58734208780015376}
   - component: {fileID: 4503923040044663363}
+  - component: {fileID: -2979397891645313087}
   m_Layer: 11
   m_Name: PlayerGrenade
   m_TagString: Untagged
@@ -137,6 +138,8 @@ MonoBehaviour:
     m_Bits: 3200
   explodeOnCollision: 1
   explodeOnTrigger: 1
+  destroyOnExplosion: 1
+  disableMeshOnExplosion: 1
   explosionForce: 10
   bigExplosionRadiusMultiplier: 2
   explosionDuration: 0.1
@@ -220,3 +223,16 @@ MonoBehaviour:
     type: 3}
   normalColor: {r: 0.745283, g: 0.53169817, b: 0, a: 0}
   bigColor: {r: 1, g: 0.21226418, b: 0.21226418, a: 0}
+--- !u!114 &-2979397891645313087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123938187522302595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c96a81858d23d41ab4fba646ea2970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDespawn: 10

@@ -11,8 +11,6 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
 
     [SerializeField] private float chargingTime;
 
-    private bool _canAttack = true;
-    
     private IAiController _aiController;
     private IActiveAbility _rangeAbility;
 
@@ -38,16 +36,6 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
         }
     }
 
-    public void AllowAttack()
-    {
-        _canAttack = true;
-    }
-
-    public void DisallowAttack()
-    {
-        _canAttack = false;
-    }
-
     public float GetChargingTime()
     {
         return chargingTime;
@@ -55,6 +43,6 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
 
     public bool NeedToAttack()
     {
-        return _canAttack && Physics.CheckSphere(transform.position, attackRange, layersToShoot);
+        return _aiController.CanAttack();
     }
 }

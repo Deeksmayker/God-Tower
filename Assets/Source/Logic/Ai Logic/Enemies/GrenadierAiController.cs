@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using NTC.Global.Cache;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 public class GrenadierAiController : MonoCache, IAiController

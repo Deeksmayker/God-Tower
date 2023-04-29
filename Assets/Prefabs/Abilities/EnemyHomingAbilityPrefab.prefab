@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5066929638657381884}
   - component: {fileID: 5066929638657381885}
-  - component: {fileID: -3645287181055256855}
-  - component: {fileID: -1912884286103450359}
+  - component: {fileID: 4910407646500050656}
   m_Layer: 0
-  m_Name: HomingAbilityPrefab
+  m_Name: EnemyHomingAbilityPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5f64b2981525f4eb377e8666492322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infinite: 0
+  infinite: 1
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
   damage: 1
@@ -55,10 +54,10 @@ MonoBehaviour:
   dumpingShootsDelay: 0
   abilityLifetime: 10
   cooldown: 0.2
-  HomingPrefab: {fileID: 2340060840547580004, guid: 506cbc46fe0641041bd4ef3c87e91e48,
+  HomingPrefab: {fileID: 2340060840547580004, guid: 460953faac5188e4eacacd786eaedf88,
     type: 3}
   maxSpread: 30
---- !u!114 &-3645287181055256855
+--- !u!114 &4910407646500050656
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,18 +71,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectOnShoot: {fileID: 2734764703766690187, guid: 649938c78d3b25445a55c9cc433326e4,
     type: 3}
---- !u!114 &-1912884286103450359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5066929638657381886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 043900948fd64221b3d2f377a5c89ed7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shakePreset: {fileID: 11400000, guid: 5a1fc536a4e738c43b85459284ee390b, type: 2}
-  separateShakingOnDump: 1
-  shakePresetOnDump: {fileID: 11400000, guid: 21fadc19b47ce974b9e8d8217e9262ad, type: 2}

@@ -14,4 +14,5 @@ public interface IHealthHandler
     public void RemoveHealth(float removeValue);
     public void SetHealth(float value);
     public float GetHealth();
+    public bool IsDead();
 }

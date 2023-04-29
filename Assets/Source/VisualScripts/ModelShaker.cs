@@ -9,6 +9,7 @@ public class ModelShaker : MonoCache
 {
     [SerializeField] private ShakePreset rapidShakePreset;
     [SerializeField] private ShakePreset durableShakePreset;
+    [SerializeField] private bool makeDurableShakeOnStart;
     
     private float _rapidTimer;
     
@@ -28,6 +29,12 @@ public class ModelShaker : MonoCache
     private void Awake()
     {
         _originalPosition = transform.localPosition;
+
+        if (makeDurableShakeOnStart)
+        {
+            StartDurableShaking();
+            StartDurableShakingRotation();
+        }
     }
 
     /*protected override void Run()
@@ -66,12 +73,28 @@ public class ModelShaker : MonoCache
 
     public void StartDurableShaking()
     {
+        if (!durableShakePreset.positionShake.isOn)
+            return;
         _durableShaking = true;
         AnimationShortCuts.ShakePositionAnimation(transform, durableShakePreset).OnComplete(() =>
         {
             if (_durableShaking)
             {
                 StartDurableShaking();
+            }
+        });
+    }
+    
+    public void StartDurableShakingRotation()
+    {
+        if (!durableShakePreset.rotationShake.isOn)
+            return;
+        _durableShaking = true;
+        AnimationShortCuts.ShakeRotationAnimation(transform, durableShakePreset).OnComplete(() =>
+        {
+            if (_durableShaking)
+            {
+                StartDurableShakingRotation();
             }
         });
     }

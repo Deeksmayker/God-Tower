@@ -5,6 +5,8 @@ public class ExplosiveObjectController : MonoCache
 {
     [SerializeField] private bool explodeOnCollision, explodeOnTrigger = true;
 
+    [SerializeField] private bool makeExplosiveSuper = true;
+
     private BaseExplosiveObject connectedExplosiveObject;
 
     protected override void OnEnabled()
@@ -22,13 +24,19 @@ public class ExplosiveObjectController : MonoCache
     {
         if (!explodeOnCollision)
             return;
-        connectedExplosiveObject.MakeBigExplosion();
+        
+        if (makeExplosiveSuper)
+            connectedExplosiveObject.MakeExplosiveSuper();
+        connectedExplosiveObject.Explode();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!explodeOnTrigger)
             return;
-        connectedExplosiveObject.MakeBigExplosion();
+        
+        if (makeExplosiveSuper)
+            connectedExplosiveObject.MakeExplosiveSuper();
+        connectedExplosiveObject.Explode();
     }
 }

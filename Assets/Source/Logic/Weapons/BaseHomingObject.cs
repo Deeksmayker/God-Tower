@@ -23,6 +23,7 @@ public class BaseHomingObject : MonoCache
     [SerializeField] private float SecondBeforeHoming = 0.5f;
     [SerializeField] private float Damping = 0.8f;
     [SerializeField] private float SearchRadius = 500f;
+    [SerializeField] private bool lookForProjectiles = true;
     
     [Header ("Super Homing Settings")]
     [SerializeField] private float SuperHomingDamage = 2f;
@@ -31,24 +32,27 @@ public class BaseHomingObject : MonoCache
     [SerializeField] private float ExplosionRadius = 5f;
     [SerializeField] private BaseExplosiveObject explosivePrefab;
 
+    private Collider[] _targets = new Collider[10];
+    
+    private static Dictionary<BaseHomingObject, int> _sHomingTargetsHash = new();
+
+    private bool _isSuperHoming;
+    
     public event Action OnDestroy;
     public event Action OnChangeState;
     public event Action OnSuperHomingActivated;
 
     private HomingState homingState;
-    private bool isSuperHoming;
-    
+
     private Rigidbody ownRigidbody;
-    private Collider ownCollider;
     private ITakeHit hitTakerComponent;
 
-    private GameObject target;
+    private Transform target;
     
     private void Awake()
     {
         hitTakerComponent = Get<ITakeHit>();
         ownRigidbody = Get<Rigidbody>();
-        ownCollider = Get<Collider>();
     }
 
     protected override void OnEnabled()
@@ -61,6 +65,8 @@ public class BaseHomingObject : MonoCache
     protected override void OnDisabled()
     {
         hitTakerComponent.OnTakeHit -= HandleTakeHit;
+
+        _sHomingTargetsHash.Remove(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -78,13 +84,17 @@ public class BaseHomingObject : MonoCache
 
             if (target)
             {
-                ownCollider.isTrigger = true;
+                if (_sHomingTargetsHash.ContainsKey(this))
+                    _sHomingTargetsHash[this] = target.GetHashCode();
+                else
+                    _sHomingTargetsHash.Add(this, target.GetHashCode());
+                //ownCollider.isTrigger = true;
                 homingState = HomingState.Hunting;
             }
             else
             {
-                OnDestroy?.Invoke();
-                Destroy(gameObject);
+                /*OnDestroy?.Invoke();
+                Destroy(gameObject);*/
             }
         }
 
@@ -95,7 +105,6 @@ public class BaseHomingObject : MonoCache
             else
             {
                 homingState = HomingState.Searching;
-                ownRigidbody.velocity *= 0f; // Обнуляем ускорение, чтобы не выходило на орбиту, а резко меняло направление.
             }
         }
     }
@@ -105,10 +114,10 @@ public class BaseHomingObject : MonoCache
         BecomeSuperHoming();
     }
 
-    private void DirectHomingToTarget(GameObject target)
+    private void DirectHomingToTarget(Transform targetTransform)
     {
-        var direction = target.transform.position - transform.position;
-        ownRigidbody.velocity += direction * Speed * Time.fixedDeltaTime;
+        var direction = targetTransform.position - transform.position;
+        ownRigidbody.AddForce(Speed * Time.fixedDeltaTime * direction, ForceMode.Acceleration);
         ownRigidbody.velocity *= Mathf.Clamp01(1f - Damping * Time.fixedDeltaTime);
 
         ownRigidbody.rotation = Quaternion.LookRotation(ownRigidbody.velocity);
@@ -116,16 +125,20 @@ public class BaseHomingObject : MonoCache
 
     private void BecomeSuperHoming()
     {
+        if (_isSuperHoming)
+            return;
+        
         Speed *= SuperHomingSpeed;
         Damage *= SuperHomingDamage;
-        isSuperHoming = true;
         NightPool.Spawn(explosivePrefab, transform);
         gameObject.AddComponent<ExplosiveObjectController>();
+        _isSuperHoming = true;
+        homingState = HomingState.Searching;
 
         OnSuperHomingActivated?.Invoke();
     }
 
-    private void DealDamage(Collider other, float damage)
+    private async UniTask DealDamage(Collider other, float damage)
     {
         var hitPosition = transform.position;
 
@@ -136,9 +149,9 @@ public class BaseHomingObject : MonoCache
 
         if (other.TryGetComponent<BaseExplosiveObject>(out var explosive))
         {
-            explosive.MakeBigExplosion();
+            explosive.MakeExplosiveSuper();
+            explosive.Explode();
             BecomeSuperHoming();
-            homingState = HomingState.Searching;
             return;
         }
 
@@ -146,77 +159,63 @@ public class BaseHomingObject : MonoCache
         {
             takeHit.TakeHit(damage, hitPosition, hitType);
             OnDestroy?.Invoke();
+            await UniTask.NextFrame();
             Destroy(gameObject);            
         }
     }
 
-/*
-    private void TakeDamageInRadius(float radius, float damage)
-    {
-        attackHitsContainer = Physics.OverlapSphere(transform.position, 
-            SearchRadius, layersToHoming).ToList();
-        
-        for (var i = 0; i < attackHitsContainer.Count; i++)
-        {
-            if (attackHitsContainer[i] is null)
-                break;
-            
-            var hitTransform = attackHitsContainer[i].transform;
-            var hitHash = hitTransform.parent == null
-                ? hitTransform.GetHashCode()
-                : hitTransform.parent.GetHashCode();
-
-            if (objectsAlreadyTakeHit.Contains(hitHash))
-                continue;
-            objectsAlreadyTakeHit.Add(hitHash);
-            
-            var hitPosition = attackHitsContainer[i].ClosestPoint(transform.position);
-
-            var hitType = HitTypes.NormalPoint;
-
-            if (attackHitsContainer[i].GetComponent<IWeakPoint>() != null)
-                hitType = HitTypes.WeakPoint;
-            
-            attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(Damage, hitPosition, hitType);
-            attackHitsContainer[i].GetComponent<IMover>()?.AddVelocity((hitTransform.position - transform.position).normalized * ExplosionForce);
-        }
-    }
-*/
-
-    private async UniTask ChangeStateAfterSeconds(HomingState homingState, float seconds)
+    private async UniTask ChangeStateAfterSeconds(HomingState newState, float seconds)
     {
         await UniTask.Delay(TimeSpan.FromSeconds(seconds));
+
+        /*if (homingState >= newState)
+            return;*/
         
-        this.homingState = homingState;
+        homingState = newState;
         OnChangeState?.Invoke();
     }
 
-    private GameObject FindFavorableTarget()
+    private Transform FindFavorableTarget()
     {
-        var targets = Physics.OverlapSphere(transform.position, 
-            SearchRadius, layersToHoming).Select(x => x.gameObject).ToArray();
+        Physics.OverlapSphereNonAlloc(transform.position,
+            SearchRadius, _targets, layersToHoming);
 
-        for (int i = 0; i < targets.Length; i++)
+        if (!lookForProjectiles)
+            return FindClosestTarget(_targets);
+        
+        for (int i = 0; i < _targets.Length; i++)
         {
-            if (targets[i].layer is 11) // PlayerProjectile
-                return targets[i];
+            if (_targets[i] == null || _sHomingTargetsHash.ContainsValue(_targets[i].transform.GetHashCode()))
+                continue;
             
-            if (targets[i].layer is 12) // EnemyProjectile
-                return targets[i];
+            if (_targets[i].gameObject.layer is 11 && !_targets[i].TryGetComponent<BaseHomingObject>(out var homing)) // PlayerProjectile
+                return _targets[i].transform;
+            
+            if (_targets[i].gameObject.layer is 12) // EnemyProjectile
+                return _targets[i].transform;
         }
         
-        return FindClosestTarget(targets);
+        return FindClosestTarget(_targets);
     }
 
-    private GameObject FindClosestTarget(GameObject[] points)
+    private Transform FindClosestTarget(Collider[] points)
     {
         if (points == null) return null;
 
         var distance = Mathf.Infinity;
-        GameObject closest = null;
+        Collider closest = null;
 
         for (int i = 0; i < points.Length; i++)
         {
+            if (points[i] == null
+                || _sHomingTargetsHash.ContainsValue(points[i].transform.GetHashCode())
+                || points[i].TryGetComponent<BaseHomingObject>(out var homing))
+                continue;
+
+            var healthHandler = points[i].GetComponentInParent<IHealthHandler>();
+            if (healthHandler.IsDead())
+                continue;
+            
             var diff = points[i].transform.position - transform.position;
             var curDistance = diff.sqrMagnitude;
 
@@ -227,6 +226,6 @@ public class BaseHomingObject : MonoCache
             }
         }
         
-        return closest;
+        return closest == null ? null : closest.transform;
     }
 }

@@ -78,6 +78,9 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void StartDying()
     {
+        if (!canDie)
+            return;
+        
         _dying = true;
         _dyingTimer = dyingDuration;
         OnDying?.Invoke();
@@ -124,5 +127,5 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         return health;
     }
 
-
+    public bool IsDead() => _dying;
 }

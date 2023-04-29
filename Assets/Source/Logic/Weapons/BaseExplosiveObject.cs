@@ -12,12 +12,17 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     [SerializeField] private bool destroyOnExplosion = true;
     [SerializeField] private bool disableMeshOnExplosion = true;
 
+    [SerializeField] private float ExplodeRadius = 5;
+    [SerializeField] private float Damage = 10;
+
     [SerializeField] private float explosionForce;
     [SerializeField] private float bigExplosionRadiusMultiplier = 2;
     [SerializeField, Min(0.0001f)] private float explosionDuration;
     [SerializeField] private float collisionImmuneDuration = 0.1f;
 
     private float _timer;
+
+    private bool _isSuper;
 
     private ITakeHit _hitTakerComponent;
 
@@ -27,12 +32,14 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     public event Action<float> OnBigExplosionWithRadius;
     public event Action<float> OnExplosionWithRadius;
     
-    public float ExplodeRadius = 1f;
-    public float Damage = 10f;
+    
+
+    public Rigidbody Rb;
 
     private void Awake()
     {
         _hitTakerComponent = Get<ITakeHit>();
+        Rb = Get<Rigidbody>();
     }
 
     protected override void OnEnabled()
@@ -69,8 +76,8 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         if (_timer > 0)
             return;
         
-        ExplodeRadius *= 2;
-        MakeBigExplosion();
+        MakeExplosiveSuper();
+        Explode();
     }
     
     private void OnCollisionEnter(Collision col)
@@ -78,7 +85,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         if (!explodeOnCollision || collisionImmuneDuration > 0)
             return;
         
-        MakeNormalExplosion();
+        Explode();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -86,14 +93,19 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         if (!explodeOnTrigger)
             return;
 
-        MakeNormalExplosion();
+        Explode();
     }
 
-    public void MakeNormalExplosion()
+    public void Explode()
     {
-        OnExplosionWithRadius?.Invoke(ExplodeRadius);
+        if (_isSuper)
+            OnBigExplosionWithRadius?.Invoke(ExplodeRadius * bigExplosionRadiusMultiplier);
+        else
+            OnExplosionWithRadius?.Invoke(ExplodeRadius);
         _timer = explosionDuration;
-        DamageEveryoneInRadius(ExplodeRadius);
+        
+        
+        DamageEveryoneInRadius(_isSuper ? ExplodeRadius * bigExplosionRadiusMultiplier : ExplodeRadius);
 
         if (disableMeshOnExplosion)
         {
@@ -101,7 +113,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         }
     }
 
-    public void MakeBigExplosion()
+    /*public void MakeBigExplosion()
     {
         ExplodeRadius *= 2;
         OnBigExplosionWithRadius?.Invoke(ExplodeRadius);
@@ -112,6 +124,11 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         {
             GetComponentInChildren<MeshRenderer>().enabled = false;
         }
+    }*/
+
+    public void MakeExplosiveSuper()
+    {
+        _isSuper = true;
     }
 
     private void DamageEveryoneInRadius(float radius)

@@ -8,7 +8,6 @@ using UnityEngine.VFX;
 public class AbilityShootEffectMaker : MonoCache
 {
     [SerializeField] private VisualEffect effectOnShoot;
-    [SerializeField] private bool inheritSpeed = true;
 
     private IActiveAbility _ability;
     private IMover _mover;

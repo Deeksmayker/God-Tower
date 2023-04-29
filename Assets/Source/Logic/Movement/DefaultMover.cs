@@ -31,7 +31,7 @@ public class DefaultMover : MonoCache, IMover
     {
         _ch = Get<CharacterController>();
         _aiAgent = Get<NavMeshAgent>();
-
+        
         if (_ch != null)
             _groundCheckerHeightRelatedPosition = groundCheckPoint.localPosition.y / _ch.height;
     }

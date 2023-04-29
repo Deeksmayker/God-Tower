@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3777070023183891386}
   - component: {fileID: 7719287496760662528}
   - component: {fileID: 1110353517650118654}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,8 @@ GameObject:
   - component: {fileID: 2340060840547580004}
   - component: {fileID: 7876663646525903667}
   - component: {fileID: 7296110070262661785}
-  m_Layer: 0
+  - component: {fileID: -5515722370655133362}
+  m_Layer: 11
   m_Name: Homing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,10 +163,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6272
   Damage: 5
-  Speed: 10
+  Speed: 1000
   SecondBeforeHoming: 0.5
-  Damping: 1
+  Damping: 2
   SearchRadius: 500
+  lookForProjectiles: 1
   SuperHomingDamage: 2
   SuperHomingSpeed: 2
   ExplosionForce: 10
@@ -192,7 +194,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7348562710896785287}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b945b46fd10431844841d3e9773697b5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -208,3 +210,16 @@ CapsuleCollider:
   m_Height: 4.81
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5515722370655133362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348562710896785287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c96a81858d23d41ab4fba646ea2970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDespawn: 10
