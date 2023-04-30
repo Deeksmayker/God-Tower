@@ -152,6 +152,7 @@ MonoBehaviour:
   noAbilityColor: {r: 2.4913445, g: 2.4913445, b: 2.4913445, a: 0}
   laserAbilityColor: {r: 0, g: 2.1879835, b: 2.1879835, a: 0}
   grenadeAbilityColor: {r: 3.7358491, g: 0.78009593, b: 0, a: 0}
+  homingAbilityColor: {r: 0.8831904, g: 0, b: 2.008084, a: 0}
 --- !u!114 &2041626863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5634,6 +5635,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationTarget: {fileID: 8970179928658585028}
+  parryEffect: {fileID: 2734764703766690187, guid: 027692673381ac14eafd31385cc49e16,
+    type: 3}
   shakeCamera: 1
   kickShakePreset: {fileID: 11400000, guid: be7bd7213b9642d469c226709bcfae93, type: 2}
   hitShakePreset: {fileID: 11400000, guid: 719def726682805499e6230696fdecf9, type: 2}
@@ -6580,6 +6583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rapidShakePreset: {fileID: 11400000, guid: 1424216921372f84781f49fb7bbb05c7, type: 2}
   durableShakePreset: {fileID: 11400000, guid: 6c4a5ad0bae6bd84a916d777ee8f4f44, type: 2}
+  makeDurableShakeOnStart: 0
 --- !u!114 &2185268750498220861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6920,6 +6924,7 @@ GameObject:
   - component: {fileID: 2131039309}
   - component: {fileID: 2131039310}
   - component: {fileID: 3998808298923127483}
+  - component: {fileID: 2131039314}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -6989,8 +6994,10 @@ MonoBehaviour:
     type: 3}
   grenadeAbilityPrefab: {fileID: 3232058061232070227, guid: 06f3cea25764ba048a1c32d55a377e3a,
     type: 3}
-  leftAbility: 1
-  rightAbility: 2
+  homingAbilityPrefab: {fileID: 5066929638657381886, guid: e204781df02cc464eaa807265e86b6cc,
+    type: 3}
+  leftAbility: 3
+  rightAbility: 1
   infiniteAbilities: 1
 --- !u!114 &3998808300210842285
 MonoBehaviour:
@@ -7049,6 +7056,8 @@ MonoBehaviour:
   preparingTime: 0.02
   attackDuration: 0.3
   cooldown: 0.5
+  allowParry: 1
+  parryProjectileBoostVelocity: 70
 --- !u!114 &3998808300210842283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7199,14 +7208,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 3998808298746309513}
-  m_XSensitivity: 0.2
-  m_YSensitivity: 0.2
+  m_XSensitivity: 0.1
+  m_YSensitivity: 0.1
   m_ClampVerticalRotation: 1
   m_MinimumX: -90
   m_MaximumX: 90
   m_Smooth: 0
   m_SmoothTime: 5
   m_LockCursor: 1
+--- !u!114 &2131039314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41afc8f7e6d400bb14e4f65e07ff8ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeStopOnKickHit: 0.05
+  timeStopOnParry: 0.1
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0
@@ -8016,6 +8039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rapidShakePreset: {fileID: 11400000, guid: 1424216921372f84781f49fb7bbb05c7, type: 2}
   durableShakePreset: {fileID: 11400000, guid: 6c4a5ad0bae6bd84a916d777ee8f4f44, type: 2}
+  makeDurableShakeOnStart: 0
 --- !u!114 &7717996820641030923
 MonoBehaviour:
   m_ObjectHideFlags: 0

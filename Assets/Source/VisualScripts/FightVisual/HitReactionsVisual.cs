@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Global.Animations;
 using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
@@ -8,13 +9,17 @@ using UnityEngine.VFX;
 
 public class HitReactionsVisual : MonoCache
 {
-    [SerializeField] private float colorChangeDuration;
+    [SerializeField] private bool changeMeshesColor = true;
+    
+    [SerializeField] private float hitChangeColorTime = 0.4f;
+    
+    [Header("Visual Effects")]
     [SerializeField] private VisualEffect hitVisualEffect;
     [SerializeField] private VisualEffect dieVisualEffect;
-    
     [SerializeField] private VisualEffect auraEffect;
-    [SerializeField] private float hitChangeColorTime = 0.4f;
 
+    [SerializeField] private ShakePreset hitShake;
+    
     private bool _dying;
     
     private Color _originalMeshColor;
@@ -23,6 +28,7 @@ public class HitReactionsVisual : MonoCache
     private MaterialPropertyBlock _propertyBlock;
     
     private MeshRenderer[] _meshRenderers;
+    private SkinnedMeshRenderer _skinnedMeshRenderer;
     private ITakeHit[] _hitTakers;
     private IHealthHandler _healthHandler;
 
@@ -31,6 +37,7 @@ public class HitReactionsVisual : MonoCache
         _meshRenderers = GetComponentsInChildren<MeshRenderer>();
         _hitTakers = GetComponentsInChildren<ITakeHit>();
         _healthHandler = GetComponentInParent<IHealthHandler>();
+        _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
         _propertyBlock = new MaterialPropertyBlock();
     }
@@ -40,9 +47,15 @@ public class HitReactionsVisual : MonoCache
         if (auraEffect != null)
             _originalAuraColor = auraEffect.GetVector4("Color");
         
-        if (_meshRenderers.Length > 0)
+        if (changeMeshesColor && _meshRenderers.Length > 0)
         {
             _meshRenderers[0].GetPropertyBlock(_propertyBlock);
+            _originalMeshColor = _propertyBlock.GetColor("Color");
+        }
+
+        if (_skinnedMeshRenderer)
+        {
+            _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
             _originalMeshColor = _propertyBlock.GetColor("Color");
         }
     }
@@ -74,13 +87,23 @@ public class HitReactionsVisual : MonoCache
         _dying = true;
         SetAuraColor(Color.white);
         
-        for (var i = 0; i < _meshRenderers.Length; i++)
+        if (changeMeshesColor)
+            for (var i = 0; i < _meshRenderers.Length; i++)
+            {
+                _meshRenderers[i].GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", Color.white);
+
+                _propertyBlock.SetColor("_EmissionColor", Color.white * 3);
+                _meshRenderers[i].SetPropertyBlock(_propertyBlock);
+            }
+
+        if (_skinnedMeshRenderer)
         {
-            _meshRenderers[i].GetPropertyBlock(_propertyBlock);
+            _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetColor("_BaseColor", Color.white);
 
             _propertyBlock.SetColor("_EmissionColor", Color.white * 3);
-            _meshRenderers[i].SetPropertyBlock(_propertyBlock);
+            _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
         }
     }
 
@@ -98,19 +121,31 @@ public class HitReactionsVisual : MonoCache
     {
         if (hitVisualEffect != null)
             NightPool.Spawn(hitVisualEffect, pos, Quaternion.identity);
+
+        AnimationShortCuts.ShakePositionAnimation(transform, hitShake);
         
         if (_dying)
             return;
 
         SetAuraColor(Color.white);
         
-        for (var i = 0; i < _meshRenderers.Length; i++)
+        if (changeMeshesColor)
+            for (var i = 0; i < _meshRenderers.Length; i++)
+            {
+                _meshRenderers[i].GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", Color.white);
+
+                _propertyBlock.SetColor("_EmissionColor", Color.white * 3);
+                _meshRenderers[i].SetPropertyBlock(_propertyBlock);
+            }
+
+        if (_skinnedMeshRenderer)
         {
-            _meshRenderers[i].GetPropertyBlock(_propertyBlock);
+            _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetColor("_BaseColor", Color.white);
 
             _propertyBlock.SetColor("_EmissionColor", Color.white * 3);
-            _meshRenderers[i].SetPropertyBlock(_propertyBlock);
+            _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
         }
 
         await UniTask.Delay(TimeSpan.FromSeconds(hitChangeColorTime));
@@ -120,13 +155,23 @@ public class HitReactionsVisual : MonoCache
         
         SetAuraColor(_originalAuraColor);
         
-        for (var i = 0; i < _meshRenderers.Length; i++)
+        if (changeMeshesColor)
+            for (var i = 0; i < _meshRenderers.Length; i++)
+            {
+                _meshRenderers[i].GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", Color.black);
+
+                _propertyBlock.SetColor("_EmissionColor", Color.black);
+                _meshRenderers[i].SetPropertyBlock(_propertyBlock);
+            }
+        
+        if (_skinnedMeshRenderer)
         {
-            _meshRenderers[i].GetPropertyBlock(_propertyBlock);
+            _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetColor("_BaseColor", Color.black);
 
             _propertyBlock.SetColor("_EmissionColor", Color.black);
-            _meshRenderers[i].SetPropertyBlock(_propertyBlock);
+            _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
         }
     }
 
@@ -136,17 +181,5 @@ public class HitReactionsVisual : MonoCache
             return;
         
         auraEffect.SetVector4("Color", color);
-    }
-
-    private void HandleWeakPointHit(float baseDamage)
-    {
-        for (var i = 0; i < _meshRenderers.Length; i++)
-        {
-            _meshRenderers[i].GetPropertyBlock(_propertyBlock);
-            _propertyBlock.SetColor("_BaseColor", Color.red);
-            _propertyBlock.SetColor("_EmissionColor", Color.red * 3);
-            //propertyBlock.SetColor("_Emission", Color.red);
-            _meshRenderers[i].SetPropertyBlock(_propertyBlock);
-        }
     }
 }
