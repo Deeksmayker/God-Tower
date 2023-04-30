@@ -48,56 +48,57 @@ public class PausePanelUi : MonoBehaviour
         closeSettingsWindowButton.onClick.RemoveListener(CloseSettingsWindow);
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && _isWindowOpen == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && !_isWindowOpen)
         {
             // stop time
+            TimeController.Instance.SetPause(true);
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             OpenPauseWindow();
-            TimeController.Instance.SetPause(true);
             _isWindowOpen = true;
         }
     }
 
-    public void SetSliderSound(float value)
+    private void SetSliderSound(float value)
     {
         soundValueText.text = value.ToString();
     }
 
-    public void SetSliderSense(float value)
+    private void SetSliderSense(float value)
     {
         senseValueText.text = value.ToString();
     }
 
-    public void OpenPauseWindow()
+    private void OpenPauseWindow()
     {
         pauseWindow.SetActive(true);
     }
 
-    public void ClosePauseWindow()
+    private void ClosePauseWindow()
     {
-        Debug.Log("!!!");
         pauseWindow.SetActive(false);
     }
 
-    public void CloseSettingsWindow()
+    private void CloseSettingsWindow()
     {
         settingsWindow.SetActive(false);
         OpenPauseWindow();
     }
 
-    public void ResumeGame()
+    private void ResumeGame()
     {
-        _isWindowOpen = false;
         // resume time
         TimeController.Instance.SetPause(false);
+
+        _isWindowOpen = false;
         Cursor.visible = false;
         ClosePauseWindow();
     }
 
-    public void OpenSettings()
+    private void OpenSettings()
     {
         ClosePauseWindow();
         settingsWindow.SetActive(true);
@@ -105,7 +106,7 @@ public class PausePanelUi : MonoBehaviour
         SetSliderSound(soundSlider.value);
     }
 
-    public void Exit()
+    private void Exit()
     {
         Application.Quit();
     }
