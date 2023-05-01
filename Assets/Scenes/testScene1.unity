@@ -6411,6 +6411,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 261712990, guid: efcca681c6aa2c64db2c7085334d7c9c, type: 3}
+      propertyPath: dumpLoadedEffect
+      value: 
+      objectReference: {fileID: 2734764703766690187, guid: 3bf47eeb9f6f7f54dbec3b6b54e02f86,
+        type: 3}
     - target: {fileID: 3998808300210840913, guid: efcca681c6aa2c64db2c7085334d7c9c,
         type: 3}
       propertyPath: m_RootOrder
@@ -6470,6 +6475,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3998808300210842285, guid: efcca681c6aa2c64db2c7085334d7c9c,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

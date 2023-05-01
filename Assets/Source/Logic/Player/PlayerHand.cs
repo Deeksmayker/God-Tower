@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class PlayerHand : MonoCache
 {
-    [SerializeField] private ParticleSystem dumpLoadedParticles;
-
     [HideInInspector] public Animator HandAnimator;
     [HideInInspector] public SkinnedMeshRenderer HandMeshRenderer;
+
+    private AbilityTypes _abilityType = AbilityTypes.None;
     
     private ModelShaker _shaker;
     
@@ -17,6 +17,7 @@ public class PlayerHand : MonoCache
     public Action<PlayerHand> OnHandEndCharging;
     public Action<PlayerHand> OnHandEmpty;
     public Action<PlayerHand, AbilityTypes> OnHandNewAbility;
+    public Action<PlayerHand, AbilityTypes> OnHandDumpLoaded;
     
     protected AbilitiesHandler _abilitiesHandler;
 
@@ -45,16 +46,19 @@ public class PlayerHand : MonoCache
 
     public void HandleAbilityDumpLoaded()
     {
-        NightPool.Spawn(dumpLoadedParticles, transform.position);
+        OnHandDumpLoaded?.Invoke(this, _abilityType);
     }
 
     public void HandleAbilityEmpty()
     {
+        _abilityType = AbilityTypes.None;
         OnHandEmpty?.Invoke(this);
     }
 
     protected void HandleNewAbility(IActiveAbility ability)
     {
+        _abilityType = ability.GetType();
+        
         ability.OnPerform += HandleAbilityPerforming;
         ability.OnStartHolding += HandleAbilityCharging;
         ability.OnEndHolding += HandleAbilityEndCharging;

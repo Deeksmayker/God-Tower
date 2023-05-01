@@ -1,13 +1,17 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
+using NTC.Global.Pool;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 using UnityEngine.XR;
 
 public class HandsVisual : MonoCache
 {
+    [SerializeField] private VisualEffect dumpLoadedEffect;
+    
     [Header("Rapid hands shaking")]
     [SerializeField] private float rapidShakeDuration;
     [SerializeField] private float rapidShakeIntensity;
@@ -46,6 +50,7 @@ public class HandsVisual : MonoCache
             _playerHands[i].OnHandNewAbility += HandleAbilityChangeOnHand;
             _playerHands[i].OnHandEmpty += HandleEmptyHandAbility;
             _playerHands[i].OnHandEndCharging += HandleEndChargingAbility;
+            _playerHands[i].OnHandDumpLoaded += HandleAbilityDumpLoaded;
         }
     }
 
@@ -58,6 +63,7 @@ public class HandsVisual : MonoCache
             _playerHands[i].OnHandNewAbility -= HandleAbilityChangeOnHand;
             _playerHands[i].OnHandEmpty -= HandleEmptyHandAbility;
             _playerHands[i].OnHandEndCharging -= HandleEndChargingAbility;
+            _playerHands[i].OnHandDumpLoaded -= HandleAbilityDumpLoaded;
         }
     }
 
@@ -86,6 +92,30 @@ public class HandsVisual : MonoCache
             case AbilityTypes.Homing:
                 ChangeHandAnimation(hand, AnimationConstants.HomingAbility);
                 ChangeHandColor(hand, homingAbilityColor);
+                return;
+        }
+    }
+
+    private void HandleAbilityDumpLoaded(PlayerHand hand, AbilityTypes type)
+    {
+        var handTransform = hand.transform;
+        hand.GetShaker()?.StartRapidShaking();
+        switch (type)
+        {
+            case AbilityTypes.Laser:
+                var effect1 = NightPool.Spawn(dumpLoadedEffect, handTransform.position,
+                    handTransform.rotation);
+                effect1.SetVector4("Color", laserAbilityColor);
+                return;
+            case AbilityTypes.Grenade:
+                var effect2 = NightPool.Spawn(dumpLoadedEffect, handTransform.position,
+                    handTransform.rotation);
+                effect2.SetVector4("Color", grenadeAbilityColor);
+                return;
+            case AbilityTypes.Homing:
+                var effect3 = NightPool.Spawn(dumpLoadedEffect, handTransform.position,
+                    handTransform.rotation);
+                effect3.SetVector4("Color", homingAbilityColor);
                 return;
         }
     }
