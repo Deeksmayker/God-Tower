@@ -143,6 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9905048694e748418864cc74e4c00b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dumpLoadedEffect: {fileID: 2734764703766690187, guid: 3bf47eeb9f6f7f54dbec3b6b54e02f86,
+    type: 3}
   rapidShakeDuration: 0.2
   rapidShakeIntensity: 100
   rapidShakeAmount: 0.1
@@ -6596,8 +6598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7e8588317749da873659463438aa23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dumpLoadedParticles: {fileID: 7273538771712922065, guid: fdb629b02526b534ab38772065d976c2,
-    type: 3}
   HandAnimator: {fileID: 0}
   HandMeshRenderer: {fileID: 0}
 --- !u!114 &206257263
@@ -7014,7 +7014,7 @@ MonoBehaviour:
   groundCheckPoint: {fileID: 421572061}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
   groundCheckRadius: 0.45
   alignMovementWithRotation: 1
   targetHorizontalSpeed: 20
@@ -8052,8 +8052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62853142e5a5445ea2758fd4af36bf54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dumpLoadedParticles: {fileID: 7273538771712922065, guid: fdb629b02526b534ab38772065d976c2,
-    type: 3}
   HandAnimator: {fileID: 0}
   HandMeshRenderer: {fileID: 0}
 --- !u!114 &4905871059429823450

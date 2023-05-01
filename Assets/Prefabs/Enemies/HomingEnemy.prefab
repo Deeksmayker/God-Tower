@@ -1946,6 +1946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442090942055}
+  - component: {fileID: 703094130}
   m_Layer: 0
   m_Name: VisualStuff
   m_TagString: Untagged
@@ -1969,6 +1970,20 @@ Transform:
   m_Father: {fileID: 1387883442111091378}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &703094130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387883442090942054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d424c11d0b348543b6496bf760ae3f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightConePrefab: {fileID: 7759695285783371050, guid: 5e7e91d46ef1bd448ba8a51d625f3f66,
+    type: 3}
 --- !u!1 &1387883442104534016
 GameObject:
   m_ObjectHideFlags: 0

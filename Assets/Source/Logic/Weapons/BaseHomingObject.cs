@@ -130,7 +130,7 @@ public class BaseHomingObject : MonoCache
             return;
         
         Speed *= SuperHomingSpeed;
-        Damage *= SuperHomingDamage;
+        //Damage *= SuperHomingDamage;
         NightPool.Spawn(explosivePrefab, transform);
         gameObject.AddComponent<ExplosiveObjectController>();
         _isSuperHoming = true;
