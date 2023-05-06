@@ -8,9 +8,17 @@ using UnityEngine;
 
 public class TimeController : MonoCache
 {
+    public static TimeController Instance;
+
     private List<TimeScaleTimer> _timers = new List<TimeScaleTimer>();
     [SerializeField] private TimeScaleTimer _currentTimer;
     private bool _isPaused = false;
+
+    private void Start()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
 
     public async UniTask SetTimeScale(float timeScale, float duration)
     {
@@ -79,7 +87,7 @@ public class TimeController : MonoCache
         public Coroutine coroutine;
         public bool isFinished = false;
         public float timer;
-        
+
         private bool _isPaused;
 
         public TimeScaleTimer(float timeScale, float duration)
