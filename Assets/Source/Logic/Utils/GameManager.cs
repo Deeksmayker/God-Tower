@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
 
         _playerGameObject = FindObjectOfType<PlayerUnit>().gameObject;
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         var sceneIndexes = _definitionSceneDictionary[definition];
         
         if (sceneIndexes != null && sceneIndexes.Count > 0)
-            LoadScene(sceneIndexes[Random.Range(0, sceneIndexes.Count - 1)]);
+            LoadScene(sceneIndexes[Random.Range(0, sceneIndexes.Count)]);
     }
 
     private void SavePlayerData()
