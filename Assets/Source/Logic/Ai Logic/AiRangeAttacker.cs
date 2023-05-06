@@ -11,6 +11,8 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
 
     [SerializeField] private float chargingTime;
 
+    [SerializeField] private Animation attackPreparingAnimation;
+
     private IAiController _aiController;
     private IActiveAbility _rangeAbility;
 
@@ -30,9 +32,12 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
 
     public void TryAttack()
     {
-        if (_aiController.CanAttack())
+        if (_aiController.CanAttack() && _rangeAbility.CanPerform())
         {
             _rangeAbility.PerformWithDelay(chargingTime);
+
+            if (attackPreparingAnimation)
+                attackPreparingAnimation.Play();
         }
     }
 

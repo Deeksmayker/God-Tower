@@ -25,4 +25,5 @@ public interface IActiveAbility
     public Vector3 GetStartPoint();
     public Transform GetRotationTargetTransform();
     public AbilityTypes GetType();
+    public bool CanPerform();
 }

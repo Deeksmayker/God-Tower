@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 public interface IMover
 {
+    public event Action OnLanding;
+    
     public void PerformMove();
     public void SetHorizontalInput(Vector2 input);
     public void SetVerticalVelocity(float velocity);

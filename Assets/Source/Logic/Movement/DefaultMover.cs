@@ -25,8 +25,11 @@ public class DefaultMover : MonoCache, IMover
 
     private float _groundCheckerHeightRelatedPosition;
 
+    private bool _grounded = true;
     private bool _isResponseToInput = true;
     
+    public event Action OnLanding;
+
     private void Awake()
     {
         _ch = Get<CharacterController>();
@@ -38,8 +41,15 @@ public class DefaultMover : MonoCache, IMover
 
     protected override void Run()
     {
+        var newGroundedState = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
+        
+        if (newGroundedState && !_grounded)
+            OnLanding?.Invoke();
+        _grounded = newGroundedState;
+        
         PerformMove();
     }
+
 
     public void PerformMove()
     {
@@ -131,8 +141,9 @@ public class DefaultMover : MonoCache, IMover
     [ContextMenu("Recalculate ground checker position")]
     public void RecalculateGroundCheckerPosition()
     {
-        groundCheckPoint.localPosition = new Vector3(groundCheckPoint.localPosition.x,
-            _groundCheckerHeightRelatedPosition * _ch.height, groundCheckPoint.localPosition.z);
+        var localPos = groundCheckPoint.localPosition;
+        groundCheckPoint.localPosition = new Vector3(localPos.x,
+            _groundCheckerHeightRelatedPosition * _ch.height, localPos.z);
     }
 
     public float GetVelocityMagnitude()
@@ -157,7 +168,7 @@ public class DefaultMover : MonoCache, IMover
 
     public bool IsGrounded()
     {
-        return Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
+        return _grounded;
     }
 
     private void OnDrawGizmosSelected()

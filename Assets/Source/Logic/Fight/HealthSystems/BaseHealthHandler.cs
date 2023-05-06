@@ -22,6 +22,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     private ITakeHit[] _hitTakers;
     private IWeakPoint[] _weakPoints;
 
+    public event Action OnHit;
     public event Action<float> OnHealthChanged;
     public event Action OnDying;
     public event Action OnDied;
@@ -72,6 +73,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         if (_timer > 0)
             return;
         
+        OnHit?.Invoke();
         _timer = damageImmuneTime;
         RemoveHealth(damage);
     }

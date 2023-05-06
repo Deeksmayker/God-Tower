@@ -77,7 +77,7 @@ public class GroundSlider : MonoCache
             _slideDirection = transform.forward;
         _mover.SetHorizontalVelocity(_slideDirection * (_mover.GetVelocity().magnitude / 2 > baseSlideSpeed ? _mover.GetVelocity().magnitude / 2 : baseSlideSpeed));
         _mover.SetInputResponse(false);
-        
+        _mover.SetVerticalVelocity(-30);
         ShakeCameraOnSliding();
     }
 

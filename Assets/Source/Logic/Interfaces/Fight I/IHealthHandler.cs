@@ -2,6 +2,7 @@
 
 public interface IHealthHandler
 {
+    public event Action OnHit;
     public event Action<float> OnHealthChanged;
     public event Action OnDying;
     public event Action OnDied;

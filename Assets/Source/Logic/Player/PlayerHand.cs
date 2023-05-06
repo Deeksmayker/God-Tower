@@ -24,7 +24,7 @@ public class PlayerHand : MonoCache
     private void Awake()
     {
         _abilitiesHandler = GetComponentInParent<AbilitiesHandler>();
-        _shaker = GetComponentInChildren<ModelShaker>();
+        _shaker = GetComponentInParent<ModelShaker>();
         HandAnimator = GetComponentInChildren<Animator>();
         HandMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }

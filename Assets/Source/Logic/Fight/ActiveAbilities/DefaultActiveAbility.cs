@@ -220,4 +220,9 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     {
         return AbilityTypes.None;
     }
+
+    public bool CanPerform()
+    {
+        return _cooldownTimer <= 0 && !_dumping;
+    }
 }

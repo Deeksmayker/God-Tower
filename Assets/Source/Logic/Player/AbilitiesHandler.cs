@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks.Triggers;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
@@ -106,6 +107,7 @@ public class AbilitiesHandler : MonoCache
             Debug.LogError("No ability on \"ability\" prefab");
 
         var ability = Instantiate(newAbilityPrefab, transform);
+        ability.transform.position = shootPoint.position;
         abilitySide = ability.GetComponent<IActiveAbility>();
         abilitySide.SetRotationTarget(camRotationTarget);
         abilitySide.SetShootPoint(shootPoint);

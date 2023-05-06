@@ -67,6 +67,9 @@ public class RunnerAiController : MonoCache, IAiController
     {
         _position = transform.position;
         
+        if (!_attacking)
+            rotationTarget.LookAt(_target);
+        
         if (_rangeChargingTimer > 0)
         {
             _rangeChargingTimer -= Time.deltaTime;
