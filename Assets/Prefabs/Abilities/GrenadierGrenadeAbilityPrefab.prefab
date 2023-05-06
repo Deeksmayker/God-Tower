@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3232058061232070225}
   - component: {fileID: 3232058061232070224}
   - component: {fileID: 1503201156085345680}
+  - component: {fileID: -2433549409984071139}
   m_Layer: 0
   m_Name: GrenadierGrenadeAbilityPrefab
   m_TagString: Untagged
@@ -73,4 +74,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectOnShoot: {fileID: 2734764703766690187, guid: 05b7690c940e7dd408bbb6c2d98c904e,
     type: 3}
-  inheritSpeed: 0
+--- !u!114 &-2433549409984071139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3232058061232070227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f360de3a714f01920fea7d99db43d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  performClips:
+  - {fileID: 8300000, guid: e4490dbe18714ce42839b48b4b42d9d9, type: 3}
+  emptySource: {fileID: 1357061663731978696, guid: 27333b1e8177f974683a03057fb0c650,
+    type: 3}
+  volumeVariation: 0.4
+  pitchVariation: 0.2

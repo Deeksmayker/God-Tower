@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5066929638657381884}
   - component: {fileID: 5066929638657381885}
   - component: {fileID: 4910407646500050656}
+  - component: {fileID: 3461735820221039287}
   m_Layer: 0
   m_Name: EnemyHomingAbilityPrefab
   m_TagString: Untagged
@@ -71,3 +72,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectOnShoot: {fileID: 2734764703766690187, guid: 649938c78d3b25445a55c9cc433326e4,
     type: 3}
+--- !u!114 &3461735820221039287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5066929638657381886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f360de3a714f01920fea7d99db43d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  performClips:
+  - {fileID: 8300000, guid: 2009df61327998f4188972c19aa68c13, type: 3}
+  emptySource: {fileID: 1357061663731978696, guid: 27333b1e8177f974683a03057fb0c650,
+    type: 3}
+  volumeVariation: 0.3
+  pitchVariation: 0.2

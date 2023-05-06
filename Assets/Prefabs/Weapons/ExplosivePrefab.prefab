@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6458937437020298766}
   - component: {fileID: 8929701607955828243}
   - component: {fileID: 4503923040044663363}
+  - component: {fileID: -1413647851113758305}
   m_Layer: 11
   m_Name: ExplosivePrefab
   m_TagString: Untagged
@@ -48,16 +49,20 @@ MonoBehaviour:
   layersToExplode:
     serializedVersion: 2
     m_Bits: 3200
+  superExplosionLayers:
+    serializedVersion: 2
+    m_Bits: 0
   explodeOnCollision: 0
   explodeOnTrigger: 0
   destroyOnExplosion: 0
   disableMeshOnExplosion: 0
+  ExplodeRadius: 5
+  Damage: 10
   explosionForce: 10
   bigExplosionRadiusMultiplier: 2
   explosionDuration: 0.1
   collisionImmuneDuration: 0.1
-  ExplodeRadius: 5
-  Damage: 10
+  Rb: {fileID: 0}
 --- !u!114 &4503923040044663363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,3 +79,23 @@ MonoBehaviour:
     type: 3}
   normalColor: {r: 0.745283, g: 0.53169817, b: 0, a: 0}
   bigColor: {r: 1, g: 0.21226418, b: 0.21226418, a: 0}
+--- !u!114 &-1413647851113758305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123938187522302595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a9ef642e50475a8072ebef7a82fbef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeVariation: 0.2
+  pitchVariation: 0.1
+  normalExplosionClips:
+  - {fileID: 8300000, guid: ed407d70c20018a499b550f4d1f76ca5, type: 3}
+  bigExplosionClips:
+  - {fileID: 8300000, guid: 894b03e822ca7a344aa6bd48929ceb4e, type: 3}
+  audioSourceToSpawn: {fileID: 1357061663731978696, guid: 27333b1e8177f974683a03057fb0c650,
+    type: 3}

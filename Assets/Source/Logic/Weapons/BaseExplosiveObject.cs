@@ -34,8 +34,6 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     public event Action<float> OnBigExplosionWithRadius;
     public event Action<float> OnExplosionWithRadius;
     
-    
-
     public Rigidbody Rb;
 
     private void Awake()

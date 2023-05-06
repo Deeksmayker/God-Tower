@@ -21,6 +21,7 @@ public class BaseHomingObject : MonoCache
     [Header ("General Homing Settings")]
     [SerializeField] private float Damage = 5f;
     [SerializeField] private float Speed = 1f;
+    [SerializeField] private float maxSpeed = 80f;
     [SerializeField] private float SecondBeforeHoming = 0.5f;
     [SerializeField] private float Damping = 0.8f;
     [SerializeField] private float SearchRadius = 500f;
@@ -107,6 +108,11 @@ public class BaseHomingObject : MonoCache
             {
                 homingState = HomingState.Searching;
             }
+        }
+
+        if (ownRigidbody.velocity.magnitude > maxSpeed)
+        {
+            ownRigidbody.velocity = Vector3.ClampMagnitude(ownRigidbody.velocity, maxSpeed);
         }
     }
 

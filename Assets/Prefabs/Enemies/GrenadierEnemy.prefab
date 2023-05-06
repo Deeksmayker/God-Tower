@@ -1671,6 +1671,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7636869775461110964}
   - component: {fileID: 490903965}
+  - component: {fileID: 7261913498580114632}
   m_Layer: 8
   m_Name: VisualStuff
   m_TagString: Untagged
@@ -1708,6 +1709,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightConePrefab: {fileID: 7759695285783371050, guid: 5e7e91d46ef1bd448ba8a51d625f3f66,
     type: 3}
+--- !u!114 &7261913498580114632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636869775461110967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0113b860cb33469380255cf89caf1615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  takeHitClips:
+  - {fileID: 8300000, guid: c16c6303ecb5bb547a95b05009dae74f, type: 3}
+  dyingClips:
+  - {fileID: 8300000, guid: 8f00d109cd9329345b2db568bed8f763, type: 3}
+  diedClips:
+  - {fileID: 8300000, guid: bdc39d4547c3e144ebb463f98f4464c2, type: 3}
+  audioSourceToSpawn: {fileID: 1357061663731978696, guid: 27333b1e8177f974683a03057fb0c650,
+    type: 3}
+  volumeVariation: 0.3
+  pitchVariation: 0.2
 --- !u!1 &7636869775547360117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,7 +1892,7 @@ Transform:
   - {fileID: 4981279394131583625}
   - {fileID: 7636869775461110964}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7636869775631508307
 MonoBehaviour:
@@ -1913,6 +1936,7 @@ MonoBehaviour:
   tryAttackOnLineOfSight: 1
   attackRange: 102.02
   chargingTime: 0.01
+  attackPreparingAnimation: {fileID: 0}
 --- !u!114 &7636869775631508314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2005,6 +2029,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canGiveAbility: 0
   abilityPrefab: {fileID: 3232058061232070227, guid: 06f3cea25764ba048a1c32d55a377e3a,
+    type: 3}
+  stealClip: {fileID: 8300000, guid: def763e780553e943b85a5a8f11d8f1a, type: 3}
+  stealSoundPrefab: {fileID: 7335316615607121784, guid: 0e022010a449a1d4db4655d7cb83faf9,
     type: 3}
 --- !u!1 &7636869775949798646
 GameObject:

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7335316615607121784}
   - component: {fileID: 7335316615607121786}
   m_Layer: 0
-  m_Name: LaserStealAudioSource
+  m_Name: StealAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,15 +46,15 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 5bb3e20e011ed97439de817fa8363e22, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
+  DopplerLevel: 0
+  MinDistance: 3
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -90,7 +90,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

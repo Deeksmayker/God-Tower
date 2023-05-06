@@ -1947,6 +1947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1387883442090942055}
   - component: {fileID: 703094130}
+  - component: {fileID: 4196540908596564085}
   m_Layer: 0
   m_Name: VisualStuff
   m_TagString: Untagged
@@ -1984,6 +1985,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightConePrefab: {fileID: 7759695285783371050, guid: 5e7e91d46ef1bd448ba8a51d625f3f66,
     type: 3}
+--- !u!114 &4196540908596564085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387883442090942054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0113b860cb33469380255cf89caf1615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  takeHitClips:
+  - {fileID: 8300000, guid: c16c6303ecb5bb547a95b05009dae74f, type: 3}
+  dyingClips:
+  - {fileID: 8300000, guid: 8f00d109cd9329345b2db568bed8f763, type: 3}
+  diedClips:
+  - {fileID: 8300000, guid: bdc39d4547c3e144ebb463f98f4464c2, type: 3}
+  audioSourceToSpawn: {fileID: 1357061663731978696, guid: 27333b1e8177f974683a03057fb0c650,
+    type: 3}
+  volumeVariation: 0.3
+  pitchVariation: 0.2
 --- !u!1 &1387883442104534016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,7 +2130,7 @@ Transform:
   - {fileID: 1387883442090942055}
   - {fileID: 6130411786694977138}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1387883442111091379
 MonoBehaviour:
@@ -2197,6 +2220,7 @@ MonoBehaviour:
   tryAttackOnLineOfSight: 1
   attackRange: 100
   chargingTime: 0.2
+  attackPreparingAnimation: {fileID: 0}
 --- !u!114 &1387883442111091391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2242,6 +2266,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canGiveAbility: 0
   abilityPrefab: {fileID: 5066929638657381886, guid: e204781df02cc464eaa807265e86b6cc,
+    type: 3}
+  stealClip: {fileID: 8300000, guid: 1d18fe2c6a7c1cf4984774648f65386f, type: 3}
+  stealSoundPrefab: {fileID: 7335316615607121784, guid: 0e022010a449a1d4db4655d7cb83faf9,
     type: 3}
 --- !u!1 &1387883442127415408
 GameObject:
