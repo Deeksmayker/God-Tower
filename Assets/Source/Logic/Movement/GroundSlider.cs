@@ -6,15 +6,18 @@ public class GroundSlider : MonoCache
 {
     [SerializeField] private ParticleSystem slidingParticles;
     [SerializeField] private float baseSlideSpeed;
+    [SerializeField] private float slideDuration = 0.5f;
  //   [SerializeField] private float slideJumpAddedSpeed;
-    [SerializeField] private float speedDecreasingRate;
+    [SerializeField] private float speedIncreaseRate = 10;
     [SerializeField] private float colliderHeight;
 
     [SerializeField] private ShakePreset slidingShake;
 
     private float _defaultHeight;
+    private float _timer;
     
     private bool _input;
+    private bool _canSlide = true;
     private bool _sliding;
 
     private Vector3 _slideDirection;
@@ -49,9 +52,12 @@ public class GroundSlider : MonoCache
     
     protected override void Run()
     {
-        if (_mover.IsGrounded() && _input && !_sliding)
+        _timer -= Time.deltaTime;
+
+        if (_mover.IsGrounded() && _canSlide && _input && !_sliding && _timer <= 0)
         {
             StartSlide();
+            _canSlide = false;
         }
 
         if (!_input && _sliding)
@@ -61,16 +67,24 @@ public class GroundSlider : MonoCache
 
         if (_sliding)
         {
-            _mover.SetHorizontalVelocity(Vector3.MoveTowards(_mover.GetVelocity(), _slideDirection * baseSlideSpeed, speedDecreasingRate * Time.deltaTime));
+            var multiplier = _mover.GetHorizontalSpeed() > baseSlideSpeed ? speedIncreaseRate / 10 : speedIncreaseRate;
+            _mover.SetHorizontalVelocity(Vector3.MoveTowards(_mover.GetVelocity(), _slideDirection * baseSlideSpeed, speedIncreaseRate * Time.deltaTime));
+
+            if (_timer <= 0)
+            {
+                StopSlide();
+            }
         }
     }
 
     private void StartSlide()
     {
         slidingParticles.Play();
-        _ch.height = colliderHeight;
         _sliding = true;
+        
+        _ch.height = colliderHeight;
         _mover.RecalculateGroundCheckerPosition();
+        
         _slideDirection = _mover.GetHorizontalInput().x * transform.right +
                           _mover.GetHorizontalInput().y * transform.forward;
         if (_slideDirection.Equals(Vector3.zero))
@@ -78,6 +92,9 @@ public class GroundSlider : MonoCache
         _mover.SetHorizontalVelocity(_slideDirection * (_mover.GetVelocity().magnitude / 2 > baseSlideSpeed ? _mover.GetVelocity().magnitude / 2 : baseSlideSpeed));
         _mover.SetInputResponse(false);
         _mover.SetVerticalVelocity(-30);
+
+        _timer = slideDuration;
+        
         ShakeCameraOnSliding();
     }
 
@@ -101,6 +118,8 @@ public class GroundSlider : MonoCache
     
     public void SetInput(bool value)
     {
+        if (!value && _input)
+            _canSlide = true;
         _input = value;
     }
 }

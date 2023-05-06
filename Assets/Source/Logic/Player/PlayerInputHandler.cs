@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoCache
 {
     [SerializeField] private Transform lookRotationTransform;
+    [SerializeField] private float jumpContinueInput = 0.1f;
+
+    private float _jumpInputTimer;
     
     private IMover _mover;
     private IJumper _jumper;
@@ -40,7 +43,15 @@ public class PlayerInputHandler : MonoCache
 
         if (_jumper != null)
         {
-            _jumper.SetJumpInput(_playerInput.actions["Jump"].WasPressedThisFrame());
+            var jumpInput = _playerInput.actions["Jump"].WasPressedThisFrame();
+            if (jumpInput)
+                _jumpInputTimer = jumpContinueInput;
+
+            var needToJump = jumpInput || _jumpInputTimer > 0;
+
+            _jumper.SetJumpInput(needToJump);
+
+            _jumpInputTimer -= Time.deltaTime;
         }
 
         if (_meleeAttacker != null)
