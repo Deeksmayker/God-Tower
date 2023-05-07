@@ -33,6 +33,8 @@ public class CameraLook : MonoCache
               Cursor.visible = false;
               Cursor.lockState = CursorLockMode.Locked;
           }
+          
+          SetSense(SettingsController.Sensitivity);
       }
 
       protected override void Run()
@@ -41,7 +43,10 @@ public class CameraLook : MonoCache
       }
       
       public void LookRotation()
-       { 
+      {
+          if (TimeController.Instance.IsPaused)
+              return;
+           
            var mouseDelta = _playerInput.actions["Look"].ReadValue<Vector2>();
            float yRot = mouseDelta.x * m_XSensitivity;
            float xRot = mouseDelta.y * m_YSensitivity;
@@ -78,6 +83,12 @@ public class CameraLook : MonoCache
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
+        }
+
+        public void SetSense(float value)
+        {
+            m_XSensitivity = value;
+            m_YSensitivity = value;
         }
 
         /*public void UpdateCursorLock()

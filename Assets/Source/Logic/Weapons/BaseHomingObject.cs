@@ -15,6 +15,8 @@ public enum HomingState
 
 public class BaseHomingObject : MonoCache
 {
+    [SerializeField] private bool iEnemy;
+    
     [SerializeField] private LayerMask layersToHoming;
     [SerializeField] private LayerMask enemyLayers;
 
@@ -68,7 +70,8 @@ public class BaseHomingObject : MonoCache
     {
         hitTakerComponent.OnTakeHit -= HandleTakeHit;
 
-        _sHomingTargetsHash.Remove(this);
+        if (!iEnemy)
+            _sHomingTargetsHash.Remove(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -86,10 +89,14 @@ public class BaseHomingObject : MonoCache
 
             if (target)
             {
-                if (_sHomingTargetsHash.ContainsKey(this))
-                    _sHomingTargetsHash[this] = target.GetHashCode();
-                else
-                    _sHomingTargetsHash.Add(this, target.GetHashCode());
+                if (!iEnemy)
+                {
+                    if (_sHomingTargetsHash.ContainsKey(this))
+                        _sHomingTargetsHash[this] = target.GetHashCode();
+                    else
+                        _sHomingTargetsHash.Add(this, target.GetHashCode());
+                }
+                
                 //ownCollider.isTrigger = true;
                 homingState = HomingState.Hunting;
             }
@@ -193,7 +200,7 @@ public class BaseHomingObject : MonoCache
         
         for (int i = 0; i < _targets.Length; i++)
         {
-            if (_targets[i] == null || _sHomingTargetsHash.ContainsValue(_targets[i].transform.GetHashCode()))
+            if (_targets[i] == null || !iEnemy && _sHomingTargetsHash.ContainsValue(_targets[i].transform.GetHashCode()))
                 continue;
             
             if (_targets[i].gameObject.layer is 11 && !_targets[i].TryGetComponent<BaseHomingObject>(out var homing)) // PlayerProjectile
@@ -215,13 +222,13 @@ public class BaseHomingObject : MonoCache
 
         for (int i = 0; i < points.Length; i++)
         {
-            if (points[i] == null
-                || _sHomingTargetsHash.ContainsValue(points[i].transform.GetHashCode())
+            if (points[i] == null ||
+                !iEnemy && _sHomingTargetsHash.ContainsValue(points[i].transform.GetHashCode())
                 || points[i].TryGetComponent<BaseHomingObject>(out var homing))
                 continue;
 
             var healthHandler = points[i].GetComponentInParent<IHealthHandler>();
-            if (healthHandler.IsDead())
+            if (healthHandler.IsDead() && !iEnemy)
                 continue;
             
             var diff = points[i].transform.position - transform.position;

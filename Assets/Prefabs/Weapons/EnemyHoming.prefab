@@ -160,13 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ed32f3efd54ad44b07f5fa3d854a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iEnemy: 1
   layersToHoming:
     serializedVersion: 2
     m_Bits: 1024
   enemyLayers:
     serializedVersion: 2
     m_Bits: 4224
-  Damage: 5
+  Damage: 20
   Speed: 400
   maxSpeed: 80
   SecondBeforeHoming: 0.5

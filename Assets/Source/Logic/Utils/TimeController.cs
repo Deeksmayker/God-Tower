@@ -5,6 +5,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TimeController : MonoCache
 {
@@ -12,7 +13,7 @@ public class TimeController : MonoCache
 
     private List<TimeScaleTimer> _timers = new List<TimeScaleTimer>();
     [SerializeField] private TimeScaleTimer _currentTimer;
-    private bool _isPaused = false;
+    [FormerlySerializedAs("_isPaused")] public bool IsPaused = false;
 
     private void Start()
     {
@@ -25,6 +26,9 @@ public class TimeController : MonoCache
         Time.timeScale = timeScale;
 
         await UniTask.Delay(TimeSpan.FromSeconds(duration), DelayType.UnscaledDeltaTime);
+
+        if (IsPaused)
+            return;
 
         Time.timeScale = 1;
 
@@ -42,22 +46,9 @@ public class TimeController : MonoCache
 
     public void SetPause(bool isPaused)
     {
-        _isPaused = isPaused;
+        IsPaused = isPaused;
 
-        if (!_isPaused && _timers.Count > 0)
-        {
-            TimeScaleTimer nextTimer = GetNextTimer();
-
-            if (nextTimer != null)
-            {
-                _currentTimer = nextTimer;
-                _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
-        }
+        Time.timeScale = isPaused ? 0 : 1;
     }
 
     private TimeScaleTimer GetNextTimer()

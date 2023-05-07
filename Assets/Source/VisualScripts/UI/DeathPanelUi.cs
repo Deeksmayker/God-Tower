@@ -35,12 +35,13 @@ public class DeathPanelUi : MonoCache
 
     private void HandlePlayerDied()
     {
+        SettingsController.LastScene = SceneManager.GetActiveScene().buildIndex;
         if (deathPanel == null)
         {
             Debug.Log("no death panel attached");
             return;
         }
-
+        
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         deathPanel.SetActive(true);
@@ -49,6 +50,6 @@ public class DeathPanelUi : MonoCache
     [ContextMenu("Reload game")]
     public void ReloadGameOnDeath()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SettingsController.LastScene);
     }
 }

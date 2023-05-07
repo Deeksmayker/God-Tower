@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 5c4dc23d409a8e1479269881231b304e,
+    type: 2}
   m_LightingSettings: {fileID: 1856970584}
 --- !u!196 &4
 NavMeshSettings:
@@ -5768,7 +5769,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh43126
+  m_Name: pb_Mesh38880
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -6876,6 +6877,11 @@ PrefabInstance:
         type: 3}
       propertyPath: canDie
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1387883442111091391, guid: ca3c6cd8c5b12244cbc9b5ef9b4b8634,
+        type: 3}
+      propertyPath: health
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45234,6 +45240,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2131039298, guid: efcca681c6aa2c64db2c7085334d7c9c, type: 3}
+      propertyPath: canDie
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2140864504, guid: efcca681c6aa2c64db2c7085334d7c9c, type: 3}
       propertyPath: rightAbility
       value: 0
@@ -101094,7 +101104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 0}
+  m_AnchoredPosition: {x: -0, y: 2.73}
   m_SizeDelta: {x: 8, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2111016006
@@ -101117,11 +101127,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'F to kick
-
-    Q | E on white
-
-    LMB | RMB '
+  m_text: "F\n to kick\nQ | E \non white enemy\nLMB | RMB\n to shoot"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -101184,7 +101190,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.38630438, z: 0, w: 0}
+  m_margin: {x: -0.15791655, y: -1.0841668, z: -0.5447755, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -102022,7 +102028,7 @@ PrefabInstance:
     - target: {fileID: 6228702707757442443, guid: 1c5333f35e85f7a44a55fa7278dda39d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.73
+      value: 24.87
       objectReference: {fileID: 0}
     - target: {fileID: 6228702707757442443, guid: 1c5333f35e85f7a44a55fa7278dda39d,
         type: 3}

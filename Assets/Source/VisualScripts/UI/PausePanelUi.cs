@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PausePanelUi : MonoBehaviour
@@ -50,6 +51,11 @@ public class PausePanelUi : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && _isWindowOpen)
+        {
+            ResumeGame();
+        }
+        
         if (Input.GetKeyDown(KeyCode.Escape) && !_isWindowOpen)
         {
             // stop time
@@ -92,9 +98,11 @@ public class PausePanelUi : MonoBehaviour
     {
         // resume time
         TimeController.Instance.SetPause(false);
-
+        
         _isWindowOpen = false;
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        CloseSettingsWindow();
         ClosePauseWindow();
     }
 
@@ -106,8 +114,9 @@ public class PausePanelUi : MonoBehaviour
         SetSliderSound(soundSlider.value);
     }
 
-    private void Exit()
+    public void Exit()
     {
-        Application.Quit();
+        TimeController.Instance.SetPause(false);
+        SceneManager.LoadScene(0);
     }
 }

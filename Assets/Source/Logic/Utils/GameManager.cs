@@ -31,7 +31,14 @@ public class GameManager : MonoBehaviour
 
         _playerGameObject = FindObjectOfType<PlayerUnit>().gameObject;
         _playerData = new PlayerData();
-        _definitionSceneDictionary = new Dictionary<int, List<int>>(){ {1, new List<int>(){1}} };
+        _definitionSceneDictionary = new Dictionary<int, List<int>>()
+        {
+            {1, new List<int>(){2}},
+            {2, new List<int>(){3}},
+            {3, new List<int>(){4}},
+            {4, new List<int>(){5}},
+            {5, new List<int>(){6}},
+        };
     }
 
     /// <summary>
@@ -60,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     private void SavePlayerData()
     {
-        _playerData.SetHealthPoint(_playerGameObject.GetComponent<BaseHealthHandler>().GetHealth());
+        //_playerData.SetHealthPoint(_playerGameObject.GetComponent<BaseHealthHandler>().GetHealth());
     }
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

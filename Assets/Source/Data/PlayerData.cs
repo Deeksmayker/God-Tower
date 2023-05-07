@@ -5,7 +5,7 @@ using Zenject.SpaceFighter;
 
 public class PlayerData
 {
-    private float _healthPoint;
+    private float _healthPoint = 100;
 
     public PlayerData() { }
 

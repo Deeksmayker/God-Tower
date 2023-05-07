@@ -163,6 +163,7 @@ public class HomingEnemyAiController : BaseAiController
     private void HandleDying()
     {
         _dead = true;
+        _canAttack = false;
         _gravityMaker.enabled = true;
     }
 

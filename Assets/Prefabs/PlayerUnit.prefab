@@ -7106,7 +7106,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 100
   orthographic: 0
@@ -7262,6 +7262,7 @@ GameObject:
   - component: {fileID: 2131039310}
   - component: {fileID: 3998808298923127483}
   - component: {fileID: 2131039314}
+  - component: {fileID: 3998808298923127473}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -7288,7 +7289,7 @@ Transform:
   - {fileID: 1686899659}
   - {fileID: 1551784979}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3998808300210842282
 CharacterController:
@@ -7323,7 +7324,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ef9e94975b748e5a654afd5135d2425, type: 3}
   m_Name: 
@@ -7335,8 +7336,8 @@ MonoBehaviour:
   homingAbilityPrefab: {fileID: 5066929638657381886, guid: e204781df02cc464eaa807265e86b6cc,
     type: 3}
   leftAbility: 0
-  rightAbility: 1
-  infiniteAbilities: 1
+  rightAbility: 0
+  infiniteAbilities: 0
 --- !u!114 &3998808300210842285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7387,7 +7388,7 @@ MonoBehaviour:
   layersToHit:
     serializedVersion: 2
     m_Bits: 6272
-  hitBoxSize: {x: 1, y: 1, z: 3}
+  hitBoxSize: {x: 1.5, y: 3, z: 3}
   damage: 5
   forwardRecoilBeforePunch: 20
   payoffPowerVector: {x: 15, y: 20, z: 15}
@@ -7424,6 +7425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRotationTransform: {fileID: 3998808298746309513}
+  jumpContinueInput: 0.1
 --- !u!114 &3998808300210840912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7487,6 +7489,7 @@ MonoBehaviour:
   leftHandShootPoint: {fileID: 1644204099}
   stealDistance: 10
   stealRadius: 0.5
+  healBySteal: 20
 --- !u!114 &2131039298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7499,7 +7502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddc7e42f3b84b43ba85dbcc20b4342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDie: 0
+  canDie: 1
+  canStartDying: 1
   health: 100
   damageImmuneTime: 0.1
   dyingDuration: 0
@@ -7529,8 +7533,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slidingParticles: {fileID: 285188863}
-  baseSlideSpeed: 25
-  speedDecreasingRate: 10
+  baseSlideSpeed: 40
+  slideDuration: 0.5
+  speedIncreaseRate: 10
   colliderHeight: 1
   slidingShake: {fileID: 11400000, guid: 8a44a37dd368a524796c5e13baaeffbf, type: 2}
 --- !u!114 &3998808298923127483
@@ -7568,6 +7573,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeStopOnKickHit: 0.05
   timeStopOnParry: 0.1
+--- !u!114 &3998808298923127473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332c9740f46e4f5ab5579efe3df01071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 1551784981}
+  takeDamageClip: {fileID: 8300000, guid: 09b553c9261391f4fb8af6ead0618039, type: 3}
+  volume: {fileID: 7021654372833778275}
+  camShake: {fileID: 11400000, guid: 719def726682805499e6230696fdecf9, type: 2}
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class TempPlayerTakeHitVisual : MonoCache
 {
+    [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip takeDamageClip;
     [SerializeField] private Volume volume;
     [SerializeField] private ShakePreset camShake;
@@ -18,6 +19,7 @@ public class TempPlayerTakeHitVisual : MonoCache
     private void HandleTakeHit()
     {
         CameraService.Instance.ShakeCamera(camShake);
+        source.PlayOneShot(takeDamageClip);
         ChangePostProcess();
 
     }
@@ -29,6 +31,13 @@ public class TempPlayerTakeHitVisual : MonoCache
         if (volume.profile.TryGet<Vignette>(out vignette))
         {
             vignette.color.value = Color.red;
+        }
+
+        await UniTask.Delay(300);
+        
+        if (volume.profile.TryGet<Vignette>(out vignette))
+        {
+            vignette.color.value = Color.black;
         }
     }
 }
