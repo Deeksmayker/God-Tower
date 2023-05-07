@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(BoxCollider))]
 public class SceneTunnel : MonoBehaviour
 {
     [SerializeField] private int definitionNextLevel = 1;

@@ -37,7 +37,7 @@ public class ActiveAbilityGiver : MonoCache, IGiveAbility
     public GameObject GetAbilityPrefab()
     {
         if (_healthHandler != null)
-            _healthHandler.Die();
+            _healthHandler.Die(true);
 
         if (stealSoundPrefab)
         {

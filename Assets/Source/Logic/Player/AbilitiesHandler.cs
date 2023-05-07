@@ -20,6 +20,7 @@ public class AbilitiesHandler : MonoCache
     [SerializeField] private Transform rightHandShootPoint, leftHandShootPoint;
     [SerializeField] private float stealDistance = 10;
     [SerializeField] private float stealRadius = 0.5f;
+    [SerializeField] private float healBySteal = 20;
     
     private IActiveAbility _leftAbility, _rightAbility;
 
@@ -72,6 +73,7 @@ public class AbilitiesHandler : MonoCache
         if (robbedAbility != null)
         {
             SetNewRightAbility(robbedAbility);
+            Get<IHealthHandler>().AddHealth(healBySteal);
         }
     }
 
@@ -84,7 +86,14 @@ public class AbilitiesHandler : MonoCache
         if (robbedAbility != null)
         {
             SetNewLeftAbility(robbedAbility);
+            Get<IHealthHandler>().AddHealth(healBySteal);
         }
+    }
+
+    public void RemoveAbilities()
+    {
+        _leftAbility?.RemoveAbility();
+        _rightAbility?.RemoveAbility();
     }
 
     private GameObject CheckForStealAbility()
@@ -111,7 +120,7 @@ public class AbilitiesHandler : MonoCache
         abilitySide = ability.GetComponent<IActiveAbility>();
         abilitySide.SetRotationTarget(camRotationTarget);
         abilitySide.SetShootPoint(shootPoint);
-        abilitySide.SetInfinity(isInfinite);
+        abilitySide.SetInfinity(isInfinite || abilitySide.IsInfinite());
     }
 
     private void HandleNewRightAbility()

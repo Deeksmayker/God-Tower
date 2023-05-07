@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3216269069128228425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3216269069128228430}
+  - component: {fileID: 3216269069128228431}
+  - component: {fileID: 3216269069128228424}
+  - component: {fileID: -5936562314676606616}
+  - component: {fileID: 6007502969462246103}
+  - component: {fileID: 406258497327728457}
+  m_Layer: 0
+  m_Name: InfiniteLaserAbilityPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3216269069128228430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216269069128228425}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.915179, y: 4.4143424, z: 2.458209}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3216269069128228431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216269069128228425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573a7b2e68944ebdac34f9fc6c5801f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infinite: 1
+  directionTarget: {fileID: 0}
+  shootStartPoint: {fileID: 0}
+  damage: 5
+  dumpShootChargesCount: 10
+  holdTimeToDump: 1.5
+  dumpingShootsDelay: 0.1
+  abilityLifetime: 7
+  cooldown: 0.4
+  hitTakerLayers:
+    serializedVersion: 2
+    m_Bits: 6272
+  environmentLayers:
+    serializedVersion: 2
+    m_Bits: 513
+  radius: 1
+  distance: 300
+--- !u!114 &3216269069128228424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216269069128228425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 769ee80fb6ac40dc8e9d55aa7eb9b8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  traceEffect: {fileID: 7637479311655098315, guid: 5e7d8c7dbf7b4cd4eb2190001aad5e88,
+    type: 3}
+  hitEffect: {fileID: 2734764703766690187, guid: c303081d6fa7a5c49b1ef24bce2d5ece,
+    type: 3}
+--- !u!114 &-5936562314676606616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216269069128228425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e53881d58d4679ba7aac53a2c7c2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectOnShoot: {fileID: 2734764703766690187, guid: 817180f7c9acd9c4db4a5bcd62f56184,
+    type: 3}
+--- !u!114 &6007502969462246103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216269069128228425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043900948fd64221b3d2f377a5c89ed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakePreset: {fileID: 11400000, guid: 47e2682d8e5563b46b3e5c6a7addca78, type: 2}
+  separateShakingOnDump: 0
+  shakePresetOnDump: {fileID: 0}
+--- !u!114 &406258497327728457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216269069128228425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f360de3a714f01920fea7d99db43d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  performClips:
+  - {fileID: 8300000, guid: 0502e38459ec7ca4da7325ee04b4138c, type: 3}
+  - {fileID: 8300000, guid: 39401e39a631a974488262baa6f8ee15, type: 3}
+  emptySource: {fileID: 1357061663731978696, guid: 6f5644b7ac02bdb40846634bf76f833a,
+    type: 3}
+  volumeVariation: 0.4
+  pitchVariation: 0.2

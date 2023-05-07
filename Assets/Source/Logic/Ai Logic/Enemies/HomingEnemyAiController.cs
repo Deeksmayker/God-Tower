@@ -6,7 +6,7 @@ using UnityEngine;
 using NTC.Global.Cache;
 using Zenject;
 
-public class HomingEnemyAiController : MonoCache, IAiController
+public class HomingEnemyAiController : BaseAiController
 {
     [SerializeField] private LayerMask environmentLayers;
     [SerializeField] private LayerMask targetLayers;
@@ -51,8 +51,9 @@ public class HomingEnemyAiController : MonoCache, IAiController
         MakeDefaultMovement();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _mover.SetInputResponse(false);
         
         _target = Physics.OverlapSphere(transform.position, 1000, targetLayers)[0].transform;
@@ -77,7 +78,7 @@ public class HomingEnemyAiController : MonoCache, IAiController
         if (_dead)
             return;
 
-        _canAttack = !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
+        _canAttack = _targetDetected && !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
         //Debug.Log(_canAttack);
         
         transform.LookAt(_targetPosition);
@@ -104,6 +105,12 @@ public class HomingEnemyAiController : MonoCache, IAiController
         {
             TryFindPositionToMove();
         }
+    }
+
+    public override void SetTargetDetected(bool value)
+    {
+        base.SetTargetDetected(value);
+        _moving = !value;
     }
 
     private void TryFindPositionToMove()
@@ -159,7 +166,7 @@ public class HomingEnemyAiController : MonoCache, IAiController
         _gravityMaker.enabled = true;
     }
 
-    public bool CanAttack()
+    public override bool CanAttack()
     {
         return _canAttack;
     }

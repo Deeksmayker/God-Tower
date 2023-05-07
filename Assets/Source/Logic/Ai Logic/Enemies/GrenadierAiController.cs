@@ -6,7 +6,7 @@ using NTC.Global.Cache;
 using UnityEngine;
 using Zenject;
 
-public class GrenadierAiController : MonoCache, IAiController
+public class GrenadierAiController : BaseAiController
 {
     [SerializeField] private LayerMask layersToAttack;
     [SerializeField] private LayerMask environmentLayers;
@@ -105,6 +105,12 @@ public class GrenadierAiController : MonoCache, IAiController
         }
     }
 
+    public override void SetTargetDetected(bool value)
+    {
+        base.SetTargetDetected(value);
+        _jumping = !value;
+    }
+
     private async UniTask JumpOnOtherPosition(Vector3 positionToJump)
     {
         _jumping = true;
@@ -197,15 +203,15 @@ public class GrenadierAiController : MonoCache, IAiController
         _dead = true;
     }
 
-    public bool CanAttack()
+    public override bool CanAttack()
     {
-        return !_dead && !Physics.Raycast(rotationTarget.position, _target.position - rotationTarget.position,
+        return _targetDetected && !_dead && !Physics.Raycast(rotationTarget.position, _target.position - rotationTarget.position,
             Vector3.Distance(rotationTarget.position, _target.position), environmentLayers);
     }
 
     private bool CanAttackAtThatPosition(Vector3 position)
     {
-        return !_dead && !Physics.Raycast(position, _target.position - position,
+        return _targetDetected && !_dead && !Physics.Raycast(position, _target.position - position,
             Vector3.Distance(position, _target.position), environmentLayers);
     }
 }

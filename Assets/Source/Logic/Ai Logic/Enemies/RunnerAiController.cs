@@ -4,7 +4,7 @@ using NTC.Global.Cache;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class RunnerAiController : MonoCache, IAiController
+public class RunnerAiController : BaseAiController
 {
     [SerializeField] private LayerMask layersToAttack;
     [SerializeField] private LayerMask environmentLayers;
@@ -81,6 +81,21 @@ public class RunnerAiController : MonoCache, IAiController
         }
     }
 
+    public override void SetTargetDetected(bool value)
+    {
+        base.SetTargetDetected(value);
+
+        if (value)
+        {
+            _movementController.ResumeMoving();
+        }
+        else
+        {
+            _movementController.Stop();
+        }
+        _movementController.SetRotationToVelocityVector(value);
+    }
+
     private void HandleStartMeleeAttack()
     {
         _movementController.Stop();
@@ -127,9 +142,9 @@ public class RunnerAiController : MonoCache, IAiController
         _dead = true;
     }
 
-    public bool CanAttack()
+    public override bool CanAttack()
     {
-        return !_dead && !_attacking && !Physics.Raycast(transform.position, _target.position - _position,
+        return _targetDetected && !_dead && !_attacking && !Physics.Raycast(transform.position, _target.position - _position,
             Vector3.Distance(_position, _target.position), environmentLayers);
     }
 }

@@ -19,6 +19,7 @@ public interface IActiveAbility
     public void SetShootPoint(Transform shootPoint);
     public void SetInfinity(bool value);
     public void RemoveAbility();
+    public bool IsInfinite();
     public float GetRemainingLifetime();
     public float GetMaxLifetime();
     public Vector3 GetPerformDirection();

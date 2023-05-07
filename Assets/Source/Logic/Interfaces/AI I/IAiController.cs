@@ -1,4 +1,8 @@
-﻿public interface IAiController
+﻿using System;
+
+public interface IAiController
 {
-    public bool CanAttack();
+    public abstract void SetTargetDetected(bool value);
+    
+    public abstract bool CanAttack();
 }

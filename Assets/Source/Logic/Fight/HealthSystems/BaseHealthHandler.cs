@@ -8,6 +8,7 @@ using Zenject;
 public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbilityOpportunity
 {
     [SerializeField] private bool canDie = true;
+    [SerializeField] private bool canStartDying = true;
     [SerializeField] private float health;
     [SerializeField] private float damageImmuneTime = 0.1f;
     [SerializeField] private float dyingDuration = 5;
@@ -80,7 +81,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void StartDying()
     {
-        if (!canDie)
+        if (!canStartDying)
             return;
         
         _dying = true;
@@ -89,9 +90,9 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         OnCanGiveAbility?.Invoke();
     }
 
-    public void Die()
+    public void Die(bool order = false)
     {
-        if (!canDie)
+        if (!canDie && !order)
             return;
         
         OnDied?.Invoke();
@@ -112,7 +113,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
             StartDying();
         }
 
-        if (health < -50)
+        if (health < -50 && canDie)
         {
             Die();
         }

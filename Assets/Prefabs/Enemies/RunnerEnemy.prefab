@@ -624,7 +624,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 4217543120629146882, guid: 13d487a73e15a5d4c9e42b6c569131d9,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: a6b3313c94f5009488d8617a0b499d20, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -869,6 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDie: 1
+  canStartDying: 1
   health: 10
   damageImmuneTime: 0
   dyingDuration: 5
@@ -1003,6 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c54946c447ac48cea14cab451780de50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ambientAudioSource: {fileID: 3033200899398484774}
   layersToAttack:
     serializedVersion: 2
     m_Bits: 1024

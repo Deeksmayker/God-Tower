@@ -82,6 +82,31 @@ public class HitReactionsVisual : MonoCache
         }
     }
 
+    public void RestoreColor()
+    {
+        _dying = false;
+        SetAuraColor(Color.black);
+        
+        if (changeMeshesColor)
+            for (var i = 0; i < _meshRenderers.Length; i++)
+            {
+                _meshRenderers[i].GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", Color.black);
+
+                _propertyBlock.SetColor("_EmissionColor", Color.black * 3);
+                _meshRenderers[i].SetPropertyBlock(_propertyBlock);
+            }
+
+        if (_skinnedMeshRenderer)
+        {
+            _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
+            _propertyBlock.SetColor("_BaseColor", Color.black);
+
+            _propertyBlock.SetColor("_EmissionColor", Color.black * 3);
+            _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
+        }
+    }
+
     private void HandleDying()
     {
         _dying = true;

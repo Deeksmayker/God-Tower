@@ -130,7 +130,6 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
                 return;
             }
             
-            OnEmpty?.Invoke();
             RemoveAbility();
         }
     }
@@ -176,8 +175,11 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         infinite = value;
     }
 
+    public bool IsInfinite() => infinite;
+
     public void RemoveAbility()
     {
+        OnEmpty?.Invoke();
         Destroy(gameObject);
     }
 

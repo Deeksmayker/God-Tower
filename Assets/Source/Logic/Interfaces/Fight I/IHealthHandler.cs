@@ -9,7 +9,7 @@ public interface IHealthHandler
 
     public void HandleHit(float damage);
     public void StartDying();
-    public void Die();
+    public void Die(bool order = false);
 
     public void AddHealth(float addValue);
     public void RemoveHealth(float removeValue);

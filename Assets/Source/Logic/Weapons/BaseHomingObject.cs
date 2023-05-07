@@ -34,7 +34,7 @@ public class BaseHomingObject : MonoCache
     [SerializeField] private float ExplosionRadius = 5f;
     [SerializeField] private BaseExplosiveObject explosivePrefab;
 
-    private Collider[] _targets = new Collider[10];
+    private Collider[] _targets = new Collider[20];
     
     private static Dictionary<BaseHomingObject, int> _sHomingTargetsHash = new();
 
