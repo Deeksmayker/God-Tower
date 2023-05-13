@@ -75,6 +75,7 @@ public class HandsVisual : MonoCache
     private void HandleAbilityChangeOnHand(PlayerHand hand, AbilityTypes type)
     {
         hand.HandAnimator.SetTrigger("StealAbility");
+        ChangeHandColorCoverageByLifetime(hand);
         switch (type)
         {
             case AbilityTypes.None:
@@ -134,6 +135,21 @@ public class HandsVisual : MonoCache
         hand.HandMeshRenderer.SetPropertyBlock(_propertyBlock);
 
         hand.GetComponentInChildren<Light>().color = color;
+    }
+
+    private async UniTask ChangeHandColorCoverageByLifetime(PlayerHand hand)
+    {
+        var ability = hand.GetHandAbility();
+        var t = 1f;
+       
+        while (t > 0 && hand.GetHandAbility() != null && hand.GetHandAbility() == ability)
+        {
+            hand.HandMeshRenderer.GetPropertyBlock(_propertyBlock);
+            _propertyBlock.SetFloat("_ColorCoverage", t);
+            hand.HandMeshRenderer.SetPropertyBlock(_propertyBlock);
+            t = ability.GetRemainingLifetime() / ability.GetMaxLifetime();
+            await UniTask.NextFrame();
+        }
     }
 
     private void HandlePerformingAbility(PlayerHand hand)

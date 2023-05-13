@@ -5,18 +5,24 @@ using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class AbilitySlidersManager : MonoCache
 {
-    [SerializeField] private AbilitiesHandler abilitiesHandler;
     [SerializeField] private Slider rightAbilitySlider;
     [SerializeField] private Slider leftAbilitySlider;
+
+    [Inject] private PlayerUnit _player;
+    private AbilitiesHandler abilitiesHandler;
+
 
     private Coroutine _checkingRightAbilityLifetime;
     private Coroutine _checkingLeftAbilityLifetime;
     
     private void Start()
     {
+        abilitiesHandler = _player.Get<AbilitiesHandler>();
+        
         rightAbilitySlider.gameObject.SetActive(false);
         leftAbilitySlider.gameObject.SetActive(false);
         

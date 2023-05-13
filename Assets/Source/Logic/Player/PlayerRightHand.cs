@@ -10,4 +10,9 @@ public class PlayerRightHand : PlayerHand
             _abilitiesHandler.OnNewRightAbility += () => HandleNewAbility(_abilitiesHandler.GetRightAbility());
         }
     }
+    
+    public override IActiveAbility GetHandAbility()
+    {
+        return _abilitiesHandler.GetRightAbility();
+    }
 }

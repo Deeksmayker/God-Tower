@@ -68,6 +68,8 @@ public class PlayerHand : MonoCache
         OnHandNewAbility?.Invoke(this, ability.GetType());
     }
 
+    public virtual IActiveAbility GetHandAbility() => null;
+
     public ModelShaker GetShaker()
     {
         return _shaker;
