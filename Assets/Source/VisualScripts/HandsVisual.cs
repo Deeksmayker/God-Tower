@@ -132,6 +132,8 @@ public class HandsVisual : MonoCache
         hand.HandMeshRenderer.GetPropertyBlock(_propertyBlock);
         _propertyBlock.SetColor("_Color", color);
         hand.HandMeshRenderer.SetPropertyBlock(_propertyBlock);
+
+        hand.GetComponentInChildren<Light>().color = color;
     }
 
     private void HandlePerformingAbility(PlayerHand hand)
