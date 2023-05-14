@@ -103,6 +103,7 @@ public class HomingEnemyAiController : BaseAiController
 
         if (_timeOnPosition > timeChangeLocation || _cantAttackTime > cantAttackTimeToChangeLocation)
         {
+            _moving = true;
             TryFindPositionToMove();
         }
     }
@@ -113,7 +114,7 @@ public class HomingEnemyAiController : BaseAiController
         _moving = !value;
     }
 
-    private void TryFindPositionToMove()
+    private async UniTask TryFindPositionToMove()
     {
         for (var i = 0; i < _movePoints.Count; i++)
         {
@@ -122,14 +123,18 @@ public class HomingEnemyAiController : BaseAiController
                 environmentLayers);
             if (canAttack && !_movePoints[i].IsOccupied())
             {
-                if (_currentPoint != null)
+                if (_currentPoint)
                     _currentPoint.LeavePoint();
                 _currentPoint = _movePoints[i];
                 _currentPoint.TakePoint();
                 MoveToOtherPosition(pointPosition);
                 return;
             }
+
+            await UniTask.NextFrame();
         }
+
+        _moving = false;
     }
 
     private async UniTask MoveToOtherPosition(Vector3 newPosition)

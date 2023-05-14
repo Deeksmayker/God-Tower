@@ -37,7 +37,9 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
             _rangeAbility.PerformWithDelay(chargingTime);
 
             if (attackPreparingAnimation)
+            {
                 attackPreparingAnimation.Play();
+            }
         }
     }
 
