@@ -113,7 +113,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
             StartDying();
         }
 
-        if (health < -50 && canDie)
+        if (health < -200 && canDie)
         {
             Die();
         }

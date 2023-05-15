@@ -69,7 +69,7 @@ public class HomingEnemyAiController : BaseAiController
     {
         _healthHandler.OnDying -= HandleDying;
     }
-    
+
     protected override void Run()
     {
         _position = transform.position;

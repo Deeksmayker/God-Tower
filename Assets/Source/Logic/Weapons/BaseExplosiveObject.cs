@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using NTC.Global.Cache;
+using NTC.Global.Pool;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 
 public class BaseExplosiveObject : MonoCache, IMakeExplosion
 {
@@ -16,12 +18,16 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
 
     [SerializeField] private float ExplodeRadius = 5;
     [SerializeField] private float Damage = 10;
+    [SerializeField] private float superHomingDamageMultiplier = 4f;
 
     [SerializeField] private float explosionForce;
     [SerializeField] private float bigExplosionRadiusMultiplier = 2;
     [SerializeField, Min(0.0001f)] private float explosionDuration;
     [SerializeField] private float collisionImmuneDuration = 0.1f;
+    [SerializeField] private VisualEffect trailEffect;
 
+    private float _currentDamage;
+    private float _currentRadius;
     private float _timer;
 
     private bool _isSuper;
@@ -40,10 +46,22 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     {
         _hitTakerComponent = Get<ITakeHit>();
         Rb = Get<Rigidbody>();
+
+        _currentDamage = Damage;
+        _currentRadius = ExplodeRadius;
     }
 
     protected override void OnEnabled()
     {
+        _currentDamage = Damage;
+        _currentRadius = ExplodeRadius;
+
+        if (trailEffect)
+        {
+            trailEffect = NightPool.Spawn(trailEffect, transform);
+            trailEffect.SetVector3("Target", transform.position);
+        }
+
         if (_hitTakerComponent != null)
             _hitTakerComponent.OnTakeHit += HandleTakeHit;
     }   
@@ -57,11 +75,14 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     //private float _lifetime = 0;
     protected override void Run()
     {
+        if (trailEffect)
+            trailEffect.SetVector3("Target", transform.position);
+
         //_lifetime += Time.deltaTime;
         if (_timer > 0)
         {
             _timer -= Time.deltaTime;
-            DamageEveryoneInRadius(ExplodeRadius);
+            DamageEveryoneInRadius();
             if (_timer <= 0 && destroyOnExplosion)
             {
                 Destroy(gameObject);
@@ -105,12 +126,15 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         _timer = explosionDuration;
         
         
-        DamageEveryoneInRadius(_isSuper ? ExplodeRadius * bigExplosionRadiusMultiplier : ExplodeRadius);
+        DamageEveryoneInRadius();
 
         if (disableMeshOnExplosion)
         {
             GetComponentInChildren<MeshRenderer>().enabled = false;
         }
+
+        if (explosionDuration.Equals(0))
+            Destroy(gameObject);
     }
 
     /*public void MakeBigExplosion()
@@ -128,16 +152,21 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
 
     public void MakeExplosiveSuper()
     {
+        if (_isSuper)
+            return;
+
         _isSuper = true;
+        _currentRadius *= bigExplosionRadiusMultiplier;
+        _currentDamage *= superHomingDamageMultiplier;
         layersToExplode = superExplosionLayers;
     }
 
-    private void DamageEveryoneInRadius(float radius)
+    private void DamageEveryoneInRadius()
     {
         Array.Clear(_attackHitsContainer, 0, _attackHitsContainer.Length);
 
         Physics.OverlapSphereNonAlloc(transform.position, 
-            radius, _attackHitsContainer, layersToExplode);
+            _currentRadius, _attackHitsContainer, layersToExplode);
         
         for (var i = 0; i < _attackHitsContainer.Length; i++)
         {
@@ -160,8 +189,10 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
             if (_attackHitsContainer[i].GetComponent<IWeakPoint>() != null)
                 hitType = HitTypes.WeakPoint;
             
-            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(Damage, hitPosition, hitType);
-            _attackHitsContainer[i].GetComponent<IMover>()?.AddVelocity((hitTransform.position - transform.position).normalized * explosionForce);
+            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(_currentDamage, hitPosition, hitType);
+            var player = _attackHitsContainer[i].GetComponentInParent<PlayerUnit>();
+            if (player)
+                player.Get<IMover>()?.AddVelocity((hitTransform.position - transform.position).normalized * explosionForce);
         }
     }
 

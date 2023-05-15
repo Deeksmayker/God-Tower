@@ -51,14 +51,15 @@ MonoBehaviour:
     m_Bits: 3200
   superExplosionLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4224
   explodeOnCollision: 0
   explodeOnTrigger: 0
   destroyOnExplosion: 0
   disableMeshOnExplosion: 0
   ExplodeRadius: 5
-  Damage: 10
-  explosionForce: 10
+  Damage: 20
+  superHomingDamageMultiplier: 4
+  explosionForce: 40
   bigExplosionRadiusMultiplier: 2
   explosionDuration: 0.1
   collisionImmuneDuration: 0.1

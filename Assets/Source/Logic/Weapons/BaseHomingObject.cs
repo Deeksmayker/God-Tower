@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum HomingState
 {
@@ -19,6 +20,7 @@ public class BaseHomingObject : MonoCache
     
     [SerializeField] private LayerMask layersToHoming;
     [SerializeField] private LayerMask enemyLayers;
+    [SerializeField] private VisualEffect trailEffect;
 
     [Header ("General Homing Settings")]
     [SerializeField] private float Damage = 5f;
@@ -63,6 +65,11 @@ public class BaseHomingObject : MonoCache
     {
         hitTakerComponent.OnTakeHit += HandleTakeHit;
 
+        if (trailEffect)
+        {
+            trailEffect = NightPool.Spawn(trailEffect, transform);
+        }
+
         ChangeStateAfterSeconds(HomingState.Searching, SecondBeforeHoming);
     }
     
@@ -83,6 +90,9 @@ public class BaseHomingObject : MonoCache
 
     protected override void Run()
     {
+        if (trailEffect)
+            trailEffect.SetVector3("Target", transform.position);
+
         if (homingState == HomingState.Searching)
         {
             target = FindFavorableTarget();
