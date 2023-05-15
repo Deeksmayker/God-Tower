@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using NTC.Global.Cache;
 using UnityEngine;
 using Zenject;
 
@@ -35,6 +34,7 @@ public class GrenadierAiController : BaseAiController
     private Vector3 _position;
     private Vector3 _rotationTargetPosition;
 
+    private Animator _animator;
     private IMover _mover;
     private GravityMaker _gravityMaker;
     private IAiMovementController _movementController;
@@ -46,6 +46,7 @@ public class GrenadierAiController : BaseAiController
 
     private void Awake()
     {
+        _animator = GetComponentInChildren<Animator>();
         _movementController = Get<IAiMovementController>();
         _rangeAttackController = Get<IAiRangeAttackController>();
         _grenadeAbility = GetComponentInChildren<GrenadeAbility>();
@@ -111,12 +112,35 @@ public class GrenadierAiController : BaseAiController
         _jumping = !value;
     }
 
+    private async UniTask TryFindPositionToJump()
+    {
+        for (var i = 0; i < _jumpPoints.Count; i++)
+        {
+            var canAttack = CanAttackAtThatPosition(_jumpPoints[i].transform.position);
+            if (canAttack && !_jumpPoints[i].IsOccupied())
+            {
+                if (Physics.Raycast(_jumpPoints[i].transform.position, Vector3.down, out var hit, 10,
+                        environmentLayers))
+                {
+                    if (_currentPoint != null) 
+                        _currentPoint.LeavePoint();
+                    _currentPoint = _jumpPoints[i];
+                    _currentPoint.TakePoint();
+                    JumpOnOtherPosition(hit.point);
+                    return;
+                }
+            }
+            await UniTask.NextFrame();
+        }
+    }
+
     private async UniTask JumpOnOtherPosition(Vector3 positionToJump)
     {
         _jumping = true;
         OnStartPreparingJump?.Invoke();
         transform.DOLookAt(positionToJump, prepareJumpTime / 2);
-        
+        _animator.SetTrigger("Jump");
+
         await UniTask.Delay(TimeSpan.FromSeconds(prepareJumpTime));
         
         var jumpAngle = Mathf.Abs(MathUtils.CalculateHighLaunchAngle(Vector3.Distance(_position, positionToJump), jumpForce,
@@ -145,29 +169,24 @@ public class GrenadierAiController : BaseAiController
         _jumping = false;
     }
 
-    private void TryFindPositionToJump()
-    {
-        for (var i = 0; i < _jumpPoints.Count; i++)
-        {
-            var canAttack = CanAttackAtThatPosition(_jumpPoints[i].transform.position);
-            if (canAttack && !_jumpPoints[i].IsOccupied())
-            {
-                if (Physics.Raycast(_jumpPoints[i].transform.position, Vector3.down, out var hit, 10,
-                        environmentLayers))
-                {
-                    if (_currentPoint != null) 
-                        _currentPoint.LeavePoint();
-                    _currentPoint = _jumpPoints[i];
-                    _currentPoint.TakePoint();
-                    JumpOnOtherPosition(hit.point);
-                    return;
-                }
-            }
-        }
-    }
 
     private void HandleStartChargingGrenadeAttack()
     {
+        RotateHeadToRightAngleBeforeShoot();
+    }
+
+    private async UniTask RotateHeadToRightAngleBeforeShoot()
+    {
+        rotationTarget.LookAt(_target);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(_rangeAttackController.GetChargingTime() - timeBeforeShootToRotateHead));
+
+        if (_jumping)
+        {
+            rotationTarget.LookAt(_target);
+            return;
+        }
+
         var pos = rotationTarget.position;
         var targetPos = _target.position;
         var distanceToTarget = Vector3.Distance(pos, targetPos);
@@ -178,7 +197,7 @@ public class GrenadierAiController : BaseAiController
         var mover = _target.GetComponentInParent<IMover>();
         if (mover != null)
         {
-            
+
             var moverVelocity = mover.GetVelocity();
             moverVelocity.y = 0;
             targetPos += moverVelocity * MathUtils.CalculateFlightTime(pos, targetPos, launchAngle * Mathf.Deg2Rad,
