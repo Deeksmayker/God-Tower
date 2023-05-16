@@ -50,7 +50,7 @@ public class BaseHomingObject : MonoCache
 
     private HomingState homingState;
 
-    private Rigidbody ownRigidbody;
+    [HideInInspector] public Rigidbody ownRigidbody;
     private ITakeHit hitTakerComponent;
 
     private Transform target;

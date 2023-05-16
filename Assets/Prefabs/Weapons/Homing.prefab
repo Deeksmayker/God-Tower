@@ -170,10 +170,10 @@ MonoBehaviour:
   trailEffect: {fileID: 5101262216388615646, guid: 6f5e94eb464ed7f4d80bf334d8019f1d,
     type: 3}
   Damage: 5
-  Speed: 1000
-  maxSpeed: 80
+  Speed: 2000
+  maxSpeed: 100
   SecondBeforeHoming: 0.5
-  Damping: 2
+  Damping: 4
   SearchRadius: 500
   lookForProjectiles: 1
   SuperHomingDamage: 2

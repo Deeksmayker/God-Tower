@@ -114,6 +114,7 @@ public class Kicker : MonoCache, IMeleeAttacker
             if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseHomingObject>(out var homing))
             {
                 homing.BecomeSuperHoming();
+                homing.ownRigidbody.velocity += (GetAttackDirection() * 100);
                 OnParry?.Invoke();
                 return;
             }
