@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 261712988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4714137197510415369}
@@ -145,12 +145,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dumpLoadedEffect: {fileID: 2734764703766690187, guid: 3bf47eeb9f6f7f54dbec3b6b54e02f86,
     type: 3}
-  rapidShakeDuration: 0.2
-  rapidShakeIntensity: 100
-  rapidShakeAmount: 0.1
-  durableTimeToMaxIntensity: 3
-  durableShakeIntensity: 50
-  durableShakeAmount: 0.02
   noAbilityColor: {r: 2.4913445, g: 2.4913445, b: 2.4913445, a: 0}
   laserAbilityColor: {r: 0.7971623, g: 1.1495275, b: 2.0361254, a: 0}
   grenadeAbilityColor: {r: 2.725848, g: 2.1505816, b: 0.7843241, a: 0}
@@ -5562,8 +5556,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: c49d12a83bf370647be969b389df6cf5, type: 3}
-  - {fileID: -876546973899608171, guid: c49d12a83bf370647be969b389df6cf5, type: 3}
+  - {fileID: 2100000, guid: 5c9724a064c5388499bb3e436f37bca4, type: 2}
+  - {fileID: 2100000, guid: 5c9724a064c5388499bb3e436f37bca4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6676,7 +6670,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696176787}
   m_LocalRotation: {x: -0.13030575, y: 0.9691297, z: -0.20888144, w: -0.013292221}
-  m_LocalPosition: {x: -1.0999999, y: -0.524, z: 1.1190002}
+  m_LocalPosition: {x: -1.14, y: -0.524, z: 1.16}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6983,8 +6977,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: c49d12a83bf370647be969b389df6cf5, type: 3}
-  - {fileID: -876546973899608171, guid: c49d12a83bf370647be969b389df6cf5, type: 3}
+  - {fileID: 2100000, guid: 5c9724a064c5388499bb3e436f37bca4, type: 2}
+  - {fileID: 2100000, guid: 5c9724a064c5388499bb3e436f37bca4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7362,7 +7356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3918936706544625045}
   m_LocalRotation: {x: 0.115254804, y: 0.96661055, z: -0.22307257, w: -0.051176265}
-  m_LocalPosition: {x: 1.0999999, y: -0.524, z: 1.1190002}
+  m_LocalPosition: {x: 1.14, y: -0.524, z: 1.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7407,6 +7401,7 @@ GameObject:
   - component: {fileID: 3998808298643400549}
   - component: {fileID: 1137967107}
   - component: {fileID: 1137967106}
+  - component: {fileID: 117173105}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7559,6 +7554,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionLerpSpeed: 8
   rotationLerpSpeed: 8
+--- !u!114 &117173105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808298643400553}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b993a4ebea15ab4eb8476ad25e8a8d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camRootTransform: {fileID: 0}
+  smoothness: 1
 --- !u!1 &3998808298746309512
 GameObject:
   m_ObjectHideFlags: 0
@@ -7858,8 +7867,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddc7e42f3b84b43ba85dbcc20b4342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDie: 1
-  canStartDying: 1
+  canDie: 0
+  canStartDying: 0
   health: 100
   damageImmuneTime: 0.1
   dyingDuration: 0
@@ -7870,7 +7879,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4dee059f2114e68b37b3ce430fa69be, type: 3}
   m_Name: 
@@ -7883,7 +7892,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a690bc52a93b4681a3a0a2af2c4ef933, type: 3}
   m_Name: 
@@ -7945,7 +7954,7 @@ MonoBehaviour:
   takeDamageClip: {fileID: 8300000, guid: 09b553c9261391f4fb8af6ead0618039, type: 3}
   volume: {fileID: 7021654372833778275}
   camShake: {fileID: 11400000, guid: 719def726682805499e6230696fdecf9, type: 2}
-  maxVignetteIntensity: 0.8
+  maxVignetteIntensity: 0.4
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

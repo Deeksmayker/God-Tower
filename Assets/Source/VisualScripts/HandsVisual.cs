@@ -1,26 +1,14 @@
-﻿using System;
+﻿using Code.Global.Animations;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 using UnityEngine.VFX;
-using UnityEngine.XR;
 
 public class HandsVisual : MonoCache
 {
     [SerializeField] private VisualEffect dumpLoadedEffect;
-    
-    [Header("Rapid hands shaking")]
-    [SerializeField] private float rapidShakeDuration;
-    [SerializeField] private float rapidShakeIntensity;
-    [SerializeField] private float rapidShakeAmount;
-
-    [Header("Durable hands shaking")]
-    [SerializeField] private float durableTimeToMaxIntensity;
-    [SerializeField] private float durableShakeIntensity;
-    [SerializeField] private float durableShakeAmount;
 
     [Header("Abilities")]
     [ColorUsageAttribute(false, true)]
@@ -32,6 +20,8 @@ public class HandsVisual : MonoCache
     [ColorUsageAttribute(false, true)]
     [SerializeField] private Color homingAbilityColor;
 
+    private IMover _mover;
+
     private PlayerHand[] _playerHands;
     private MaterialPropertyBlock _propertyBlock;
 
@@ -39,6 +29,7 @@ public class HandsVisual : MonoCache
     {
         _playerHands = GetComponentsInChildren<PlayerHand>();
         _propertyBlock = new MaterialPropertyBlock();
+        _mover = GetComponentInParent<IMover>();
     }
 
     protected override void OnEnabled()
