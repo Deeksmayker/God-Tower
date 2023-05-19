@@ -74,7 +74,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         _remainingLifetime -= Time.deltaTime;
         if (_remainingLifetime <= 0)
         {
-            if (_chargingTimer >= holdTimeToDump)
+            if (_input)
             {
                 _dumping = true;
                 return;

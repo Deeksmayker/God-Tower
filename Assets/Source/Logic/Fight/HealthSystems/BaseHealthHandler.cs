@@ -118,7 +118,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     public void RemoveHealth(float removeValue)
     {
         SetHealth(health - removeValue);
-        if (health <= 0 && !_dying)
+        if (health <= 0)
         {
             StartDying();
         }

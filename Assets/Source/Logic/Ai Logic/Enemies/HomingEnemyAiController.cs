@@ -164,7 +164,6 @@ public class HomingEnemyAiController : BaseAiController
 
     protected override void HandleDying()
     {
-        Debug.Log("dead");
         base.HandleDying();
         _canAttack = false;
         _gravityMaker.enabled = true;
@@ -172,7 +171,6 @@ public class HomingEnemyAiController : BaseAiController
 
     protected override void HandleRevive()
     {
-        Debug.Log("revived");
         base.HandleRevive();
         _gravityMaker.enabled = false;
     }

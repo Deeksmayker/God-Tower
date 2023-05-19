@@ -168,7 +168,7 @@ public class HitReactionsVisual : MonoCache
     {
         var t = 1f;
 
-        while (t > 0 && _dying)
+        while (t > 0 && _dying && gameObject)
         {
             if (changeMeshesColor)
                 for (var i = 0; i < _meshRenderers.Length; i++)
