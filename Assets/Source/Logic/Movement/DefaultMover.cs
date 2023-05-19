@@ -91,7 +91,7 @@ public class DefaultMover : MonoCache, IMover
         if (IsGrounded())
             return true;
 
-        if (desiredSpeed.Equals(0) || !Mathf.Sign(desiredSpeed).Equals(Mathf.Sign(actualSpeed)))
+        if (!desiredSpeed.Equals(0) && !Mathf.Sign(desiredSpeed).Equals(Mathf.Sign(actualSpeed)))
             return true;
                                   
         return Mathf.Abs(desiredSpeed) > Mathf.Abs(actualSpeed);

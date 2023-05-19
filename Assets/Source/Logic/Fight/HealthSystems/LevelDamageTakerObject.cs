@@ -20,7 +20,8 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
     public event Action<float> OnHealthChanged;
     public event Action OnDying;
     public event Action OnDied;
-    
+    public event Action OnRevive;
+
     public UnityEvent OnHurt = new();
     public UnityEvent OnRecovery = new();
 
@@ -106,5 +107,20 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
     public bool IsDead()
     {
         return _dying;
+    }
+
+    public void Revive()
+    {
+        throw new NotImplementedException();
+    }
+
+    public float GetReviveTime()
+    {
+        throw new NotImplementedException();
+    }
+
+    public float GetCurrentReviveTimer()
+    {
+        throw new NotImplementedException();
     }
 }

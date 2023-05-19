@@ -2366,7 +2366,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDie: 1
   canStartDying: 1
-  health: 100
+  oneHealthDeathProtection: 0
+  health: 1
   damageImmuneTime: 0
   dyingDuration: 7
 --- !u!114 &1387883442111091388

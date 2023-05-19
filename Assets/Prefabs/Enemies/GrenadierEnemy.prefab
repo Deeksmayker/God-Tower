@@ -429,6 +429,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &864604714901534806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,7 +1366,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
+  - {fileID: 2100000, guid: 90d814e39e4a67846ace4ece519f2752, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2043,7 +2044,7 @@ Transform:
   - {fileID: 4981279394131583625}
   - {fileID: 7636869775461110964}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7636869775631508307
 MonoBehaviour:
@@ -2165,7 +2166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDie: 1
   canStartDying: 1
-  health: 200
+  oneHealthDeathProtection: 0
+  health: 1
   damageImmuneTime: 0.01
   dyingDuration: 5
 --- !u!114 &7636869775631508313

@@ -144,10 +144,10 @@ public class Kicker : MonoCache, IMeleeAttacker
         {
             _mover.SetVerticalVelocity(payoffPowerVector.y);
             _mover.AddVelocity(new Vector3(
-                -GetAttackDirection().x * payoffPowerVector.x,
+                GetAttackDirection().x * payoffPowerVector.x,
                 0,
-                -GetAttackDirection().z * payoffPowerVector.z));
-            _isHitAnything = true;
+                GetAttackDirection().z * payoffPowerVector.z));
+            _isHitAnything = true; 
         }
     }
 

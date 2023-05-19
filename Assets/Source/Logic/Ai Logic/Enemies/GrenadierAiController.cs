@@ -27,7 +27,6 @@ public class GrenadierAiController : BaseAiController
     private float _cantAttackTime;
     
     private bool _jumping;
-    private bool _dead;
     
     private Transform _target;
     
@@ -58,24 +57,16 @@ public class GrenadierAiController : BaseAiController
     
     protected override void OnEnabled()
     {
+        base.OnEnabled();
         _grenadeAbility.OnStartHolding += HandleStartChargingGrenadeAttack;
         _grenadeAbility.OnPerform += HandlePerformingGrenadeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying += HandleDying;
-        }
     }
 
     protected override void OnDisabled()
     {
+        base.OnDisabled();
         _grenadeAbility.OnStartHolding -= HandleStartChargingGrenadeAttack;
         _grenadeAbility.OnPerform -= HandlePerformingGrenadeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying -= HandleDying;
-        }
     }
 
     protected override void Run()
@@ -215,11 +206,6 @@ public class GrenadierAiController : BaseAiController
     private void HandlePerformingGrenadeAttack()
     {
         
-    }
-
-    private void HandleDying()
-    {
-        _dead = true;
     }
 
     public override bool CanAttack()

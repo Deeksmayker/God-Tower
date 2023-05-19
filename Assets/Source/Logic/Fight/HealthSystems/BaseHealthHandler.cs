@@ -9,6 +9,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 {
     [SerializeField] private bool canDie = true;
     [SerializeField] private bool canStartDying = true;
+    [SerializeField] private bool oneHealthDeathProtection;
     [SerializeField] private float health;
     [SerializeField] private float damageImmuneTime = 0.1f;
     [SerializeField] private float dyingDuration = 5;
@@ -29,6 +30,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     public event Action OnDied;
     public event Action OnCanGiveAbility;
     public event Action OnNotCanGiveAbility;
+    public event Action OnRevive;
 
     private void Awake()
     {
@@ -64,7 +66,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
             _dyingTimer -= Time.deltaTime;
             if (_dyingTimer <= 0)
             {
-                Die();
+                Revive();
             }
         }
     }
@@ -99,6 +101,14 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         NightPool.Despawn(this);
     }
 
+    public void Revive()
+    {
+        _dying = false;
+        health = _maxHealth;
+        OnNotCanGiveAbility?.Invoke();
+        OnRevive?.Invoke();
+    }
+
     public void AddHealth(float addValue)
     {
         SetHealth(health + addValue);
@@ -113,7 +123,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
             StartDying();
         }
 
-        if (health < -200 && canDie)
+        if (health < -2000 && canDie)
         {
             Die();
         }
@@ -121,6 +131,8 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void SetHealth(float value)
     {
+        if (health > 1 && value <= 0)
+            value = 1;
         health = value;
         OnHealthChanged?.Invoke(health);
     }
@@ -131,4 +143,14 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     }
 
     public bool IsDead() => _dying;
+
+    public float GetReviveTime()
+    {
+        return dyingDuration;
+    }
+
+    public float GetCurrentReviveTimer()
+    {
+        return _dyingTimer;
+    }
 }

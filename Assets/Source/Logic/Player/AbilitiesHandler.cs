@@ -79,6 +79,7 @@ public class AbilitiesHandler : MonoCache
 
     public void SetLeftStealInput(bool input)
     {
+        return;
         if (!input)
             return;
 

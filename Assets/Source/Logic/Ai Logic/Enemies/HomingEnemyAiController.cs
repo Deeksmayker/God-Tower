@@ -32,14 +32,12 @@ public class HomingEnemyAiController : BaseAiController
 
     private bool _canAttack;
     private bool _moving;
-    private bool _dead;
 
     private HomingEnemyMovePoint _currentPoint;
     [Inject] private List<HomingEnemyMovePoint> _movePoints;
 
     private IMover _mover;
     private GravityMaker _gravityMaker;
-    private IHealthHandler _healthHandler;
 
     private void Awake()
     {
@@ -47,7 +45,6 @@ public class HomingEnemyAiController : BaseAiController
         _gravityMaker = Get<GravityMaker>();
         _gravityMaker.enabled = false;
 
-        _healthHandler = Get<IHealthHandler>();
         MakeDefaultMovement();
     }
 
@@ -61,13 +58,13 @@ public class HomingEnemyAiController : BaseAiController
 
     protected override void OnEnabled()
     {
-        _healthHandler.OnDying += HandleDying;
+        base.OnEnabled();
     }
 
     
     protected override void OnDisabled()
     {
-        _healthHandler.OnDying -= HandleDying;
+        base.OnDisabled();
     }
 
     protected override void Run()
@@ -165,11 +162,19 @@ public class HomingEnemyAiController : BaseAiController
             });
     }
 
-    private void HandleDying()
+    protected override void HandleDying()
     {
-        _dead = true;
+        Debug.Log("dead");
+        base.HandleDying();
         _canAttack = false;
         _gravityMaker.enabled = true;
+    }
+
+    protected override void HandleRevive()
+    {
+        Debug.Log("revived");
+        base.HandleRevive();
+        _gravityMaker.enabled = false;
     }
 
     public override bool CanAttack()

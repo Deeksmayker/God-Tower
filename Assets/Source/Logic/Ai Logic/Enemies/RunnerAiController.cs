@@ -20,7 +20,6 @@ public class RunnerAiController : BaseAiController
 
     private bool _canAttack;
     private bool _attacking;
-    private bool _dead;
     private bool _moving;
     
     private float _timeOnPosition;
@@ -49,24 +48,16 @@ public class RunnerAiController : BaseAiController
 
     protected override void OnEnabled()
     {
+        base.OnEnabled();
         _rangeAbility.OnStartHolding += HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform += HandlePerformingRangeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying += HandleDying;
-        }
     }
 
     protected override void OnDisabled()
     {
+        base.OnDisabled();
         _rangeAbility.OnStartHolding -= HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform -= HandlePerformingRangeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying -= HandleDying;
-        }
     }
 
     protected override void Run()
@@ -217,9 +208,11 @@ public class RunnerAiController : BaseAiController
         _attacking = false;
     }
 
-    private void HandleDying()
+    protected override void HandleRevive()
     {
-        _dead = true;
+        base.HandleRevive();
+        _attacking = false;
+        _moving = false;
     }
 
     public override bool CanAttack()

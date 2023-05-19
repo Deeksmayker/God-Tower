@@ -5172,7 +5172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 2
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
@@ -5182,7 +5182,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 2
 --- !u!1 &419512307
 GameObject:
   m_ObjectHideFlags: 0
@@ -5714,7 +5714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 2
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
@@ -5724,7 +5724,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 2
 --- !u!1 &1069879340
 GameObject:
   m_ObjectHideFlags: 0
@@ -5927,7 +5927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 2
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
@@ -5937,7 +5937,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 2
 --- !u!1 &1249313429
 GameObject:
   m_ObjectHideFlags: 0
@@ -6634,7 +6634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 2
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
@@ -6644,7 +6644,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 2
 --- !u!1 &1696176787
 GameObject:
   m_ObjectHideFlags: 0
@@ -6701,6 +6701,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1849502635
 GameObject:
   m_ObjectHideFlags: 0
@@ -7248,7 +7249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3295190065406047387}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.13, y: -0.15, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7387,6 +7388,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3998808298643400553
 GameObject:
   m_ObjectHideFlags: 0
@@ -7401,7 +7403,6 @@ GameObject:
   - component: {fileID: 3998808298643400549}
   - component: {fileID: 1137967107}
   - component: {fileID: 1137967106}
-  - component: {fileID: 117173105}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7444,7 +7445,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 10.069196
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -7554,20 +7555,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionLerpSpeed: 8
   rotationLerpSpeed: 8
---- !u!114 &117173105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3998808298643400553}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b993a4ebea15ab4eb8476ad25e8a8d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camRootTransform: {fileID: 0}
-  smoothness: 1
 --- !u!1 &3998808298746309512
 GameObject:
   m_ObjectHideFlags: 0
@@ -7654,7 +7641,7 @@ Transform:
   - {fileID: 1686899659}
   - {fileID: 1551784979}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3998808300210842282
 CharacterController:
@@ -7723,7 +7710,7 @@ MonoBehaviour:
   alignMovementWithRotation: 1
   targetHorizontalSpeed: 20
   groundHorizontalAcceleration: 75
-  airHorizontalAcceleration: 25
+  airHorizontalAcceleration: 50
 --- !u!114 &3998808300210842280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7755,13 +7742,14 @@ MonoBehaviour:
     m_Bits: 6272
   hitBoxSize: {x: 1.5, y: 3, z: 3}
   damage: 20
-  forwardRecoilBeforePunch: 20
-  payoffPowerVector: {x: 15, y: 20, z: 15}
+  forwardRecoilBeforePunch: 40
+  payoffPowerVector: {x: 20, y: 40, z: 20}
   preparingTime: 0.02
-  attackDuration: 0.3
+  attackDuration: 0.5
   cooldown: 0.5
   allowParry: 1
   parryProjectileBoostVelocity: 70
+  parryHeal: 50
 --- !u!114 &3998808300210842283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7852,8 +7840,8 @@ MonoBehaviour:
   camRotationTarget: {fileID: 3998808298746309513}
   rightHandShootPoint: {fileID: 1633741983}
   leftHandShootPoint: {fileID: 1644204099}
-  stealDistance: 10
-  stealRadius: 0.5
+  stealDistance: 50
+  stealRadius: 5
   healBySteal: 20
 --- !u!114 &2131039298
 MonoBehaviour:
@@ -7867,10 +7855,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddc7e42f3b84b43ba85dbcc20b4342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDie: 0
-  canStartDying: 0
+  canDie: 1
+  canStartDying: 1
+  oneHealthDeathProtection: 1
   health: 100
-  damageImmuneTime: 0.1
+  damageImmuneTime: 0.3
   dyingDuration: 0
 --- !u!114 &2131039309
 MonoBehaviour:
@@ -8734,7 +8723,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &722472791688639475
 Transform:
   m_ObjectHideFlags: 0

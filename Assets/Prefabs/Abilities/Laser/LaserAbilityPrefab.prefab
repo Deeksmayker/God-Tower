@@ -52,9 +52,9 @@ MonoBehaviour:
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
   damage: 5
-  dumpShootChargesCount: 30
-  holdTimeToDump: 0.7
-  dumpingShootsDelay: 0.05
+  dumpShootChargesCount: 10
+  holdTimeToDump: 0
+  dumpingShootsDelay: 0
   abilityLifetime: 7
   cooldown: 0.2
   hitTakerLayers:
@@ -65,6 +65,7 @@ MonoBehaviour:
     m_Bits: 513
   radius: 3
   distance: 300
+  spreadAngles: 10
 --- !u!114 &3216269069128228424
 MonoBehaviour:
   m_ObjectHideFlags: 0
