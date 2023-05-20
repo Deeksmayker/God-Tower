@@ -1637,7 +1637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7636869774722740883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0033, y: 0.0011, z: 0.0507}
+  m_LocalPosition: {x: 0.0014271494, y: 0.02786895, z: 0.058294185}
   m_LocalScale: {x: 0.014285711, y: 0.014285709, z: 0.0142857125}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2044,7 +2044,7 @@ Transform:
   - {fileID: 4981279394131583625}
   - {fileID: 7636869775461110964}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7636869775631508307
 MonoBehaviour:
@@ -2167,9 +2167,10 @@ MonoBehaviour:
   canDie: 1
   canStartDying: 1
   oneHealthDeathProtection: 0
+  needToRecovery: 1
   health: 1
   damageImmuneTime: 0.01
-  dyingDuration: 5
+  stunDuration: 5
 --- !u!114 &7636869775631508313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2691,11 +2692,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7636869775631508311}
     m_Modifications:
-    - target: {fileID: 3232058061232070224, guid: 09380b8e378fab44999b3f15e5bc9f78,
-        type: 3}
-      propertyPath: throwPower
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 3232058061232070224, guid: 09380b8e378fab44999b3f15e5bc9f78,
         type: 3}
       propertyPath: directionTarget

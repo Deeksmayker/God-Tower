@@ -172,7 +172,7 @@ public class GrenadierAiController : BaseAiController
 
         await UniTask.Delay(TimeSpan.FromSeconds(_rangeAttackController.GetChargingTime() - timeBeforeShootToRotateHead));
 
-        if (_jumping)
+        /*if (_jumping)
         {
             rotationTarget.LookAt(_target);
             return;
@@ -197,10 +197,10 @@ public class GrenadierAiController : BaseAiController
             distanceToTarget = Vector3.Distance(pos, targetPos);
             launchAngle = MathUtils.CalculateLowLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
                 Physics.gravity.y);
-        }
+        }*/
 
-        rotationTarget.LookAt(targetPos);
-        rotationTarget.eulerAngles = new Vector3(launchAngle, rotationTarget.rotation.eulerAngles.y, 0);
+        rotationTarget.LookAt(_target);
+        //rotationTarget.eulerAngles = new Vector3(launchAngle, rotationTarget.rotation.eulerAngles.y, 0);
     }
 
     private void HandlePerformingGrenadeAttack()

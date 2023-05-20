@@ -167,12 +167,15 @@ public class HomingEnemyAiController : BaseAiController
         base.HandleDying();
         _canAttack = false;
         _gravityMaker.enabled = true;
+        _currentPoint = null;
     }
 
     protected override void HandleRevive()
     {
         base.HandleRevive();
         _gravityMaker.enabled = false;
+        _moving = false;
+        _currentPoint = null;
     }
 
     public override bool CanAttack()

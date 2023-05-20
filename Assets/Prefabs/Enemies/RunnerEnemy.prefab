@@ -774,7 +774,7 @@ Transform:
   - {fileID: 543450652829631992}
   - {fileID: 2027735910}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5276695168522168775
 MonoBehaviour:
@@ -827,9 +827,10 @@ MonoBehaviour:
   canDie: 1
   canStartDying: 1
   oneHealthDeathProtection: 0
+  needToRecovery: 1
   health: 1
   damageImmuneTime: 0
-  dyingDuration: 5
+  stunDuration: 5
 --- !u!114 &5276695168522168771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1244,12 +1245,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5276695168522168769}
     m_Modifications:
-    - target: {fileID: 3216269069128228424, guid: 018332c5dfb565f40afe19b4a5a7c8ee,
-        type: 3}
-      propertyPath: hitEffect
-      value: 
-      objectReference: {fileID: 2734764703766690187, guid: 817180f7c9acd9c4db4a5bcd62f56184,
-        type: 3}
     - target: {fileID: 3216269069128228425, guid: 018332c5dfb565f40afe19b4a5a7c8ee,
         type: 3}
       propertyPath: m_Name
@@ -1309,11 +1304,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3216269069128228431, guid: 018332c5dfb565f40afe19b4a5a7c8ee,
-        type: 3}
-      propertyPath: radius
-      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3216269069128228431, guid: 018332c5dfb565f40afe19b4a5a7c8ee,
         type: 3}

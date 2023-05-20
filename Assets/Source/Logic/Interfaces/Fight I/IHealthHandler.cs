@@ -4,12 +4,12 @@ public interface IHealthHandler
 {
     public event Action OnHit;
     public event Action<float> OnHealthChanged;
-    public event Action OnDying;
+    public event Action OnStun;
     public event Action OnDied;
     public event Action OnRevive;
 
     public void HandleHit(float damage);
-    public void StartDying();
+    public void StartStun();
     public void Die(bool order = false);
     public void Revive();
 

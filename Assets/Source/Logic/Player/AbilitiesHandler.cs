@@ -99,7 +99,7 @@ public class AbilitiesHandler : MonoCache
 
     private GameObject CheckForStealAbility()
     {
-        if (Physics.SphereCast(camRotationTarget.position, stealRadius, camRotationTarget.forward, out var hit, stealDistance,
+        if (Physics.SphereCast(camRotationTarget.position - camRotationTarget.forward * 10, stealRadius, camRotationTarget.forward, out var hit, stealDistance,
                 layersToSteal))
         {
             if (hit.transform.TryGetComponent<IGiveAbility>(out var giver) && giver.CanGiveAbility())

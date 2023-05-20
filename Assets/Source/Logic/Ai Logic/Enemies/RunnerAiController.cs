@@ -33,8 +33,8 @@ public class RunnerAiController : BaseAiController
     private IActiveAbility _rangeAbility;
     private IMover _mover;
     
-    private HomingEnemyMovePoint _currentPoint;
-    [Inject] private List<HomingEnemyMovePoint> _movePoints;
+    private RunnerMovePoint _currentPoint;
+    [Inject] private List<RunnerMovePoint> _movePoints;
 
     private void Awake()
     {
@@ -135,6 +135,8 @@ public class RunnerAiController : BaseAiController
 
         while (timer < 1f)
         {
+            if (_movePoints.Count <= 0)
+                break;
             timer += Time.deltaTime;
             var index = Random.Range(0, _movePoints.Count);
             var randomMovePoint = _movePoints[index].transform.position;

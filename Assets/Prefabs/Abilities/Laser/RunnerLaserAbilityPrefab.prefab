@@ -55,15 +55,16 @@ MonoBehaviour:
   holdTimeToDump: 0
   dumpingShootsDelay: 0
   abilityLifetime: 0
-  cooldown: 5
+  cooldown: 3
   hitTakerLayers:
     serializedVersion: 2
     m_Bits: 7168
   environmentLayers:
     serializedVersion: 2
     m_Bits: 513
-  radius: 0.5
+  radius: 0.3
   distance: 300
+  spreadAngles: 0
 --- !u!114 &3216269069128228424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traceEffect: {fileID: 7637479311655098315, guid: 5e7d8c7dbf7b4cd4eb2190001aad5e88,
     type: 3}
-  hitEffect: {fileID: 2734764703766690187, guid: c303081d6fa7a5c49b1ef24bce2d5ece,
+  hitEffect: {fileID: 2734764703766690187, guid: 817180f7c9acd9c4db4a5bcd62f56184,
     type: 3}
 --- !u!114 &6586342652458106923
 MonoBehaviour:

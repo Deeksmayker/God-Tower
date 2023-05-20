@@ -18,7 +18,7 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
     
     public event Action OnHit;
     public event Action<float> OnHealthChanged;
-    public event Action OnDying;
+    public event Action OnStun;
     public event Action OnDied;
     public event Action OnRevive;
 
@@ -61,16 +61,16 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
         OnHit?.Invoke();
 
         if (health <= 0 && !_dying)
-            StartDying();
+            StartStun();
     }
 
-    public void StartDying()
+    public void StartStun()
     {
         if (needToRecovery)
             _timer = recoveryTime;
         
         _dying = true;
-        OnDying?.Invoke();
+        OnStun?.Invoke();
         OnHurt.Invoke();
     }
 

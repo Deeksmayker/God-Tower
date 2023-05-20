@@ -7641,7 +7641,7 @@ Transform:
   - {fileID: 1686899659}
   - {fileID: 1551784979}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3998808300210842282
 CharacterController:
@@ -7840,8 +7840,8 @@ MonoBehaviour:
   camRotationTarget: {fileID: 3998808298746309513}
   rightHandShootPoint: {fileID: 1633741983}
   leftHandShootPoint: {fileID: 1644204099}
-  stealDistance: 50
-  stealRadius: 5
+  stealDistance: 30
+  stealRadius: 10
   healBySteal: 20
 --- !u!114 &2131039298
 MonoBehaviour:
@@ -7856,11 +7856,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDie: 1
-  canStartDying: 1
+  canStartDying: 0
   oneHealthDeathProtection: 1
+  needToRecovery: 0
   health: 100
   damageImmuneTime: 0.3
-  dyingDuration: 0
+  stunDuration: 5
 --- !u!114 &2131039309
 MonoBehaviour:
   m_ObjectHideFlags: 0

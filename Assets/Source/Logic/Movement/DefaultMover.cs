@@ -97,6 +97,14 @@ public class DefaultMover : MonoCache, IMover
         return Mathf.Abs(desiredSpeed) > Mathf.Abs(actualSpeed);
     }
 
+    /*private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.normal.y <= 0.5f && !IsGrounded())
+        {
+            SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);
+        }
+    }*/
+
     public void SetHorizontalInput(Vector2 input)
     {
         _horizontalInput = input;

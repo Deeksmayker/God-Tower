@@ -66,7 +66,7 @@ public class HitReactionsVisual : MonoCache
 
     protected override void OnEnabled()
     {
-        _healthHandler.OnDying += HandleDying;
+        _healthHandler.OnStun += HandleDying;
         _healthHandler.OnDied += HandleDie;
         _healthHandler.OnRevive += RestoreColor;
 
@@ -78,7 +78,7 @@ public class HitReactionsVisual : MonoCache
 
     protected override void OnDisabled()
     {
-        _healthHandler.OnDying -= HandleDying;
+        _healthHandler.OnStun -= HandleDying;
         _healthHandler.OnDied -= HandleDie;
         _healthHandler.OnRevive -= RestoreColor;
 
