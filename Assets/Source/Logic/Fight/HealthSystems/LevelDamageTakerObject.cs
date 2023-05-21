@@ -18,6 +18,7 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
     
     public event Action OnHit;
     public event Action<float> OnHealthChanged;
+    public event Action OnHealthAdd;
     public event Action OnDying;
     public event Action OnDied;
     
@@ -85,6 +86,7 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
 
     public void AddHealth(float addValue)
     {
+        OnHealthAdd?.Invoke();
         throw new NotImplementedException();
     }
 
