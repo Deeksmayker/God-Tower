@@ -27,11 +27,13 @@ public class ActiveAbilityGiver : MonoCache, IGiveAbility
     protected override void OnEnabled()
     {
         _tracker.OnCanGiveAbility += SetCanGive;
+        _tracker.OnNotCanGiveAbility += SetCanNotGive;
     }
 
     protected override void OnDisabled()
     {
         _tracker.OnCanGiveAbility -= SetCanGive;
+        _tracker.OnNotCanGiveAbility += SetCanNotGive;
     }
 
     public GameObject GetAbilityPrefab()
@@ -57,5 +59,10 @@ public class ActiveAbilityGiver : MonoCache, IGiveAbility
     private void SetCanGive()
     {
         canGiveAbility = true;
+    }
+
+    private void SetCanNotGive()
+    {
+        canGiveAbility = false;
     }
 }

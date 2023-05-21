@@ -23,6 +23,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     [Header("Parry")]
     [SerializeField] private bool allowParry = true;
     [SerializeField] private float parryProjectileBoostVelocity = 70;
+    [SerializeField] private float parryHeal = 50f;
 
     private Collider[] _attackHitsContainer = new Collider[10];
     private List<int> _objectsAlreadyTakeHit = new();
@@ -36,6 +37,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     private MeleeAttackStates _attackState = MeleeAttackStates.Resting;
     
     private IMover _mover;
+    private BaseHealthHandler _healthHandler;
     
     public event Action OnStartPreparingAttack;
     public event Action OnStartAttack;
@@ -46,6 +48,17 @@ public class Kicker : MonoCache, IMeleeAttacker
     private void Awake()
     {
         _mover = Get<IMover>();
+        _healthHandler = Get<BaseHealthHandler>();
+    }
+
+    protected override void OnEnabled()
+    {
+        OnParry += HealOnParry;
+    }
+
+    protected override void OnDisabled()
+    {
+        OnParry -= HealOnParry;
     }
 
     protected override void Run()
@@ -131,10 +144,10 @@ public class Kicker : MonoCache, IMeleeAttacker
         {
             _mover.SetVerticalVelocity(payoffPowerVector.y);
             _mover.AddVelocity(new Vector3(
-                -GetAttackDirection().x * payoffPowerVector.x,
+                GetAttackDirection().x * payoffPowerVector.x,
                 0,
-                -GetAttackDirection().z * payoffPowerVector.z));
-            _isHitAnything = true;
+                GetAttackDirection().z * payoffPowerVector.z));
+            _isHitAnything = true; 
         }
     }
 
@@ -146,6 +159,11 @@ public class Kicker : MonoCache, IMeleeAttacker
     private void HandleStartAttack()
     {
         
+    }
+
+    private void HealOnParry()
+    {
+        _healthHandler.AddHealth(parryHeal);
     }
 
     public void SetInput(bool input)

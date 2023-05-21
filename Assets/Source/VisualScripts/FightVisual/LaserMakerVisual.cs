@@ -32,10 +32,10 @@ public class LaserMakerVisual : MonoCache
         _laserMaker.OnMissHit -= HandleMiss;
     }
 
-    private void HandleHitTakerHit(RaycastHit hit)
+    private void HandleHitTakerHit(RaycastHit hit, Vector3 direction)
     {
         var trace = NightPool.Spawn(traceEffect);
-        var hitPosition = _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance;
+        var hitPosition = _laserMaker.GetStartPoint() + direction * hit.distance;
         trace.SetVector3("Pos1", _laserMaker.GetStartPoint());
         trace.SetVector3("Pos2", hitPosition);
         
@@ -44,10 +44,10 @@ public class LaserMakerVisual : MonoCache
             hit.normal)));
     }
 
-    private void HandleEnvironmentHit(RaycastHit hit)
+    private void HandleEnvironmentHit(RaycastHit hit, Vector3 direction)
     {
         var trace = NightPool.Spawn(traceEffect);
-        var hitPosition = _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * hit.distance;
+        var hitPosition = _laserMaker.GetStartPoint() + direction * hit.distance;
         trace.SetVector3("Pos1", _laserMaker.GetStartPoint());
         trace.SetVector3("Pos2", hitPosition);
 
@@ -56,11 +56,11 @@ public class LaserMakerVisual : MonoCache
             hit.normal)));
     }
 
-    private void HandleMiss()
+    private void HandleMiss(Vector3 direction)
     {
         var trace = NightPool.Spawn(traceEffect);
         trace.SetVector3("Pos1", _laserMaker.GetStartPoint());
-        trace.SetVector3("Pos2", _laserMaker.GetStartPoint() + _laserMaker.GetPerformDirection() * 100);
+        trace.SetVector3("Pos2", _laserMaker.GetStartPoint() + direction * 100);
     }
     
 }

@@ -111,7 +111,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!explodeOnTrigger)
+        if (!explodeOnTrigger || collisionImmuneDuration > 0 && other.gameObject.layer is 7)
             return;
 
         Explode();

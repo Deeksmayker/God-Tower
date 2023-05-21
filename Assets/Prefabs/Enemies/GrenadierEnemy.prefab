@@ -429,6 +429,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &864604714901534806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,7 +1366,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 0c433999d5dc26c468fba3e3b10823fd, type: 3}
+  - {fileID: 2100000, guid: 90d814e39e4a67846ace4ece519f2752, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1636,7 +1637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7636869774722740883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0033, y: 0.0011, z: 0.0507}
+  m_LocalPosition: {x: 0.0014271494, y: 0.02786895, z: 0.058294185}
   m_LocalScale: {x: 0.014285711, y: 0.014285709, z: 0.0142857125}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2165,9 +2166,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDie: 1
   canStartDying: 1
-  health: 200
+  oneHealthDeathProtection: 0
+  needToRecovery: 1
+  health: 1
   damageImmuneTime: 0.01
-  dyingDuration: 5
+  stunDuration: 5
 --- !u!114 &7636869775631508313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2689,11 +2692,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7636869775631508311}
     m_Modifications:
-    - target: {fileID: 3232058061232070224, guid: 09380b8e378fab44999b3f15e5bc9f78,
-        type: 3}
-      propertyPath: throwPower
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 3232058061232070224, guid: 09380b8e378fab44999b3f15e5bc9f78,
         type: 3}
       propertyPath: directionTarget

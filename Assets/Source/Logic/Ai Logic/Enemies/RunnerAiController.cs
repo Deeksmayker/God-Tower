@@ -20,7 +20,6 @@ public class RunnerAiController : BaseAiController
 
     private bool _canAttack;
     private bool _attacking;
-    private bool _dead;
     private bool _moving;
     
     private float _timeOnPosition;
@@ -34,8 +33,8 @@ public class RunnerAiController : BaseAiController
     private IActiveAbility _rangeAbility;
     private IMover _mover;
     
-    private HomingEnemyMovePoint _currentPoint;
-    [Inject] private List<HomingEnemyMovePoint> _movePoints;
+    private RunnerMovePoint _currentPoint;
+    [Inject] private List<RunnerMovePoint> _movePoints;
 
     private void Awake()
     {
@@ -49,24 +48,16 @@ public class RunnerAiController : BaseAiController
 
     protected override void OnEnabled()
     {
+        base.OnEnabled();
         _rangeAbility.OnStartHolding += HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform += HandlePerformingRangeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying += HandleDying;
-        }
     }
 
     protected override void OnDisabled()
     {
+        base.OnDisabled();
         _rangeAbility.OnStartHolding -= HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform -= HandlePerformingRangeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying -= HandleDying;
-        }
     }
 
     protected override void Run()
@@ -144,6 +135,8 @@ public class RunnerAiController : BaseAiController
 
         while (timer < 1f)
         {
+            if (_movePoints.Count <= 0)
+                break;
             timer += Time.deltaTime;
             var index = Random.Range(0, _movePoints.Count);
             var randomMovePoint = _movePoints[index].transform.position;
@@ -217,9 +210,11 @@ public class RunnerAiController : BaseAiController
         _attacking = false;
     }
 
-    private void HandleDying()
+    protected override void HandleRevive()
     {
-        _dead = true;
+        base.HandleRevive();
+        _attacking = false;
+        _moving = false;
     }
 
     public override bool CanAttack()

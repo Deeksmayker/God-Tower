@@ -3,10 +3,11 @@ using UnityEngine;
 
 public interface IMakeLaser
 {
-    public event Action<RaycastHit> OnEnvironmentHit;
-    public event Action<RaycastHit> OnHitToHitTaker;
-    public event Action OnMissHit;
-    
+    public event Action<RaycastHit, Vector3> OnEnvironmentHit;
+    public event Action<RaycastHit, Vector3> OnHitToHitTaker;
+    public event Action<Vector3> OnMissHit;
+
+
     public Vector3 GetPerformDirection();
     public Vector3 GetStartPoint();
 }

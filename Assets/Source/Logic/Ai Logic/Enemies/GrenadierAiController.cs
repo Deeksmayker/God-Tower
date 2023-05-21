@@ -27,7 +27,6 @@ public class GrenadierAiController : BaseAiController
     private float _cantAttackTime;
     
     private bool _jumping;
-    private bool _dead;
     
     private Transform _target;
     
@@ -58,24 +57,16 @@ public class GrenadierAiController : BaseAiController
     
     protected override void OnEnabled()
     {
+        base.OnEnabled();
         _grenadeAbility.OnStartHolding += HandleStartChargingGrenadeAttack;
         _grenadeAbility.OnPerform += HandlePerformingGrenadeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying += HandleDying;
-        }
     }
 
     protected override void OnDisabled()
     {
+        base.OnDisabled();
         _grenadeAbility.OnStartHolding -= HandleStartChargingGrenadeAttack;
         _grenadeAbility.OnPerform -= HandlePerformingGrenadeAttack;
-        
-        if (TryGetComponent<IHealthHandler>(out var health))
-        {
-            health.OnDying -= HandleDying;
-        }
     }
 
     protected override void Run()
@@ -181,7 +172,7 @@ public class GrenadierAiController : BaseAiController
 
         await UniTask.Delay(TimeSpan.FromSeconds(_rangeAttackController.GetChargingTime() - timeBeforeShootToRotateHead));
 
-        if (_jumping)
+        /*if (_jumping)
         {
             rotationTarget.LookAt(_target);
             return;
@@ -206,20 +197,15 @@ public class GrenadierAiController : BaseAiController
             distanceToTarget = Vector3.Distance(pos, targetPos);
             launchAngle = MathUtils.CalculateLowLaunchAngle(distanceToTarget, _grenadeAbility.GetThrowPower(), pos.y - targetPos.y,
                 Physics.gravity.y);
-        }
+        }*/
 
-        rotationTarget.LookAt(targetPos);
-        rotationTarget.eulerAngles = new Vector3(launchAngle, rotationTarget.rotation.eulerAngles.y, 0);
+        rotationTarget.LookAt(_target);
+        //rotationTarget.eulerAngles = new Vector3(launchAngle, rotationTarget.rotation.eulerAngles.y, 0);
     }
 
     private void HandlePerformingGrenadeAttack()
     {
         
-    }
-
-    private void HandleDying()
-    {
-        _dead = true;
     }
 
     public override bool CanAttack()

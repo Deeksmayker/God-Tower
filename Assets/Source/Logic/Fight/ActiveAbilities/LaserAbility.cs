@@ -4,7 +4,7 @@ using NTC.Global.Pool;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
-
+using Random = UnityEngine.Random;
 
 public class LaserAbility : DefaultActiveAbility, IMakeLaser
 {
@@ -13,10 +13,13 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
 
     [SerializeField] private float radius = 0.4f;
     [SerializeField] private float distance = 300f;
-    
-    public event Action<RaycastHit> OnEnvironmentHit;
-    public event Action<RaycastHit> OnHitToHitTaker;
-    public event Action OnMissHit;
+
+    [Header("Dump")]
+    [SerializeField] private float spreadAngles;
+
+    public event Action<RaycastHit, Vector3> OnEnvironmentHit;
+    public event Action<RaycastHit, Vector3> OnHitToHitTaker;
+    public event Action<Vector3> OnMissHit;
 
     protected override void OnEnabled()
     {
@@ -29,32 +32,49 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
 
         var startPoint = directionTarget.position;
 
-        if (Physics.SphereCast(startPoint, radius, GetPerformDirection(), out var hitInfo, distance, hitTakerLayers))
+        var direction = GetPerformDirection();
+
+        if (isDumping)
+        {
+            var randomNumberX = Random.Range(-spreadAngles, spreadAngles);
+            var randomNumberY = Random.Range(-spreadAngles, spreadAngles);
+            var randomNumberZ = Random.Range(-spreadAngles, spreadAngles);
+
+            direction = Quaternion.Euler(randomNumberX, randomNumberY, randomNumberZ) * direction;
+        }
+       
+
+        ShootLaser(startPoint, direction);
+    }
+
+    private void ShootLaser(Vector3 startPoint, Vector3 direction)
+    {
+        if (Physics.SphereCast(startPoint, radius, direction, out var hitInfo, distance, hitTakerLayers))
         {
             var hitTransform = hitInfo.transform;
-            
+
             var hitType = HitTypes.NormalPoint;
 
             if (hitTransform.GetComponent<IWeakPoint>() != null)
             {
                 hitType = HitTypes.WeakPoint;
             }
-            
+
             if (hitInfo.transform.TryGetComponent<ITakeHit>(out var hitTaker))
             {
-                OnHitToHitTaker?.Invoke(hitInfo);
+                OnHitToHitTaker?.Invoke(hitInfo, direction);
                 hitTaker.TakeHit(damage, hitInfo.point, hitType);
                 return;
             }
         }
 
-        if (Physics.Raycast(GetStartPoint(), GetPerformDirection(), out var envHitInfo, distance, environmentLayers))
+        if (Physics.Raycast(startPoint, direction, out var envHitInfo, distance, environmentLayers))
         {
-            OnEnvironmentHit?.Invoke(envHitInfo);
+            OnEnvironmentHit?.Invoke(envHitInfo, direction);
             return;
         }
 
-        OnMissHit?.Invoke();
+        OnMissHit?.Invoke(direction);
     }
 
     public override AbilityTypes GetType()

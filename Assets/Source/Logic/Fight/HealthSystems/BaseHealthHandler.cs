@@ -9,34 +9,35 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 {
     [SerializeField] private bool canDie = true;
     [SerializeField] private bool canStartDying = true;
+    [SerializeField] private bool oneHealthDeathProtection;
+    [SerializeField] private bool needToRecovery = true;
     [SerializeField] private float health;
     [SerializeField] private float damageImmuneTime = 0.1f;
-    [SerializeField] private float dyingDuration = 5;
+    [SerializeField] private float stunDuration = 5;
 
     private float _maxHealth;
 
     private float _timer;
-    private float _dyingTimer;
+    private float _stunTimer;
 
-    private bool _dying;
+    private bool _stunned;
 
     private ITakeHit[] _hitTakers;
-    private IWeakPoint[] _weakPoints;
 
     public event Action OnHit;
     public event Action<float> OnHealthChanged;
     public event Action OnHealthAdd;
-    public event Action OnDying;
+    public event Action OnStun;
     public event Action OnDied;
     public event Action OnCanGiveAbility;
     public event Action OnNotCanGiveAbility;
+    public event Action OnRevive;
 
     private void Awake()
     {
         _maxHealth = health;
         
         _hitTakers = GetComponentsInChildren<ITakeHit>();
-        _weakPoints = GetComponentsInChildren<IWeakPoint>();
     }
 
     protected override void OnEnabled()
@@ -60,12 +61,12 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         if (_timer > 0)
             _timer -= Time.deltaTime;
 
-        if (_dyingTimer > 0 || _dying)
+        if (needToRecovery && (_stunTimer > 0 || _stunned))
         {
-            _dyingTimer -= Time.deltaTime;
-            if (_dyingTimer <= 0)
+            _stunTimer -= Time.deltaTime;
+            if (_stunTimer <= 0)
             {
-                Die();
+                Revive();
             }
         }
     }
@@ -80,14 +81,14 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         RemoveHealth(damage);
     }
 
-    public void StartDying()
+    public void StartStun()
     {
         if (!canStartDying)
             return;
         
-        _dying = true;
-        _dyingTimer = dyingDuration;
-        OnDying?.Invoke();
+        _stunned = true;
+        _stunTimer = stunDuration;
+        OnStun?.Invoke();
         OnCanGiveAbility?.Invoke();
     }
 
@@ -100,6 +101,14 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         NightPool.Despawn(this);
     }
 
+    public void Revive()
+    {
+        _stunned = false;
+        health = _maxHealth;
+        OnNotCanGiveAbility?.Invoke();
+        OnRevive?.Invoke();
+    }
+
     public void AddHealth(float addValue)
     {
         SetHealth(health + addValue);
@@ -110,12 +119,12 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     public void RemoveHealth(float removeValue)
     {
         SetHealth(health - removeValue);
-        if (health <= 0 && !_dying)
+        if (health <= 0)
         {
-            StartDying();
+            StartStun();
         }
 
-        if (health < -200 && canDie)
+        if (health <= 0 && canDie && !canStartDying)
         {
             Die();
         }
@@ -123,8 +132,20 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void SetHealth(float value)
     {
+        if (oneHealthDeathProtection && health > 1 && value <= 0)
+            value = 1;
         health = value;
         OnHealthChanged?.Invoke(health);
+    }
+
+    public void SetNeedRecovery(bool value)
+    {
+        needToRecovery = value;
+    }
+
+    public void SetCanStartDying(bool value)
+    {
+        canStartDying = value;
     }
 
     public float GetHealth()
@@ -132,5 +153,15 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         return health;
     }
 
-    public bool IsDead() => _dying;
+    public bool IsDead() => _stunned;
+
+    public float GetReviveTime()
+    {
+        return stunDuration;
+    }
+
+    public float GetCurrentReviveTimer()
+    {
+        return _stunTimer;
+    }
 }

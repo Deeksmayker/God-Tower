@@ -6,6 +6,7 @@ public class MainMenuUi : MonoCache
 {
     public void LoadGame()
     {
+        Application.targetFrameRate = 300;
         SceneManager.LoadScene(SettingsController.LastScene);
     }
 
