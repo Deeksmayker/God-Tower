@@ -24,6 +24,7 @@ public class TempPlayerTakeHitVisual : MonoCache
     {
         value = Mathf.Clamp(value, 0, 100);
         
+        postProcessingController.ChangeBloomColorByPercentage(Color.white, Color.red, value / 100);
         postProcessingController.SetDefaultVignetteIntensity(1 - value / 100);
         postProcessingController.SetDefaultBloomIntensity(5 - value / 20);
         postProcessingController.SetDefaultChromaticAberrationIntensity(1 - value / 100);

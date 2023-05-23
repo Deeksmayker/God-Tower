@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -152,6 +153,19 @@ public class PostProcessingController : MonoCache
         ChangeColorWithTime(_bloom.tint, color, time);
     }
 
+    /// <summary>
+    /// Позволяет плавно менять цвет Bloom из цвета <paramref name="from"/> в цвет <paramref name="to"/> по процентам.
+    /// </summary>
+    /// <param name="from"> Начальный цвет. Эквивалент <paramref name="percent"/> = 0. </param>
+    /// <param name="to"> Конечный цвет. Эквивалент <paramref name="percent"/> = 1. </param>
+    /// <param name="percent"> Проценты, в соответствии с которыми будет происходить переход. Чем больше <paramref name="percent"/>,
+    /// тем ближе цвет будет к <paramref name="from"/>. </param>
+    /// <param name="time"> Время, за которое будет происходить плавный переход. </param>
+    public void ChangeBloomColorByPercentage(Color from, Color to, float percent, float time = 0.1f)
+    {
+        ChangeColorByPercentage(_bloom.tint, from, to, percent, time);
+    }
+
     #endregion
     
     #region ChromaticAberrationControll
@@ -209,6 +223,15 @@ public class PostProcessingController : MonoCache
 
     #region Other
 
+    private void ChangeColorByPercentage(ColorParameter targetColor, Color from, Color to, float percent, float time)
+    {
+        var deltaColor = new Color(Mathf.Abs(from.r - to.r), Mathf.Abs(from.g - to.g), Mathf.Abs(from.b - to.b));
+        ChangeColorWithTime(targetColor ,new Color(
+            Mathf.Abs(targetColor.value.r - deltaColor.r * percent), 
+            Mathf.Abs(targetColor.value.g - deltaColor.g * percent),
+            Mathf.Abs(targetColor.value.b - deltaColor.b * percent)), time);
+    }
+    
     private async UniTask ChangeIntensityWithSmooth(FloatParameter currentIntensity, float intensity, float smooth)
     {
         var step = intensity * smooth;
