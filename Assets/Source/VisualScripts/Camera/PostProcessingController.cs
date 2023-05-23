@@ -156,8 +156,8 @@ public class PostProcessingController : MonoCache
     /// <summary>
     /// Позволяет плавно менять цвет Bloom из цвета <paramref name="from"/> в цвет <paramref name="to"/> по процентам.
     /// </summary>
-    /// <param name="from"> Начальный цвет. Эквивалент <paramref name="percent"/> = 0. </param>
-    /// <param name="to"> Конечный цвет. Эквивалент <paramref name="percent"/> = 1. </param>
+    /// <param name="from"> Начальный цвет. Эквивалент <paramref name="percent"/> = 1. </param>
+    /// <param name="to"> Конечный цвет. Эквивалент <paramref name="percent"/> = 0. </param>
     /// <param name="percent"> Проценты, в соответствии с которыми будет происходить переход. Чем больше <paramref name="percent"/>,
     /// тем ближе цвет будет к <paramref name="from"/>. </param>
     /// <param name="time"> Время, за которое будет происходить плавный переход. </param>
