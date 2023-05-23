@@ -14,6 +14,7 @@ public class LightIntensity : MonoBehaviour
 
     void Start()
     {
+        //ShakeIntensity(10);
         lightSource.intensity = defaultIntensity;
     }
 
