@@ -113,7 +113,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         if (_dumpingTimer > 0)
             return;
 
-        OnDump?.Invoke();
+        //OnDump?.Invoke();
         PerformAbility(true);
 
         _dumpingTimer = dumpingShootsDelay;
@@ -146,6 +146,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     //Костыль нужен потому что нельзя вызвать Invoke если метод принимает параметры, даже если параметр не нужен
     private void PerformAbilityWithoutSpread()
     {
+        OnDump?.Invoke();
         PerformAbility();
     }
 
@@ -158,6 +159,7 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             {
                 _dumping = true;
                 _dumpingTimer = dumpingShootsDelay;
+                OnDump?.Invoke();
             }
             else
             {

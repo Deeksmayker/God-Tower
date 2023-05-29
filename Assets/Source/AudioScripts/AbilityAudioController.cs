@@ -18,12 +18,12 @@ public class AbilityAudioController : MonoCache
 
     protected override void OnEnabled()
     {
-        _ability.OnPerform += HandlePerform;
+        _ability.OnDump += HandlePerform;
     }
     
     protected override void OnDisabled()
     {
-        _ability.OnPerform -= HandlePerform;
+        _ability.OnDump -= HandlePerform;
     }
     
     private void HandlePerform()

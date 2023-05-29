@@ -27,17 +27,17 @@ public class AbilityShootEffectMaker : MonoCache
 
     protected override void OnEnabled()
     {
-        _ability.OnPerform += SpawnEffect;
+        _ability.OnDump += SpawnEffect;
     }
     
     protected override void OnDisabled()
     {
-        _ability.OnPerform -= SpawnEffect;
+        _ability.OnDump -= SpawnEffect;
     }
 
     private void SpawnEffect()
     {
-        if (effectOnShoot is null)
+        if (!effectOnShoot)
             return;
         var effect = NightPool.Spawn(effectOnShoot, _ability.GetStartPoint(), _ability.GetRotationTargetTransform().rotation);
         effect.Play();
