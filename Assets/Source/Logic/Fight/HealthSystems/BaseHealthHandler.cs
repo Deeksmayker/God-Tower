@@ -26,6 +26,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public event Action OnHit;
     public event Action<float> OnHealthChanged;
+    public event Action OnHealthAdd;
     public event Action OnStun;
     public event Action OnDied;
     public event Action OnCanGiveAbility;
@@ -112,6 +113,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     {
         SetHealth(health + addValue);
         health = Mathf.Clamp(health, 0, _maxHealth);
+        OnHealthAdd?.Invoke();
     }
 
     public void RemoveHealth(float removeValue)
