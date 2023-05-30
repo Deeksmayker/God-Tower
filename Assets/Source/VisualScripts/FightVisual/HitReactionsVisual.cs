@@ -195,6 +195,8 @@ public class HitReactionsVisual : MonoCache
 
     private void ChangeMeshesColor(Color color)
     {
+        if (_meshRenderers == null)
+            return;
         for (var i = 0; i < _meshRenderers.Length; i++)
         {
             _meshRenderers[i].GetPropertyBlock(_propertyBlock);
@@ -205,6 +207,8 @@ public class HitReactionsVisual : MonoCache
 
     private void ChangeSkinnedMeshesColor(Color color)
     {
+        if (_skinnedMeshRenderer == null)
+            return;
         _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
         _propertyBlock.SetColor("_Color", color);
         _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);

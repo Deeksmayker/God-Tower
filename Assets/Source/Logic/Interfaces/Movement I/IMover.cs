@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IMover
 {
     public event Action OnLanding;
+    public event Action<Vector3> OnBounce;
     
     public void PerformMove();
     public void SetHorizontalInput(Vector2 input);

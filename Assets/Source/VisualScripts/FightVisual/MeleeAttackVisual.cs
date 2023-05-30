@@ -59,6 +59,9 @@ public class MeleeAttackVisual : MonoCache
 
     private void HandleHit()
     {
+        var effect = NightPool.Spawn(parryEffect, transform.position + _meleeAttacker.GetAttackDirection(),
+            Quaternion.LookRotation(_meleeAttacker.GetAttackDirection()));
+
         if (shakeCamera)
         {
             CameraService.Instance.ShakeCamera(hitShakePreset);

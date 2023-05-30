@@ -147,7 +147,8 @@ public class Kicker : MonoCache, IMeleeAttacker
                 GetAttackDirection().x * payoffPowerVector.x,
                 0,
                 GetAttackDirection().z * payoffPowerVector.z));
-            _isHitAnything = true; 
+            _isHitAnything = true;
+            _timer /= 2;
         }
     }
 
@@ -164,6 +165,11 @@ public class Kicker : MonoCache, IMeleeAttacker
     private void HealOnParry()
     {
         _healthHandler.AddHealth(parryHeal);
+    }
+
+    private void ReduceCooldown()
+    {
+
     }
 
     public void SetInput(bool input)
@@ -193,8 +199,8 @@ public class Kicker : MonoCache, IMeleeAttacker
             case MeleeAttackStates.Cooldown:
                 OnEndAttack?.Invoke();
                 _objectsAlreadyTakeHit.Clear();
-                _isHitAnything = false;
                 _timer = GetAttackCooldown();
+                _isHitAnything = false;
                 break;
         }
     }
@@ -235,7 +241,7 @@ public class Kicker : MonoCache, IMeleeAttacker
 
     public float GetAttackCooldown()
     {
-        return cooldown;
+        return _isHitAnything ? cooldown / 2 : cooldown;
     }
 
     public float GetTimerValueForCurrentAttackState()

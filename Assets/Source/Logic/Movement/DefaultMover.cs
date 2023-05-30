@@ -29,6 +29,7 @@ public class DefaultMover : MonoCache, IMover
     private bool _isResponseToInput = true;
     
     public event Action OnLanding;
+    public event Action<Vector3> OnBounce;
 
     private void Awake()
     {
@@ -102,6 +103,7 @@ public class DefaultMover : MonoCache, IMover
         if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded())
         {
             SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);
+            OnBounce?.Invoke(hit.normal);
         }
     }
 
