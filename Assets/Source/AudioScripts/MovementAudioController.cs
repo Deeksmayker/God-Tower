@@ -65,14 +65,14 @@ public class MovementAudioController : MonoCache
     private void HandleLanding()
     {
         var clip = AudioUtils.GetRandomClip(landingClips);
-        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, 0.7f);
+        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, 0.3f);
         _audioSource.PlayOneShot(clip);
     }
 
     private void HandleJump()
     {
         var clip = AudioUtils.GetRandomClip(jumpClips);
-        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, 0.7f);
+        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, 0.3f);
         _audioSource.PlayOneShot(clip);
     }
 

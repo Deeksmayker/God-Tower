@@ -108,8 +108,8 @@ public class Kicker : MonoCache, IMeleeAttacker
             if (_objectsAlreadyTakeHit.Contains(hitParentHash))
                 continue;
             _objectsAlreadyTakeHit.Add(hitParentHash);
-            
-            var hitPosition = _attackHitsContainer[i].ClosestPoint(hitBoxCenter);
+
+            var hitPosition = hitBoxCenter;
 
             var hitType = HitTypes.NormalPoint;
 

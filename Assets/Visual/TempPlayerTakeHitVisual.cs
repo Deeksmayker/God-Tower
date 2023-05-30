@@ -10,6 +10,7 @@ public class TempPlayerTakeHitVisual : MonoCache
     [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip takeDamageClip;
     [SerializeField] private ShakePreset camShake;
+
     [Inject] private PostProcessingController postProcessingController;
 
     protected override void OnEnabled()
@@ -23,8 +24,8 @@ public class TempPlayerTakeHitVisual : MonoCache
     private void SetDefaultValuePostProcessing(float value)
     {
         value = Mathf.Clamp(value, 0, 100);
-        
-        postProcessingController.ChangeBloomColorByPercentage(Color.white, Color.red, value / 100);
+
+        postProcessingController.SetBloomColor(Color.Lerp(Color.white, Color.red, 1 - value / 100), 0.2f);
         postProcessingController.SetDefaultVignetteIntensity(1 - value / 100);
         postProcessingController.SetDefaultBloomIntensity(5 - value / 20);
         postProcessingController.SetDefaultChromaticAberrationIntensity(1 - value / 100);

@@ -98,7 +98,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
             return;
         
         OnDied?.Invoke();
-        NightPool.Despawn(this);
+        Destroy(gameObject);
     }
 
     public void Revive()

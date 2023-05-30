@@ -166,6 +166,11 @@ public class PostProcessingController : MonoCache
         ChangeColorByPercentage(_bloom.tint, from, to, percent, time);
     }
 
+    public void SetBloomTintColor(Color color, float time)
+    {
+        ChangeColorWithTime(_bloom.tint, color, time);
+    }
+
     #endregion
     
     #region ChromaticAberrationControll

@@ -7403,6 +7403,7 @@ GameObject:
   - component: {fileID: 3998808298643400549}
   - component: {fileID: 1137967107}
   - component: {fileID: 1137967106}
+  - component: {fileID: 2292159567300001313}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7555,6 +7556,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionLerpSpeed: 8
   rotationLerpSpeed: 8
+--- !u!114 &2292159567300001313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808298643400553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b8586ae563b024db76210025f34b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 7021654372833778275}
+  smooth: 0.1
+  maxVignetteIntensity: 0.4
+  maxBloomIntensity: 8
+  maxChromaticAberrationIntensity: 0.8
 --- !u!1 &3998808298746309512
 GameObject:
   m_ObjectHideFlags: 0
@@ -7739,7 +7757,7 @@ MonoBehaviour:
   directionTarget: {fileID: 444436189}
   layersToHit:
     serializedVersion: 2
-    m_Bits: 6272
+    m_Bits: 6784
   hitBoxSize: {x: 1.5, y: 3, z: 3}
   damage: 20
   forwardRecoilBeforePunch: 40
@@ -7942,9 +7960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 1551784981}
   takeDamageClip: {fileID: 8300000, guid: 09b553c9261391f4fb8af6ead0618039, type: 3}
-  volume: {fileID: 7021654372833778275}
   camShake: {fileID: 11400000, guid: 719def726682805499e6230696fdecf9, type: 2}
-  maxVignetteIntensity: 0.4
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

@@ -199,7 +199,7 @@ public class GrenadierAiController : BaseAiController
                 Physics.gravity.y);
         }*/
 
-        rotationTarget.LookAt(_target);
+        rotationTarget.LookAt(_target.position + Vector3.down / 2);
         //rotationTarget.eulerAngles = new Vector3(launchAngle, rotationTarget.rotation.eulerAngles.y, 0);
     }
 
