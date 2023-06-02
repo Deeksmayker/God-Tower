@@ -3,13 +3,13 @@ using DG.Tweening;
 using NTC.Global.Cache;
 using UnityEditor.Rendering;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class RoomDoor : MonoCache
 {
     [SerializeField] private bool trackEnemies = true;
     [SerializeField] private float height = 250;
-    [SerializeField] private float openSpeed = 20f;
+    [SerializeField] private float openSpeed = 300f;
     [SerializeField] private float closeSpeed = 300f;
 
     private int _enemiesCount;
@@ -19,6 +19,8 @@ public class RoomDoor : MonoCache
     private float _speed = 1f;
     
     private Vector3 desiredPosition;
+
+    public UnityEvent OnOpen = new();
 
     private void Awake()
     {
@@ -49,8 +51,9 @@ public class RoomDoor : MonoCache
 
     public void Open()
     {
+        OnOpen.Invoke();
         desiredPosition += Vector3.up * height;
-        _speed = openSpeed;
+        _speed = closeSpeed;
         _closed = false;
     }
 

@@ -46,4 +46,6 @@ public class MovementEffectsController : MonoCache
         var effect = NightPool.Spawn(bounceEffect, transform.position);
         effect.transform.rotation = Quaternion.FromToRotation(Vector3.up, normal);
     }
+
+    public bool Sliding() => _mover.IsGrounded() && _mover.GetHorizontalSpeed() > 25;
 }

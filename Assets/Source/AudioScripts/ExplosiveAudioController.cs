@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ExplosiveAudioController : MonoCache
 {
-    [SerializeField] private float volumeVariation = 0.2f;
-    [SerializeField] private float pitchVariation = 0.1f;
-    
     [SerializeField] private AudioClip[] normalExplosionClips;
     [SerializeField] private AudioClip[] bigExplosionClips;
     [SerializeField] private AudioSource audioSourceToSpawn;
@@ -35,7 +32,7 @@ public class ExplosiveAudioController : MonoCache
         var source = NightPool.Spawn(audioSourceToSpawn, transform.position);
         source.clip = AudioUtils.GetRandomClip(normalExplosionClips);
         
-        AudioUtils.RandomiseAudioSourceParams(ref source, true, true, volumeVariation, pitchVariation, 0.3f);
+        AudioUtils.RandomiseAudioSourceParams(ref source, true, true, 0.05f, 0.2f, 0.15f);
 
         source.Play();
     }
@@ -45,7 +42,7 @@ public class ExplosiveAudioController : MonoCache
         var source = NightPool.Spawn(audioSourceToSpawn, transform.position);
         source.clip = AudioUtils.GetRandomClip(bigExplosionClips);
         
-        AudioUtils.RandomiseAudioSourceParams(ref source, true, true, volumeVariation, pitchVariation, 0.6f);
+        AudioUtils.RandomiseAudioSourceParams(ref source, true, true, 0.05f, 0.2f, 0.1f);
 
         source.Play();
     }

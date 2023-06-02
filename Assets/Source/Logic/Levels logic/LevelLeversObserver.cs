@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class LevelLeversObserver : MonoCache
 {
     [SerializeField] private BaseHealthHandler[] connectedObjects;
+    [SerializeField] private BaseHealthHandler[] connectedEnemies;
 
     private int _deadCount;
 
@@ -17,6 +18,11 @@ public class LevelLeversObserver : MonoCache
             connectedObjects[i].OnStun += HandleObjectDie;
             connectedObjects[i].OnRevive += HandleObjectRevive;
         }
+
+        for (var i = 0; i < connectedEnemies.Length; i++)
+        {
+            connectedEnemies[i].OnDied += HandleObjectDie;
+        }
     }
 
     protected override void OnDisabled()
@@ -26,12 +32,17 @@ public class LevelLeversObserver : MonoCache
             connectedObjects[i].OnRevive -= HandleObjectRevive;
             connectedObjects[i].OnStun -= HandleObjectDie;
         }
+
+        for (var i = 0; i < connectedEnemies.Length; i++)
+        {
+            connectedEnemies[i].OnDied -= HandleObjectDie;
+        }
     }
 
     private void HandleObjectDie()
     {
         _deadCount++;
-        if (_deadCount >= connectedObjects.Length)
+        if (_deadCount >= connectedObjects.Length + connectedEnemies.Length)
         {
             for (var i = 0; i < connectedObjects.Length; i++)
             {

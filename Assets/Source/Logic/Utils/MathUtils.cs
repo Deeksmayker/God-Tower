@@ -55,4 +55,9 @@ public static class MathUtils
 
         return true;
     }
+
+    public static Vector3 GetHorizontalFromVector(Vector3 vec)
+    {
+        return new Vector3(vec.x, 0, vec.z);
+    }
 }

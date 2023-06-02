@@ -60,8 +60,8 @@ public class DefaultMover : MonoCache, IMover
 
             if (alignMovementWithRotation)
             {
-                horizontalInputDirection = horizontalInputDirection.x * transform.right +
-                                           horizontalInputDirection.z * transform.forward;
+
+                horizontalInputDirection = transform.TransformDirection(horizontalInputDirection);
             }
 
             var acceleration = IsGrounded() ? groundHorizontalAcceleration : airHorizontalAcceleration;
@@ -100,7 +100,7 @@ public class DefaultMover : MonoCache, IMover
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded())
+        if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20)
         {
             SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);
             OnBounce?.Invoke(hit.normal);

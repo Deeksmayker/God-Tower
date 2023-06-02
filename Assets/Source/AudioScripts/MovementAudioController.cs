@@ -3,18 +3,14 @@ using UnityEngine;
 
 public class MovementAudioController : MonoCache
 {
-    [SerializeField] private float volumeVariation = 0.4f;
-    [SerializeField] private float pitchVariation = 0.2f;
-    
-    [Header("Footsteps")]
-    [SerializeField] private AudioClip[] stepClips;
-    [SerializeField] private float stepSoundInterval = 0.3f;
-    [SerializeField] private float horizontalSpeedThreshold = 10;
+    [SerializeField] private MovementEffectsController effectsController;
+    [Header("Sliding")]
+    [SerializeField] private AudioSource slidingAudioSource;
 
     [Header("Jump")]
     [SerializeField] private AudioClip[] jumpClips;
 
-    [Header("Langing")]
+    [Header("Landing")]
     [SerializeField] private AudioClip[] landingClips;
 
     private float _stepTimer;
@@ -25,7 +21,6 @@ public class MovementAudioController : MonoCache
 
     private void Awake()
     {
-        _stepTimer = stepSoundInterval;
         _audioSource = Get<AudioSource>();
         _mover = GetComponentInParent<IMover>();
         _jumper = GetComponentInParent<IJumper>();
@@ -59,24 +54,45 @@ public class MovementAudioController : MonoCache
     
     protected override void Run()
     {
-        //MakeFootstepsSound();
+        MakeSlidingSound();
     }
 
     private void HandleLanding()
     {
         var clip = AudioUtils.GetRandomClip(landingClips);
-        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, 0.3f);
+        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, 0.2f, 0.1f, 0.3f);
         _audioSource.PlayOneShot(clip);
     }
 
     private void HandleJump()
     {
         var clip = AudioUtils.GetRandomClip(jumpClips);
-        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, 0.3f);
+        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, 0.2f, 0.1f, 0.3f);
         _audioSource.PlayOneShot(clip);
     }
 
-    private void MakeFootstepsSound()
+    private void HandleBounce()
+    {
+
+    }
+
+    private void MakeSlidingSound()
+    {
+        if (!slidingAudioSource.isPlaying && effectsController.Sliding())
+        {
+            slidingAudioSource.volume = 0.5f;
+            slidingAudioSource.Play();
+        }
+
+        if (slidingAudioSource.isPlaying && !effectsController.Sliding())
+        {
+            slidingAudioSource.volume = Mathf.Lerp(slidingAudioSource.volume, 0, Time.deltaTime * 5);
+            if (MathUtils.CompareNumsApproximately(slidingAudioSource.volume, 0, 0.01f))
+                slidingAudioSource.Stop();
+        }
+    }
+
+    /*private void MakeFootstepsSound()
     {
         if (_mover.IsGrounded() && _mover.GetHorizontalSpeed() > horizontalSpeedThreshold) 
             _stepTimer -= Time.deltaTime;
@@ -85,9 +101,9 @@ public class MovementAudioController : MonoCache
         {
             var clip = AudioUtils.GetRandomClip(stepClips);
             
-            AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, 0.5f);
+            AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, 0.2f, 0.1f, 0.5f);
             _audioSource.PlayOneShot(clip);
             _stepTimer = stepSoundInterval;
         }
-    }
+    }*/
 }

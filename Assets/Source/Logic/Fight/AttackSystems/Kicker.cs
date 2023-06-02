@@ -85,7 +85,6 @@ public class Kicker : MonoCache, IMeleeAttacker
     [ContextMenu("Imitate Kick")]
     public void PerformAttack()
     {
-        
         Array.Clear(_attackHitsContainer, 0, _attackHitsContainer.Length);
 
         var hitBoxCenter = directionTarget.position + directionTarget.forward * (hitBoxSize.z / 2.0f);
@@ -95,12 +94,12 @@ public class Kicker : MonoCache, IMeleeAttacker
         
         for (var i = 0; i < _attackHitsContainer.Length; i++)
         {
-            if (_attackHitsContainer[i] is null)
+            if (!_attackHitsContainer[i])
                 break;
 
             var hitTransform = _attackHitsContainer[i].transform;
 
-            if (hitTransform.parent is not null)
+            if (hitTransform.parent)
                 hitTransform = hitTransform.parent;
             
             var hitParentHash = hitTransform.GetHashCode();
@@ -131,18 +130,25 @@ public class Kicker : MonoCache, IMeleeAttacker
                 OnParry?.Invoke();
                 return;
             }
-
-            if (_attackHitsContainer[i].GetComponent<IWeakPoint>() != null)
-                hitType = HitTypes.WeakPoint;
             
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, hitType);
             
             OnHit?.Invoke();
         }
 
-        if (_attackHitsContainer[0] is not null && !_isHitAnything)
+        if (_attackHitsContainer[0] && !_isHitAnything)
         {
-            _mover.SetVerticalVelocity(payoffPowerVector.y);
+            var verticalVector = payoffPowerVector.y;
+            if (_attackHitsContainer[0].GetComponent<ITakeHit>() == null)
+            {
+                Physics.Raycast(transform.position, _attackHitsContainer[0].ClosestPoint(transform.position) - transform.position, out var hit, 10, layersToHit);
+                var normal = hit.normal;
+
+                if (normal.y <= 0.5f)
+                    verticalVector = 0;
+            }
+
+            _mover.SetVerticalVelocity(verticalVector);
             _mover.AddVelocity(new Vector3(
                 GetAttackDirection().x * payoffPowerVector.x,
                 0,
@@ -210,6 +216,10 @@ public class Kicker : MonoCache, IMeleeAttacker
         var resultVelocity = _mover.GetVelocity();
         resultVelocity += GetAttackDirection() * forwardRecoilBeforePunch;
         resultVelocity = resultVelocity.magnitude * GetAttackDirection();
+
+        /*if (GetAttackDirection().y < -0.5f)
+            resultVelocity *= 2f;*/
+
         resultVelocity.y = Mathf.Clamp(resultVelocity.y, -100, 10);
         _mover.SetVelocity(resultVelocity);
     }
