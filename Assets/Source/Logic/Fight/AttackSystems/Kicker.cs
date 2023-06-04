@@ -138,17 +138,7 @@ public class Kicker : MonoCache, IMeleeAttacker
 
         if (_attackHitsContainer[0] && !_isHitAnything)
         {
-            var verticalVector = payoffPowerVector.y;
-            if (_attackHitsContainer[0].GetComponent<ITakeHit>() == null)
-            {
-                Physics.Raycast(transform.position, _attackHitsContainer[0].ClosestPoint(transform.position) - transform.position, out var hit, 10, layersToHit);
-                var normal = hit.normal;
-
-                if (normal.y <= 0.5f)
-                    verticalVector = 0;
-            }
-
-            _mover.SetVerticalVelocity(verticalVector);
+            _mover.SetVerticalVelocity(payoffPowerVector.y);
             _mover.AddVelocity(new Vector3(
                 GetAttackDirection().x * payoffPowerVector.x,
                 0,

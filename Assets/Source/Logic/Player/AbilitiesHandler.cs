@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks.Triggers;
+using DG.Tweening;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
@@ -16,6 +17,7 @@ public enum AbilityTypes
 public class AbilitiesHandler : MonoCache
 {
     [SerializeField] private LayerMask layersToSteal;
+    [SerializeField] private VfxTargetFly stealLineEffect;
     [SerializeField] private Transform camRotationTarget;
     [SerializeField] private Transform rightHandShootPoint, leftHandShootPoint;
     [SerializeField] private float stealDistance = 10;
@@ -109,6 +111,9 @@ public class AbilitiesHandler : MonoCache
         {
             if (hit.transform.TryGetComponent<IGiveAbility>(out var giver) && giver.CanGiveAbility())
             {
+                var effect = NightPool.Spawn(stealLineEffect, rightHandShootPoint);
+                effect.SetTarget(hit.transform.position);
+
                 return giver.GetAbilityPrefab();
             }
         }

@@ -9,6 +9,8 @@ public class PlayerInputHandler : MonoCache
     [SerializeField] private float jumpContinueInput = 0.1f;
 
     private float _jumpInputTimer;
+
+    private bool _responseToInput = true;
     
     private IMover _mover;
     private IJumper _jumper;
@@ -36,6 +38,9 @@ public class PlayerInputHandler : MonoCache
 
     protected override void Run()
     {
+        if (!_responseToInput)
+            return;
+
         if (_mover != null)
         {
             _mover.SetHorizontalInput(_playerInput.actions["Move"].ReadValue<Vector2>());
@@ -91,4 +96,8 @@ public class PlayerInputHandler : MonoCache
         }*/
     }
         
+    public void DisableInputResponse()
+    {
+        _responseToInput = false;
+    }
 }

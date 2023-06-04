@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using NTC.Global.Cache;
@@ -51,6 +52,15 @@ public class RunnerAiController : BaseAiController
         base.OnEnabled();
         _rangeAbility.OnStartHolding += HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform += HandlePerformingRangeAttack;
+
+        var connectedRoom = GetComponentInParent<RoomParent>();
+        if (connectedRoom)
+        {
+            var points = connectedRoom.GetRunnerMovePoints().ToList();
+            if (points == null || points.Count == 0)
+                return;
+            _movePoints = points;
+        }
     }
 
     protected override void OnDisabled()

@@ -2781,6 +2781,7 @@ MonoBehaviour:
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
   m_UseScreenCoordOverride: 0
   m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
@@ -2898,6 +2899,7 @@ GameObject:
   - component: {fileID: 2131039314}
   - component: {fileID: 3998808298923127473}
   - component: {fileID: 3476707485973282550}
+  - component: {fileID: 1813946074729433932}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -2994,7 +2996,7 @@ MonoBehaviour:
   alignMovementWithRotation: 1
   targetHorizontalSpeed: 20
   groundHorizontalAcceleration: 75
-  airHorizontalAcceleration: 50
+  airHorizontalAcceleration: 25
 --- !u!114 &3998808300210842280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3026,11 +3028,11 @@ MonoBehaviour:
     m_Bits: 6784
   hitBoxSize: {x: 1.5, y: 3, z: 3}
   damage: 20
-  forwardRecoilBeforePunch: 40
-  payoffPowerVector: {x: 20, y: 40, z: 20}
+  forwardRecoilBeforePunch: 60
+  payoffPowerVector: {x: 0, y: 40, z: 0}
   preparingTime: 0.02
   attackDuration: 0.5
-  cooldown: 0.5
+  cooldown: 0.25
   allowParry: 1
   parryProjectileBoostVelocity: 70
   parryHeal: 50
@@ -3106,6 +3108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba6856339a845779b25f8d47fae6c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraRoot: {fileID: 3998808298746309513}
 --- !u!114 &3998808298923127482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3121,6 +3124,8 @@ MonoBehaviour:
   layersToSteal:
     serializedVersion: 2
     m_Bits: 256
+  stealLineEffect: {fileID: 4908521231261656995, guid: 2638fe0a923a148478c40533de19f40d,
+    type: 3}
   camRotationTarget: {fileID: 3998808298746309513}
   rightHandShootPoint: {fileID: 1633741983}
   leftHandShootPoint: {fileID: 1644204099}
@@ -3246,6 +3251,19 @@ MonoBehaviour:
   startColor: {r: 1.471698, g: 1.471698, b: 1.471698, a: 0}
   maxColor: {r: 25.962265, g: 0.36738986, b: 0.36738986, a: 0}
   radiusForMaxColor: 60
+  addedVerticalVelocityOnSteal: 10
+--- !u!114 &1813946074729433932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da24e8a6c5fd0f94082877ccab709ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

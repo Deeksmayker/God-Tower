@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using NTC.Global.Cache;
 using Zenject;
+using System.Linq;
 
 public class HomingEnemyAiController : BaseAiController
 {
@@ -53,12 +54,22 @@ public class HomingEnemyAiController : BaseAiController
         base.Start();
         _mover.SetInputResponse(false);
         
-        _target = Physics.OverlapSphere(transform.position, 1000, targetLayers)[0].transform;
     }
 
     protected override void OnEnabled()
     {
         base.OnEnabled();
+
+        _target = Physics.OverlapSphere(transform.position, 1000, targetLayers)[0].transform;
+
+        var connectedRoom = GetComponentInParent<RoomParent>();
+        if (connectedRoom)
+        {
+            var points = connectedRoom.GetHomingEnemyMovePoints().ToList();
+            if (points == null || points.Count == 0)
+                return;
+            _movePoints = points;
+        }
     }
 
     

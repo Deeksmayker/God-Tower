@@ -18,6 +18,8 @@ public class CameraLook : MonoCache
       private Quaternion m_CharacterTargetRot;
       private Quaternion m_CameraTargetRot;
       private bool m_cursorIsLocked = true;
+
+    private bool _responseToInput = true;
         
       private PlayerInput _playerInput;
 
@@ -44,7 +46,7 @@ public class CameraLook : MonoCache
       
       public void LookRotation()
       {
-          if (TimeController.Instance.IsPaused)
+          if (TimeController.Instance.IsPaused || !_responseToInput)
               return;
            
            var mouseDelta = _playerInput.actions["Look"].ReadValue<Vector2>();
@@ -138,4 +140,9 @@ public class CameraLook : MonoCache
 
             return q;
         }   
+
+    public void DisableInputResponse()
+    {
+        _responseToInput = false;
+    }
 }
