@@ -1882,7 +1882,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1849502635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,7 +2651,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3998808298643400553
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,6 +2666,7 @@ GameObject:
   - component: {fileID: 1137967107}
   - component: {fileID: 1137967106}
   - component: {fileID: 2292159567300001313}
+  - component: {fileID: 7373052234850367785}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2837,6 +2836,19 @@ MonoBehaviour:
   maxVignetteIntensity: 0.4
   maxBloomIntensity: 8
   maxChromaticAberrationIntensity: 0.8
+--- !u!114 &7373052234850367785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808298643400553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7201c41fb5c5a044ba9f269571850d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  step: 0.5
 --- !u!1 &3998808298746309512
 GameObject:
   m_ObjectHideFlags: 0
@@ -3246,6 +3258,7 @@ MonoBehaviour:
   startColor: {r: 1.471698, g: 1.471698, b: 1.471698, a: 0}
   maxColor: {r: 25.962265, g: 0.36738986, b: 0.36738986, a: 0}
   radiusForMaxColor: 60
+  addedVerticalVelocityOnSteal: 10
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0
