@@ -17,7 +17,7 @@ public class StealingEffectsController : MonoCache
     [SerializeField] private float addedVerticalVelocityOnSteal = 10;
 
     private MeshRenderer _radiusObjectMeshRenderer;
-    private MaterialPropertyBlock _propertyBlock = new();
+    private MaterialPropertyBlock _propertyBlock;
 
     private float _currentRadius;
     private float _desiredRadius;

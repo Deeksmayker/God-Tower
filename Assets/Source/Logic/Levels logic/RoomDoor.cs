@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using NTC.Global.Cache;
 using UnityEditor.Rendering;
@@ -8,6 +9,8 @@ using UnityEngine.Events;
 public class RoomDoor : MonoCache
 {
     [SerializeField] private bool trackEnemies = true;
+    [SerializeField] private GroupPlayerDetector[] groupsToTrack;
+
     [SerializeField] private float height = 250;
     [SerializeField] private float openSpeed = 300f;
     [SerializeField] private float closeSpeed = 300f;
@@ -32,14 +35,19 @@ public class RoomDoor : MonoCache
         if (!trackEnemies)
             return;
 
-        var enemiesOnScene = FindObjectsOfType<BaseAiController>();
-        _enemiesCount = enemiesOnScene.Length;
+        _enemiesCount = 0;
 
-        for (var i = 0; i < enemiesOnScene.Length; i++)
+        for (var i = 0; i < groupsToTrack.Length; i++)
         {
-            if (enemiesOnScene[i].TryGetComponent<IHealthHandler>(out var health))
+            var enemiesInGroup = groupsToTrack[i].GetComponentsInChildren<BaseAiController>();
+            for (var j = 0; j < enemiesInGroup.Length; j++)
             {
-                health.OnDied += HandleEnemyDied;
+                if (enemiesInGroup[j].TryGetComponent<IHealthHandler>(out var health))
+                {
+                    _enemiesCount++;
+                    health.OnDied += HandleEnemyDied;
+                }
+
             }
         }
     }

@@ -56,13 +56,14 @@ MonoBehaviour:
   explodeOnTrigger: 0
   destroyOnExplosion: 0
   disableMeshOnExplosion: 0
-  ExplodeRadius: 5
+  ExplodeRadius: 10
   Damage: 20
   superHomingDamageMultiplier: 4
   explosionForce: 40
   bigExplosionRadiusMultiplier: 2
   explosionDuration: 0.1
   collisionImmuneDuration: 0.1
+  trailEffect: {fileID: 0}
   Rb: {fileID: 0}
 --- !u!114 &4503923040044663363
 MonoBehaviour:
@@ -92,8 +93,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a9ef642e50475a8072ebef7a82fbef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeVariation: 0.2
-  pitchVariation: 0.1
   normalExplosionClips:
   - {fileID: 8300000, guid: ed407d70c20018a499b550f4d1f76ca5, type: 3}
   bigExplosionClips:

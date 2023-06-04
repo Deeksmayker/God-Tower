@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -60,6 +61,15 @@ public class GrenadierAiController : BaseAiController
         base.OnEnabled();
         _grenadeAbility.OnStartHolding += HandleStartChargingGrenadeAttack;
         _grenadeAbility.OnPerform += HandlePerformingGrenadeAttack;
+
+        var connectedRoom = GetComponentInParent<RoomParent>();
+        if (connectedRoom)
+        {
+            var points = connectedRoom.GetGrenadierJumpPoints().ToList();
+            if (points == null || points.Count == 0)
+                return;
+            _jumpPoints = points;
+        }
     }
 
     protected override void OnDisabled()

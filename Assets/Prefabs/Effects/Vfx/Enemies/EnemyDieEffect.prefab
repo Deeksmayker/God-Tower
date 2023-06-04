@@ -59,7 +59,10 @@ VisualEffect:
         m_Name: MaxScale
         m_Overridden: 1
     m_Vector2f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 1, y: 3}
+        m_Name: MinMaxLifetime
+        m_Overridden: 1
     m_Vector3f:
       m_Array:
       - m_Value: {x: -5, y: 1, z: -5}
