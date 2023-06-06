@@ -238,7 +238,7 @@ public class BaseHomingObject : MonoCache
                 continue;
 
             var healthHandler = points[i].GetComponentInParent<IHealthHandler>();
-            if (healthHandler.IsDead() && !iEnemy)
+            if (healthHandler != null && healthHandler.IsDead() && !iEnemy)
                 continue;
             
             var diff = points[i].transform.position - transform.position;
