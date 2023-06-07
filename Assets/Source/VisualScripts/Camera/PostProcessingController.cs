@@ -17,6 +17,7 @@ public class PostProcessingController : MonoCache
     private Vignette _vignette;
     private Bloom _bloom;
     private ChromaticAberration _chromaticAberration;
+    private MotionBlur _motiouBlur;
 
     private float _defaultVignetteIntensity;
     private float _defaultBloomIntensity;
@@ -27,6 +28,7 @@ public class PostProcessingController : MonoCache
         volume.profile.TryGet<Vignette>(out _vignette);
         volume.profile.TryGet<Bloom>(out _bloom);
         volume.profile.TryGet<ChromaticAberration>(out _chromaticAberration);
+        volume.profile.TryGet<MotionBlur>(out _motiouBlur);
         
         _defaultVignetteIntensity = _vignette.intensity.value;
         _defaultBloomIntensity = _bloom.intensity.value;
@@ -272,4 +274,9 @@ public class PostProcessingController : MonoCache
     }
 
     #endregion
+
+    public void SetMotionBlurIntensity(float value)
+    {
+        _motiouBlur.intensity.value = value;
+    }
 }

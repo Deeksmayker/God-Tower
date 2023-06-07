@@ -2668,6 +2668,7 @@ GameObject:
   - component: {fileID: 1137967107}
   - component: {fileID: 1137967106}
   - component: {fileID: 2292159567300001313}
+  - component: {fileID: 5238936183812696310}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2838,6 +2839,19 @@ MonoBehaviour:
   maxVignetteIntensity: 0.4
   maxBloomIntensity: 8
   maxChromaticAberrationIntensity: 0.8
+--- !u!114 &5238936183812696310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808298643400553}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7201c41fb5c5a044ba9f269571850d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  step: 10
 --- !u!1 &3998808298746309512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,6 +2914,7 @@ GameObject:
   - component: {fileID: 3998808298923127473}
   - component: {fileID: 3476707485973282550}
   - component: {fileID: 1813946074729433932}
+  - component: {fileID: 1102217480231806896}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -3026,10 +3041,12 @@ MonoBehaviour:
   layersToHit:
     serializedVersion: 2
     m_Bits: 6784
-  hitBoxSize: {x: 1.5, y: 3, z: 3}
+  hitBoxSize: {x: 3, y: 1.5, z: 4}
   damage: 20
-  forwardRecoilBeforePunch: 60
-  payoffPowerVector: {x: 0, y: 40, z: 0}
+  minDashPower: 20
+  maxDashPower: 80
+  minPayoffPowerVector: {x: 0, y: 30, z: 0}
+  maxPayoffPowerVector: {x: 0, y: 40, z: 0}
   preparingTime: 0.02
   attackDuration: 0.5
   cooldown: 0.25
@@ -3144,7 +3161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddc7e42f3b84b43ba85dbcc20b4342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDie: 0
+  canDie: 1
   canStartDying: 0
   oneHealthDeathProtection: 1
   needToRecovery: 0
@@ -3245,9 +3262,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radiusObject: {fileID: 255045707089274207}
-  startRadius: 30
-  perStealRadiusIncrease: 5
-  decreaseRate: 2
+  startRadius: 10
+  maxRadius: 150
   startColor: {r: 1.471698, g: 1.471698, b: 1.471698, a: 0}
   maxColor: {r: 25.962265, g: 0.36738986, b: 0.36738986, a: 0}
   radiusForMaxColor: 60
@@ -3264,6 +3280,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da24e8a6c5fd0f94082877ccab709ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1102217480231806896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e4a246e60ecfcc48ac82a7709bb2134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  styleReduceRate: 0.08
+  stylePerKill: 0.2
+  fullscreenMaterial: {fileID: 2100000, guid: e93305b4aa3c50144a2270a01a2b7573, type: 2}
+  maxAlpha: 5
+  minSpeed: 0.5
+  maxSpeed: 1.5
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

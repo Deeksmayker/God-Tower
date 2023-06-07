@@ -1,12 +1,12 @@
 using NTC.Global.Cache;
 using UnityEngine;
+using Zenject;
 
 public class StealingEffectsController : MonoCache
 {
     [SerializeField] private GameObject radiusObject;
     [SerializeField] private float startRadius = 20;
-    [SerializeField] private float perStealRadiusIncrease = 5;
-    [SerializeField] private float decreaseRate = 1;
+    [SerializeField] private float maxRadius = 200;
 
     [ColorUsage(false, true)]
     [SerializeField] private Color startColor;
@@ -22,12 +22,14 @@ public class StealingEffectsController : MonoCache
     private float _currentRadius;
     private float _desiredRadius;
 
+    private PlayerStyleController _playerStyleController;
     private AbilitiesHandler _abilitiesHandler;
     private IMover _mover;
 
     private void Awake()
     {
         _abilitiesHandler = Get<AbilitiesHandler>();
+        _playerStyleController = Get<PlayerStyleController>();
         _mover = Get<IMover>();
         _currentRadius = startRadius;
         _desiredRadius = _currentRadius;
@@ -51,10 +53,9 @@ public class StealingEffectsController : MonoCache
 
     protected override void Run()
     {
-        _desiredRadius -= Time.deltaTime * decreaseRate;
-        _desiredRadius = Mathf.Clamp(_desiredRadius, startRadius, 200);
+        _desiredRadius = Mathf.Lerp(startRadius, maxRadius, _playerStyleController.GetCurrentStyle01());
 
-        _currentRadius = Mathf.Lerp(_currentRadius, _desiredRadius, Time.deltaTime * 5);
+        _currentRadius = Mathf.Lerp(_currentRadius, _desiredRadius, 10 * Time.deltaTime);
         
         SetRadius(_currentRadius);
 
@@ -66,8 +67,6 @@ public class StealingEffectsController : MonoCache
 
     private void HandleKillEnemy()
     {
-        _desiredRadius += perStealRadiusIncrease;
-
         if (_mover.GetVelocity().y > addedVerticalVelocityOnSteal)
             _mover.AddVerticalVelocity(addedVerticalVelocityOnSteal);
         else
