@@ -19,7 +19,7 @@ public class FOVController : MonoCache
 
     private float _oldSpeed = 0;
     private float _maxSpeed = 120;
-    private float _maxFov = 120;
+    private float _maxFov = 130;
     private float _minFov = 100;
     
     protected override void OnEnabled()
@@ -30,13 +30,13 @@ public class FOVController : MonoCache
         _oldSpeed = _mover.GetHorizontalSpeed();
     }
 
-    protected override void Run()
+    protected override void LateRun()
     {
-        if (_mover.GetHorizontalSpeed().Equals(_oldSpeed)) return;
+        if (_mover.GetVelocityMagnitude().Equals(_oldSpeed)) return;
 
-        _oldSpeed = _mover.GetHorizontalSpeed();
+        _oldSpeed = _mover.GetVelocityMagnitude();
         Debug.Log(_oldSpeed);
-        ChangeFOV(Mathf.Clamp(_oldSpeed/_maxSpeed * (_maxFov - _minFov) + _minFov, 100, 120));
+        ChangeFOV(Mathf.Clamp(_oldSpeed/_maxSpeed * (_maxFov - _minFov) + _minFov, _minFov, _maxFov));
     }
 
     private void ChangeFOV(float value)
@@ -53,16 +53,16 @@ public class FOVController : MonoCache
         {
             while (camera.fieldOfView > value)
             {
-                yield return new WaitForFixedUpdate();
-                camera.fieldOfView -= step;
+                yield return null;
+                camera.fieldOfView -= step * Time.deltaTime;
             }
         }
         else
         {
             while (camera.fieldOfView < value)
             {
-                yield return new WaitForFixedUpdate();
-                camera.fieldOfView += step;
+                yield return null;
+                camera.fieldOfView += step * Time.deltaTime;
             }
         }
     }

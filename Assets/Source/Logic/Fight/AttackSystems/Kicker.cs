@@ -12,8 +12,10 @@ public class Kicker : MonoCache, IMeleeAttacker
 
     [Header("Impact")]
     [SerializeField] private int damage = 1;
-    [SerializeField] private float forwardRecoilBeforePunch;
-    [SerializeField] private Vector3 payoffPowerVector;
+    [SerializeField] private float minDashPower;
+    [SerializeField] private float maxDashPower;
+    [SerializeField] private Vector3 minPayoffPowerVector;
+    [SerializeField] private Vector3 maxPayoffPowerVector;
 
     [Header("Timers")]
     [SerializeField] private float preparingTime;
@@ -33,11 +35,15 @@ public class Kicker : MonoCache, IMeleeAttacker
     private bool _isHitAnything;
 
     private float _timer;
+    private float _currentDashPower;
+
+    private Vector3 _currentPayoffPowerVector;
 
     private MeleeAttackStates _attackState = MeleeAttackStates.Resting;
     
     private IMover _mover;
     private BaseHealthHandler _healthHandler;
+    private PlayerStyleController _playerStyleController;
     
     public event Action OnStartPreparingAttack;
     public event Action OnStartAttack;
@@ -49,6 +55,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     {
         _mover = Get<IMover>();
         _healthHandler = Get<BaseHealthHandler>();
+        _playerStyleController = Get<PlayerStyleController>();  
     }
 
     protected override void OnEnabled()
@@ -65,6 +72,9 @@ public class Kicker : MonoCache, IMeleeAttacker
     {
         if (!_canAttack)
             return;
+
+        _currentDashPower = Mathf.Lerp(minDashPower, maxDashPower, _playerStyleController.GetCurrentStyle01());
+        _currentPayoffPowerVector = Vector3.Lerp(minPayoffPowerVector, maxPayoffPowerVector, _playerStyleController.GetCurrentStyle01());
         
         if (NeedToAttack())
             SetAttackStateToNext();
@@ -138,11 +148,11 @@ public class Kicker : MonoCache, IMeleeAttacker
 
         if (_attackHitsContainer[0] && !_isHitAnything)
         {
-            _mover.SetVerticalVelocity(payoffPowerVector.y);
+            _mover.SetVerticalVelocity(_currentPayoffPowerVector.y);
             _mover.AddVelocity(new Vector3(
-                GetAttackDirection().x * payoffPowerVector.x,
+                GetAttackDirection().x * _currentPayoffPowerVector.x,
                 0,
-                GetAttackDirection().z * payoffPowerVector.z));
+                GetAttackDirection().z * _currentPayoffPowerVector.z));
             _isHitAnything = true;
             _timer /= 2;
         }
@@ -204,7 +214,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     private void MakeForwardRecoil()
     {
         var resultVelocity = _mover.GetVelocity();
-        resultVelocity += GetAttackDirection() * forwardRecoilBeforePunch;
+        resultVelocity += GetAttackDirection() * _currentDashPower;
         resultVelocity = resultVelocity.magnitude * GetAttackDirection();
 
         /*if (GetAttackDirection().y < -0.5f)
