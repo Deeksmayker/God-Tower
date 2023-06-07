@@ -24,7 +24,7 @@ public class PlayerUnit : MonoCache
         if (!_levelEnded)
             return;
 
-        _mover.SetHorizontalInput(new Vector2(_targetRotationTransform.forward.x, _targetRotationTransform.forward.z));
+        _mover.SetHorizontalInput(new Vector2(0, 1));
         transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotationTransform.rotation, 3 * Time.deltaTime);
         cameraRoot.rotation = Quaternion.Slerp(cameraRoot.rotation, _targetRotationTransform.rotation, 3 * Time.deltaTime);
     }
