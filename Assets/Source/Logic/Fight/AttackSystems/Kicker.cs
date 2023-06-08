@@ -220,7 +220,7 @@ public class Kicker : MonoCache, IMeleeAttacker
         /*if (GetAttackDirection().y < -0.5f)
             resultVelocity *= 2f;*/
 
-        resultVelocity.y = Mathf.Clamp(resultVelocity.y, -100, 10);
+        resultVelocity.y = Mathf.Clamp(resultVelocity.y, -100, 20);
         _mover.SetVelocity(resultVelocity);
     }
 

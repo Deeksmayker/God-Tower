@@ -2367,9 +2367,11 @@ MonoBehaviour:
   canDie: 1
   canStartDying: 1
   oneHealthDeathProtection: 0
+  needToRecovery: 1
   health: 1
+  hitsToDie: 1
   damageImmuneTime: 0
-  dyingDuration: 7
+  stunDuration: 5
 --- !u!114 &1387883442111091388
 MonoBehaviour:
   m_ObjectHideFlags: 0

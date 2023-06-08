@@ -51,6 +51,11 @@ public class PlayerStyleController : MonoCache
         _currentStyle += stylePerKill;
     }
 
+    public void SetStyleToMax()
+    {
+        _currentStyle = 1;
+    }
+
     public float GetCurrentStyle01()
     {
         return _currentStyle;

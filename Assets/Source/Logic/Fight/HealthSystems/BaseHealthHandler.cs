@@ -12,6 +12,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     [SerializeField] private bool oneHealthDeathProtection;
     [SerializeField] private bool needToRecovery = true;
     [SerializeField] private float health;
+    [SerializeField] private float hitsToDie;
     [SerializeField] private float damageImmuneTime = 0.1f;
     [SerializeField] private float stunDuration = 5;
 
@@ -111,14 +112,14 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void AddHealth(float addValue)
     {
-        SetHealth(health + addValue);
+        SetHealth(health + _maxHealth / hitsToDie);
         health = Mathf.Clamp(health, 0, _maxHealth);
         OnHealthAdd?.Invoke();
     }
 
     public void RemoveHealth(float removeValue)
     {
-        SetHealth(health - removeValue);
+        SetHealth(health - _maxHealth / hitsToDie);
         if (health <= 0)
         {
             StartStun();

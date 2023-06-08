@@ -326,7 +326,7 @@ MonoBehaviour:
   explodeOnTrigger: 1
   destroyOnExplosion: 1
   disableMeshOnExplosion: 1
-  ExplodeRadius: 5
+  ExplodeRadius: 10
   Damage: 30
   superHomingDamageMultiplier: 4
   explosionForce: 40
@@ -335,7 +335,7 @@ MonoBehaviour:
   collisionImmuneDuration: 0.5
   trailEffect: {fileID: 5335158447780110343, guid: 27ae00a87e956db48ac4fac3821b3578,
     type: 3}
-  Rb: {fileID: 0}
+  Rb: {fileID: 5014089233099295981}
 --- !u!135 &4823301809095505626
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -438,8 +438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a9ef642e50475a8072ebef7a82fbef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeVariation: 0.2
-  pitchVariation: 0.1
   normalExplosionClips:
   - {fileID: 8300000, guid: ed407d70c20018a499b550f4d1f76ca5, type: 3}
   bigExplosionClips:

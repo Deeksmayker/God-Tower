@@ -3044,12 +3044,12 @@ MonoBehaviour:
   hitBoxSize: {x: 3, y: 1.5, z: 4}
   damage: 20
   minDashPower: 20
-  maxDashPower: 80
+  maxDashPower: 90
   minPayoffPowerVector: {x: 0, y: 30, z: 0}
-  maxPayoffPowerVector: {x: 0, y: 40, z: 0}
+  maxPayoffPowerVector: {x: 0, y: 50, z: 0}
   preparingTime: 0.02
   attackDuration: 0.5
-  cooldown: 0.25
+  cooldown: 0.4
   allowParry: 1
   parryProjectileBoostVelocity: 150
   parryHeal: 0
@@ -3166,6 +3166,7 @@ MonoBehaviour:
   oneHealthDeathProtection: 1
   needToRecovery: 0
   health: 100
+  hitsToDie: 2
   damageImmuneTime: 0.3
   stunDuration: 5
 --- !u!114 &2131039309
@@ -3263,11 +3264,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radiusObject: {fileID: 255045707089274207}
   startRadius: 10
-  maxRadius: 150
+  maxRadius: 80
   startColor: {r: 1.471698, g: 1.471698, b: 1.471698, a: 0}
   maxColor: {r: 25.962265, g: 0.36738986, b: 0.36738986, a: 0}
   radiusForMaxColor: 60
-  addedVerticalVelocityOnSteal: 10
+  addedVerticalVelocityOnSteal: 20
 --- !u!114 &1813946074729433932
 MonoBehaviour:
   m_ObjectHideFlags: 0
