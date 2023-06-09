@@ -14,24 +14,12 @@ public class PausePanelUi : MonoBehaviour
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
 
-    [Header("Settings")] [SerializeField] private Button closeSettingsWindowButton;
-
-    [SerializeField] private Slider senseSlider;
-    [SerializeField] private TextMeshProUGUI senseValueText;
-
-    [SerializeField] private Slider soundSlider;
-    [SerializeField] private TextMeshProUGUI soundValueText;
-
-    private int _senseValue;
-    private int _soundValue;
+    [SerializeField] private Button closeSettingsWindowButton;
 
     private bool _isWindowOpen;
 
     private void Start()
     {
-        senseSlider.onValueChanged.AddListener(SetSliderSense);
-        soundSlider.onValueChanged.AddListener(SetSliderSound);
-
         resumeButton.onClick.AddListener(ResumeGame);
         settingsButton.onClick.AddListener(OpenSettings);
         exitButton.onClick.AddListener(Exit);
@@ -40,9 +28,6 @@ public class PausePanelUi : MonoBehaviour
 
     private void OnDestroy()
     {
-        senseSlider.onValueChanged.RemoveListener(SetSliderSense);
-        soundSlider.onValueChanged.RemoveListener(SetSliderSound);
-
         resumeButton.onClick.RemoveListener(ResumeGame);
         settingsButton.onClick.RemoveListener(OpenSettings);
         exitButton.onClick.RemoveListener(Exit);
@@ -66,16 +51,6 @@ public class PausePanelUi : MonoBehaviour
             OpenPauseWindow();
             _isWindowOpen = true;
         }
-    }
-
-    private void SetSliderSound(float value)
-    {
-        soundValueText.text = value.ToString();
-    }
-
-    private void SetSliderSense(float value)
-    {
-        senseValueText.text = value.ToString();
     }
 
     private void OpenPauseWindow()
@@ -110,8 +85,6 @@ public class PausePanelUi : MonoBehaviour
     {
         ClosePauseWindow();
         settingsWindow.SetActive(true);
-        SetSliderSense(senseSlider.value);
-        SetSliderSound(soundSlider.value);
     }
 
     public void Exit()
