@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using NTC.Global.Cache;
 using UnityEngine;
 using UnityEngine.AI;
@@ -100,7 +101,8 @@ public class DefaultMover : MonoCache, IMover
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20)
+        if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20
+            && !Physics.Raycast(transform.position, Vector3.down, 5, groundLayer))
         {
             SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);
             OnBounce?.Invoke(hit.normal);
