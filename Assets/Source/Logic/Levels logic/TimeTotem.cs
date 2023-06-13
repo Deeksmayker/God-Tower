@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TimeTotem : MonoCache
 {
+    [SerializeField] private bool completedOnStart;
     [SerializeField] private float timeToCancel;
 
     private bool _roomCleared;
@@ -20,6 +21,13 @@ public class TimeTotem : MonoCache
         _meshRenderer = Get<MeshRenderer>();
         _propertyBlock = new MaterialPropertyBlock();
         _meshRenderer.GetPropertyBlock(_propertyBlock);
+
+        if (completedOnStart)
+        {
+            _roomCleared = true;
+            _propertyBlock.SetFloat("_ColorCoverage", 0.5f);
+            _meshRenderer.SetPropertyBlock(_propertyBlock);
+        }
     }   
 
     protected override void OnEnabled()

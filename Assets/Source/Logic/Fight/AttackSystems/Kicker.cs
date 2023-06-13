@@ -7,8 +7,10 @@ using static IMeleeAttacker;
 public class Kicker : MonoCache, IMeleeAttacker
 {
     [SerializeField] private Transform directionTarget;
+    [SerializeField] private LayerMask environmentLayers;
     [SerializeField] private LayerMask layersToHit;
     [SerializeField] private Vector3 hitBoxSize;
+    [SerializeField] private Vector3 environmentHitboxSize;
 
     [Header("Impact")]
     [SerializeField] private int damage = 1;
@@ -81,7 +83,8 @@ public class Kicker : MonoCache, IMeleeAttacker
 
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
-            PerformAttack();
+            PerformAttack(layersToHit, hitBoxSize);
+            PerformAttack(environmentLayers, environmentHitboxSize);
         }
 
         if (GetCurrentAttackState() != MeleeAttackStates.Resting)
@@ -93,14 +96,14 @@ public class Kicker : MonoCache, IMeleeAttacker
     }
 
     [ContextMenu("Imitate Kick")]
-    public void PerformAttack()
+    public void PerformAttack(LayerMask layers, Vector3 hitbox)
     {
         Array.Clear(_attackHitsContainer, 0, _attackHitsContainer.Length);
 
-        var hitBoxCenter = directionTarget.position + directionTarget.forward * (hitBoxSize.z / 2.0f);
+        var hitBoxCenter = directionTarget.position + directionTarget.forward * (hitbox.z / 2.0f);
         
         Physics.OverlapBoxNonAlloc(hitBoxCenter, 
-            hitBoxSize / 2, _attackHitsContainer, directionTarget.rotation, layersToHit);
+            hitbox / 2, _attackHitsContainer, directionTarget.rotation, layers);
         
         for (var i = 0; i < _attackHitsContainer.Length; i++)
         {
