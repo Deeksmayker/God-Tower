@@ -15,6 +15,7 @@ public interface IMover
     public void SetVelocity(Vector3 newVelocity);
     public void SetHorizontalVelocity(Vector3 newVelocity);
     public void AddVelocity(Vector3 addedVelocityVector);
+    public void AddOrSetVelocity(Vector3 addedVelocity);
     public void SetInputResponse(bool value);
     public void RecalculateGroundCheckerPosition();
     

@@ -16,7 +16,7 @@ public interface IMeleeAttacker
     public event Action OnEndAttack;
     public event Action OnHit;
     
-    public void PerformAttack();
+    public void PerformAttack(LayerMask layers, Vector3 hitbox);
     public void SetInput(bool input);
     public void SetAttackStateToNext();
     public void AllowAttack();

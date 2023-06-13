@@ -18,10 +18,12 @@ public class PlayerStyleController : MonoCache
     [Inject] private PostProcessingController _postProcessingController;
 
     private AbilitiesHandler _abilitiesHandler;
+    private IMover _mover;
 
     private void Awake()
     {
         _abilitiesHandler = Get<AbilitiesHandler>();
+        _mover = Get<IMover>();
     }
 
     protected override void OnEnabled()
@@ -32,11 +34,20 @@ public class PlayerStyleController : MonoCache
     protected override void OnDisabled()
     {
         _abilitiesHandler.OnNewAbility -= HandleEnemyKill;
+
+        _currentStyle = 0;
+
+        _postProcessingController.SetMotionBlurIntensity(Mathf.Pow(_currentStyle, 3));
+
+        fullscreenMaterial.SetFloat("_Alpha", Mathf.Lerp(0, maxAlpha, Mathf.Pow(_currentStyle, 3)));
+        fullscreenMaterial.SetFloat("_Speed", Mathf.Lerp(minSpeed, maxSpeed, Mathf.Pow(_currentStyle, 3)));
     }
 
     protected override void Run()
     {
-        _currentStyle -= styleReduceRate * Time.deltaTime;
+        var removedStyle = _mover.IsGrounded() ? styleReduceRate : styleReduceRate / 2;
+
+        _currentStyle -= removedStyle * Time.deltaTime;
 
         _currentStyle = Mathf.Clamp01(_currentStyle);
 

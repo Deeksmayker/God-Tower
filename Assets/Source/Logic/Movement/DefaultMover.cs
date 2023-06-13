@@ -145,6 +145,11 @@ public class DefaultMover : MonoCache, IMover
         _velocity += addedVelocityVector;
     }
 
+    public void AddOrSetVelocity(Vector3 addedVeloctiy)
+    {
+        _velocity = Vector3.RotateTowards(_velocity, addedVeloctiy, 100, 100) + addedVeloctiy;
+    }
+
     public void SetInputResponse(bool value)
     {
         _isResponseToInput = value;

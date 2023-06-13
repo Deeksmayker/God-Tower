@@ -11,6 +11,7 @@ public class PlayerInputHandler : MonoCache
     private float _jumpInputTimer;
 
     private bool _responseToInput = true;
+    private bool _canShoot = true;
     
     private IMover _mover;
     private IJumper _jumper;
@@ -18,6 +19,7 @@ public class PlayerInputHandler : MonoCache
     private AbilitiesHandler _abilitiesHandler;
     private AirSlamer _slamer;
     private GroundSlider _slider;
+    private Hook _hook;
     //private PickUpDetector _pickUpDetector;
     //private Thrower _thrower;
     
@@ -32,6 +34,7 @@ public class PlayerInputHandler : MonoCache
         _abilitiesHandler = Get<AbilitiesHandler>();
         _slamer = Get<AirSlamer>();
         _slider = Get<GroundSlider>();
+        _hook = Get<Hook>();
         //_pickUpDetector = GetComponentInChildren<PickUpDetector>();
         //_thrower = GetComponentInChildren<Thrower>();
     }
@@ -67,9 +70,13 @@ public class PlayerInputHandler : MonoCache
         if (_abilitiesHandler != null)
         {
             _abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
-            _abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
             _abilitiesHandler.SetLeftStealInput(_playerInput.actions["LeftSteal"].WasPressedThisFrame());
-            _abilitiesHandler.SetLeftAbilityInput(_playerInput.actions["LeftAttack"].IsInProgress());
+
+            if (_canShoot)
+            {
+                _abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
+                _abilitiesHandler.SetLeftAbilityInput(_playerInput.actions["LeftAttack"].IsInProgress());
+            }
         }
 
         if (_slamer != null)
@@ -80,6 +87,11 @@ public class PlayerInputHandler : MonoCache
         if (_slider != null)
         {
             _slider.SetInput(_playerInput.actions["Slide"].IsInProgress());
+        }
+
+        if (_hook)
+        {
+            _hook.SetInput(_playerInput.actions["Hook"].WasPressedThisFrame());
         }
         /*if (_pickUpDetector != null)
         {
@@ -99,5 +111,10 @@ public class PlayerInputHandler : MonoCache
     public void DisableInputResponse()
     {
         _responseToInput = false;
+    }
+
+    public void SetShootInputResponse(bool canShoot)
+    {
+        _canShoot = canShoot;
     }
 }
