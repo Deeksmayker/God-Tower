@@ -145,4 +145,9 @@ public class CameraLook : MonoCache
     {
         _responseToInput = false;
     }
+
+    public void EnableInputResponse()
+    {
+        _responseToInput = true;
+    }
 }

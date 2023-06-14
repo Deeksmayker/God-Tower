@@ -35,7 +35,7 @@ public class RunnerAiController : BaseAiController
     private IMover _mover;
     
     private RunnerMovePoint _currentPoint;
-    [Inject] private List<RunnerMovePoint> _movePoints;
+    private List<RunnerMovePoint> _movePoints;
 
     private void Awake()
     {

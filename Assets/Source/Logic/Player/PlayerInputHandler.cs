@@ -113,6 +113,11 @@ public class PlayerInputHandler : MonoCache
         _responseToInput = false;
     }
 
+    public void EnableInputResponse()
+    {
+        _responseToInput = true;
+    }
+
     public void SetShootInputResponse(bool canShoot)
     {
         _canShoot = canShoot;

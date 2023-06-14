@@ -5,28 +5,50 @@ using UnityEngine;
 public class PlayerUnit : MonoCache
 {
     [SerializeField] private Transform cameraRoot;
+    [SerializeField] private bool walkForwardOnStart = true;
 
+    private static bool _levelStarted;
     private static bool _levelEnded;
     private Transform _targetRotationTransform;
 
+    private float _timer;
+
     private IMover _mover;
 
+    public static event Action OnLevelStarted;
     public static event Action OnLevelEnd;
 
     private void Awake()
     {
         _levelEnded = false;
         Application.targetFrameRate = 200;
+        _targetRotationTransform = transform;
+        _mover = Get<IMover>();
+
+        if (walkForwardOnStart)
+        {
+            Get<PlayerInputHandler>().DisableInputResponse();
+            var camera = GetComponentInChildren<CameraLook>();
+            camera.DisableInputResponse();
+        }
     }
 
-    protected override void Run()
+    protected override void LateRun()
     {
-        if (!_levelEnded)
+        if (!_levelEnded && (_timer > 1 || !walkForwardOnStart))
             return;
 
         _mover.SetHorizontalInput(new Vector2(0, 1));
         transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotationTransform.rotation, 3 * Time.deltaTime);
         cameraRoot.rotation = Quaternion.Slerp(cameraRoot.rotation, _targetRotationTransform.rotation, 3 * Time.deltaTime);
+
+        _timer += Time.deltaTime;
+        if (_timer > 1)
+        {
+            Get<PlayerInputHandler>().EnableInputResponse();
+            var camera = GetComponentInChildren<CameraLook>();
+            camera.EnableInputResponse();
+        }
     }
 
     public void HandleLevelEnd(Transform targetTransform)
@@ -36,9 +58,22 @@ public class PlayerUnit : MonoCache
         var camera = GetComponentInChildren<CameraLook>();
         camera.DisableInputResponse();
         _targetRotationTransform = targetTransform;
-        _mover = Get<IMover>();
         OnLevelEnd?.Invoke();
     }
 
+    public void HandleLevelStarted()
+    {
+        _levelStarted = true;
+        OnLevelStarted?.Invoke();
+    }
+
+    public void TeleportPlayer(Vector3 pos)
+    {
+        Get<CharacterController>().enabled = false;
+        transform.position = pos;
+        Get<CharacterController>().enabled = true;
+    }
+
     public static bool LevelEnded() => _levelEnded;
+    public static bool LevelStarted() => _levelStarted;
 }

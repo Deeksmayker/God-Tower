@@ -47,6 +47,7 @@ public class DefaultMover : MonoCache, IMover
         
         if (newGroundedState && !_grounded)
             OnLanding?.Invoke();
+
         _grounded = newGroundedState;
         
         PerformMove();
@@ -79,9 +80,8 @@ public class DefaultMover : MonoCache, IMover
                 _velocity.x = horizontalVelocity.x;
             if (NeedToChangeHorizontalSpeed(desiredVelocity.z, _velocity.z))
                 _velocity.z = horizontalVelocity.z;
-            
         }
-        
+
         if (_ch != null)
             _ch.Move(_velocity * Time.deltaTime);
         else if (_aiAgent != null)
