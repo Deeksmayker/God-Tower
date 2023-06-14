@@ -2846,12 +2846,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808298643400553}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7201c41fb5c5a044ba9f269571850d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 10
+  speedThreshold: 25
+  maxSpeed: 100
+  addedFovToMax: 20
+  fovChangeRate: 10
 --- !u!1 &3998808298746309512
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,7 +3054,7 @@ MonoBehaviour:
   minDashPower: 20
   maxDashPower: 90
   minPayoffPowerVector: {x: 0, y: 30, z: 0}
-  maxPayoffPowerVector: {x: 0, y: 50, z: 0}
+  maxPayoffPowerVector: {x: 0, y: 40, z: 0}
   preparingTime: 0.02
   attackDuration: 0.75
   cooldown: 0.25
@@ -3321,7 +3324,7 @@ MonoBehaviour:
     m_Bits: 16384
   camTransform: {fileID: 3998808298746309513}
   minHookPower: 60
-  maxHookPower: 120
+  maxHookPower: 80
   hookUpPower: 20
   cooldown: 0.5
   hookRadius: 10

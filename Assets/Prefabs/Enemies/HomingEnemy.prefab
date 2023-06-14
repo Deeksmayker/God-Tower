@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883441605169418}
-  - component: {fileID: 1387883441605169419}
   m_Layer: 7
   m_Name: RightUp
   m_TagString: Untagged
@@ -125,21 +124,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1387883441605169419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883441605169421}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883441684559825
 GameObject:
   m_ObjectHideFlags: 0
@@ -3078,7 +3062,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442234266191}
-  - component: {fileID: 1387883442234266188}
   m_Layer: 7
   m_Name: LeftDown (1)
   m_TagString: Untagged
@@ -3111,21 +3094,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -54.728, z: 20.856}
---- !u!114 &1387883442234266188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883442234266190}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883442241452535
 GameObject:
   m_ObjectHideFlags: 0
@@ -3490,7 +3458,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442487986785}
-  - component: {fileID: 1387883442487986798}
   m_Layer: 7
   m_Name: LeftDown
   m_TagString: Untagged
@@ -3523,21 +3490,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 38.063}
---- !u!114 &1387883442487986798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883442487986784}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883442496028290
 GameObject:
   m_ObjectHideFlags: 0
@@ -4128,7 +4080,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442590709035}
-  - component: {fileID: 1387883442590709032}
   m_Layer: 7
   m_Name: LeftUp
   m_TagString: Untagged
@@ -4161,21 +4112,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1387883442590709032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883442590709034}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883442606392854
 GameObject:
   m_ObjectHideFlags: 0
@@ -4185,7 +4121,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442606392855}
-  - component: {fileID: 1387883442606392852}
   m_Layer: 7
   m_Name: RightDown
   m_TagString: Untagged
@@ -4218,21 +4153,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -38.063}
---- !u!114 &1387883442606392852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883442606392854}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883442615461304
 GameObject:
   m_ObjectHideFlags: 0
@@ -4491,7 +4411,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442649551109}
-  - component: {fileID: 1387883442649551106}
   m_Layer: 7
   m_Name: LeftUp (2)
   m_TagString: Untagged
@@ -4524,21 +4443,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -121.887, z: 0}
---- !u!114 &1387883442649551106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883442649551108}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883442662519361
 GameObject:
   m_ObjectHideFlags: 0
@@ -5046,7 +4950,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442744089726}
-  - component: {fileID: 1387883442744089727}
   m_Layer: 7
   m_Name: LeftUp (1)
   m_TagString: Untagged
@@ -5079,21 +4982,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -60.887, z: 0}
---- !u!114 &1387883442744089727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883442744089713}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883442772590169
 GameObject:
   m_ObjectHideFlags: 0
@@ -5684,7 +5572,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387883442909283732}
-  - component: {fileID: 1387883442909283733}
   m_Layer: 7
   m_Name: LeftDown (2)
   m_TagString: Untagged
@@ -5717,21 +5604,6 @@ Transform:
   m_Father: {fileID: 1387883442241452532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -109.728, z: 20.856}
---- !u!114 &1387883442909283733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387883442909283735}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rapidShakePreset: {fileID: 0}
-  durableShakePreset: {fileID: 11400000, guid: 928175b9663dfce458ec76ec24c80b56, type: 2}
-  makeDurableShakeOnStart: 1
 --- !u!1 &1387883442922648681
 GameObject:
   m_ObjectHideFlags: 0

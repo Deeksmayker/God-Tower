@@ -173,7 +173,7 @@ public class Kicker : MonoCache, IMeleeAttacker
 
     private void HealOnParry()
     {
-        _healthHandler.AddHealth(parryHeal);
+        /*_healthHandler.AddHealth(parryHeal);*/
     }
 
     private void ReduceCooldown()

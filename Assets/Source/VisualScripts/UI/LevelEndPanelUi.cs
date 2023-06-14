@@ -29,7 +29,7 @@ public class LevelEndPanelUi : MonoCache
         if (!PlayerUnit.LevelEnded() || TimeController.Instance.IsPaused)
             return;
 
-        if (_input.actions["RightAttack"].WasPressedThisFrame())
+        if (_input.actions["LeftAttack"].WasPressedThisFrame())
             GameManager.Instance.LoadScene(levelToLoad);
     }
 
