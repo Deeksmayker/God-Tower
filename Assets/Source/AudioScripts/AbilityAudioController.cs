@@ -31,7 +31,7 @@ public class AbilityAudioController : MonoCache
         var source = NightPool.Spawn(emptySource, transform.position);
         source.clip = AudioUtils.GetRandomClip(performClips);
         
-        AudioUtils.RandomiseAudioSourceParams(ref source, true, true, volumeVariation, pitchVariation);
+        AudioUtils.RandomiseAudioSourceParams(ref source, true, true, volumeVariation, pitchVariation, 0.6f, 0.7f);
 
         source.Play();
     }

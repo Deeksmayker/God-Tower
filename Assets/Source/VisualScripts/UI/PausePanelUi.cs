@@ -51,6 +51,11 @@ public class PausePanelUi : MonoBehaviour
             OpenPauseWindow();
             _isWindowOpen = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void OpenPauseWindow()

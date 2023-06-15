@@ -13,10 +13,13 @@ public class MovementAudioController : MonoCache
     [Header("Landing")]
     [SerializeField] private AudioClip[] landingClips;
 
+    [SerializeField] private AudioClip[] hookClips;
+
     private float _stepTimer;
 
     private IMover _mover;
     private IJumper _jumper;
+    private Hook _hook;
     private AudioSource _audioSource;
 
     private void Awake()
@@ -24,6 +27,7 @@ public class MovementAudioController : MonoCache
         _audioSource = Get<AudioSource>();
         _mover = GetComponentInParent<IMover>();
         _jumper = GetComponentInParent<IJumper>();
+        _hook = GetComponentInParent<Hook>();
     }
 
     protected override void OnEnabled()
@@ -37,6 +41,11 @@ public class MovementAudioController : MonoCache
         {
             _mover.OnLanding += HandleLanding;
         }
+
+        if (_hook)
+        {
+            _hook.OnHook += HandleHook;
+        }
     }
 
     protected override void OnDisabled()
@@ -49,6 +58,11 @@ public class MovementAudioController : MonoCache
         if (_mover != null)
         {
             _mover.OnLanding -= HandleLanding;
+        }
+
+        if (_hook)
+        {
+            _hook.OnHook -= HandleHook; 
         }
     }
     
@@ -71,9 +85,21 @@ public class MovementAudioController : MonoCache
         _audioSource.PlayOneShot(clip);
     }
 
+    private void HandleHook()
+    {
+        PlayOneSound(hookClips);
+    }
+
     private void HandleBounce()
     {
 
+    }
+
+    private void PlayOneSound(AudioClip[] clips, float volumeVariation = 0.2f, float pitchVariation = 0.1f, float baseVolume = 1f)
+    {
+        var clip = AudioUtils.GetRandomClip(clips);
+        AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, volumeVariation, pitchVariation, baseVolume);
+        _audioSource.PlayOneShot(clip);
     }
 
     private void MakeSlidingSound()

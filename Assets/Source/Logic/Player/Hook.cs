@@ -2,6 +2,7 @@ using Code.Global.Animations;
 using DG.Tweening;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
+using System;
 using UnityEngine;
 
 public class Hook : MonoCache
@@ -26,6 +27,8 @@ public class Hook : MonoCache
 
     private IMover _mover;
     private PlayerStyleController _playerStyleController;
+
+    public event Action OnHook;
 
     private void Awake()
     {
@@ -69,6 +72,8 @@ public class Hook : MonoCache
         var direction = Vector3.Normalize(targetPos - transform.position);
         _mover.SetVelocity(direction * _currentHookPower);
         _mover.AddVerticalVelocity(hookUpPower);
+
+        OnHook?.Invoke();
     }
 
     public void MakeHookVisual(Vector3 targetPos)

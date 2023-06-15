@@ -23,10 +23,14 @@ public class RoomDoor : MonoCache
     
     private Vector3 desiredPosition;
 
+    private AudioSource _audioSource;
+
     public UnityEvent OnOpen = new();
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
+
         desiredPosition = transform.position;
     }
 
@@ -63,6 +67,8 @@ public class RoomDoor : MonoCache
         desiredPosition += Vector3.up * height;
         _speed = closeSpeed;
         _closed = false;
+
+        _audioSource.Play();
     }
 
     public void Close()

@@ -42,6 +42,9 @@ public class PlayerUnit : MonoCache
         transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotationTransform.rotation, 3 * Time.deltaTime);
         cameraRoot.rotation = Quaternion.Slerp(cameraRoot.rotation, _targetRotationTransform.rotation, 3 * Time.deltaTime);
 
+        if (_levelEnded)
+            return;
+
         _timer += Time.deltaTime;
         if (_timer > 1)
         {

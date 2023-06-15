@@ -34,10 +34,13 @@ public class TimeTotem : MonoCache
     {
         if (_room != null)
         {
-            var enemyGroup = _room.GetComponentInChildren<GroupPlayerDetector>();
+            var enemyGroup = _room.GetComponentsInChildren<GroupPlayerDetector>();
             if (enemyGroup != null)
             {
-                enemyGroup.OnPlayerDetected.AddListener(StartTimer);
+                for (var i = 0; i < enemyGroup.Length; i++)
+                {
+                    enemyGroup[i].OnPlayerDetected.AddListener(StartTimer);
+                }
             }
         }
     }

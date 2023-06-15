@@ -13,6 +13,7 @@ public class RunnerAiController : BaseAiController
 {
     [SerializeField] private LayerMask layersToAttack;
     [SerializeField] private LayerMask environmentLayers;
+    [SerializeField] private bool moveToPoints = true;
     [SerializeField] private Transform rotationTarget;
     [SerializeField] private float timeBeforeShootToRotateHead = 0.3f;
     [SerializeField] private float moveSpeed = 30f;
@@ -101,7 +102,7 @@ public class RunnerAiController : BaseAiController
             _cantAttackTime = 0;
         }
 
-        if (_timeOnPosition > timeChangeLocation || _cantAttackTime > cantAttackTimeToChangeLocation)
+        if ((_timeOnPosition > timeChangeLocation || _cantAttackTime > cantAttackTimeToChangeLocation) && moveToPoints)
         {
             TryFindPositionToMove();
         }
