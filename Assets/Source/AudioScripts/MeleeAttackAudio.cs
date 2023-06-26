@@ -13,11 +13,11 @@ public class MeleeAttackAudio : MonoCache
     [SerializeField] private float volumeVariation = 0.3f;
     [SerializeField] private float pitchVariation = 0.1f;
 
-    private Kicker _meleeAttacker;
+    private IMeleeAttacker _meleeAttacker;
 
     private void Awake()
     {
-        _meleeAttacker = GetComponentInParent<Kicker>();
+        _meleeAttacker = GetComponentInParent<IMeleeAttacker>();
     }
 
     protected override void OnEnabled()

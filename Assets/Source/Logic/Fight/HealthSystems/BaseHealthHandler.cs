@@ -154,7 +154,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         return health;
     }
 
-    public bool IsDead() => _stunned;
+    public bool InStun() => _stunned;
 
     public float GetReviveTime()
     {

@@ -53,6 +53,7 @@ public class AbilitiesHandler : MonoCache
             _leftAbility.RemoveAbility();
         }
         SetNewAbility(out _leftAbility, newAbilityPrefab, leftHandShootPoint, isInfinite);
+        Get<IHealthHandler>().AddHealth(healBySteal);
         OnNewLeftAbility?.Invoke();
     }
 
@@ -89,7 +90,6 @@ public class AbilitiesHandler : MonoCache
         if (robbedAbility != null)
         {
             SetNewLeftAbility(robbedAbility);
-            Get<IHealthHandler>().AddHealth(healBySteal);
         }
     }
 

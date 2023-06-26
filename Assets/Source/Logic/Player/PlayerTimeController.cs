@@ -10,11 +10,11 @@ public class PlayerTimeController : MonoCache
     
     [Inject] private TimeController _timeController;
 
-    private Kicker _kicker;
+    private IMeleeAttacker _kicker;
 
     private void Awake()
     {
-        _kicker = Get<Kicker>();
+        _kicker = Get<IMeleeAttacker>();
     }
 
     protected override void OnEnabled()

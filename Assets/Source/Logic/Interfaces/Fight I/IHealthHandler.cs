@@ -20,5 +20,5 @@ public interface IHealthHandler
     public float GetHealth();
     public float GetReviveTime();
     public float GetCurrentReviveTimer();
-    public bool IsDead();
+    public bool InStun();
 }

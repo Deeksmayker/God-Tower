@@ -13,7 +13,7 @@ public class PlayerInputHandler : MonoCache
     private bool _responseToInput = true;
     private bool _canShoot = true;
     
-    private IMover _mover;
+    private PlayerMovementController _mover;
     private IJumper _jumper;
     private IMeleeAttacker _meleeAttacker;
     private AbilitiesHandler _abilitiesHandler;
@@ -27,7 +27,7 @@ public class PlayerInputHandler : MonoCache
 
     private void Awake()
     {
-        _mover = Get<DefaultMover>();
+        _mover = Get<PlayerMovementController>();
         _playerInput = Get<PlayerInput>();
         _jumper = Get<IJumper>();
         _meleeAttacker = Get<IMeleeAttacker>();
@@ -47,6 +47,8 @@ public class PlayerInputHandler : MonoCache
         if (_mover != null)
         {
             _mover.SetHorizontalInput(_playerInput.actions["Move"].ReadValue<Vector2>());
+
+            _mover.SetDashInput(_playerInput.actions["Dash"].IsInProgress());
         }
 
         if (_jumper != null)

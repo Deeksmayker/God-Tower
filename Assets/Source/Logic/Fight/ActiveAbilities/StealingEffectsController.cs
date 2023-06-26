@@ -53,7 +53,7 @@ public class StealingEffectsController : MonoCache
 
     protected override void Run()
     {
-        _desiredRadius = Mathf.Lerp(startRadius, maxRadius, _playerStyleController.GetCurrentStyle01());
+        _desiredRadius = Mathf.Lerp(startRadius, maxRadius, Mathf.Pow(_playerStyleController.GetCurrentStyle01(), 3));
 
         _currentRadius = Mathf.Lerp(_currentRadius, _desiredRadius, 10 * Time.deltaTime);
         

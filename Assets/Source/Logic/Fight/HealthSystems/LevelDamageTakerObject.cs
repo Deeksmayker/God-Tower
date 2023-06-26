@@ -106,7 +106,7 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
         return health;
     }
 
-    public bool IsDead()
+    public bool InStun()
     {
         return _dying;
     }

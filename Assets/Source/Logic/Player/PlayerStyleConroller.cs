@@ -7,6 +7,9 @@ public class PlayerStyleController : MonoCache
     [SerializeField] private float styleReduceRate;
     [SerializeField] private float stylePerKill;
 
+    [Header("Components")]
+    [SerializeField] private float addedDashDuration;
+
     [Header("Fullscreen Effect")]
     [SerializeField] private Material fullscreenMaterial;
     [SerializeField] private float maxAlpha = 5;
@@ -15,18 +18,17 @@ public class PlayerStyleController : MonoCache
     [SerializeField] private AudioSource styleMeterAudioSource;
     [SerializeField] private AudioClip styleFullOneShotClip;
 
-
     private float _currentStyle;
 
     [Inject] private PostProcessingController _postProcessingController;
 
     private AbilitiesHandler _abilitiesHandler;
-    private IMover _mover;
+    private PlayerMovementController _mover;
 
     private void Awake()
     {
         _abilitiesHandler = Get<AbilitiesHandler>();
-        _mover = Get<IMover>();
+        _mover = Get<PlayerMovementController>();
     }
 
     protected override void OnEnabled()
@@ -54,8 +56,9 @@ public class PlayerStyleController : MonoCache
 
         _currentStyle = Mathf.Clamp01(_currentStyle);
 
-        _postProcessingController.SetMotionBlurIntensity(Mathf.Pow(_currentStyle, 3));
+        _mover.SetDashDuration(Mathf.Lerp(_mover.GetBaseDashDuration(), _mover.GetBaseDashDuration() + addedDashDuration, _currentStyle));
 
+        _postProcessingController.SetMotionBlurIntensity(Mathf.Pow(_currentStyle, 3));
         fullscreenMaterial.SetFloat("_Alpha", Mathf.Lerp(0, maxAlpha, Mathf.Pow(_currentStyle, 3)));
         fullscreenMaterial.SetFloat("_Speed", Mathf.Lerp(minSpeed, maxSpeed, Mathf.Pow(_currentStyle, 3)));
 

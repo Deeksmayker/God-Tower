@@ -14,11 +14,11 @@ public class MeleeAttackVisual : MonoCache
     [SerializeField] private ShakePreset hitShakePreset;
 
     private Animator _animator;
-    private Kicker _meleeAttacker;
+    private IMeleeAttacker _meleeAttacker;
 
     private void Awake()
     {
-        _meleeAttacker = GetComponentInParent<Kicker>(); ;
+        _meleeAttacker = GetComponentInParent<IMeleeAttacker>(); ;
         _animator = GetComponentInParent<Animator>();
 
         if (_meleeAttacker is null)
