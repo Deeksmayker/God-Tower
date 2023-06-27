@@ -2741,7 +2741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e7b76266b7830419d3170e8d8f3e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addedVerticalSpeed: 50
+  addedVerticalSpeed: 40
 --- !u!136 &7872997131959220950
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2761,8 +2761,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4
-  m_Height: 7
+  m_Radius: 5
+  m_Height: 15
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3486897800359297834
@@ -3104,7 +3104,6 @@ GameObject:
   - component: {fileID: 3998808300210842286}
   - component: {fileID: 2140864504}
   - component: {fileID: 7346594362803391657}
-  - component: {fileID: 3998808300210842283}
   - component: {fileID: 3998808300210842284}
   - component: {fileID: 3998808298923127482}
   - component: {fileID: 2131039298}
@@ -3224,29 +3223,14 @@ MonoBehaviour:
   layersToHit:
     serializedVersion: 2
     m_Bits: 6272
-  hitBoxSize: {x: 5, y: 5, z: 10}
+  hitBoxSize: {x: 10, y: 10, z: 10}
   damage: 20
-  hitPayoffForce: 50
+  hitPayoffForce: 40
   preparingTime: 0.02
   attackDuration: 0.75
   cooldown: 0.25
   allowParry: 1
   parryProjectileBoostVelocity: 200
---- !u!114 &3998808300210842283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0207e8ab29a14290b40d85b25b2a4044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RiseGravity: -50
-  FallingGravity: -30
-  changingGravityVelocity: 10
 --- !u!114 &3998808300210842284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3368,7 +3352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radiusObject: {fileID: 255045707089274207}
   startRadius: 0
-  maxRadius: 100
+  maxRadius: 0
   startColor: {r: 1.471698, g: 1.471698, b: 1.471698, a: 0}
   maxColor: {r: 25.962265, g: 0.36738986, b: 0.36738986, a: 0}
   radiusForMaxColor: 100
@@ -3399,7 +3383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   styleReduceRate: 0.08
   stylePerKill: 0.2
-  addedDashDuration: 1
+  addedDashDuration: 0.5
   fullscreenMaterial: {fileID: 2100000, guid: e93305b4aa3c50144a2270a01a2b7573, type: 2}
   maxAlpha: 5
   minSpeed: 0.5
@@ -3476,7 +3460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Friction: 6
-  m_Gravity: 10
+  m_Gravity: 40
   m_JumpForce: 20
   m_AutoBunnyHop: 1
   m_AirControl: 1
@@ -3498,8 +3482,8 @@ MonoBehaviour:
   camRootTransform: {fileID: 3998808298746309513}
   dashCharges: 3
   dashAddedSpeed: 50
-  baseDashDuration: 0.25
-  minDashDuration: 0.1
+  baseDashDuration: 0.3
+  minDashDuration: 0.3
   baseDashCooldown: 2
 --- !u!1 &3998808300644396506
 GameObject:

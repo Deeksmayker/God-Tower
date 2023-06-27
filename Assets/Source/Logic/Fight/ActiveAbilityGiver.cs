@@ -7,6 +7,7 @@ public class ActiveAbilityGiver : MonoCache, IGiveAbility
 {
     [SerializeField] private bool canGiveAbility;
     [SerializeField] private GameObject abilityPrefab;
+    [SerializeField] private StackedAbility stackedAbilityPrefab;
     [SerializeField] private AudioClip stealClip;
     [SerializeField] private AudioSource stealSoundPrefab;
 
@@ -49,6 +50,21 @@ public class ActiveAbilityGiver : MonoCache, IGiveAbility
         }
         
         return abilityPrefab;
+    }
+
+    public StackedAbility GetStackedAbilityPrefab()
+    {
+        if (_healthHandler != null)
+            _healthHandler.Die(true);
+
+        if (stealSoundPrefab)
+        {
+            var sound = NightPool.Spawn(stealSoundPrefab, transform.position);
+            sound.clip = stealClip;
+            sound.Play();
+        }
+
+        return stackedAbilityPrefab;
     }
 
     public bool CanGiveAbility()

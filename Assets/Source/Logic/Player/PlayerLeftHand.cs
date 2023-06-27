@@ -6,7 +6,7 @@ public class PlayerLeftHand : PlayerHand
     {
         if (_abilitiesHandler != null)
         {
-            _abilitiesHandler.OnNewLeftAbility += () => HandleNewAbility(_abilitiesHandler.GetLeftAbility());
+            _abilitiesHandler.OnNewAbility += () => HandleNewAbility(_abilitiesHandler.GetLeftAbility());
         }
     }
 

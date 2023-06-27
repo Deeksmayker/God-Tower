@@ -85,12 +85,12 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     protected override void OnEnabled()
     {
-        _abilitiesHandler.OnNewAbility += RefreshOneDashCharge;
+        _abilitiesHandler.OnNewAbility += RefreshDashCharges;
     }
 
     protected override void OnDisabled()
     {
-        _abilitiesHandler.OnNewAbility -= RefreshOneDashCharge;
+        _abilitiesHandler.OnNewAbility -= RefreshDashCharges;
     }
 
     protected override void Run()
@@ -360,13 +360,12 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         if (keepMomentum || _velocity.magnitude < dashAddedSpeed)
             return;
         
-        _velocity *= (1f - dashAddedSpeed / _velocity.magnitude);
+        _velocity *= 0.6f;
     }
 
-    public void RefreshOneDashCharge()
+    public void RefreshDashCharges()
     {
-        if (_currentDashCharges < dashCharges)
-            _currentDashCharges++;
+        _currentDashCharges = dashCharges;
     }
 
     private bool CanDash()
@@ -380,7 +379,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20
-            && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers))
+            && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers)
+            && !(_dash && Vector3.Dot(hit.normal, _velocity) < -0.5f))
         {
             StopDash(true);
             SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);

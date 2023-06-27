@@ -136,7 +136,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
             if (abilityGiver != null)
             {
-                _abilitiesHandler.SetNewLeftAbility(abilityGiver.GetAbilityPrefab());
+                _abilitiesHandler.SetNewLeftAbility(abilityGiver);
             }
 
             if (healthHandler != null)

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class LaserAbility : DefaultActiveAbility, IMakeLaser
+public class LaserAbility : DefaultActiveAbility, IMakeLaser, IWorkWithStackAbilities
 {
     [SerializeField] private LayerMask hitTakerLayers;
     [SerializeField] private LayerMask environmentLayers;
@@ -20,6 +20,7 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
     public event Action<RaycastHit, Vector3> OnEnvironmentHit;
     public event Action<RaycastHit, Vector3> OnHitToHitTaker;
     public event Action<Vector3> OnMissHit;
+    public event Action<Vector3> OnImpact;
 
     protected override void OnEnabled()
     {
@@ -42,7 +43,6 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
 
             direction = Quaternion.Euler(randomNumberX, randomNumberY, randomNumberZ) * direction;
         }
-       
 
         ShootLaser(startPoint, direction);
     }
@@ -64,6 +64,7 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
             {
                 OnHitToHitTaker?.Invoke(hitInfo, direction);
                 hitTaker.TakeHit(damage, hitInfo.point, hitType);
+                OnImpact?.Invoke(hitInfo.point);
                 return;
             }
         }
@@ -71,6 +72,7 @@ public class LaserAbility : DefaultActiveAbility, IMakeLaser
         if (Physics.Raycast(startPoint, direction, out var envHitInfo, distance, environmentLayers))
         {
             OnEnvironmentHit?.Invoke(envHitInfo, direction);
+            OnImpact?.Invoke(envHitInfo.point);
             return;
         }
 

@@ -71,12 +71,12 @@ public class PlayerInputHandler : MonoCache
 
         if (_abilitiesHandler != null)
         {
-            _abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
+            //_abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
             _abilitiesHandler.SetLeftStealInput(_playerInput.actions["LeftSteal"].WasPressedThisFrame());
 
             if (_canShoot)
             {
-                _abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
+                //_abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
                 _abilitiesHandler.SetLeftAbilityInput(_playerInput.actions["LeftAttack"].IsInProgress());
             }
         }
