@@ -14,12 +14,12 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
     [SerializeField] private Animation attackPreparingAnimation;
 
     private IAiController _aiController;
-    private IActiveAbility _rangeAbility;
+    private DefaultActiveAbility _rangeAbility;
 
     private void Awake()
     {
         _aiController = Get<IAiController>();
-        _rangeAbility = GetComponentInChildren<IActiveAbility>();
+        _rangeAbility = GetComponentInChildren<DefaultActiveAbility>();
     }
 
     protected override void Run()
@@ -34,7 +34,7 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
     {
         if (_aiController.CanAttack() && _rangeAbility.CanPerform())
         {
-            _rangeAbility.PerformWithDelay(chargingTime);
+            _rangeAbility.PerformWithDelay(chargingTime, 1);
 
             if (attackPreparingAnimation)
             {

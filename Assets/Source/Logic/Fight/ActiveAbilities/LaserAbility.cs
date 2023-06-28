@@ -6,100 +6,51 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class LaserAbility : DefaultActiveAbility, IMakeLaser, IWorkWithStackAbilities
+public class LaserAbility : DefaultActiveAbility
 {
-    [SerializeField] private LayerMask hitTakerLayers;
-    [SerializeField] private LayerMask environmentLayers;
-
-    [SerializeField] private float radius = 0.4f;
-    [SerializeField] private float distance = 300f;
+    [SerializeField] private bool _shootOnInput = true;
 
     [Header("Dump")]
     [SerializeField] private float spreadAngles;
 
-    public event Action<RaycastHit, Vector3> OnEnvironmentHit;
-    public event Action<RaycastHit, Vector3> OnHitToHitTaker;
-    public event Action<Vector3> OnMissHit;
-    public event Action<Vector3> OnImpact;
+    private LaserShooter _shooter;
 
-    protected override void OnEnabled()
+    private void Awake()
     {
-        
+        _shooter = Get<LaserShooter>();
     }
 
-    public override void PerformAbility(bool isDumping = false)
+    public override void PerformAbility(int count)
     {
-        base.PerformAbility(isDumping);
+        if (!_shootOnInput)
+            return;
 
         var startPoint = directionTarget.position;
 
         var direction = GetPerformDirection();
 
-        if (isDumping)
+        for (var i = 0; i < count; i++)
         {
+            if (i == 0)
+            {
+                _shooter.ShootLaser(startPoint, direction);
+                continue;
+            }
+
             var randomNumberX = Random.Range(-spreadAngles, spreadAngles);
             var randomNumberY = Random.Range(-spreadAngles, spreadAngles);
             var randomNumberZ = Random.Range(-spreadAngles, spreadAngles);
 
-            direction = Quaternion.Euler(randomNumberX, randomNumberY, randomNumberZ) * direction;
+            var spreadedDirection = Quaternion.Euler(randomNumberX, randomNumberY, randomNumberZ) * direction;
+
+            _shooter.ShootLaser(startPoint, spreadedDirection);
         }
 
-        ShootLaser(startPoint, direction);
-    }
-
-    private void ShootLaser(Vector3 startPoint, Vector3 direction)
-    {
-        if (Physics.SphereCast(startPoint, radius, direction, out var hitInfo, distance, hitTakerLayers))
-        {
-            var hitTransform = hitInfo.transform;
-
-            var hitType = HitTypes.NormalPoint;
-
-            if (hitTransform.GetComponent<IWeakPoint>() != null)
-            {
-                hitType = HitTypes.WeakPoint;
-            }
-
-            if (hitInfo.transform.TryGetComponent<ITakeHit>(out var hitTaker))
-            {
-                OnHitToHitTaker?.Invoke(hitInfo, direction);
-                hitTaker.TakeHit(damage, hitInfo.point, hitType);
-                OnImpact?.Invoke(hitInfo.point);
-                return;
-            }
-        }
-
-        if (Physics.Raycast(startPoint, direction, out var envHitInfo, distance, environmentLayers))
-        {
-            OnEnvironmentHit?.Invoke(envHitInfo, direction);
-            OnImpact?.Invoke(envHitInfo.point);
-            return;
-        }
-
-        OnMissHit?.Invoke(direction);
+        base.PerformAbility(count);
     }
 
     public override AbilityTypes GetType()
     {
         return AbilityTypes.Laser;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        
-        var firstPoint = directionTarget.position;
-        var endPoint = firstPoint + directionTarget.forward * distance;
-
-        var direction = (endPoint - firstPoint).normalized;
-        
-        Gizmos.DrawWireSphere(firstPoint, radius);
-        Gizmos.DrawWireSphere(endPoint, radius);
-        Gizmos.DrawLine(firstPoint + directionTarget.up * radius, endPoint + directionTarget.up * radius);
-        Gizmos.DrawLine(firstPoint - directionTarget.up * radius, endPoint - directionTarget.up * radius);
-        Gizmos.DrawLine(firstPoint + directionTarget.right * radius, endPoint + directionTarget.right * radius);
-        Gizmos.DrawLine(firstPoint - directionTarget.right * radius, endPoint - directionTarget.right * radius);
-        //Gizmos.DrawLine(firstPoint + directionTarget.up * radius, firstPoint - directionTarget.up * radius);
-        //Gizmos.DrawLine(endPoint + directionTarget.up * radius, endPoint - directionTarget.up * radius);
     }
 }

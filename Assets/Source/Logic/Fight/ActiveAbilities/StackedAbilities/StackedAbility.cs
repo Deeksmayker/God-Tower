@@ -28,7 +28,7 @@ public abstract class StackedAbility : MonoCache
         impacter.OnImpact -= PerformOnImpact;
     }*/
 
-    public void SetImpacter(IWorkWithStackAbilities impacter)
+    public void SetImpacter(IImpacter impacter)
     {
         impacter.OnImpact += PerformOnImpact;
     }

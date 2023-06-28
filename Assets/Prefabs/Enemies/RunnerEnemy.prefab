@@ -847,6 +847,8 @@ MonoBehaviour:
   canGiveAbility: 0
   abilityPrefab: {fileID: 3216269069128228425, guid: c7af7e11377f74d4e86dc715793dfc00,
     type: 3}
+  stackedAbilityPrefab: {fileID: 1013376563405748268, guid: 8403f24af3978a346bb9df902d699a4b,
+    type: 3}
   stealClip: {fileID: 8300000, guid: 5bb3e20e011ed97439de817fa8363e22, type: 3}
   stealSoundPrefab: {fileID: 7335316615607121784, guid: 0e022010a449a1d4db4655d7cb83faf9,
     type: 3}
@@ -890,6 +892,7 @@ MonoBehaviour:
   environmentLayers:
     serializedVersion: 2
     m_Bits: 512
+  moveToPoints: 1
   rotationTarget: {fileID: 1061043884}
   timeBeforeShootToRotateHead: 0.1
   moveSpeed: 50

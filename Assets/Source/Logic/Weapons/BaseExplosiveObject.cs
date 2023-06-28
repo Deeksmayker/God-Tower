@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.VFX;
 
-public class BaseExplosiveObject : MonoCache, IMakeExplosion
+public class BaseExplosiveObject : MonoCache, IMakeExplosion, IImpacter
 {
     [SerializeField] private LayerMask layersToExplode;
     [SerializeField] private LayerMask superExplosionLayers;
@@ -39,7 +39,8 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
     
     public event Action<float> OnBigExplosionWithRadius;
     public event Action<float> OnExplosionWithRadius;
-    
+    public event Action<Vector3> OnImpact;
+
     public Rigidbody Rb;
 
     private void Awake()
@@ -124,7 +125,7 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion
         else
             OnExplosionWithRadius?.Invoke(ExplodeRadius);
         _timer = explosionDuration;
-        
+        OnImpact?.Invoke(transform.position);
         
         DamageEveryoneInRadius();
 

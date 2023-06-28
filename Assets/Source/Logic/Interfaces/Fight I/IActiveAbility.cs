@@ -1,19 +1,15 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public interface IActiveAbility
 {
     public event Action OnPerform;
     public event Action OnStartHolding;
-    public event Action OnEndHolding;
-    public event Action OnDumpLoaded;
-    public event Action OnDump;
     public event Action OnEmpty;
     
-    public void ChargeAbility();
-    public void PerformAbility(bool isDumping = false);
-    public void DumpAbility();
-    public void PerformWithDelay(float delay);
+    //public void ChargeAbility();
+    public void PerformAbility(int count);
     public void SetInput(bool value);
     public void SetRotationTarget(Transform rotationTarget);
     public void SetShootPoint(Transform shootPoint);

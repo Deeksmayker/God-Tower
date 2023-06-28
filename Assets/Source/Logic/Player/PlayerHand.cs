@@ -61,8 +61,8 @@ public class PlayerHand : MonoCache
         
         ability.OnPerform += HandleAbilityPerforming;
         ability.OnStartHolding += HandleAbilityCharging;
-        ability.OnEndHolding += HandleAbilityEndCharging;
-        ability.OnDumpLoaded += HandleAbilityDumpLoaded;
+        ability.OnPerform += HandleAbilityEndCharging;
+        ability.OnStartHolding += HandleAbilityDumpLoaded;
         ability.OnEmpty += HandleAbilityEmpty;
         
         OnHandNewAbility?.Invoke(this, ability.GetType());

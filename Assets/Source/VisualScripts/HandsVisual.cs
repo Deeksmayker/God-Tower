@@ -92,7 +92,7 @@ public class HandsVisual : MonoCache
     {
         var handTransform = hand.transform;
         hand.GetShaker()?.StartRapidShaking();
-        switch (type)
+        /*switch (type)
         {
             case AbilityTypes.Laser:
                 var effect1 = NightPool.Spawn(dumpLoadedEffect, handTransform.position,
@@ -109,7 +109,7 @@ public class HandsVisual : MonoCache
                     handTransform.rotation);
                 effect3.SetVector4("Color", homingAbilityColor);
                 return;
-        }
+        }*/
     }
 
     private async UniTask ChangeHandAnimation(PlayerHand hand, string abilityAnimationName)

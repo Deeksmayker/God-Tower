@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8594319399714668570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6287971566303477814}
+  - component: {fileID: 1013376563405748268}
+  - component: {fileID: 460355903792686280}
+  - component: {fileID: 3842281384299736767}
+  m_Layer: 0
+  m_Name: LaserStackedAbility
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6287971566303477814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8594319399714668570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.915179, y: 4.4143424, z: 2.458209}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1013376563405748268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8594319399714668570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c194d6bd5770b428a9da1be6233c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootCount: 5
+--- !u!114 &460355903792686280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8594319399714668570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5de7379bbd1634495120a69edf28a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitTakerLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  environmentLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  damage: 20
+  radius: 3
+  distance: 300
+--- !u!114 &3842281384299736767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8594319399714668570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 769ee80fb6ac40dc8e9d55aa7eb9b8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  traceEffect: {fileID: 7637479311655098315, guid: 5e7d8c7dbf7b4cd4eb2190001aad5e88,
+    type: 3}
+  hitEffect: {fileID: 2734764703766690187, guid: c303081d6fa7a5c49b1ef24bce2d5ece,
+    type: 3}

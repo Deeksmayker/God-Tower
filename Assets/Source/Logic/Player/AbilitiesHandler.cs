@@ -23,7 +23,9 @@ public class AbilitiesHandler : MonoCache
     [SerializeField] private float stealDistance = 10;
     [SerializeField] private float stealRadius = 0.5f;
     [SerializeField] private float healBySteal = 20;
-    
+
+    private int _stackedAbilitiesCount;
+
     private IActiveAbility _leftAbility;
     private GameObject _currentAbilityObject;
 
@@ -94,12 +96,26 @@ public class AbilitiesHandler : MonoCache
         if (_leftAbility != null)
         {
             var stackedAbility = NightPool.Spawn(abilityGiver.GetStackedAbilityPrefab(), _currentAbilityObject.transform);
-            stackedAbility.SetImpacter(_currentAbilityObject.GetComponent<IWorkWithStackAbilities>());
+            _stackedAbilitiesCount++;
+            stackedAbility.SpecifyStackedNumber(_stackedAbilitiesCount);
 
-            return;
+            if (_currentAbilityObject.TryGetComponent<IImpacter>(out var impacter))
+            {
+                stackedAbility.SetImpacter(impacter);
+                return;
+            }
+
+            if (_currentAbilityObject.TryGetComponent<ISpawnImpacter>(out var impacterSpawner))
+            {
+                impacterSpawner.OnImpacterSpawned += stackedAbility.SetImpacter;
+                return;
+            }
+
+            _leftAbility.RemoveAbility();
         }
 
         _currentAbilityObject = Instantiate(abilityGiver.GetAbilityPrefab(), transform);
+        Debug.Log(_currentAbilityObject);
         _currentAbilityObject.transform.position = shootPoint.position;
         _leftAbility = _currentAbilityObject.GetComponent<IActiveAbility>();
         _leftAbility.SetRotationTarget(camRotationTarget);
@@ -115,6 +131,7 @@ public class AbilitiesHandler : MonoCache
     private void HandleLeftAbilityEmpty()
     {
         _leftAbility = null;
+        _stackedAbilitiesCount = 0;
     }
     public IActiveAbility GetLeftAbility() => _leftAbility;
 
