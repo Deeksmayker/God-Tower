@@ -1,3 +1,4 @@
+using NTC.Global.Pool;
 using UnityEngine;
 
 public class LaserStackedAbility : StackedAbility
@@ -20,5 +21,12 @@ public class LaserStackedAbility : StackedAbility
             _laser.transform.position = position;
             _laser.ShootLaser(position, direction);
         }
+
+        Destroy(gameObject);
+    }
+
+    public override AbilityTypes GetStackedAbilityType()
+    {
+        return AbilityTypes.Laser;
     }
 }

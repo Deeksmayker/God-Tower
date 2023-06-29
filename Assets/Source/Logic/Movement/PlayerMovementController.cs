@@ -58,6 +58,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     // Used to queue the next jump just before hitting the ground.
     private bool m_JumpQueued = false;
 
+    private bool _isGrounded = true;
+
     private bool _dashInput;
     private bool _dashHoldInput;
     private bool _dash = false;
@@ -73,6 +75,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     public event Action OnLanding;
     public event Action<Vector3> OnBounce;
     public event Action OnJump;
+    public event Action OnStartDash;
+    public event Action OnStopDash;
 
     private void Awake()
     {
@@ -85,20 +89,25 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     protected override void OnEnabled()
     {
-        _abilitiesHandler.OnNewAbility += RefreshDashCharges;
+        _abilitiesHandler.OnStealAbility += RefreshDashCharges;
     }
 
     protected override void OnDisabled()
     {
-        _abilitiesHandler.OnNewAbility -= RefreshDashCharges;
+        _abilitiesHandler.OnStealAbility -= RefreshDashCharges;
     }
 
     protected override void Run()
     {
-       /* if (IsGrounded())
-        {
-            _currentDashCharges = dashCharges;
-        }*/
+        /* if (IsGrounded())
+         {
+             _currentDashCharges = dashCharges;
+         }*/
+
+        if (!_isGrounded && _ch.isGrounded)
+            OnLanding?.Invoke();
+
+        _isGrounded = _ch.isGrounded;
 
         if (!_dash && _currentDashCharges < dashCharges)
         {
@@ -308,7 +317,6 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private void StartDash()
     {
         _dash = true;
-
         var direction = camRootTransform.forward;
         if (!m_MoveInput.Equals(Vector3.zero) && direction.y > -0.5f && direction.y < 0.5f)
         {
@@ -317,6 +325,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         }
 
         _velocity = direction * (_velocity.magnitude + dashAddedSpeed);
+        OnStartDash?.Invoke();
 
         _currentDashCharges--;
         _dashCooldownTimer = baseDashCooldown;
@@ -347,7 +356,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             return;
 
         _dash = false;
-        
+        OnStopDash?.Invoke();
         _dashTimer = 0;
 
         if (IsGrounded() && _dashInput)

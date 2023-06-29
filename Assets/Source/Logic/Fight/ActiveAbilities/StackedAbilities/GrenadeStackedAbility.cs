@@ -22,5 +22,12 @@ public class GrenadeStackedAbility : StackedAbility
 
         _explosive.transform.position = position + randomDisplacement;
         _explosive.Explode();
+
+        Destroy(gameObject);
+    }
+
+    public override AbilityTypes GetStackedAbilityType()
+    {
+        return AbilityTypes.Homing;
     }
 }

@@ -50,6 +50,8 @@ public class HomingStackedAbility : StackedAbility
         effect.SetVector3("Pos2", (position + targetPos) * 0.5f * UnityEngine.Random.Range(0.8f, 1.2f));
         effect.SetVector3("Pos3", (position + targetPos) * 0.5f * UnityEngine.Random.Range(0.7f, 1.3f));
         effect.SetVector3("Pos4", targetPos);
+
+        Destroy(gameObject);
     }
 
     public static async UniTask RemoveHashFromTable(int hash)
@@ -57,5 +59,10 @@ public class HomingStackedAbility : StackedAbility
         await UniTask.Delay(1000);
 
         _targetsHashes.Remove(hash);
+    }
+
+    public override AbilityTypes GetStackedAbilityType()
+    {
+        return AbilityTypes.Homing;
     }
 }

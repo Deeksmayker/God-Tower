@@ -7,6 +7,7 @@ public class PlayerLeftHand : PlayerHand
         if (_abilitiesHandler != null)
         {
             _abilitiesHandler.OnNewAbility += () => HandleNewAbility(_abilitiesHandler.GetLeftAbility());
+            _abilitiesHandler.OnNewStackedAbility += HandleNewStackedAbility;
         }
     }
 

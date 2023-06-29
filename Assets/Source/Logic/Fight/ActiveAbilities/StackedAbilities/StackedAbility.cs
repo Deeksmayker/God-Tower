@@ -39,4 +39,9 @@ public abstract class StackedAbility : MonoCache
     }
 
     public abstract void PerformOnImpact(Vector3 position);
+
+    public virtual AbilityTypes GetStackedAbilityType()
+    {
+        return AbilityTypes.None;
+    }
 }

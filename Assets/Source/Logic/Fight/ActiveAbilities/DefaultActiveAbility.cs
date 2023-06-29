@@ -75,7 +75,6 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     {
         _cooldownTimer = cooldown;
         OnPerform?.Invoke();
-        Debug.Log("FDS");
         if (!infinite)
             RemoveAbility();
     }

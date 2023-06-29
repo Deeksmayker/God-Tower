@@ -18,6 +18,7 @@ public class PlayerHand : MonoCache
     public Action<PlayerHand> OnHandEmpty;
     public Action<PlayerHand, AbilityTypes> OnHandNewAbility;
     public Action<PlayerHand, AbilityTypes> OnHandDumpLoaded;
+    public Action<PlayerHand, AbilityTypes> OnHandNewAbilityStacked;
     
     protected AbilitiesHandler _abilitiesHandler;
 
@@ -66,6 +67,11 @@ public class PlayerHand : MonoCache
         ability.OnEmpty += HandleAbilityEmpty;
         
         OnHandNewAbility?.Invoke(this, ability.GetType());
+    }
+
+    protected void HandleNewStackedAbility(StackedAbility stackedAbility)
+    {
+        OnHandNewAbilityStacked?.Invoke(this, stackedAbility.GetStackedAbilityType());
     }
 
     public virtual IActiveAbility GetHandAbility() => null;
