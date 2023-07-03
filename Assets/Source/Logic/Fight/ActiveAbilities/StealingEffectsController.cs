@@ -76,6 +76,6 @@ public class StealingEffectsController : MonoCache
     private void SetRadius(float newRadius)
     {
         _abilitiesHandler.SetStealRadius(newRadius);
-        radiusObject.transform.localScale = 2 * newRadius * Vector3.one;
+        radiusObject.transform.localScale = 2 * newRadius * new Vector3(1, 100, 1);
     }
 }

@@ -4,12 +4,13 @@ using UnityEngine;
 public class TimeTotem : MonoCache
 {
     [SerializeField] private bool completedOnStart;
-    [SerializeField] private float timeToCancel;
+    [SerializeField] private float timeToMaxDifficulty;
 
     private bool _roomCleared;
     private bool _playerInArea;
 
     private float _timer;
+    private float _secondsTimer;
 
     private RoomParent _room;
     private MeshRenderer _meshRenderer;
@@ -34,7 +35,7 @@ public class TimeTotem : MonoCache
     {
         if (_room != null)
         {
-            var enemyGroup = _room.GetComponentsInChildren<GroupPlayerDetector>();
+            var enemyGroup = _room.GetEnemyGroups();
             if (enemyGroup != null)
             {
                 for (var i = 0; i < enemyGroup.Length; i++)
@@ -47,16 +48,37 @@ public class TimeTotem : MonoCache
 
     protected override void Run()
     {
-        if (!_playerInArea || _roomCleared || _timer >= timeToCancel)
+        if (!_playerInArea || _roomCleared || _timer >= timeToMaxDifficulty)
             return;
 
         _timer += Time.deltaTime;;
+        _secondsTimer += Time.deltaTime;
 
-        _propertyBlock.SetFloat("_ColorCoverage", _timer / timeToCancel);
+        if (_secondsTimer >= 1)
+        {
+            SetDifficultyToEnemies();
+            _secondsTimer -= 1;
+        }
+
+
+        _propertyBlock.SetFloat("_ColorCoverage", _timer / timeToMaxDifficulty);
         _meshRenderer.SetPropertyBlock(_propertyBlock);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void SetDifficultyToEnemies()
+    {
+        for (var i = 0; i < _room.GetEnemyGroups().Length; i++)
+        {
+            var group = _room.GetEnemyGroups()[i];
+            for (var j = 0; j < group.GetConnectedEnemies().Length; j++)
+            {
+                var enemy = group.GetConnectedEnemies()[j];
+                enemy.SetTimeDifficulty01(Mathf.Clamp01(Mathf.InverseLerp(0, timeToMaxDifficulty, _timer)));
+            }
+        }
+    }
+
+    /*private void OnTriggerEnter(Collider other)
     {
         if (_roomCleared && _timer < timeToCancel && other.TryGetComponent<PlayerStyleController>(out var style))
         {
@@ -70,7 +92,7 @@ public class TimeTotem : MonoCache
         {
             style.SetStyleToMax();
         }
-    }
+    }*/
 
     public void StartTimer()
     {

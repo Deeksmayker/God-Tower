@@ -324,6 +324,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             direction.y = camRootTransform.forward.y;
         }
 
+        direction.y = Mathf.Clamp(direction.y, -1f, 0.1f);
         _velocity = direction * (_velocity.magnitude + dashAddedSpeed);
         OnStartDash?.Invoke();
 
@@ -363,6 +364,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         {
             _velocity *= 0.6f;
             Jump();
+            _velocity.y = 40;
             return;
         }
 

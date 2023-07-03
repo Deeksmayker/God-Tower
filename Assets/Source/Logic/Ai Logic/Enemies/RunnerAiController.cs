@@ -20,6 +20,10 @@ public class RunnerAiController : BaseAiController
     [SerializeField] private float timeChangeLocation = 3f;
     [SerializeField] private float cantAttackTimeToChangeLocation = 1f;
 
+    [Header("Difficulty")]
+    [SerializeField] private float baseReloadTime = 2f;
+    [SerializeField] private float maxReloadTime = 0.5f;
+
     private bool _canAttack;
     private bool _attacking;
     private bool _moving;
@@ -32,7 +36,7 @@ public class RunnerAiController : BaseAiController
     private Vector3 _targetPosition;
     
     private IAiRangeAttackController _rangeAttackController;
-    private IActiveAbility _rangeAbility;
+    private LaserAbility _rangeAbility;
     private IMover _mover;
     
     private RunnerMovePoint _currentPoint;
@@ -41,7 +45,7 @@ public class RunnerAiController : BaseAiController
     private void Awake()
     {
         _rangeAttackController = Get<IAiRangeAttackController>();
-        _rangeAbility = GetComponentInChildren<IActiveAbility>();
+        _rangeAbility = GetComponentInChildren<LaserAbility>();
         _mover = Get<IMover>();
         _mover.SetInputResponse(false);
 
@@ -83,6 +87,8 @@ public class RunnerAiController : BaseAiController
 
         if (!_attacking)
             rotationTarget.LookAt(_target);
+
+        _rangeAbility.SetCooldown(Mathf.Lerp(baseReloadTime, maxReloadTime, _timeDifficulty01));
 
         if (_moving)
         {

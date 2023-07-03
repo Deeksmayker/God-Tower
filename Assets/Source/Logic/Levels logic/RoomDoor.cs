@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public class RoomDoor : MonoCache
 {
     [SerializeField] private bool trackEnemies = true;
-    [SerializeField] private GroupPlayerDetector[] groupsToTrack;
+    [SerializeField] private EnemyGroup[] groupsToTrack;
 
     [SerializeField] private float height = 250;
     [SerializeField] private float openSpeed = 300f;

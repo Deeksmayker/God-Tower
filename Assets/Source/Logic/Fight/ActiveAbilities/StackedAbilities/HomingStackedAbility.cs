@@ -51,6 +51,8 @@ public class HomingStackedAbility : StackedAbility
         effect.SetVector3("Pos3", (position + targetPos) * 0.5f * UnityEngine.Random.Range(0.7f, 1.3f));
         effect.SetVector3("Pos4", targetPos);
 
+        TimeController.Instance.AddTimeStopDuration(0.02f);
+
         Destroy(gameObject);
     }
 

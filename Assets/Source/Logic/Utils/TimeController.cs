@@ -15,10 +15,27 @@ public class TimeController : MonoCache
     [SerializeField] private TimeScaleTimer _currentTimer;
     [FormerlySerializedAs("_isPaused")] public bool IsPaused = false;
 
+    private float _timeStopTimer;
+
     private void Start()
     {
         if (Instance == null)
             Instance = this;
+    }
+
+    protected override void Run()
+    {
+        if (_timeStopTimer <= 0)
+            return;
+
+        Time.timeScale = 0;
+        _timeStopTimer -= Time.unscaledDeltaTime;
+
+        if (_timeStopTimer <= 0)
+        {
+            Time.timeScale = IsPaused ? 0 : 1;
+            _timeStopTimer = 0;
+        }
     }
 
     public async UniTask SetTimeScale(float timeScale, float duration)
@@ -42,6 +59,11 @@ public class TimeController : MonoCache
             _currentTimer = timerWithMinTimeScale;
             _currentTimer.coroutine = StartCoroutine(_currentTimer.StartTimer());
         }*/
+    }
+
+    public void AddTimeStopDuration(float addedDuration)
+    {
+        _timeStopTimer += addedDuration;
     }
 
     public void SetPause(bool isPaused)

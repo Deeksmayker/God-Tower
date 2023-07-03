@@ -22,6 +22,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     private float _stunTimer;
 
     private bool _stunned;
+    private bool _dead;
 
     private ITakeHit[] _hitTakers;
 
@@ -95,9 +96,10 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void Die(bool order = false)
     {
-        if (!canDie && !order)
+        if (!canDie && !order || _dead)
             return;
-        
+
+        _dead = true;
         OnDied?.Invoke();
         Destroy(gameObject);
     }

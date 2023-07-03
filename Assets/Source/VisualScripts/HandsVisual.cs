@@ -84,7 +84,6 @@ public class HandsVisual : MonoCache
     {
         //hand.HandAnimator.SetTrigger("StealAbility");
         ChangeHandColorCoverageByLifetime(hand);
-        Debug.Log("CHANGED");
         switch (type)
         {
             case AbilityTypes.None:
@@ -109,7 +108,8 @@ public class HandsVisual : MonoCache
     private void HandleNewStackedAbility(PlayerHand hand, AbilityTypes type)
     {
         var color = GetColorByType(type);
-        _currentColor /= 1.75f;
+        _currentColor /= 2;
+        _currentColor *= Color.white;
         ChangeHandColor(hand, _currentColor * color);
 
         var t = Mathf.Clamp01(_abilitiesHandler.GetStackedAbilitiesCount() / 5f);

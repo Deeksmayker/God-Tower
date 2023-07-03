@@ -77,10 +77,13 @@ public class AbilitiesHandler : MonoCache
 
     private IGiveAbility CheckForStealAbility()
     {
-        if (Physics.SphereCast(camRotationTarget.position - camRotationTarget.forward * stealRadius, stealRadius, camRotationTarget.forward, out var hit, stealDistance,
+        if (Physics.SphereCast(camRotationTarget.position - camRotationTarget.forward * stealRadius, stealRadius, camRotationTarget.forward, out var hit, 1000,
                 layersToSteal))
         {
-            if (hit.transform.TryGetComponent<IGiveAbility>(out var giver) && giver.CanGiveAbility())
+            var hitPosInSameHorizontal = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
+
+            if (hit.transform.TryGetComponent<IGiveAbility>(out var giver) && giver.CanGiveAbility()
+                && Vector3.Distance(hitPosInSameHorizontal, transform.position) <= stealDistance)
             {
                 var effect = NightPool.Spawn(stealLineEffect, rightHandShootPoint);
                 effect.SetTarget(hit.transform.position);

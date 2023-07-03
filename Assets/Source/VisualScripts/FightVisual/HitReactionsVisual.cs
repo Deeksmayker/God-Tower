@@ -20,10 +20,10 @@ public class HitReactionsVisual : MonoCache
 
     [SerializeField] private ShakePreset hitShake;
     
-    private bool _dying;
+    private bool _stun;
     
     private Color _originalMeshColor;
-    private Color _originalAuraColor;
+    private Color _currentAuraColor;
 
     private MaterialPropertyBlock _propertyBlock;
     
@@ -31,6 +31,7 @@ public class HitReactionsVisual : MonoCache
     private SkinnedMeshRenderer _skinnedMeshRenderer;
     private ITakeHit[] _hitTakers;
     private IHealthHandler _healthHandler;
+    private IAiController _aiController;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class HitReactionsVisual : MonoCache
         _hitTakers = GetComponentsInChildren<ITakeHit>();
         _healthHandler = GetComponentInParent<IHealthHandler>();
         _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        _aiController = GetComponentInParent<IAiController>();
 
         _propertyBlock = new MaterialPropertyBlock();
     }
@@ -47,7 +49,7 @@ public class HitReactionsVisual : MonoCache
         SetAuraColor(Color.black);
 
         if (auraEffect != null)
-            _originalAuraColor = auraEffect.GetVector4("Color");
+            _currentAuraColor = auraEffect.GetVector4("Color");
 
         if (changeMeshesColor && _meshRenderers.Length > 0)
         {
@@ -64,7 +66,7 @@ public class HitReactionsVisual : MonoCache
 
     protected override void OnEnabled()
     {
-        _healthHandler.OnStun += HandleDying;
+        _healthHandler.OnStun += HandleStun;
         _healthHandler.OnDied += HandleDie;
         _healthHandler.OnRevive += RestoreColor;
 
@@ -76,7 +78,7 @@ public class HitReactionsVisual : MonoCache
 
     protected override void OnDisabled()
     {
-        _healthHandler.OnStun -= HandleDying;
+        _healthHandler.OnStun -= HandleStun;
         _healthHandler.OnDied -= HandleDie;
         _healthHandler.OnRevive -= RestoreColor;
 
@@ -86,10 +88,24 @@ public class HitReactionsVisual : MonoCache
         }
     }
 
+    protected override void Run()
+    {
+        if (_aiController != null)
+        {
+            _currentAuraColor = Color.Lerp(Color.black, Color.red * 4, Mathf.Pow(_aiController.GetTimeDifficulty01(), 5));
+            _currentAuraColor *= 2;
+
+            auraEffect.SetFloat("NoisePower", Mathf.Lerp(0.1f, 1, Mathf.Pow(_aiController.GetTimeDifficulty01(), 3)));
+
+            if (!_stun)
+                SetAuraColor(_currentAuraColor);
+        }
+    }
+
     public void RestoreColor()
     {
-        _dying = false;
-        SetAuraColor(Color.black);
+        _stun = false;
+        SetAuraColor(_currentAuraColor);
         
         if (changeMeshesColor)
             ChangeMeshesColor(Color.black);
@@ -100,9 +116,9 @@ public class HitReactionsVisual : MonoCache
         }
     }
 
-    private void HandleDying()
+    private void HandleStun()
     {
-        _dying = true;
+        _stun = true;
         SetAuraColor(Color.white);
         
         if (changeMeshesColor)
@@ -133,7 +149,7 @@ public class HitReactionsVisual : MonoCache
 
         AnimationShortCuts.ShakePositionAnimation(transform, hitShake);
         
-        if (_dying)
+        if (_stun)
             return;
 
         SetAuraColor(Color.white);
@@ -148,10 +164,10 @@ public class HitReactionsVisual : MonoCache
 
         await UniTask.Delay(TimeSpan.FromSeconds(hitChangeColorTime));
 
-        if (_dying)
+        if (_stun)
             return;
         
-        SetAuraColor(_originalAuraColor);
+        SetAuraColor(_currentAuraColor);
 
         if (changeMeshesColor)
             ChangeMeshesColor(Color.black);
@@ -166,11 +182,16 @@ public class HitReactionsVisual : MonoCache
     {
         var t = 1f;
 
-        while (t > 0 && _dying && gameObject)
+        while (t > 0 && _stun && gameObject)
         {
+            if (changeMeshesColor && !_meshRenderers[0])
+                break;
+
             if (changeMeshesColor)
                 for (var i = 0; i < _meshRenderers.Length; i++)
                 {
+                    if (!_meshRenderers[i])
+                        break;
                     _meshRenderers[i].GetPropertyBlock(_propertyBlock);
                     _propertyBlock.SetFloat("_ColorCoverage", t);
                     _meshRenderers[i].SetPropertyBlock(_propertyBlock);
@@ -184,13 +205,13 @@ public class HitReactionsVisual : MonoCache
                 _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
             }
 
-            var auraColor = Color.Lerp(Color.white * 2, Color.black, 1 - t);
+            var auraColor = Color.Lerp(Color.white * 2, _currentAuraColor, 1 - t);
             SetAuraColor(auraColor);
 
             t = _healthHandler.GetCurrentReviveTimer() / _healthHandler.GetReviveTime();
             await UniTask.NextFrame();
         }
-        SetAuraColor(Color.black);
+        SetAuraColor(_currentAuraColor);
     }
 
     private void ChangeMeshesColor(Color color)

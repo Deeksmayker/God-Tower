@@ -138,6 +138,11 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         infinite = value;
     }
 
+    public void SetCooldown(float newCooldown)
+    {
+        cooldown = newCooldown;
+    }
+
     public bool IsInfinite() => infinite;
 
     public void RemoveAbility()

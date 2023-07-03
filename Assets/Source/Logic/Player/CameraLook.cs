@@ -46,7 +46,7 @@ public class CameraLook : MonoCache
       
       public void LookRotation()
       {
-          if (TimeController.Instance.IsPaused || !_responseToInput)
+          if (TimeController.Instance.IsPaused || !_responseToInput || Time.timeScale == 0)
               return;
            
            var mouseDelta = _playerInput.actions["Look"].ReadValue<Vector2>();

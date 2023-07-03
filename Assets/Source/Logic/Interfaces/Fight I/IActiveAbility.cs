@@ -14,6 +14,7 @@ public interface IActiveAbility
     public void SetRotationTarget(Transform rotationTarget);
     public void SetShootPoint(Transform shootPoint);
     public void SetInfinity(bool value);
+    public void SetCooldown(float newCooldown);
     public void RemoveAbility();
     public bool IsInfinite();
     public float GetRemainingLifetime();
