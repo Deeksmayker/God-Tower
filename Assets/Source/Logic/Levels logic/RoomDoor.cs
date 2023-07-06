@@ -27,6 +27,8 @@ public class RoomDoor : MonoCache
 
     public UnityEvent OnOpen = new();
 
+    public static event Action OnRoomCompleted;
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -64,6 +66,7 @@ public class RoomDoor : MonoCache
     public void Open()
     {
         OnOpen.Invoke();
+        OnRoomCompleted?.Invoke();
         desiredPosition += Vector3.up * height;
         _speed = closeSpeed;
         _closed = false;

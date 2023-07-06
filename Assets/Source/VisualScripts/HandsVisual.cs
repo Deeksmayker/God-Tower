@@ -82,7 +82,7 @@ public class HandsVisual : MonoCache
 
     private void HandleAbilityChangeOnHand(PlayerHand hand, AbilityTypes type)
     {
-        //hand.HandAnimator.SetTrigger("StealAbility");
+        hand.HandAnimator.SetTrigger("StealAbility");
         ChangeHandColorCoverageByLifetime(hand);
         switch (type)
         {

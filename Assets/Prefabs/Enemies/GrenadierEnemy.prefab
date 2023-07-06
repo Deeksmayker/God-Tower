@@ -258,7 +258,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1052974840}
-  - component: {fileID: 6098991067127047952}
   m_Layer: 7
   m_Name: GrenadierMask
   m_TagString: Untagged
@@ -284,22 +283,6 @@ Transform:
   m_Father: {fileID: 7957683967610085157}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &6098991067127047952
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052974839}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 08f8ebb353d41fd4587b5da8e7f615e5, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 08f8ebb353d41fd4587b5da8e7f615e5, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &87217645919877382
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,6 +2042,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ambientAudioSource: {fileID: 8159971585052337706}
+  baseReloadTime: 2
+  maxReloadTime: 0.5
   layersToAttack:
     serializedVersion: 2
     m_Bits: 1024
@@ -2088,8 +2073,9 @@ MonoBehaviour:
     m_Bits: 1024
   tryAttackOnLineOfSight: 1
   attackRange: 102.02
-  chargingTime: 1
-  attackPreparingAnimation: {fileID: 6098991067127047952}
+  baseReloadTime: 2
+  maxReloadTime: 0.4
+  _animator: {fileID: 3809708173540756843}
 --- !u!114 &7636869775631508314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2172,6 +2158,7 @@ MonoBehaviour:
   hitsToDie: 1
   damageImmuneTime: 0.01
   stunDuration: 7
+  healOnRoomCompleted: 0
 --- !u!114 &7636869775631508313
 MonoBehaviour:
   m_ObjectHideFlags: 0

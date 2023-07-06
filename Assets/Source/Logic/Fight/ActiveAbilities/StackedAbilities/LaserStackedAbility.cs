@@ -22,7 +22,7 @@ public class LaserStackedAbility : StackedAbility
             _laser.ShootLaser(position, direction);
         }
 
-        TimeController.Instance.AddTimeStopDuration(0.01f);
+        TimeController.Instance.AddTimeStopDuration(0.005f);
 
         Destroy(gameObject);
     }

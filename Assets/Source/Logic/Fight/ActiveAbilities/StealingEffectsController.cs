@@ -24,13 +24,13 @@ public class StealingEffectsController : MonoCache
 
     private PlayerStyleController _playerStyleController;
     private AbilitiesHandler _abilitiesHandler;
-    private IMover _mover;
+    private PlayerMovementController _mover;
 
     private void Awake()
     {
         _abilitiesHandler = Get<AbilitiesHandler>();
         _playerStyleController = Get<PlayerStyleController>();
-        _mover = Get<IMover>();
+        _mover = Get<PlayerMovementController>();
         _currentRadius = startRadius;
         _desiredRadius = _currentRadius;
 
@@ -43,12 +43,12 @@ public class StealingEffectsController : MonoCache
 
     protected override void OnEnabled()
     {
-        _abilitiesHandler.OnNewAbility += HandleKillEnemy;
+        _abilitiesHandler.OnRangeSteal += HandleRangeSteal;
     }
 
     protected override void OnDisabled()
     {
-        _abilitiesHandler.OnNewAbility -= HandleKillEnemy;
+        _abilitiesHandler.OnRangeSteal -= HandleRangeSteal;
     }
 
     protected override void Run()
@@ -65,7 +65,7 @@ public class StealingEffectsController : MonoCache
         _radiusObjectMeshRenderer.SetPropertyBlock(_propertyBlock);
     }
 
-    private void HandleKillEnemy()
+    private void HandleRangeSteal()
     {
         if (_mover.GetVelocity().y > addedVerticalVelocityOnSteal)
             _mover.AddVerticalVelocity(addedVerticalVelocityOnSteal);

@@ -89,12 +89,12 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     protected override void OnEnabled()
     {
-        _abilitiesHandler.OnStealAbility += RefreshDashCharges;
+        _abilitiesHandler.OnKillEnemy += RefreshDashCharges;
     }
 
     protected override void OnDisabled()
     {
-        _abilitiesHandler.OnStealAbility -= RefreshDashCharges;
+        _abilitiesHandler.OnKillEnemy -= RefreshDashCharges;
     }
 
     protected override void Run()
@@ -341,6 +341,9 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             _dashTimer = _currentDashDuration;
             _dashSliding = true;
         }
+
+        if (_dashSliding)
+            AirMove();
 
         if (IsGrounded() && m_JumpQueued && _dashTimer > _currentDashDuration / 2)
         {

@@ -3294,6 +3294,7 @@ MonoBehaviour:
   hitsToDie: 2
   damageImmuneTime: 0.3
   stunDuration: 5
+  healOnRoomCompleted: 1
 --- !u!114 &3998808298923127483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3490,7 +3491,7 @@ MonoBehaviour:
   dashAddedSpeed: 50
   baseDashDuration: 0.3
   minDashDuration: 0.3
-  baseDashCooldown: 2
+  baseDashCooldown: 1
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

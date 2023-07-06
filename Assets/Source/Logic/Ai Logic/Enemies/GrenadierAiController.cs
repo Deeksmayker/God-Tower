@@ -28,6 +28,7 @@ public class GrenadierAiController : BaseAiController
     private float _cantAttackTime;
     
     private bool _jumping;
+    private bool _attacking;
     
     private Transform _target;
     
@@ -59,7 +60,7 @@ public class GrenadierAiController : BaseAiController
     protected override void OnEnabled()
     {
         base.OnEnabled();
-        _grenadeAbility.OnStartHolding += HandleStartChargingGrenadeAttack;
+        //_grenadeAbility.OnStartHolding += HandleStartChargingGrenadeAttack;
         _grenadeAbility.OnPerform += HandlePerformingGrenadeAttack;
 
         var connectedRoom = GetComponentInParent<RoomParent>();
@@ -75,7 +76,7 @@ public class GrenadierAiController : BaseAiController
     protected override void OnDisabled()
     {
         base.OnDisabled();
-        _grenadeAbility.OnStartHolding -= HandleStartChargingGrenadeAttack;
+        //_grenadeAbility.OnStartHolding -= HandleStartChargingGrenadeAttack;
         _grenadeAbility.OnPerform -= HandlePerformingGrenadeAttack;
     }
 
@@ -86,13 +87,20 @@ public class GrenadierAiController : BaseAiController
 
         if (_dead)
             return;
-        
+
+        if (!_attacking && _rangeAttackController.GetCooldownTimer() <= timeBeforeShootToRotateHead)
+        {
+            HandleStartChargingGrenadeAttack();
+        }
+
         if (_jumping)
         {
             _timeOnLocation = 0;
             _cantAttackTime = 0;
             return;
         }
+
+        
 
         _timeOnLocation += Time.deltaTime;
 
@@ -173,14 +181,15 @@ public class GrenadierAiController : BaseAiController
 
     private void HandleStartChargingGrenadeAttack()
     {
+        _attacking = true;
         RotateHeadToRightAngleBeforeShoot();
     }
 
     private async UniTask RotateHeadToRightAngleBeforeShoot()
     {
-        rotationTarget.LookAt(_target);
+        //rotationTarget.LookAt(_target);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(_rangeAttackController.GetChargingTime() - timeBeforeShootToRotateHead));
+        //await UniTask.Delay(TimeSpan.FromSeconds(_rangeAttackController.GetCurrentCooldown() - timeBeforeShootToRotateHead));
 
         /*if (_jumping)
         {
@@ -215,7 +224,7 @@ public class GrenadierAiController : BaseAiController
 
     private void HandlePerformingGrenadeAttack()
     {
-        
+        _attacking = false;
     }
 
     public override bool CanAttack()

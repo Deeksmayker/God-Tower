@@ -23,7 +23,7 @@ public class GrenadeStackedAbility : StackedAbility
         _explosive.transform.position = position + randomDisplacement;
         _explosive.Explode();
 
-        TimeController.Instance.AddTimeStopDuration(0.02f);
+        TimeController.Instance.AddTimeStopDuration(0.01f);
 
         Destroy(gameObject);
     }

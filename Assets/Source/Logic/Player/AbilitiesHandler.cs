@@ -29,7 +29,8 @@ public class AbilitiesHandler : MonoCache
     private IActiveAbility _leftAbility;
     private GameObject _currentAbilityObject;
 
-    public event Action OnStealAbility;
+    public event Action OnRangeSteal;
+    public event Action OnKillEnemy;
     public event Action OnNewAbility;
     public event Action<StackedAbility> OnNewStackedAbility;
 
@@ -45,7 +46,7 @@ public class AbilitiesHandler : MonoCache
             _leftAbility.RemoveAbility();
         }*/
         SetNewAbility(abilityGiver, leftHandShootPoint, isInfinite);
-        Get<IHealthHandler>().AddHealth(healBySteal);
+        //Get<IHealthHandler>().AddHealth(healBySteal);
     }
 
     public void SetLeftAbilityInput(bool input)
@@ -62,6 +63,7 @@ public class AbilitiesHandler : MonoCache
         if (robbedAbility != null)
         {
             SetNewLeftAbility(robbedAbility);
+            OnRangeSteal?.Invoke();
         }
     }
 
@@ -97,7 +99,7 @@ public class AbilitiesHandler : MonoCache
 
     private void SetNewAbility(IGiveAbility abilityGiver, Transform shootPoint, bool isInfinite)
     {
-        OnStealAbility?.Invoke();
+        OnKillEnemy?.Invoke();
 
         if (_leftAbility != null)
         {

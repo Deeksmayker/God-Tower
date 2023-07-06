@@ -15,7 +15,10 @@ public class TimeController : MonoCache
     [SerializeField] private TimeScaleTimer _currentTimer;
     [FormerlySerializedAs("_isPaused")] public bool IsPaused = false;
 
+    private float _currentTimeScale = 1;
     private float _timeStopTimer;
+    private float _maxTimeStop;
+    private float _restoreTimeScaleT;
 
     private void Start()
     {
@@ -25,16 +28,29 @@ public class TimeController : MonoCache
 
     protected override void Run()
     {
-        if (_timeStopTimer <= 0)
+        if (IsPaused || _maxTimeStop <= 0)
             return;
 
-        Time.timeScale = 0;
-        _timeStopTimer -= Time.unscaledDeltaTime;
+        if (_timeStopTimer > 0)
+        {
+            Time.timeScale = 0;
+            _currentTimeScale = Time.timeScale;
+            _timeStopTimer -= Time.unscaledDeltaTime;
+        }
 
         if (_timeStopTimer <= 0)
         {
-            Time.timeScale = IsPaused ? 0 : 1;
-            _timeStopTimer = 0;
+            _restoreTimeScaleT += Time.unscaledDeltaTime / (_maxTimeStop * 5);
+            Time.timeScale = Mathf.Lerp(0, 1, Mathf.Pow(_restoreTimeScaleT, 2));
+            _currentTimeScale = Time.timeScale;
+
+            if (_restoreTimeScaleT >= 1)
+            {
+                _restoreTimeScaleT = 0;
+                _maxTimeStop = 0;
+                _timeStopTimer = 0;
+                Time.timeScale = 1;
+            }
         }
     }
 
@@ -47,7 +63,7 @@ public class TimeController : MonoCache
         if (IsPaused)
             return;
 
-        Time.timeScale = 1;
+        Time.timeScale = _currentTimeScale;
 
         /*TimeScaleTimer newTimer = new TimeScaleTimer(timeScale, duration);
         _timers.Add(newTimer);
@@ -64,6 +80,7 @@ public class TimeController : MonoCache
     public void AddTimeStopDuration(float addedDuration)
     {
         _timeStopTimer += addedDuration;
+        _maxTimeStop += addedDuration;
     }
 
     public void SetPause(bool isPaused)

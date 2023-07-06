@@ -2279,6 +2279,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ambientAudioSource: {fileID: 6039548000696063818}
+  baseReloadTime: 2
+  maxReloadTime: 0.5
   environmentLayers:
     serializedVersion: 2
     m_Bits: 512
@@ -2333,8 +2335,9 @@ MonoBehaviour:
     m_Bits: 1024
   tryAttackOnLineOfSight: 1
   attackRange: 100
-  chargingTime: 0.2
-  attackPreparingAnimation: {fileID: 5135266517754622726}
+  baseReloadTime: 2
+  maxReloadTime: 0.5
+  _animator: {fileID: 0}
 --- !u!114 &1387883442111091391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2355,6 +2358,7 @@ MonoBehaviour:
   hitsToDie: 1
   damageImmuneTime: 0
   stunDuration: 7
+  healOnRoomCompleted: 0
 --- !u!114 &1387883442111091388
 MonoBehaviour:
   m_ObjectHideFlags: 0

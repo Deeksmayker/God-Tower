@@ -33,12 +33,12 @@ public class PlayerStyleController : MonoCache
 
     protected override void OnEnabled()
     {
-        _abilitiesHandler.OnStealAbility += HandleEnemyKill;
+        _abilitiesHandler.OnKillEnemy += HandleEnemyKill;
     }
 
     protected override void OnDisabled()
     {
-        _abilitiesHandler.OnStealAbility -= HandleEnemyKill;
+        _abilitiesHandler.OnKillEnemy -= HandleEnemyKill;
 
         _currentStyle = 0;
 

@@ -24,6 +24,8 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     private bool _needToPerform;
     private bool _dumping;
     private bool _dumpLoaded;
+
+    private IHealthHandler _healthHandler;
     
     public event Action OnPerform;
     public event Action OnStartHolding;
@@ -32,6 +34,8 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     private void Start()
     {
         _remainingLifetime = abilityLifetime;
+        _healthHandler = GetComponentInParent<IHealthHandler>();
+        _cooldownTimer = cooldown;
     }
 
     protected override void Run()
@@ -114,6 +118,12 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
         _cooldownTimer = cooldown;
         await UniTask.Delay(TimeSpan.FromSeconds(delay));
 
+        if (_healthHandler != null)
+        {
+            if (_healthHandler.InStun())
+                return;
+        }
+
         PerformAbility(count);
         _cooldownTimer = cooldown;
     }
@@ -170,6 +180,10 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     {
         return abilityLifetime;
     }
+
+    public float GetCooldown() => cooldown;
+    public float GetCooldownProgress() => 1f - _cooldownTimer / cooldown;
+    public float GetCooldownTimer() => _cooldownTimer;
     
     public Vector3 GetPerformDirection()
     {
