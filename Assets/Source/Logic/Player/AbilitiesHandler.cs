@@ -46,7 +46,7 @@ public class AbilitiesHandler : MonoCache
             _leftAbility.RemoveAbility();
         }*/
         SetNewAbility(abilityGiver, leftHandShootPoint, isInfinite);
-        //Get<IHealthHandler>().AddHealth(healBySteal);
+        Get<IHealthHandler>().AddHealth(healBySteal);
     }
 
     public void SetLeftAbilityInput(bool input)

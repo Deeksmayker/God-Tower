@@ -151,6 +151,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
         float wishspeed = wishdir.magnitude;
         wishspeed *= m_AirSettings.MaxSpeed;
+
         wishdir.Normalize();
         m_MoveDirectionNorm = wishdir;
 

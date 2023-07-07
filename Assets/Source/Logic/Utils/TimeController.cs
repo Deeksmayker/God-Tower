@@ -15,6 +15,8 @@ public class TimeController : MonoCache
     [SerializeField] private TimeScaleTimer _currentTimer;
     [FormerlySerializedAs("_isPaused")] public bool IsPaused = false;
 
+    private bool _timeStop;
+
     private float _currentTimeScale = 1;
     private float _timeStopTimer;
     private float _maxTimeStop;
@@ -36,6 +38,8 @@ public class TimeController : MonoCache
             Time.timeScale = 0;
             _currentTimeScale = Time.timeScale;
             _timeStopTimer -= Time.unscaledDeltaTime;
+
+            
         }
 
         if (_timeStopTimer <= 0)
@@ -58,7 +62,13 @@ public class TimeController : MonoCache
     {
         Time.timeScale = timeScale;
 
+        if (timeScale.Equals(0))
+            _timeStop = true;
+
         await UniTask.Delay(TimeSpan.FromSeconds(duration), DelayType.UnscaledDeltaTime);
+
+        if (timeScale.Equals(0))
+            _timeStop = false;
 
         if (IsPaused)
             return;
@@ -89,6 +99,8 @@ public class TimeController : MonoCache
 
         Time.timeScale = isPaused ? 0 : 1;
     }
+
+    public bool InTimeStop() => _timeStop;
 
     private TimeScaleTimer GetNextTimer()
     {

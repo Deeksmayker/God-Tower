@@ -13,6 +13,7 @@ public class StealKick : MonoCache, IMeleeAttacker
     [Header("Impact")]
     [SerializeField] private int damage = 1;
     [SerializeField] private float hitPayoffForce;
+    [SerializeField] private float forwardRecoilForce = 30f;
 
     [Header("Timers")]
     [SerializeField] private float preparingTime;
@@ -31,6 +32,7 @@ public class StealKick : MonoCache, IMeleeAttacker
     private bool _isHitAnything;
 
     private float _timer;
+    private float _baseForwardRecoilForce;
 
     private MeleeAttackStates _attackState = MeleeAttackStates.Resting;
 
@@ -45,6 +47,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
     private void Awake()
     {
+        _baseForwardRecoilForce = forwardRecoilForce;
         _mover = Get<PlayerMovementController>();
         _abilitiesHandler = Get<AbilitiesHandler>();
     }
@@ -178,7 +181,7 @@ public class StealKick : MonoCache, IMeleeAttacker
                 break;
             case MeleeAttackStates.Attacking:
                 OnStartAttack?.Invoke();
-                //MakeForwardRecoil();
+                MakeForwardRecoil();
                 _timer = GetAttackDuration();
                 break;
             case MeleeAttackStates.Cooldown:
@@ -193,6 +196,27 @@ public class StealKick : MonoCache, IMeleeAttacker
     private void HandleHit()
     {
         _mover.StopDash();
+    }
+
+    private void MakeForwardRecoil()
+    {
+
+        var horizontalVelocity = _mover.GetVelocity();
+        horizontalVelocity.y = 0;
+
+        if (Vector3.Dot(horizontalVelocity, GetAttackDirection()) >= 0)
+        {
+            var resultVelocity = _mover.GetVelocity();
+            resultVelocity += GetAttackDirection() * forwardRecoilForce;
+            resultVelocity = resultVelocity.magnitude * GetAttackDirection();
+
+            _mover.SetVelocity(resultVelocity);
+        }
+
+        else
+        {
+            _mover.AddVelocity(GetAttackDirection() * forwardRecoilForce);
+        }
     }
 
     /*private void MakeForwardRecoil()
@@ -217,6 +241,13 @@ public class StealKick : MonoCache, IMeleeAttacker
     {
         _canAttack = false;
     }
+
+    public void SetForwardRecoilForce(float value)
+    {
+        forwardRecoilForce = value;
+    }
+
+    public float GetBaseForwardRecoilPower() => _baseForwardRecoilForce;
 
     public MeleeAttackStates GetCurrentAttackState()
     {
