@@ -155,8 +155,8 @@ public class BaseHomingObject : MonoCache, IImpacter
         
         Speed *= SuperHomingSpeed;
         //Damage *= SuperHomingDamage;
-        NightPool.Spawn(explosivePrefab, transform);
-        gameObject.AddComponent<ExplosiveObjectController>();
+        //NightPool.Spawn(explosivePrefab, transform);
+        //gameObject.AddComponent<ExplosiveObjectController>();
         _isSuperHoming = true;
         homingState = HomingState.Searching;
         layersToHoming = enemyLayers;
@@ -164,7 +164,7 @@ public class BaseHomingObject : MonoCache, IImpacter
         OnSuperHomingActivated?.Invoke();
     }
 
-    private async UniTask DealDamage(Collider other, float damage)
+    private void DealDamage(Collider other, float damage)
     {
         var hitPosition = transform.position;
 
@@ -187,7 +187,7 @@ public class BaseHomingObject : MonoCache, IImpacter
         {
             takeHit.TakeHit(damage, hitPosition, hitType);
             OnDestroy?.Invoke();
-            await UniTask.NextFrame();
+            //await UniTask.NextFrame();
             Destroy(gameObject);            
         }
     }

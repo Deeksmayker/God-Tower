@@ -16,6 +16,9 @@ public class LaserStackedAbility : StackedAbility
     {
         for (var i = 0; i < shootCount; i++)
         {
+            if (!_laser)
+                break;
+
             var direction = Random.insideUnitSphere;
             direction.y = Mathf.Clamp(direction.y, -0.3f, 0.3f);
             _laser.transform.position = position;

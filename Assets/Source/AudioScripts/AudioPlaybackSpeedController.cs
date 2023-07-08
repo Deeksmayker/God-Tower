@@ -25,13 +25,13 @@ public class AudioPlaybackSpeedController : MonoCache
             return;
         }
 
-        if (Time.timeScale.Equals(1) || TimeController.Instance.InTimeStop())
+        if (Time.timeScale.Equals(1) || Time.timeScale.Equals(0))
         {
             if (!_source.pitch.Equals(_basePitch))
                 _source.pitch = _basePitch;
             return;
         }
 
-        _source.pitch = Mathf.Clamp(Mathf.Lerp(0, _basePitch, Time.timeScale), 0.05f, _basePitch);
+        _source.pitch = Mathf.Lerp(0.05f, _basePitch, Time.timeScale);
     }
 }

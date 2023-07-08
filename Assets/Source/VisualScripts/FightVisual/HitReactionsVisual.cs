@@ -182,7 +182,7 @@ public class HitReactionsVisual : MonoCache
     {
         var t = 1f;
 
-        while (t > 0 && _stun && gameObject)
+        while (t > 0 && _stun)
         {
             if (changeMeshesColor && !_meshRenderers[0])
                 break;

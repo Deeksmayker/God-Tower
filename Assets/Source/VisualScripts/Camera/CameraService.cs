@@ -15,7 +15,7 @@ public class CameraService : MonoCache
 
     public void ShakeCamera(ShakePreset shakeSettings)
     {
-        var posShaking = shakeSettings.positionShake;
+        /*var posShaking = shakeSettings.positionShake;
         if (posShaking.isOn)
         {
             AnimationShortCuts.ShakePositionAnimation(transform, shakeSettings);
@@ -25,7 +25,7 @@ public class CameraService : MonoCache
         if (rotationShaking.isOn)
         {
             AnimationShortCuts.ShakeRotationAnimation(transform, shakeSettings);
-        }
+        }*/
     }
 
     public Tween ShakeCameraPosition(ShakePreset shakePreset)

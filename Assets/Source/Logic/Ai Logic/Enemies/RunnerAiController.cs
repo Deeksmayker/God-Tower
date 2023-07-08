@@ -77,7 +77,7 @@ public class RunnerAiController : BaseAiController
         _targetPosition = _target.position;
         
         //_canAttack = _targetDetected && !_attacking && !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
-        _canAttack = _target && !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
+        _canAttack = _targetDetected && !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
         //Debug.Log("detacted - " + _targetDetected);
         //Debug.Log("_attacking - " + _attacking);
        // Debug.Log("_dead - " + _dead);
