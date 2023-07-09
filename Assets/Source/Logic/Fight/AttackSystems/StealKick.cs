@@ -8,7 +8,9 @@ public class StealKick : MonoCache, IMeleeAttacker
 {
     [SerializeField] private Transform directionTarget;
     [SerializeField] private LayerMask layersToHit;
+    [SerializeField] private LayerMask envLayers;
     [SerializeField] private Vector3 hitBoxSize;
+    [SerializeField] private Vector3 envHitBoxSize;
 
     [Header("Impact")]
     [SerializeField] private int damage = 1;
@@ -73,6 +75,7 @@ public class StealKick : MonoCache, IMeleeAttacker
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
             PerformAttack(layersToHit, hitBoxSize);
+            PerformAttack(envLayers, envHitBoxSize);
         }
 
         if (GetCurrentAttackState() != MeleeAttackStates.Resting)
@@ -204,7 +207,14 @@ public class StealKick : MonoCache, IMeleeAttacker
         var horizontalVelocity = _mover.GetVelocity();
         horizontalVelocity.y = 0;
 
-        if (Vector3.Dot(horizontalVelocity, GetAttackDirection()) >= 0)
+        var resultVelocity = _mover.GetVelocity();
+        resultVelocity += GetAttackDirection() * forwardRecoilForce;
+        resultVelocity = resultVelocity.magnitude * GetAttackDirection();
+
+        _mover.SetVelocity(resultVelocity);
+
+
+        /*if (Vector3.Dot(horizontalVelocity, GetAttackDirection()) >= 0)
         {
             var resultVelocity = _mover.GetVelocity();
             resultVelocity += GetAttackDirection() * forwardRecoilForce;
@@ -216,7 +226,7 @@ public class StealKick : MonoCache, IMeleeAttacker
         else
         {
             _mover.AddVelocity(GetAttackDirection() * forwardRecoilForce);
-        }
+        }*/
     }
 
     /*private void MakeForwardRecoil()

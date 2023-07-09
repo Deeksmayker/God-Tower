@@ -60,7 +60,7 @@ public class Hook : MonoCache
 
     public Vector3 CheckForHookTarget()
     {
-        if (Physics.SphereCast(camTransform.position, hookRadius, camTransform.forward, out var hitInfo, hookDistance, hookTargetLayers))
+        if (Physics.SphereCast(camTransform.position - camTransform.forward * hookRadius, hookRadius, camTransform.forward, out var hitInfo, hookDistance, hookTargetLayers))
         {
             return hitInfo.point;
         }

@@ -129,7 +129,7 @@ public class HitReactionsVisual : MonoCache
             ChangeSkinnedMeshesColor(Color.white * 3);
         }
 
-        ChangeColorCoverageOvertime();
+        //ChangeColorCoverageOvertime();
     }
 
     private void HandleDie()
@@ -178,7 +178,7 @@ public class HitReactionsVisual : MonoCache
         }
     }
 
-    private async UniTask ChangeColorCoverageOvertime()
+    /*private async UniTask ChangeColorCoverageOvertime()
     {
         var t = 1f;
 
@@ -212,7 +212,7 @@ public class HitReactionsVisual : MonoCache
             await UniTask.NextFrame();
         }
         SetAuraColor(_currentAuraColor);
-    }
+    }*/
 
     private void ChangeMeshesColor(Color color)
     {
