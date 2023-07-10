@@ -140,9 +140,8 @@ public class StealKick : MonoCache, IMeleeAttacker
             var abilityGiver = _attackHitsContainer[i].GetComponentInParent<IGiveAbility>();
             var healthHandler = _attackHitsContainer[i].GetComponentInParent<IHealthHandler>();
 
-            if (abilityGiver != null)
+            if (abilityGiver != null && abilityGiver.CanGiveAbility())
             {
-
                 _abilitiesHandler.SetNewLeftAbility(abilityGiver);
             }
 

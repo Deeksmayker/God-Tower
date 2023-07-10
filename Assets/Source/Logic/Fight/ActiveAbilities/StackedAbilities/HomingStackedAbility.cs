@@ -15,9 +15,11 @@ public class HomingStackedAbility : StackedAbility
 
     public override void PerformOnImpact(Vector3 position)
     {
+        var stackedCount = transform.parent.GetComponentsInChildren<HomingStackedAbility>().Length;
+
         Array.Clear(_targets, 0, _targets.Length);
 
-        Physics.OverlapSphereNonAlloc(position, 300, _targets, targetLayers);
+        Physics.OverlapSphereNonAlloc(position, 30 + stackedCount * 10, _targets, targetLayers);
 
         var targetPos = position + Vector3.up * 100;
 
@@ -52,8 +54,9 @@ public class HomingStackedAbility : StackedAbility
         effect.SetVector3("Pos4", targetPos);
 
         TimeController.Instance.AddTimeStopDuration(0.01f);
+        base.PerformOnImpact(position);
 
-        Destroy(gameObject);
+        _performed = true;
     }
 
     public static async UniTask RemoveHashFromTable(int hash)

@@ -13,10 +13,12 @@ public class GrenadeStackedAbility : StackedAbility
 
     public override void PerformOnImpact(Vector3 position)
     {
-        if (_stackedCount > 3)
+        var stackedCount = transform.parent.GetComponentsInChildren<GrenadeStackedAbility>().Length;
+
+        if (stackedCount > 3)
             _explosive.MakeExplosiveSuper();
 
-        var randomDisplacement = Random.insideUnitSphere * spreadPerStack * _stackedCount;
+        var randomDisplacement = stackedCount * spreadPerStack * Random.insideUnitSphere;
         randomDisplacement.y = Mathf.Clamp(randomDisplacement.y, -1, 50);
         randomDisplacement.y /= 2;
 
@@ -24,8 +26,8 @@ public class GrenadeStackedAbility : StackedAbility
         _explosive.Explode();
 
         TimeController.Instance.AddTimeStopDuration(0.01f);
-
-        Destroy(gameObject);
+        base.PerformOnImpact(position);
+        _performed = true;
     }
 
     public override AbilityTypes GetStackedAbilityType()

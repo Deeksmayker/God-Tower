@@ -105,7 +105,7 @@ public class AbilitiesHandler : MonoCache
         {
             var stackedAbility = Instantiate(abilityGiver.GetStackedAbilityPrefab(), transform);
             _stackedAbilitiesCount++;
-            stackedAbility.SpecifyStackedNumber(_stackedAbilitiesCount);
+            stackedAbility.AddStackedCount();
 
             OnNewStackedAbility?.Invoke(stackedAbility);
 

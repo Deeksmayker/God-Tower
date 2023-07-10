@@ -100,11 +100,11 @@ public class GroundSlider : MonoCache
 
     private void ShakeCameraOnSliding()
     {
-        CameraService.Instance.ShakeCameraPosition(slidingShake).OnComplete(() =>
+        /*CameraService.Instance.ShakeCameraPosition(slidingShake).OnComplete(() =>
         {
             if (_sliding)
                 ShakeCameraOnSliding();
-        });
+        });*/
     }
 
     private void StopSlide()

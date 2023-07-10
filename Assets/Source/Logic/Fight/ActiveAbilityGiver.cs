@@ -63,7 +63,7 @@ public class ActiveAbilityGiver : MonoCache, IGiveAbility
             sound.clip = stealClip;
             sound.Play();
         }
-
+        canGiveAbility = false;
         return stackedAbilityPrefab;
     }
 

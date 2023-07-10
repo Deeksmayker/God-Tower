@@ -221,7 +221,10 @@ public class RunnerAiController : BaseAiController
         
         await UniTask.Delay(
             TimeSpan.FromSeconds(_rangeAttackController.GetCurrentCooldown() - timeBeforeShootToRotateHead));
-        
+
+        if (!rotationTarget)
+            return;
+
         rotationTarget.LookAt(_target);
     }
 

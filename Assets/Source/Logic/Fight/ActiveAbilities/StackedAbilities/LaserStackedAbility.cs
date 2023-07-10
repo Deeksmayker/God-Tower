@@ -27,7 +27,9 @@ public class LaserStackedAbility : StackedAbility
 
         TimeController.Instance.AddTimeStopDuration(0.005f);
 
-        Destroy(gameObject);
+        base.PerformOnImpact(position);
+
+        _performed = true;
     }
 
     public override AbilityTypes GetStackedAbilityType()

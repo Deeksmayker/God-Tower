@@ -1,9 +1,15 @@
 using NTC.Global.Cache;
+using System;
 using UnityEngine;
 
 public abstract class StackedAbility : MonoCache
 {
-    protected int _stackedCount = 1;
+    protected int _stackedCount = 0;
+
+    private float _timer;
+    protected bool _performed;
+
+    public event Action<Vector3> OnPerform;
 
     /*protected override void OnEnabled()
     {
@@ -28,17 +34,30 @@ public abstract class StackedAbility : MonoCache
         impacter.OnImpact -= PerformOnImpact;
     }*/
 
+    protected override void Run()
+    {
+        if (_performed )
+        {
+            _timer += Time.deltaTime;
+            if (_timer >= 2)
+                Destroy(gameObject);
+        }   
+    }
+
     public void SetImpacter(IImpacter impacter)
     {
         impacter.OnImpact += PerformOnImpact;
     }
 
-    public void SpecifyStackedNumber(int stackedNumber)
+    public virtual void AddStackedCount()
     {
-        _stackedCount = stackedNumber;
+        _stackedCount++;
     }
 
-    public abstract void PerformOnImpact(Vector3 position);
+    public virtual void PerformOnImpact(Vector3 position)
+    {
+        OnPerform?.Invoke(position);
+    }
 
     public virtual AbilityTypes GetStackedAbilityType()
     {

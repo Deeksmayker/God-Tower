@@ -171,6 +171,7 @@ public class HomingEnemyAiController : BaseAiController
     private void MakeDefaultMovement()
     {
         transform.DOShakePosition(0.5f, strength, vibrato, 90, false, false, ShakeRandomnessMode.Harmonic)
+            //.SetLink(gameObject)
             .OnComplete(() =>
             {
                 if (!_dead && !_moving)
