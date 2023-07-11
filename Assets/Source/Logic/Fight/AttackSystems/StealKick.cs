@@ -75,7 +75,9 @@ public class StealKick : MonoCache, IMeleeAttacker
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
             PerformAttack(layersToHit, hitBoxSize);
-            PerformAttack(envLayers, envHitBoxSize);
+
+            if (_timer >= attackDuration / 2)
+                PerformAttack(envLayers, envHitBoxSize);
         }
 
         if (GetCurrentAttackState() != MeleeAttackStates.Resting)

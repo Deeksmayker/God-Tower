@@ -78,6 +78,11 @@ public class TimeTotem : MonoCache
         }
     }
 
+    public void SetDifficultyMultiplier(float multiplier)
+    {
+        timeToMaxDifficulty *= multiplier;
+    }
+
     /*private void OnTriggerEnter(Collider other)
     {
         if (_roomCleared && _timer < timeToCancel && other.TryGetComponent<PlayerStyleController>(out var style))

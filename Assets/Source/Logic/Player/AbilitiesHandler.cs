@@ -4,7 +4,7 @@ using DG.Tweening;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public enum AbilityTypes
 {
@@ -33,6 +33,8 @@ public class AbilitiesHandler : MonoCache
     public event Action OnKillEnemy;
     public event Action OnNewAbility;
     public event Action<StackedAbility> OnNewStackedAbility;
+
+    public UnityEvent OnAbilityEmpty = new();
 
     protected override void OnEnabled()
     {
@@ -143,6 +145,12 @@ public class AbilitiesHandler : MonoCache
     {
         _leftAbility = null;
         _stackedAbilitiesCount = 0;
+        OnAbilityEmpty.Invoke();
+    }
+
+    public void SetCurrentAbilityInfinity(bool isInfinite)
+    {
+        _leftAbility?.SetInfinity(isInfinite);
     }
     public IActiveAbility GetLeftAbility() => _leftAbility;
 

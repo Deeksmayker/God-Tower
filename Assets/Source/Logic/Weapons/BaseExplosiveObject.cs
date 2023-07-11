@@ -191,6 +191,9 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion, IImpacter
                 hitType = HitTypes.WeakPoint;
             
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(_currentDamage, hitPosition, hitType);
+
+            if (!_attackHitsContainer[i])
+                break;
             var player = _attackHitsContainer[i].GetComponentInParent<PlayerUnit>();
             if (player)
                 player.Get<IMover>()?.AddVelocity((hitTransform.position - transform.position).normalized * explosionForce);

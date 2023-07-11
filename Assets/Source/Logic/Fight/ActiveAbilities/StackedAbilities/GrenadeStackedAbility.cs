@@ -25,7 +25,7 @@ public class GrenadeStackedAbility : StackedAbility
         _explosive.transform.position = position + randomDisplacement;
         _explosive.Explode();
 
-        TimeController.Instance.AddTimeStopDuration(0.01f);
+        TimeController.Instance.AddTimeStopDuration(0.008f);
         base.PerformOnImpact(position);
         _performed = true;
     }

@@ -25,7 +25,7 @@ public class LaserStackedAbility : StackedAbility
             _laser.ShootLaser(position, direction);
         }
 
-        TimeController.Instance.AddTimeStopDuration(0.005f);
+        TimeController.Instance.AddTimeStopDuration(0.0025f);
 
         base.PerformOnImpact(position);
 

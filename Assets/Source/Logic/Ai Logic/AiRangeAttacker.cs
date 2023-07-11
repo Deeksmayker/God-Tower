@@ -13,6 +13,8 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
 
     [SerializeField] private Animator _animator;
 
+    private float _difficultyMultipliedBaseReloadTime, _difficultyMultipliedMaxReloadTime;
+
     private float _currentCooldown;
     private float _cooldownTimer;
 
@@ -27,11 +29,17 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
 
         _currentCooldown = baseReloadTime;
         _cooldownTimer = _currentCooldown;
+
+        if (_difficultyMultipliedBaseReloadTime.Equals(0))
+        {
+            _difficultyMultipliedBaseReloadTime = baseReloadTime;
+            _difficultyMultipliedMaxReloadTime = maxReloadTime;
+        }
     }
 
     protected override void Run()
     {
-        _currentCooldown = Mathf.Lerp(baseReloadTime, maxReloadTime, Mathf.Pow(_aiController.GetTimeDifficulty01(), 1.5f));
+        _currentCooldown = Mathf.Lerp(_difficultyMultipliedBaseReloadTime, _difficultyMultipliedMaxReloadTime, Mathf.Pow(_aiController.GetTimeDifficulty01(), 1.5f));
         //Debug.Log(_cooldownTimer);
         if (NeedToAttack())
         {
@@ -68,6 +76,18 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
     public float GetCurrentCooldown()
     {
         return _currentCooldown;
+    }
+
+    public void SetDifficultyMultiplier(float multiplier)
+    {
+        if (_difficultyMultipliedBaseReloadTime.Equals(0))
+        {
+            _difficultyMultipliedBaseReloadTime = baseReloadTime;
+            _difficultyMultipliedMaxReloadTime = maxReloadTime;
+        }
+
+        _difficultyMultipliedBaseReloadTime *= multiplier;
+        _difficultyMultipliedMaxReloadTime *= multiplier;
     }
 
     public float GetCooldownTimer() => _cooldownTimer;

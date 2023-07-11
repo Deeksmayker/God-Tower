@@ -2045,7 +2045,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 10
+  MinDistance: 15
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -2279,8 +2279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ambientAudioSource: {fileID: 6039548000696063818}
-  baseReloadTime: 2
-  maxReloadTime: 0.5
   environmentLayers:
     serializedVersion: 2
     m_Bits: 512

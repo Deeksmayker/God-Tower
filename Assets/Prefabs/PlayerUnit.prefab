@@ -2746,7 +2746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e7b76266b7830419d3170e8d8f3e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addedVerticalSpeed: 40
+  addedVerticalSpeed: 30
 --- !u!136 &7872997131959220950
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3229,9 +3229,14 @@ MonoBehaviour:
   layersToHit:
     serializedVersion: 2
     m_Bits: 6272
+  envLayers:
+    serializedVersion: 2
+    m_Bits: 512
   hitBoxSize: {x: 10, y: 10, z: 10}
+  envHitBoxSize: {x: 2.5, y: 2.5, z: 5}
   damage: 20
-  hitPayoffForce: 40
+  hitPayoffForce: 30
+  forwardRecoilForce: 20
   preparingTime: 0.02
   attackDuration: 0.75
   cooldown: 0.25
@@ -3250,7 +3255,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRotationTransform: {fileID: 3998808298746309513}
-  jumpContinueInput: 0.1
+  jumpContinueInput: 0.2
+  autoJump: 1
 --- !u!114 &3998808298923127482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3288,13 +3294,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDie: 1
   canStartDying: 0
-  oneHealthDeathProtection: 1
+  oneHealthDeathProtection: 0
   needToRecovery: 0
   health: 100
-  hitsToDie: 2
+  hitsToDie: 3
   damageImmuneTime: 0.3
   stunDuration: 5
-  healOnRoomCompleted: 1
+  healOnRoomCompleted: 0
 --- !u!114 &3998808298923127483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3329,7 +3335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeStopOnKickHit: 0.05
-  timeStopOnParry: 0.1
+  timeStopOnParry: 0.05
 --- !u!114 &3998808298923127473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3363,7 +3369,7 @@ MonoBehaviour:
   startColor: {r: 1.471698, g: 1.471698, b: 1.471698, a: 0}
   maxColor: {r: 25.962265, g: 0.36738986, b: 0.36738986, a: 0}
   radiusForMaxColor: 100
-  addedVerticalVelocityOnSteal: 15
+  addedVerticalVelocityOnSteal: 30
 --- !u!114 &1813946074729433932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3391,6 +3397,7 @@ MonoBehaviour:
   styleReduceRate: 0.08
   stylePerKill: 0.2
   addedDashDuration: 0.5
+  addedKickForwardRecoilForce: 50
   fullscreenMaterial: {fileID: 2100000, guid: e93305b4aa3c50144a2270a01a2b7573, type: 2}
   maxAlpha: 5
   minSpeed: 0.5
@@ -3414,11 +3421,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   camTransform: {fileID: 3998808298746309513}
-  minHookPower: 60
-  maxHookPower: 100
+  hookPower: 100
   hookUpPower: 20
   cooldown: 0.5
-  hookRadius: 30
+  hookRadius: 15
   hookDistance: 1000
   vfx: {fileID: 4908521231261656995, guid: 323eeb84f88f58640a115e48857e4f3c, type: 3}
   hookShake: {fileID: 11400000, guid: be7bd7213b9642d469c226709bcfae93, type: 2}
@@ -3477,17 +3483,17 @@ MonoBehaviour:
     Deceleration: 10
   m_AirSettings:
     MaxSpeed: 20
-    Acceleration: 1
+    Acceleration: 2
     Deceleration: 1
   m_StrafeSettings:
-    MaxSpeed: 1
-    Acceleration: 1000
+    MaxSpeed: 5
+    Acceleration: 100
     Deceleration: 100
   environmentLayers:
     serializedVersion: 2
     m_Bits: 512
   camRootTransform: {fileID: 3998808298746309513}
-  dashCharges: 3
+  dashCharges: 0
   dashAddedSpeed: 50
   baseDashDuration: 0.3
   minDashDuration: 0.3

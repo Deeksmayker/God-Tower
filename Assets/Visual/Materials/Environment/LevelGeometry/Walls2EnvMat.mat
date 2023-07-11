@@ -119,15 +119,15 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _NoiseNormalStrength: 0.01
-    - _NoiseOpacity: 1
+    - _NoiseOpacity: 6.46
     - _NoiseScale: 50
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ResultOpacity: 1
-    - _RotationSpeed: 9.44
+    - _ResultOpacity: 0.1
+    - _RotationSpeed: 0
     - _RoughnessPower: 1
     - _Scale: 40
     - _Smoothness: 0.5
@@ -137,7 +137,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _TexturePower: 1
-    - _VoronoiScale: 10
+    - _VoronoiScale: 5.12
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
@@ -145,7 +145,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 0}
-    - _NoiseMove: {r: 0, g: 0, b: 0, a: 0}
+    - _NoiseMove: {r: 0, g: -0.1, b: 0, a: 0}
     - _NoiseTiling: {r: 0.5, g: 2, b: 0, a: 0}
     - _Powre: {r: 1, g: 1, b: 1, a: 1}
     - _SecondColor: {r: 0, g: 0, b: 0, a: 0}
@@ -153,7 +153,7 @@ Material:
     - _TexturesTiling: {r: 1, g: 1, b: 0, a: 0}
     - _ThirdColor: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: 0.01, g: 0.01, b: 0, a: 0}
-    - _VoronoiMove: {r: 0.15, g: 0, b: 0, a: 0}
+    - _VoronoiMove: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5616195773695080052
 MonoBehaviour:

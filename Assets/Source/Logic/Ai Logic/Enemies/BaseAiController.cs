@@ -5,9 +5,6 @@ public class BaseAiController : MonoCache, IAiController
 {
     [SerializeField] private AudioSource ambientAudioSource;
 
-    [SerializeField] protected float baseReloadTime = 2;
-    [SerializeField] protected float maxReloadTime = 0.5f;
-
     protected bool _targetDetected;
     protected bool _dead;
 
