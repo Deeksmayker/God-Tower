@@ -20,17 +20,11 @@ public class AbilityCameraShaking : MonoCache
     protected override void OnEnabled()
     {
         _ability.OnPerform += HandlePerformingAbility;
-
-        if (separateShakingOnDump)
-            _ability.OnDump += HandleDump;
     }
     
     protected override void OnDisabled()
     {
         _ability.OnPerform -= HandlePerformingAbility;
-        
-        if (separateShakingOnDump)
-            _ability.OnDump -= HandleDump;
     }
 
     private void HandlePerformingAbility()

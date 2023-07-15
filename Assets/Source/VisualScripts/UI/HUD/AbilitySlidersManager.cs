@@ -26,7 +26,7 @@ public class AbilitySlidersManager : MonoCache
         rightAbilitySlider.gameObject.SetActive(false);
         leftAbilitySlider.gameObject.SetActive(false);
         
-        abilitiesHandler.OnNewRightAbility += () =>
+        /*abilitiesHandler.OnNewRightAbility += () =>
         {
             rightAbilitySlider.value =
                     rightAbilitySlider.maxValue = abilitiesHandler.GetRightAbility().GetMaxLifetime();
@@ -57,7 +57,7 @@ public class AbilitySlidersManager : MonoCache
                 _checkingLeftAbilityLifetime = null;
                 leftAbilitySlider.gameObject.SetActive(false);
             };
-        };
+        };*/
     }
 
     private IEnumerator StartCheckingAbilityLifetime(Slider slider, IActiveAbility activeAbility)

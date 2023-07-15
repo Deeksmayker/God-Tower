@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public class RoomDoor : MonoCache
 {
     [SerializeField] private bool trackEnemies = true;
-    [SerializeField] private GroupPlayerDetector[] groupsToTrack;
+    [SerializeField] private EnemyGroup[] groupsToTrack;
 
     [SerializeField] private float height = 250;
     [SerializeField] private float openSpeed = 300f;
@@ -26,6 +26,8 @@ public class RoomDoor : MonoCache
     private AudioSource _audioSource;
 
     public UnityEvent OnOpen = new();
+
+    public static event Action OnRoomCompleted;
 
     private void Awake()
     {
@@ -64,6 +66,7 @@ public class RoomDoor : MonoCache
     public void Open()
     {
         OnOpen.Invoke();
+        OnRoomCompleted?.Invoke();
         desiredPosition += Vector3.up * height;
         _speed = closeSpeed;
         _closed = false;

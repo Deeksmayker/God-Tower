@@ -27,12 +27,12 @@ public class AbilityShootEffectMaker : MonoCache
 
     protected override void OnEnabled()
     {
-        _ability.OnDump += SpawnEffect;
+        _ability.OnPerform += SpawnEffect;
     }
     
     protected override void OnDisabled()
     {
-        _ability.OnDump -= SpawnEffect;
+        _ability.OnPerform -= SpawnEffect;
     }
 
     private void SpawnEffect()

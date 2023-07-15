@@ -8,6 +8,8 @@ public class CameraService : MonoCache
 {
     public static CameraService Instance;
 
+    private bool _shaking;
+
     private void Awake()
     {
         Instance = this;
@@ -15,16 +17,23 @@ public class CameraService : MonoCache
 
     public void ShakeCamera(ShakePreset shakeSettings)
     {
+        if (_shaking)
+        {
+            DOTween.Clear();
+        }
+
+        _shaking = true;
+
         var posShaking = shakeSettings.positionShake;
         if (posShaking.isOn)
         {
-            AnimationShortCuts.ShakePositionAnimation(transform, shakeSettings);
+            AnimationShortCuts.ShakePositionAnimation(transform, shakeSettings).OnKill(() => _shaking = false);
         }
 
         var rotationShaking = shakeSettings.rotationShake;
         if (rotationShaking.isOn)
         {
-            AnimationShortCuts.ShakeRotationAnimation(transform, shakeSettings);
+            AnimationShortCuts.ShakeRotationAnimation(transform, shakeSettings).OnKill(() => _shaking = false);
         }
     }
 

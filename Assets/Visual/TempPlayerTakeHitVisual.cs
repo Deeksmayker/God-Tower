@@ -25,16 +25,16 @@ public class TempPlayerTakeHitVisual : MonoCache
     {
         value = Mathf.Clamp(value, 0, 100);
 
-        postProcessingController.SetBloomColor(Color.Lerp(Color.white, Color.red, 1 - value / 100), 0.2f);
+        //postProcessingController.SetBloomColor(Color.Lerp(Color.white, Color.red, 1 - value / 100), 0.2f);
         postProcessingController.SetDefaultVignetteIntensity(1 - value / 100);
-        postProcessingController.SetDefaultBloomIntensity(5 - value / 20);
+        //postProcessingController.SetDefaultBloomIntensity(5 - value / 20);
         postProcessingController.SetDefaultChromaticAberrationIntensity(1 - value / 100);
     }
 
     private void RefreshPostProcessing()
     {
         postProcessingController.ResetVignetteIntensity();
-        postProcessingController.ResetBloomIntensity();
+        //postProcessingController.ResetBloomIntensity();
         postProcessingController.ResetChromaticAberrationIntensity();
     }
 
@@ -48,14 +48,14 @@ public class TempPlayerTakeHitVisual : MonoCache
     private async UniTask ChangePostProcess()
     {
         postProcessingController.SetVignetteColor(Color.red, 1);
-        postProcessingController.SetBloomIntensity(10);
+        //postProcessingController.SetBloomIntensity(10);
         postProcessingController.SetChromaticAberrationIntensity(1);
         postProcessingController.SetVignetteIntensity(1);
         
         await UniTask.Delay(150);
         
         postProcessingController.SetVignetteColor(Color.black, 5);
-        postProcessingController.ResetBloomIntensity(0.02f);
+        //postProcessingController.ResetBloomIntensity(0.02f);
         postProcessingController.ResetChromaticAberrationIntensity(0.02f);
         postProcessingController.ResetVignetteIntensity(0.02f);
     }

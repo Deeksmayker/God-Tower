@@ -22,6 +22,7 @@ public class HomingEnemyAiController : BaseAiController
     [Header("Timers")]
     [SerializeField] private float timeChangeLocation = 5;
     [SerializeField] private float cantAttackTimeToChangeLocation = 1;
+    
 
     private float _timeOnPosition;
     private float _cantAttackTime;
@@ -39,11 +40,13 @@ public class HomingEnemyAiController : BaseAiController
 
     private IMover _mover;
     private GravityMaker _gravityMaker;
+    private HomingAbility _homingAbility;
 
     private void Awake()
     {
         _mover = Get<IMover>();
         _gravityMaker = Get<GravityMaker>();
+        _homingAbility = GetComponentInChildren<HomingAbility>();  
         _gravityMaker.enabled = false;
 
         MakeDefaultMovement();
@@ -90,7 +93,9 @@ public class HomingEnemyAiController : BaseAiController
         //Debug.Log(_canAttack);
         
         transform.LookAt(_targetPosition);
-        
+
+        //_homingAbility.SetCooldown(Mathf.Lerp(baseReloadTime, maxReloadTime, Mathf.Pow(_timeDifficulty01, 1.5f)));
+
         if (_moving)
         {
             _timeOnPosition = 0;
@@ -166,6 +171,7 @@ public class HomingEnemyAiController : BaseAiController
     private void MakeDefaultMovement()
     {
         transform.DOShakePosition(0.5f, strength, vibrato, 90, false, false, ShakeRandomnessMode.Harmonic)
+            //.SetLink(gameObject)
             .OnComplete(() =>
             {
                 if (!_dead && !_moving)

@@ -32,7 +32,7 @@ public class RunnerAiController : BaseAiController
     private Vector3 _targetPosition;
     
     private IAiRangeAttackController _rangeAttackController;
-    private IActiveAbility _rangeAbility;
+    private LaserAbility _rangeAbility;
     private IMover _mover;
     
     private RunnerMovePoint _currentPoint;
@@ -41,7 +41,7 @@ public class RunnerAiController : BaseAiController
     private void Awake()
     {
         _rangeAttackController = Get<IAiRangeAttackController>();
-        _rangeAbility = GetComponentInChildren<IActiveAbility>();
+        _rangeAbility = GetComponentInChildren<LaserAbility>();
         _mover = Get<IMover>();
         _mover.SetInputResponse(false);
 
@@ -51,7 +51,7 @@ public class RunnerAiController : BaseAiController
     protected override void OnEnabled()
     {
         base.OnEnabled();
-        _rangeAbility.OnStartHolding += HandleStartChargingRangeAttack;
+        //_rangeAbility.OnStartHolding += HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform += HandlePerformingRangeAttack;
 
         var connectedRoom = GetComponentInParent<RoomParent>();
@@ -67,7 +67,7 @@ public class RunnerAiController : BaseAiController
     protected override void OnDisabled()
     {
         base.OnDisabled();
-        _rangeAbility.OnStartHolding -= HandleStartChargingRangeAttack;
+        //_rangeAbility.OnStartHolding -= HandleStartChargingRangeAttack;
         _rangeAbility.OnPerform -= HandlePerformingRangeAttack;
     }
 
@@ -76,13 +76,25 @@ public class RunnerAiController : BaseAiController
         _position = transform.position;
         _targetPosition = _target.position;
         
-        _canAttack = _targetDetected && !_attacking && !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
+        //_canAttack = _targetDetected && !_attacking && !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
+        _canAttack = _targetDetected && !_dead && LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers);
+        //Debug.Log("detacted - " + _targetDetected);
+        //Debug.Log("_attacking - " + _attacking);
+       // Debug.Log("_dead - " + _dead);
+       // Debug.Log("CanSeeTarget - " + LineOfSightChecker.CanSeeTarget(_position, _targetPosition, environmentLayers));
+
 
         if (_dead)
             return;
 
         if (!_attacking)
             rotationTarget.LookAt(_target);
+
+        if (!_attacking && _rangeAttackController.GetCooldownTimer() <= timeBeforeShootToRotateHead)
+        {
+            HandleStartChargingRangeAttack();
+        }
+
 
         if (_moving)
         {
@@ -208,8 +220,11 @@ public class RunnerAiController : BaseAiController
         rotationTarget.LookAt(_target);
         
         await UniTask.Delay(
-            TimeSpan.FromSeconds(_rangeAttackController.GetChargingTime() - timeBeforeShootToRotateHead));
-        
+            TimeSpan.FromSeconds(_rangeAttackController.GetCurrentCooldown() - timeBeforeShootToRotateHead));
+
+        if (!rotationTarget)
+            return;
+
         rotationTarget.LookAt(_target);
     }
 

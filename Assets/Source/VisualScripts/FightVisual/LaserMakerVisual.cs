@@ -45,7 +45,7 @@ public class LaserMakerVisual : MonoCache
     }
 
     private void HandleEnvironmentHit(RaycastHit hit, Vector3 direction)
-    {
+    { 
         var trace = NightPool.Spawn(traceEffect);
         var hitPosition = _laserMaker.GetStartPoint() + direction * hit.distance;
         trace.SetVector3("Pos1", _laserMaker.GetStartPoint());

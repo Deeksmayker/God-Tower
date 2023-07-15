@@ -3,6 +3,7 @@
     public void TryAttack();
     /*public void AllowAttack();
     public void DisallowAttack();*/
-    public float GetChargingTime();
+    public float GetCurrentCooldown();
+    public float GetCooldownTimer();
     public bool NeedToAttack();
 }
