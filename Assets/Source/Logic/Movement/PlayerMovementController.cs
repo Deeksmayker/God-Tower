@@ -58,6 +58,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     // Used to queue the next jump just before hitting the ground.
     private bool m_JumpQueued = false;
 
+    private bool _isGrounded = true;
+
     private bool _dashInput;
     private bool _dashHoldInput;
     private bool _dash = false;
@@ -73,6 +75,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     public event Action OnLanding;
     public event Action<Vector3> OnBounce;
     public event Action OnJump;
+    public event Action OnStartDash;
+    public event Action OnStopDash;
 
     private void Awake()
     {
@@ -85,20 +89,25 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     protected override void OnEnabled()
     {
-        _abilitiesHandler.OnNewAbility += RefreshOneDashCharge;
+        _abilitiesHandler.OnKillEnemy += RefreshDashCharges;
     }
 
     protected override void OnDisabled()
     {
-        _abilitiesHandler.OnNewAbility -= RefreshOneDashCharge;
+        _abilitiesHandler.OnKillEnemy -= RefreshDashCharges;
     }
 
     protected override void Run()
     {
-       /* if (IsGrounded())
-        {
-            _currentDashCharges = dashCharges;
-        }*/
+        /* if (IsGrounded())
+         {
+             _currentDashCharges = dashCharges;
+         }*/
+
+        if (!_isGrounded && _ch.isGrounded)
+            OnLanding?.Invoke();
+
+        _isGrounded = _ch.isGrounded;
 
         if (!_dash && _currentDashCharges < dashCharges)
         {
@@ -142,6 +151,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
         float wishspeed = wishdir.magnitude;
         wishspeed *= m_AirSettings.MaxSpeed;
+
         wishdir.Normalize();
         m_MoveDirectionNorm = wishdir;
 
@@ -308,7 +318,6 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private void StartDash()
     {
         _dash = true;
-
         var direction = camRootTransform.forward;
         if (!m_MoveInput.Equals(Vector3.zero) && direction.y > -0.5f && direction.y < 0.5f)
         {
@@ -316,7 +325,9 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             direction.y = camRootTransform.forward.y;
         }
 
+        direction.y = Mathf.Clamp(direction.y, -1f, 0.1f);
         _velocity = direction * (_velocity.magnitude + dashAddedSpeed);
+        OnStartDash?.Invoke();
 
         _currentDashCharges--;
         _dashCooldownTimer = baseDashCooldown;
@@ -331,6 +342,9 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             _dashTimer = _currentDashDuration;
             _dashSliding = true;
         }
+
+        if (_dashSliding)
+            AirMove();
 
         if (IsGrounded() && m_JumpQueued && _dashTimer > _currentDashDuration / 2)
         {
@@ -347,26 +361,26 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             return;
 
         _dash = false;
-        
+        OnStopDash?.Invoke();
         _dashTimer = 0;
 
         if (IsGrounded() && _dashInput)
         {
             _velocity *= 0.6f;
             Jump();
+            _velocity.y = 40;
             return;
         }
 
         if (keepMomentum || _velocity.magnitude < dashAddedSpeed)
             return;
         
-        _velocity *= (1f - dashAddedSpeed / _velocity.magnitude);
+        _velocity *= 0.6f;
     }
 
-    public void RefreshOneDashCharge()
+    public void RefreshDashCharges()
     {
-        if (_currentDashCharges < dashCharges)
-            _currentDashCharges++;
+        _currentDashCharges = dashCharges;
     }
 
     private bool CanDash()
@@ -380,7 +394,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20
-            && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers))
+            && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers)
+            && !(_dash && Vector3.Dot(hit.normal, _velocity) < -0.5f))
         {
             StopDash(true);
             SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);

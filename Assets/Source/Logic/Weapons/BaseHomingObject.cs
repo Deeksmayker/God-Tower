@@ -14,7 +14,7 @@ public enum HomingState
     Hunting
 }
 
-public class BaseHomingObject : MonoCache
+public class BaseHomingObject : MonoCache, IImpacter
 {
     [SerializeField] private bool iEnemy;
     
@@ -47,6 +47,7 @@ public class BaseHomingObject : MonoCache
     public event Action OnDestroy;
     public event Action OnChangeState;
     public event Action OnSuperHomingActivated;
+    public event Action<Vector3> OnImpact;
 
     private HomingState homingState;
 
@@ -154,8 +155,8 @@ public class BaseHomingObject : MonoCache
         
         Speed *= SuperHomingSpeed;
         //Damage *= SuperHomingDamage;
-        NightPool.Spawn(explosivePrefab, transform);
-        gameObject.AddComponent<ExplosiveObjectController>();
+        //NightPool.Spawn(explosivePrefab, transform);
+        //gameObject.AddComponent<ExplosiveObjectController>();
         _isSuperHoming = true;
         homingState = HomingState.Searching;
         layersToHoming = enemyLayers;
@@ -163,9 +164,11 @@ public class BaseHomingObject : MonoCache
         OnSuperHomingActivated?.Invoke();
     }
 
-    private async UniTask DealDamage(Collider other, float damage)
+    private void DealDamage(Collider other, float damage)
     {
         var hitPosition = transform.position;
+
+        OnImpact?.Invoke(hitPosition);
 
         var hitType = HitTypes.NormalPoint;
 
@@ -184,7 +187,7 @@ public class BaseHomingObject : MonoCache
         {
             takeHit.TakeHit(damage, hitPosition, hitType);
             OnDestroy?.Invoke();
-            await UniTask.NextFrame();
+            //await UniTask.NextFrame();
             Destroy(gameObject);            
         }
     }

@@ -10,7 +10,7 @@ public class Hook : MonoCache
     [SerializeField] private LayerMask hookTargetLayers;
     [SerializeField] private Transform camTransform;
 
-    [SerializeField] private float minHookPower, maxHookPower;
+    [SerializeField] private float hookPower;
     [SerializeField] private float hookUpPower;
     [SerializeField] private float cooldown;
     [SerializeField] private float hookRadius, hookDistance;
@@ -21,19 +21,18 @@ public class Hook : MonoCache
     [SerializeField] private Animator handAnimator;
 
     private float _timer;
-    private float _currentHookPower;
 
     private bool _input;
 
     private IMover _mover;
-    private PlayerStyleController _playerStyleController;
+    //private PlayerStyleController _playerStyleController;
 
     public event Action OnHook;
 
     private void Awake()
     {
         _mover = Get<IMover>();
-        _playerStyleController = Get<PlayerStyleController>();
+        //_playerStyleController = Get<PlayerStyleController>();
     }
 
     protected override void Run()
@@ -44,7 +43,7 @@ public class Hook : MonoCache
             return;
         }
 
-        _currentHookPower = Mathf.Lerp(minHookPower, maxHookPower, _playerStyleController.GetCurrentStyle01());
+        //_currentHookPower = Mathf.Lerp(minHookPower, maxHookPower, _playerStyleController.GetCurrentStyle01());
 
         if (_input)
         {
@@ -60,7 +59,7 @@ public class Hook : MonoCache
 
     public Vector3 CheckForHookTarget()
     {
-        if (Physics.SphereCast(camTransform.position, hookRadius, camTransform.forward, out var hitInfo, hookDistance, hookTargetLayers))
+        if (Physics.SphereCast(camTransform.position - camTransform.forward * hookRadius / 2, hookRadius, camTransform.forward, out var hitInfo, hookDistance, hookTargetLayers))
         {
             return hitInfo.point;
         }
@@ -69,8 +68,8 @@ public class Hook : MonoCache
 
     public void HookToTarget(Vector3 targetPos)
     {
-        var direction = Vector3.Normalize(targetPos - transform.position);
-        _mover.SetVelocity(direction * _currentHookPower);
+        var direction = (targetPos - transform.position).normalized;
+        _mover.SetVelocity(direction * hookPower);
         _mover.AddVerticalVelocity(hookUpPower);
 
         OnHook?.Invoke();

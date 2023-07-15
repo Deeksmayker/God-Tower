@@ -4,13 +4,15 @@ using UnityEngine;
 public class BaseAiController : MonoCache, IAiController
 {
     [SerializeField] private AudioSource ambientAudioSource;
-    
+
     protected bool _targetDetected;
     protected bool _dead;
+
+    protected float _timeDifficulty01;
     
     protected virtual void Start()
     {
-        SetTargetDetected(!GetComponentInParent<GroupPlayerDetector>());
+        SetTargetDetected(!GetComponentInParent<EnemyGroup>());
     }
 
     protected override void OnEnabled()
@@ -55,4 +57,11 @@ public class BaseAiController : MonoCache, IAiController
     {
         _dead = false;
     }
+
+    public void SetTimeDifficulty01(float value)
+    {
+        _timeDifficulty01 = value;
+    }
+
+    public float GetTimeDifficulty01() => _timeDifficulty01;
 }

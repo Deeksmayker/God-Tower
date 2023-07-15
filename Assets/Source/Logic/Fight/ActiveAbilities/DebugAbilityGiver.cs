@@ -30,12 +30,12 @@ public class DebugAbilityGiver : MonoCache
 
     private void Start()
     {
-        CheckAndSetLeftAbility();
-        CheckAndSetRightAbility();
+        //CheckAndSetLeftAbility();
+        //CheckAndSetRightAbility();
     }
 
-    [ContextMenu("Set left ability")]
-    public void CheckAndSetLeftAbility()
+    //[ContextMenu("Set left ability")]
+    /*public void CheckAndSetLeftAbility()
     {
         switch (leftAbility)
         {
@@ -52,8 +52,8 @@ public class DebugAbilityGiver : MonoCache
                 return;
         }
     }
-    
-    [ContextMenu("Set right ability")]
+    */
+  /*  [ContextMenu("Set right ability")]
     public void CheckAndSetRightAbility()
     {
         switch (rightAbility)
@@ -70,5 +70,5 @@ public class DebugAbilityGiver : MonoCache
             default:
                 return;
         }
-    }
+    }*/
 }

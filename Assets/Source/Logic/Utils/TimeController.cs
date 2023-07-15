@@ -15,22 +15,65 @@ public class TimeController : MonoCache
     [SerializeField] private TimeScaleTimer _currentTimer;
     [FormerlySerializedAs("_isPaused")] public bool IsPaused = false;
 
+    private bool _timeStop;
+
+    private float _currentTimeScale = 1;
+    private float _timeStopTimer;
+    private float _maxTimeStop;
+    private float _restoreTimeScaleT;
+
     private void Start()
     {
         if (Instance == null)
             Instance = this;
     }
 
+    protected override void Run()
+    {
+        if (IsPaused || _maxTimeStop <= 0)
+            return;
+
+        if (_timeStopTimer > 0)
+        {
+            Time.timeScale = 0;
+            _currentTimeScale = Time.timeScale;
+            _timeStopTimer -= Time.unscaledDeltaTime;
+
+            
+        }
+
+        if (_timeStopTimer <= 0)
+        {
+            _restoreTimeScaleT += Time.unscaledDeltaTime / (_maxTimeStop * 5);
+            Time.timeScale = Mathf.Lerp(0, 1, Mathf.Pow(_restoreTimeScaleT, 2));
+            _currentTimeScale = Time.timeScale;
+
+            if (_restoreTimeScaleT >= 1)
+            {
+                _restoreTimeScaleT = 0;
+                _maxTimeStop = 0;
+                _timeStopTimer = 0;
+                Time.timeScale = 1;
+            }
+        }
+    }
+
     public async UniTask SetTimeScale(float timeScale, float duration)
     {
         Time.timeScale = timeScale;
 
+        if (timeScale.Equals(0))
+            _timeStop = true;
+
         await UniTask.Delay(TimeSpan.FromSeconds(duration), DelayType.UnscaledDeltaTime);
+
+        if (timeScale.Equals(0))
+            _timeStop = false;
 
         if (IsPaused)
             return;
 
-        Time.timeScale = 1;
+        Time.timeScale = _currentTimeScale;
 
         /*TimeScaleTimer newTimer = new TimeScaleTimer(timeScale, duration);
         _timers.Add(newTimer);
@@ -44,12 +87,20 @@ public class TimeController : MonoCache
         }*/
     }
 
+    public void AddTimeStopDuration(float addedDuration)
+    {
+        _timeStopTimer += addedDuration;
+        _maxTimeStop += addedDuration;
+    }
+
     public void SetPause(bool isPaused)
     {
         IsPaused = isPaused;
 
         Time.timeScale = isPaused ? 0 : 1;
     }
+
+    public bool InTimeStop() => _timeStop;
 
     private TimeScaleTimer GetNextTimer()
     {

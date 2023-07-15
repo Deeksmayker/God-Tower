@@ -18,7 +18,7 @@ public class AbilitiesTouchStealer : MonoCache
     {
         if (other.TryGetComponent<IGiveAbility>(out var giver) && giver.CanGiveAbility())
         {
-            _abilitiesHandler.SetNewLeftAbility(giver.GetAbilityPrefab());
+            _abilitiesHandler.SetNewLeftAbility(giver);
         }
 
         if (other.TryGetComponent<BaseHealthHandler>(out var health) && health.InStun())
