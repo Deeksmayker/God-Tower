@@ -11,6 +11,7 @@ public class LevelEndPanelUi : MonoCache
     [SerializeField] private int levelToLoad;
     [SerializeField] private GameObject levelEndPanel;
     [SerializeField] private GameObject newRecordPanel;
+    [SerializeField] private GameObject secretTutorialUnlockedPanel;
     [SerializeField] private TextMeshProUGUI timeTextMesh;
     [SerializeField] private TextMeshProUGUI recordTextMesh;
     [SerializeField] private TextMeshProUGUI rankTextMesh;
@@ -26,12 +27,14 @@ public class LevelEndPanelUi : MonoCache
 
         LevelStatisticsManager.OnLevelEnded += HandleLevelEnded;
         LevelStatisticsManager.OnNewRecord += HandleNewRecord;
+        LevelStatisticsManager.OnNewSecretTutorial += HandleSecretTutorialUnlocked;
     }
 
     protected override void OnDisabled()
     {
         LevelStatisticsManager.OnLevelEnded -= HandleLevelEnded;
         LevelStatisticsManager.OnNewRecord -= HandleNewRecord;
+        LevelStatisticsManager.OnNewSecretTutorial -= HandleSecretTutorialUnlocked;
     }
 
     protected override void Run()
@@ -58,5 +61,10 @@ public class LevelEndPanelUi : MonoCache
 
         if (newRecordClip)
             _audioSource.PlayOneShot(newRecordClip);
+    }
+
+    public void HandleSecretTutorialUnlocked()
+    {
+        secretTutorialUnlockedPanel.SetActive(true);
     }
 }

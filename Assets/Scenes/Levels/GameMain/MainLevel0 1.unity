@@ -374,7 +374,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-43738
+  m_Name: pb_Mesh-837984
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -979,6 +979,7 @@ GameObject:
   - component: {fileID: 280104765}
   - component: {fileID: 280104767}
   - component: {fileID: 280104766}
+  - component: {fileID: 280104768}
   m_Layer: 9
   m_Name: Quad (4)
   m_TagString: Untagged
@@ -1028,8 +1029,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kill more to stack
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1118,7 +1120,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1140,6 +1142,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &280104768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280104764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u0423\u0431\u0435\u0439 \u0431\u043E\u043B\u044C\u0448\u0435 \u0447\u0442\u043E\u0431\u044B
+    \u043D\u0430\u043A\u043E\u043F\u0438\u0442\u044C"
+  enText: Kill more to stack
 --- !u!1001 &310690657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1779,6 +1796,7 @@ GameObject:
   - component: {fileID: 397550250}
   - component: {fileID: 397550252}
   - component: {fileID: 397550251}
+  - component: {fileID: 397550253}
   m_Layer: 9
   m_Name: Quad (1)
   m_TagString: Untagged
@@ -1830,8 +1848,9 @@ MonoBehaviour:
 
     to kill and get ability'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1855,7 +1874,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.1
+  m_fontSize: 34.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1891,7 +1910,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.11299133, y: -2.9937372, z: -0.31520557, w: -7.088764}
+  m_margin: {x: -0.76020336, y: -5.0972033, z: -0.8673005, w: -7.088764}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -1920,7 +1939,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1942,6 +1961,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &397550253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397550249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "F\n\u0447\u0442\u043E\u0431\u044B \u0443\u0431\u0438\u0442\u044C \u0438
+    \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0441\u0442\u044C"
+  enText: 'F
+
+    to kill and get ability'
 --- !u!1 &427278472
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,6 +1989,7 @@ GameObject:
   - component: {fileID: 427278473}
   - component: {fileID: 427278475}
   - component: {fileID: 427278474}
+  - component: {fileID: 427278476}
   m_Layer: 9
   m_Name: Quad (8)
   m_TagString: Untagged
@@ -2002,7 +2039,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: SHOOT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2069,7 +2106,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 427278475}
   m_maskType: 0
 --- !u!23 &427278475
@@ -2114,13 +2151,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &427278476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427278472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u0421\u0422\u0420\u0415\u041B\u042F\u0419"
+  enText: SHOOT
 --- !u!43 &456501283
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1656
+  m_Name: pb_Mesh-837496
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2327,6 +2378,16 @@ PrefabInstance:
       propertyPath: levelToLoad
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1742035155342816398, guid: cd67ac8f4d71a0e4190be5eee1ed4f4b,
+        type: 3}
+      propertyPath: enText
+      value: 0-1 Aquired
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742035155342816398, guid: cd67ac8f4d71a0e4190be5eee1ed4f4b,
+        type: 3}
+      propertyPath: ruText
+      value: "0-1 \u041E\u0431\u0440\u0430\u0431\u043E\u0442\u0430\u043D"
+      objectReference: {fileID: 0}
     - target: {fileID: 2111654052596059766, guid: cd67ac8f4d71a0e4190be5eee1ed4f4b,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2436,6 +2497,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InGameCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039160663525609866, guid: cd67ac8f4d71a0e4190be5eee1ed4f4b,
+        type: 3}
+      propertyPath: m_text
+      value: 0-1 passed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2738,6 +2804,7 @@ GameObject:
   - component: {fileID: 585090772}
   - component: {fileID: 585090774}
   - component: {fileID: 585090773}
+  - component: {fileID: 585090775}
   m_Layer: 9
   m_Name: Quad (10)
   m_TagString: Untagged
@@ -2787,8 +2854,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: RMB to hook
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2848,7 +2916,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -24.48183, y: -2.9937372, z: -42.19604, w: -29.726456}
+  m_margin: {x: -24.48183, y: 0.297199, z: -42.19604, w: -29.726456}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -2877,7 +2945,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2899,6 +2967,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &585090775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585090771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u041F\u041A\u041C \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u0438\u0442\u044F\u043D\u0443\u0442\u044C\u0441\u044F"
+  enText: RMB to hook
 --- !u!1001 &599634206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3393,6 +3475,7 @@ GameObject:
   - component: {fileID: 663383617}
   - component: {fileID: 663383619}
   - component: {fileID: 663383618}
+  - component: {fileID: 663383620}
   m_Layer: 9
   m_Name: Quad (7)
   m_TagString: Untagged
@@ -3442,8 +3525,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Stack abilities
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3532,7 +3616,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3554,6 +3638,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &663383620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663383616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u041A\u043E\u043F\u0438 \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0441\u0442\u0438"
+  enText: Stack abilities
 --- !u!850595691 &686234224
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -3629,6 +3727,7 @@ GameObject:
   - component: {fileID: 710756515}
   - component: {fileID: 710756517}
   - component: {fileID: 710756516}
+  - component: {fileID: 710756518}
   m_Layer: 9
   m_Name: Quad (5)
   m_TagString: Untagged
@@ -3678,8 +3777,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kill more to stack
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3768,7 +3868,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3790,6 +3890,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &710756518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710756514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u0423\u0431\u0435\u0439 \u0431\u043E\u043B\u044C\u0448\u0435 \u0447\u0442\u043E\u0431\u044B
+    \u043D\u0430\u043A\u043E\u043F\u0438\u0442\u044C"
+  enText: Kill more to stack
 --- !u!1001 &713264283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4084,7 +4199,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4944
+  m_Name: pb_Mesh-840616
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -4412,7 +4527,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1600
+  m_Name: pb_Mesh-837438
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -4813,6 +4928,7 @@ GameObject:
   - component: {fileID: 1072198543}
   - component: {fileID: 1072198545}
   - component: {fileID: 1072198544}
+  - component: {fileID: 1072198546}
   m_Layer: 9
   m_Name: Quad (6)
   m_TagString: Untagged
@@ -4862,8 +4978,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Stack abilities
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4952,7 +5069,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4974,6 +5091,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1072198546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072198542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u041A\u043E\u043F\u0438 \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0441\u0442\u0438"
+  enText: Stack abilities
 --- !u!1 &1094267306
 GameObject:
   m_ObjectHideFlags: 0
@@ -5258,7 +5389,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1626
+  m_Name: pb_Mesh-837464
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5548,7 +5679,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4048
+  m_Name: pb_Mesh-840660
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5725,7 +5856,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1576
+  m_Name: pb_Mesh-837414
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -6278,7 +6409,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4930
+  m_Name: pb_Mesh-840602
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -6448,6 +6579,7 @@ GameObject:
   - component: {fileID: 1496286045}
   - component: {fileID: 1496286047}
   - component: {fileID: 1496286046}
+  - component: {fileID: 1496286048}
   m_Layer: 9
   m_Name: Quad (7)
   m_TagString: Untagged
@@ -6497,7 +6629,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: SHOOT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6564,7 +6696,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 1496286047}
   m_maskType: 0
 --- !u!23 &1496286047
@@ -6609,6 +6741,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1496286048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496286044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u0421\u0422\u0420\u0415\u041B\u042F\u0419"
+  enText: SHOOT
 --- !u!1 &1508158634
 GameObject:
   m_ObjectHideFlags: 0
@@ -6620,6 +6766,7 @@ GameObject:
   - component: {fileID: 1508158635}
   - component: {fileID: 1508158637}
   - component: {fileID: 1508158636}
+  - component: {fileID: 1508158638}
   m_Layer: 9
   m_Name: Quad (6)
   m_TagString: Untagged
@@ -6669,7 +6816,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Now shoot
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6736,7 +6883,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 1508158637}
   m_maskType: 0
 --- !u!23 &1508158637
@@ -6781,6 +6928,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1508158638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508158634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u0422\u0435\u043F\u0435\u0440\u044C \u0441\u0442\u0440\u0435\u043B\u044F\u0439"
+  enText: Now shoot
 --- !u!1001 &1540097180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7019,7 +7180,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4900
+  m_Name: pb_Mesh-840574
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -7345,6 +7506,7 @@ GameObject:
   - component: {fileID: 1824977470}
   - component: {fileID: 1824977472}
   - component: {fileID: 1824977471}
+  - component: {fileID: 1824977473}
   m_Layer: 9
   m_Name: Quad (9)
   m_TagString: Untagged
@@ -7394,8 +7556,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: RMB to hook
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7484,7 +7647,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7506,6 +7669,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1824977473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824977469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u041F\u041A\u041C \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u0438\u0442\u044F\u043D\u0443\u0442\u044C\u0441\u044F"
+  enText: RMB to hook
 --- !u!1 &1932370583
 GameObject:
   m_ObjectHideFlags: 0
@@ -7517,6 +7694,7 @@ GameObject:
   - component: {fileID: 1932370584}
   - component: {fileID: 1932370586}
   - component: {fileID: 1932370585}
+  - component: {fileID: 1932370587}
   m_Layer: 9
   m_Name: Quad (2)
   m_TagString: Untagged
@@ -7566,8 +7744,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: LMB to shoot
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7591,7 +7770,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.3
+  m_fontSize: 32.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7656,7 +7835,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 6345096079029554295, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7678,6 +7857,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1932370587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932370583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u041B\u041A\u041C \u0447\u0442\u043E\u0431\u044B \u0441\u0442\u0440\u0435\u043B\u044F\u0442\u044C"
+  enText: LMB to shoot
 --- !u!1001 &1963458514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7819,6 +8012,7 @@ GameObject:
   - component: {fileID: 1968790417}
   - component: {fileID: 1968790419}
   - component: {fileID: 1968790418}
+  - component: {fileID: 1968790420}
   m_Layer: 9
   m_Name: Quad (3)
   m_TagString: Untagged
@@ -7868,7 +8062,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: LMB to shoot
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7c8a97846e349e46b07bff3639c4cd2, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7935,7 +8129,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 1968790419}
   m_maskType: 0
 --- !u!23 &1968790419
@@ -7980,6 +8174,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1968790420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968790416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u041B\u041A\u041C \u0447\u0442\u043E\u0431\u044B \u0441\u0442\u0440\u0435\u043B\u044F\u0442\u044C"
+  enText: LMB to shoot
 --- !u!1 &2026306568
 GameObject:
   m_ObjectHideFlags: 0
@@ -8212,7 +8420,7 @@ PrefabInstance:
     - target: {fileID: 4344887937277764070, guid: 528dc4af3485e6d41b109ffc36bc9453,
         type: 3}
       propertyPath: m_Size.y
-      value: 116.2
+      value: 820.1
       objectReference: {fileID: 0}
     - target: {fileID: 4344887937277764070, guid: 528dc4af3485e6d41b109ffc36bc9453,
         type: 3}
@@ -8237,7 +8445,7 @@ PrefabInstance:
     - target: {fileID: 6972565030940763209, guid: 528dc4af3485e6d41b109ffc36bc9453,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 46.3
+      value: 65.9
       objectReference: {fileID: 0}
     - target: {fileID: 6972565030940763209, guid: 528dc4af3485e6d41b109ffc36bc9453,
         type: 3}

@@ -13,6 +13,7 @@ public class LevelStatisticsManager : MonoCache
     public static event Action OnLevelStarted;
     public static event Action OnLevelEnded;
     public static event Action OnNewRecord;
+    public static event Action OnNewSecretTutorial;
 
     protected override void Run()
     {
@@ -25,6 +26,10 @@ public class LevelStatisticsManager : MonoCache
     {
         _levelEnded = true;
         LevelsManager.SetNextLevelToAvaliable(level);
+
+        if (GetCurrentLevelData().Record == 0 && GetCurrentLevelData().SecretTutorialUnlockedAfterPassing)
+            OnNewSecretTutorial?.Invoke();
+
         if (GetCurrentLevelData().Record > _levelTime || GetCurrentLevelData().Record == 0)
         {
             LevelsManager.SetLevelRecord(level, _levelTime);

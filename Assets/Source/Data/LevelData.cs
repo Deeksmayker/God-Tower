@@ -17,6 +17,8 @@ public class LevelData
     public float RecordForBRank;
     public float RecordForCRank;
 
+    public bool SecretTutorialUnlockedAfterPassing;
+
 
     public LevelData(Levels level, bool avaliable, float record, float recordForSRank, float recordForARank, float recordForBRank, float recordForCRank)
     {
