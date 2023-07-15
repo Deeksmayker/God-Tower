@@ -2932,7 +2932,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 100
+  field of view: 110
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -3278,8 +3278,11 @@ MonoBehaviour:
   rightHandShootPoint: {fileID: 1633741983}
   leftHandShootPoint: {fileID: 1644204099}
   stealDistance: 30
-  stealRadius: 10
+  stealRadius: 30
   healBySteal: 20
+  OnAbilityEmpty:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2131039298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3365,7 +3368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radiusObject: {fileID: 255045707089274207}
   startRadius: 0
-  maxRadius: 100
+  maxRadius: 150
   startColor: {r: 1.471698, g: 1.471698, b: 1.471698, a: 0}
   maxColor: {r: 25.962265, g: 0.36738986, b: 0.36738986, a: 0}
   radiusForMaxColor: 100
@@ -3395,7 +3398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   styleReduceRate: 0.08
-  stylePerKill: 0.2
+  stylePerKill: 0.1
   addedDashDuration: 0.5
   addedKickForwardRecoilForce: 50
   fullscreenMaterial: {fileID: 2100000, guid: e93305b4aa3c50144a2270a01a2b7573, type: 2}
@@ -3421,7 +3424,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   camTransform: {fileID: 3998808298746309513}
-  hookPower: 100
+  hookPower: 80
   hookUpPower: 20
   cooldown: 0.5
   hookRadius: 15

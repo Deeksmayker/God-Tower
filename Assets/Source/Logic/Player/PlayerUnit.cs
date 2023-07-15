@@ -15,9 +15,6 @@ public class PlayerUnit : MonoCache
 
     private IMover _mover;
 
-    public static event Action OnLevelStarted;
-    public static event Action OnLevelEnd;
-
     private void Awake()
     {
         _levelEnded = false;
@@ -61,13 +58,11 @@ public class PlayerUnit : MonoCache
         var camera = GetComponentInChildren<CameraLook>();
         camera.DisableInputResponse();
         _targetRotationTransform = targetTransform;
-        OnLevelEnd?.Invoke();
     }
 
     public void HandleLevelStarted()
     {
         _levelStarted = true;
-        OnLevelStarted?.Invoke();
     }
 
     public void TeleportPlayer(Vector3 pos)

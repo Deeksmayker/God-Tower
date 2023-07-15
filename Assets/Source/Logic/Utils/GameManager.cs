@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
-        _playerGameObject = FindObjectOfType<PlayerUnit>().gameObject;
+        /*_playerGameObject = FindObjectOfType<PlayerUnit>().gameObject;
         _playerData = new PlayerData();
         _definitionSceneDictionary = new Dictionary<int, List<int>>()
         {
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             {3, new List<int>(){4}},
             {4, new List<int>(){5}},
             {5, new List<int>(){6}},
-        };
+        };*/
     }
 
     /// <summary>
@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        _playerGameObject = FindObjectOfType<PlayerUnit>().gameObject;
-        _playerGameObject.GetComponent<BaseHealthHandler>().SetHealth(_playerData.GetHealthPoint());
+        //_playerGameObject = FindObjectOfType<PlayerUnit>().gameObject;
+        //_playerGameObject.GetComponent<BaseHealthHandler>().SetHealth(_playerData.GetHealthPoint());
 
         OnSceneEndLoad?.Invoke();
     }

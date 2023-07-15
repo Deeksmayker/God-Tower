@@ -10982,7 +10982,7 @@ PrefabInstance:
     - target: {fileID: 651188575104048473, guid: cd67ac8f4d71a0e4190be5eee1ed4f4b,
         type: 3}
       propertyPath: levelToLoad
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2111654052596059766, guid: cd67ac8f4d71a0e4190be5eee1ed4f4b,
         type: 3}
@@ -13920,11 +13920,6 @@ PrefabInstance:
     - target: {fileID: 2131039298, guid: efcca681c6aa2c64db2c7085334d7c9c, type: 3}
       propertyPath: canDie
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 16026984469209041, guid: efcca681c6aa2c64db2c7085334d7c9c,
-        type: 3}
-      propertyPath: hookPower
-      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3998808300210840913, guid: efcca681c6aa2c64db2c7085334d7c9c,
         type: 3}
@@ -37651,6 +37646,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5496470854556125984, guid: 63ceb08ff9d19f14ba1395ce3bf98d2f,
+        type: 3}
+      propertyPath: level
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

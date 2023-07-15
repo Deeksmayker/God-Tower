@@ -4,6 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUi : MonoCache
 {
+    private void Awake()
+    {
+        SavesManager.LoadAllData();
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void LoadTutorial()
     {
         Application.targetFrameRate = 300;
@@ -14,6 +22,12 @@ public class MainMenuUi : MonoCache
     {
         Application.targetFrameRate = 300;
         SceneManager.LoadScene(2);
+    }
+
+    public void LoadScene(int index)
+    {
+        Application.targetFrameRate = 300;
+        SceneManager.LoadScene(index);
     }
 
     public void SetNormalDifficulty()
