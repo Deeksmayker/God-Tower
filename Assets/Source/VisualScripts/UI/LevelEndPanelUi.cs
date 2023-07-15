@@ -7,21 +7,34 @@ using Zenject;
 
 public class LevelEndPanelUi : MonoCache
 {
+    [SerializeField] private AudioClip newRecordClip;
     [SerializeField] private int levelToLoad;
     [SerializeField] private GameObject levelEndPanel;
+    [SerializeField] private GameObject newRecordPanel;
+    [SerializeField] private GameObject secretTutorialUnlockedPanel;
     [SerializeField] private TextMeshProUGUI timeTextMesh;
+    [SerializeField] private TextMeshProUGUI recordTextMesh;
+    [SerializeField] private TextMeshProUGUI rankTextMesh;
 
     [Inject] private LevelStatisticsManager _levelStatistics;
     [Inject] private PlayerInput _input;
 
+    private AudioSource _audioSource;
+
     protected override void OnEnabled()
     {
-        PlayerUnit.OnLevelEnd += HandleLevelEnded;
+        _audioSource = GetComponent<AudioSource>();
+
+        LevelStatisticsManager.OnLevelEnded += HandleLevelEnded;
+        LevelStatisticsManager.OnNewRecord += HandleNewRecord;
+        LevelStatisticsManager.OnNewSecretTutorial += HandleSecretTutorialUnlocked;
     }
 
     protected override void OnDisabled()
     {
-        PlayerUnit.OnLevelEnd -= HandleLevelEnded;
+        LevelStatisticsManager.OnLevelEnded -= HandleLevelEnded;
+        LevelStatisticsManager.OnNewRecord -= HandleNewRecord;
+        LevelStatisticsManager.OnNewSecretTutorial -= HandleSecretTutorialUnlocked;
     }
 
     protected override void Run()
@@ -37,5 +50,21 @@ public class LevelEndPanelUi : MonoCache
     {
         levelEndPanel.SetActive(true);
         timeTextMesh.text = TimeSpan.FromSeconds(_levelStatistics.GetLevelTime()).ToString("mm':'ss':'fff");
+        recordTextMesh.text = TimeSpan.FromSeconds(_levelStatistics.GetCurrentLevelData().Record).ToString("mm':'ss':'fff");
+        rankTextMesh.text = _levelStatistics.GetCurrentLevelData().GetRankTextByTime(_levelStatistics.GetLevelTime(), true);
+    }
+
+    public void HandleNewRecord()
+    {
+        newRecordPanel.SetActive(true);
+        recordTextMesh.text = TimeSpan.FromSeconds(_levelStatistics.GetCurrentLevelData().Record).ToString("mm':'ss':'fff");
+
+        if (newRecordClip)
+            _audioSource.PlayOneShot(newRecordClip);
+    }
+
+    public void HandleSecretTutorialUnlocked()
+    {
+        secretTutorialUnlockedPanel.SetActive(true);
     }
 }

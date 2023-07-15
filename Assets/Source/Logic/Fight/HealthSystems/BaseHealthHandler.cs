@@ -15,6 +15,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     [SerializeField] private float hitsToDie;
     [SerializeField] private float damageImmuneTime = 0.1f;
     [SerializeField] private float stunDuration = 5;
+    [SerializeField] private bool healOnRoomCompleted;
 
     private float _maxHealth;
 
@@ -22,6 +23,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     private float _stunTimer;
 
     private bool _stunned;
+    private bool _dead;
 
     private ITakeHit[] _hitTakers;
 
@@ -46,6 +48,11 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         for (var i = 0; i < _hitTakers.Length; i++)
         {
             _hitTakers[i].OnTakeHit += HandleHit;
+        }
+
+        if (healOnRoomCompleted)
+        {
+            RoomDoor.OnRoomCompleted += () => AddHealth(20);
         }
     }
 
@@ -95,9 +102,10 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
 
     public void Die(bool order = false)
     {
-        if (!canDie && !order)
+        if (!canDie && !order || _dead)
             return;
-        
+
+        _dead = true;
         OnDied?.Invoke();
         Destroy(gameObject);
     }
@@ -110,7 +118,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         OnRevive?.Invoke();
     }
 
-    public void AddHealth(float addValue)
+    public void AddHealth(float addValue = 1)
     {
         SetHealth(health + _maxHealth / hitsToDie);
         health = Mathf.Clamp(health, 0, _maxHealth);

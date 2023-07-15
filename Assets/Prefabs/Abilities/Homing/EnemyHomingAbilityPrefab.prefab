@@ -50,10 +50,8 @@ MonoBehaviour:
   directionTarget: {fileID: 0}
   shootStartPoint: {fileID: 0}
   damage: 1
-  dumpShootChargesCount: 5
-  holdTimeToDump: 2
-  dumpingShootsDelay: 0
-  abilityLifetime: 10
+  shootCount: 1
+  abilityLifetime: 100
   cooldown: 0.2
   HomingPrefab: {fileID: 2340060840547580004, guid: 460953faac5188e4eacacd786eaedf88,
     type: 3}

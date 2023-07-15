@@ -49,7 +49,17 @@ public class CameraLook : MonoCache
           if (TimeController.Instance.IsPaused || !_responseToInput)
               return;
            
-           var mouseDelta = _playerInput.actions["Look"].ReadValue<Vector2>();
+          if (Time.timeScale < 1)
+        {
+            m_Smooth = true;
+            m_SmoothTime = Mathf.Lerp(10, 20, Time.timeScale);
+        }
+        else
+        {
+            m_Smooth = false;
+        }
+          var timeScaleSensMultiplier = Time.timeScale < 0.5f ? 0.5f : Time.timeScale;
+           var mouseDelta = _playerInput.actions["Look"].ReadValue<Vector2>() * timeScaleSensMultiplier;
            float yRot = mouseDelta.x * m_XSensitivity;
            float xRot = mouseDelta.y * m_YSensitivity;
 

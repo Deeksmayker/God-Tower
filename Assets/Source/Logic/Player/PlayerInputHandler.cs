@@ -7,6 +7,7 @@ public class PlayerInputHandler : MonoCache
 {
     [SerializeField] private Transform lookRotationTransform;
     [SerializeField] private float jumpContinueInput = 0.1f;
+    [SerializeField] private bool autoJump;
 
     private float _jumpInputTimer;
 
@@ -53,15 +54,23 @@ public class PlayerInputHandler : MonoCache
 
         if (_jumper != null)
         {
-            var jumpInput = _playerInput.actions["Jump"].WasPressedThisFrame();
-            if (jumpInput)
-                _jumpInputTimer = jumpContinueInput;
+            if (autoJump)
+            {
+                _jumper.SetJumpInput(_playerInput.actions["Jump"].IsInProgress());
+            }
 
-            var needToJump = jumpInput || _jumpInputTimer > 0;
+            else
+            {
+                var jumpInput = _playerInput.actions["Jump"].WasPressedThisFrame();
+                if (jumpInput)
+                    _jumpInputTimer = jumpContinueInput;
 
-            _jumper.SetJumpInput(needToJump);
+                var needToJump = jumpInput || _jumpInputTimer > 0;
 
-            _jumpInputTimer -= Time.deltaTime;
+                _jumper.SetJumpInput(needToJump);
+
+                _jumpInputTimer -= Time.deltaTime;
+            } 
         }
 
         if (_meleeAttacker != null)
@@ -71,12 +80,12 @@ public class PlayerInputHandler : MonoCache
 
         if (_abilitiesHandler != null)
         {
-            _abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
-            _abilitiesHandler.SetLeftStealInput(_playerInput.actions["LeftSteal"].WasPressedThisFrame());
+            //_abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
+            _abilitiesHandler.SetLeftStealInput(_playerInput.actions["LeftSteal"].IsInProgress());
 
             if (_canShoot)
             {
-                _abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
+                //_abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
                 _abilitiesHandler.SetLeftAbilityInput(_playerInput.actions["LeftAttack"].IsInProgress());
             }
         }

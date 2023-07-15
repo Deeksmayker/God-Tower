@@ -4,7 +4,7 @@ using DG.Tweening;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public enum AbilityTypes
 {
@@ -23,62 +23,37 @@ public class AbilitiesHandler : MonoCache
     [SerializeField] private float stealDistance = 10;
     [SerializeField] private float stealRadius = 0.5f;
     [SerializeField] private float healBySteal = 20;
-    
-    private IActiveAbility _leftAbility, _rightAbility;
 
-    public Action OnNewAbility;
-    public Action OnNewRightAbility;
-    public Action OnNewLeftAbility;
+    private int _stackedAbilitiesCount;
+
+    private IActiveAbility _leftAbility;
+    private GameObject _currentAbilityObject;
+
+    public event Action OnRangeSteal;
+    public event Action OnKillEnemy;
+    public event Action OnNewAbility;
+    public event Action<StackedAbility> OnNewStackedAbility;
+
+    public UnityEvent OnAbilityEmpty = new();
 
     protected override void OnEnabled()
     {
-        OnNewRightAbility += HandleNewRightAbility;
-        OnNewLeftAbility += HandleNewLeftAbility;
-    }
-    
-    public void SetNewRightAbility(GameObject newAbilityPrefab, bool isInfinite = false)
-    {
-        if (_rightAbility != null)
-        {
-            _rightAbility.RemoveAbility();
-        }
-        SetNewAbility(out _rightAbility, newAbilityPrefab, rightHandShootPoint, isInfinite);
-        OnNewRightAbility?.Invoke();
+        OnNewAbility += HandleNewLeftAbility;
     }
 
-    public void SetNewLeftAbility(GameObject newAbilityPrefab, bool isInfinite = false)
+    public void SetNewLeftAbility(IGiveAbility abilityGiver, bool isInfinite = false)
     {
-        if (_leftAbility != null)
+/*        if (_leftAbility != null)
         {
             _leftAbility.RemoveAbility();
-        }
-        SetNewAbility(out _leftAbility, newAbilityPrefab, leftHandShootPoint, isInfinite);
+        }*/
+        SetNewAbility(abilityGiver, leftHandShootPoint, isInfinite);
         Get<IHealthHandler>().AddHealth(healBySteal);
-        OnNewLeftAbility?.Invoke();
     }
 
     public void SetLeftAbilityInput(bool input)
     {
         _leftAbility?.SetInput(input);
-    }
-
-    public void SetRightAbilityInput(bool input)
-    {
-        _rightAbility?.SetInput(input);
-    }
-
-    public void SetRightStealInput(bool input)
-    {
-        return;
-        if (!input)
-            return;
-
-        var robbedAbility = CheckForStealAbility();
-        if (robbedAbility != null)
-        {
-            SetNewRightAbility(robbedAbility);
-            Get<IHealthHandler>().AddHealth(healBySteal);
-        }
     }
 
     public void SetLeftStealInput(bool input)
@@ -90,13 +65,13 @@ public class AbilitiesHandler : MonoCache
         if (robbedAbility != null)
         {
             SetNewLeftAbility(robbedAbility);
+            OnRangeSteal?.Invoke();
         }
     }
 
     public void RemoveAbilities()
     {
         _leftAbility?.RemoveAbility();
-        _rightAbility?.RemoveAbility();
     }
 
     public void SetStealRadius(float newRadius)
@@ -104,60 +79,82 @@ public class AbilitiesHandler : MonoCache
         stealDistance = newRadius;
     }
 
-    private GameObject CheckForStealAbility()
+    private IGiveAbility CheckForStealAbility()
     {
-        if (Physics.SphereCast(camRotationTarget.position - camRotationTarget.forward * stealRadius, stealRadius, camRotationTarget.forward, out var hit, stealDistance,
+        if (Physics.SphereCast(camRotationTarget.position - camRotationTarget.forward * stealRadius, stealRadius, camRotationTarget.forward, out var hit, 1000,
                 layersToSteal))
         {
-            if (hit.transform.TryGetComponent<IGiveAbility>(out var giver) && giver.CanGiveAbility())
+            var hitPosInSameHorizontal = new Vector3(hit.transform.position.x, transform.position.y, hit.transform.position.z);
+
+            if (hit.transform.TryGetComponent<IGiveAbility>(out var giver) && giver.CanGiveAbility()
+                && Vector3.Distance(hitPosInSameHorizontal, transform.position) <= stealDistance)
             {
                 var effect = NightPool.Spawn(stealLineEffect, rightHandShootPoint);
                 effect.SetTarget(hit.transform.position);
 
-                return giver.GetAbilityPrefab();
+                return giver;
             }
         }
 
         return null;
     }
 
-    private void SetNewAbility(out IActiveAbility abilitySide, GameObject newAbilityPrefab, Transform shootPoint, bool isInfinite)
+    private void SetNewAbility(IGiveAbility abilityGiver, Transform shootPoint, bool isInfinite)
     {
-        if (newAbilityPrefab.GetComponent<IActiveAbility>() == null)
-            Debug.LogError("No ability on \"ability\" prefab");
+        OnKillEnemy?.Invoke();
 
-        var ability = Instantiate(newAbilityPrefab, transform);
-        ability.transform.position = shootPoint.position;
-        abilitySide = ability.GetComponent<IActiveAbility>();
-        abilitySide.SetRotationTarget(camRotationTarget);
-        abilitySide.SetShootPoint(shootPoint);
-        abilitySide.SetInfinity(isInfinite || abilitySide.IsInfinite());
-    }
+        if (_leftAbility != null)
+        {
+            var stackedAbility = Instantiate(abilityGiver.GetStackedAbilityPrefab(), transform);
+            _stackedAbilitiesCount++;
+            stackedAbility.AddStackedCount();
 
-    private void HandleNewRightAbility()
-    {
+            OnNewStackedAbility?.Invoke(stackedAbility);
+
+            if (_currentAbilityObject.TryGetComponent<IImpacter>(out var impacter))
+            {
+                stackedAbility.SetImpacter(impacter);
+                return;
+            }
+
+            if (_currentAbilityObject.TryGetComponent<ISpawnImpacter>(out var impacterSpawner))
+            {
+                impacterSpawner.OnImpacterSpawned += stackedAbility.SetImpacter;
+                return;
+            }
+
+            _leftAbility.RemoveAbility();
+        }
+
+        _currentAbilityObject = Instantiate(abilityGiver.GetAbilityPrefab(), transform);
+        _currentAbilityObject.transform.position = shootPoint.position;
+        _leftAbility = _currentAbilityObject.GetComponent<IActiveAbility>();
+        _leftAbility.SetRotationTarget(camRotationTarget);
+        _leftAbility.SetShootPoint(shootPoint);
+        _leftAbility.SetInfinity(isInfinite || _leftAbility.IsInfinite());
+
         OnNewAbility?.Invoke();
-        _rightAbility.OnEmpty += () => HandleRightAbilityEmpty();
-    }
-
-    private void HandleRightAbilityEmpty()
-    {
-        _rightAbility = null;
     }
 
     private void HandleNewLeftAbility()
     {
-        OnNewAbility?.Invoke();
         _leftAbility.OnEmpty += HandleLeftAbilityEmpty;
     }
 
     private void HandleLeftAbilityEmpty()
     {
         _leftAbility = null;
+        _stackedAbilitiesCount = 0;
+        OnAbilityEmpty.Invoke();
     }
 
-    public IActiveAbility GetRightAbility() => _rightAbility;
+    public void SetCurrentAbilityInfinity(bool isInfinite)
+    {
+        _leftAbility?.SetInfinity(isInfinite);
+    }
     public IActiveAbility GetLeftAbility() => _leftAbility;
+
+    public int GetStackedAbilitiesCount() => _stackedAbilitiesCount;
 
     private void OnDrawGizmosSelected()
     {

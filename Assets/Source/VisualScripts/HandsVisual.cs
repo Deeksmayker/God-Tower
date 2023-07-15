@@ -5,6 +5,7 @@ using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
 using UnityEngine.VFX;
+using UnityEngine.XR;
 
 public class HandsVisual : MonoCache
 {
@@ -20,7 +21,15 @@ public class HandsVisual : MonoCache
     [ColorUsageAttribute(false, true)]
     [SerializeField] private Color homingAbilityColor;
 
-    private IMover _mover;
+    [Header("Hand shader settings")]
+    [SerializeField] private float minStep = 0.17f;
+    [SerializeField] private float maxStep = 0.27f;
+    [SerializeField] private float minSpeed = 0.01f;
+    [SerializeField] private float maxSpeed = 1f;
+
+    private Color _currentColor;
+
+    private AbilitiesHandler _abilitiesHandler;
 
     private PlayerHand[] _playerHands;
     private MaterialPropertyBlock _propertyBlock;
@@ -29,7 +38,9 @@ public class HandsVisual : MonoCache
     {
         _playerHands = GetComponentsInChildren<PlayerHand>();
         _propertyBlock = new MaterialPropertyBlock();
-        _mover = GetComponentInParent<IMover>();
+        _abilitiesHandler = GetComponentInParent<AbilitiesHandler>();   
+
+        _currentColor = noAbilityColor;
     }
 
     protected override void OnEnabled()
@@ -42,6 +53,7 @@ public class HandsVisual : MonoCache
             _playerHands[i].OnHandEmpty += HandleEmptyHandAbility;
             _playerHands[i].OnHandEndCharging += HandleEndChargingAbility;
             _playerHands[i].OnHandDumpLoaded += HandleAbilityDumpLoaded;
+            _playerHands[i].OnHandNewAbilityStacked += HandleNewStackedAbility;
         }
     }
 
@@ -55,12 +67,17 @@ public class HandsVisual : MonoCache
             _playerHands[i].OnHandEmpty -= HandleEmptyHandAbility;
             _playerHands[i].OnHandEndCharging -= HandleEndChargingAbility;
             _playerHands[i].OnHandDumpLoaded -= HandleAbilityDumpLoaded;
+            _playerHands[i].OnHandNewAbilityStacked -= HandleNewStackedAbility;
         }
     }
 
     private void HandleEmptyHandAbility(PlayerHand hand)
     {
         HandleAbilityChangeOnHand(hand, AbilityTypes.None);
+        hand.HandMeshRenderer.GetPropertyBlock(_propertyBlock);
+        _propertyBlock.SetFloat("_Step", minStep);
+        _propertyBlock.SetFloat("_Speed", minSpeed);
+        hand.HandMeshRenderer.SetPropertyBlock(_propertyBlock);
     }
 
     private void HandleAbilityChangeOnHand(PlayerHand hand, AbilityTypes type)
@@ -88,11 +105,26 @@ public class HandsVisual : MonoCache
         }
     }
 
+    private void HandleNewStackedAbility(PlayerHand hand, AbilityTypes type)
+    {
+        var color = GetColorByType(type);
+        _currentColor /= 2;
+        _currentColor *= Color.white;
+        ChangeHandColor(hand, _currentColor * color);
+
+        var t = Mathf.Clamp01(_abilitiesHandler.GetStackedAbilitiesCount() / 5f);
+
+        hand.HandMeshRenderer.GetPropertyBlock(_propertyBlock);
+        _propertyBlock.SetFloat("_Step", Mathf.Lerp(minStep, maxStep, t));
+        _propertyBlock.SetFloat("_Speed", Mathf.Lerp(minSpeed, maxSpeed, t));
+        hand.HandMeshRenderer.SetPropertyBlock(_propertyBlock);
+    }
+
     private void HandleAbilityDumpLoaded(PlayerHand hand, AbilityTypes type)
     {
         var handTransform = hand.transform;
         hand.GetShaker()?.StartRapidShaking();
-        switch (type)
+        /*switch (type)
         {
             case AbilityTypes.Laser:
                 var effect1 = NightPool.Spawn(dumpLoadedEffect, handTransform.position,
@@ -109,7 +141,7 @@ public class HandsVisual : MonoCache
                     handTransform.rotation);
                 effect3.SetVector4("Color", homingAbilityColor);
                 return;
-        }
+        }*/
     }
 
     private async UniTask ChangeHandAnimation(PlayerHand hand, string abilityAnimationName)
@@ -126,6 +158,23 @@ public class HandsVisual : MonoCache
         hand.HandMeshRenderer.SetPropertyBlock(_propertyBlock);
 
         hand.GetComponentInChildren<Light>().color = color;
+
+        _currentColor = color;
+    }
+
+    private Color GetColorByType(AbilityTypes type)
+    {
+        switch (type)
+        {
+            case AbilityTypes.Laser:
+                return laserAbilityColor;
+            case AbilityTypes.Grenade:
+                return grenadeAbilityColor;
+            case AbilityTypes.Homing:
+                return homingAbilityColor;
+        }
+
+        return noAbilityColor;
     }
 
     private async UniTask ChangeHandColorCoverageByLifetime(PlayerHand hand)

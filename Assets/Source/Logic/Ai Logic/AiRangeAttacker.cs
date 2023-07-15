@@ -9,44 +9,88 @@ public class AiRangeAttacker : MonoCache, IAiRangeAttackController
     [SerializeField] private bool tryAttackOnLineOfSight;
     [SerializeField] private float attackRange;
 
-    [SerializeField] private float chargingTime;
+    [SerializeField] private float baseReloadTime, maxReloadTime;
 
-    [SerializeField] private Animation attackPreparingAnimation;
+    [SerializeField] private Animator _animator;
+
+    private float _difficultyMultipliedBaseReloadTime, _difficultyMultipliedMaxReloadTime;
+
+    private float _currentCooldown;
+    private float _cooldownTimer;
 
     private IAiController _aiController;
-    private IActiveAbility _rangeAbility;
+    private DefaultActiveAbility _rangeAbility;
 
     private void Awake()
     {
         _aiController = Get<IAiController>();
-        _rangeAbility = GetComponentInChildren<IActiveAbility>();
+
+        _rangeAbility = GetComponentInChildren<DefaultActiveAbility>();
+
+        _currentCooldown = baseReloadTime;
+        _cooldownTimer = _currentCooldown;
+
+        if (_difficultyMultipliedBaseReloadTime.Equals(0))
+        {
+            _difficultyMultipliedBaseReloadTime = baseReloadTime;
+            _difficultyMultipliedMaxReloadTime = maxReloadTime;
+        }
     }
 
     protected override void Run()
     {
+        _currentCooldown = Mathf.Lerp(_difficultyMultipliedBaseReloadTime, _difficultyMultipliedMaxReloadTime, Mathf.Pow(_aiController.GetTimeDifficulty01(), 1.5f));
+        //Debug.Log(_cooldownTimer);
         if (NeedToAttack())
         {
+            _cooldownTimer -= Time.deltaTime;
             TryAttack();
         }
     }
 
     public void TryAttack()
     {
-        if (_aiController.CanAttack() && _rangeAbility.CanPerform())
+        if (_aiController.CanAttack())
         {
-            _rangeAbility.PerformWithDelay(chargingTime);
-
-            if (attackPreparingAnimation)
+            if (_cooldownTimer <= 0)
             {
-                attackPreparingAnimation.Play();
+                _rangeAbility.PerformAbility(1);
+                _cooldownTimer = _currentCooldown;
+                if (_animator)
+                {
+                    _animator.SetBool("Prepare", false);
+                }
+            }
+
+            else if (_cooldownTimer / _currentCooldown <= 0.5f)
+            {
+                if (_animator)
+                {
+                    _animator.SetFloat("Speed", 1f / (_currentCooldown / 2f));
+                    _animator.SetBool("Prepare", true);
+                }
             }
         }
     }
 
-    public float GetChargingTime()
+    public float GetCurrentCooldown()
     {
-        return chargingTime;
+        return _currentCooldown;
     }
+
+    public void SetDifficultyMultiplier(float multiplier)
+    {
+        if (_difficultyMultipliedBaseReloadTime.Equals(0))
+        {
+            _difficultyMultipliedBaseReloadTime = baseReloadTime;
+            _difficultyMultipliedMaxReloadTime = maxReloadTime;
+        }
+
+        _difficultyMultipliedBaseReloadTime *= multiplier;
+        _difficultyMultipliedMaxReloadTime *= multiplier;
+    }
+
+    public float GetCooldownTimer() => _cooldownTimer;
 
     public bool NeedToAttack()
     {

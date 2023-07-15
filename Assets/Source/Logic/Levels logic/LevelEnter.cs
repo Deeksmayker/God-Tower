@@ -15,8 +15,8 @@ public class LevelEnter : MonoCache
             _player.TeleportPlayer(playerSpawnPoint.position);
     }
 
-    public void StartLevel()
+    /*public void StartLevel()
     {
         _player.HandleLevelStarted();
-    }
+    }*/
 }

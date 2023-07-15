@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
@@ -11,63 +12,38 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
 
     [SerializeField] protected float damage;
     
-    [SerializeField] private int dumpShootChargesCount;
+    [SerializeField] private int shootCount;
 
-    [SerializeField] private float holdTimeToDump;
-    [SerializeField] private float dumpingShootsDelay;
     [SerializeField] private float abilityLifetime;
     [SerializeField] private float cooldown;
 
-    private int _remainingChargesToShootOnDump;
-
-    private float _remainingLifetime;
+    private float _remainingLifetime = 1;
     private float _cooldownTimer;
-    private float _chargingTimer;
-    private float _dumpingTimer;
 
     private bool _input;
     private bool _needToPerform;
     private bool _dumping;
     private bool _dumpLoaded;
+
+    private IHealthHandler _healthHandler;
     
     public event Action OnPerform;
     public event Action OnStartHolding;
-    public event Action OnEndHolding;
-    public event Action OnDumpLoaded;
     public event Action OnEmpty;
-    public event Action OnDump;
 
-    private void Awake()
+    private void Start()
     {
-        _remainingChargesToShootOnDump = dumpShootChargesCount;
         _remainingLifetime = abilityLifetime;
+        _healthHandler = GetComponentInParent<IHealthHandler>();
+        _cooldownTimer = cooldown;
     }
 
     protected override void Run()
     {
-        if (_dumping)
-        {
-            DumpAbility();
-            return;
-        }
-        
         if (_cooldownTimer > 0)
         {
             _cooldownTimer -= Time.deltaTime;
         }
-
-        if (_needToPerform && _cooldownTimer <= 0)
-        {
-            PerformAbility();
-            _cooldownTimer = cooldown;
-        }
-        
-        if (_input)
-        {
-            ChargeAbility();
-        }
-        
-        _needToPerform = false;
 
         if (infinite)
             return;
@@ -79,13 +55,11 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
                 _dumping = true;
                 return;
             }
-            
-            OnEmpty?.Invoke();
             RemoveAbility();
         }
     }
     
-    public void ChargeAbility()
+    /*public void ChargeAbility()
     {
         if (_chargingTimer.Equals(0))
         {
@@ -99,15 +73,17 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             OnDumpLoaded?.Invoke();
             _dumpLoaded = true;
         }
-    }
+    }*/
 
-    public virtual void PerformAbility(bool isDumping = false)
+    public virtual void PerformAbility(int count)
     {
-        _chargingTimer = 0;
+        _cooldownTimer = cooldown;
         OnPerform?.Invoke();
+        if (!infinite)
+            RemoveAbility();
     }
 
-    public void DumpAbility()
+    /*public void DumpAbility()
     {
         _dumpingTimer -= Time.deltaTime;
         if (_dumpingTimer > 0)
@@ -132,49 +108,49 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
             
             RemoveAbility();
         }
-    }
+    }*/
 
-    public void PerformWithDelay(float delay)
+    public async UniTask PerformWithDelay(float delay, int count)
     {
         if (_cooldownTimer > 0)
             return;
         OnStartHolding?.Invoke();
-        Invoke(nameof(PerformAbilityWithoutSpread), delay);
+        _cooldownTimer = cooldown;
+        await UniTask.Delay(TimeSpan.FromSeconds(delay));
+
+        if (_healthHandler != null)
+        {
+            if (_healthHandler.InStun())
+                return;
+        }
+
+        PerformAbility(count);
         _cooldownTimer = cooldown;
     }
     
-    //Костыль нужен потому что нельзя вызвать Invoke если метод принимает параметры, даже если параметр не нужен
-    private void PerformAbilityWithoutSpread()
-    {
-        OnDump?.Invoke();
-        PerformAbility();
-    }
-
     public void SetInput(bool value)
     {
-        if (_input && !value)
+        if (_input && !value && _cooldownTimer <= 0)
         {
-            OnEndHolding?.Invoke();
-            if (_chargingTimer >= holdTimeToDump)
-            {
-                _dumping = true;
-                _dumpingTimer = dumpingShootsDelay;
-                OnDump?.Invoke();
-            }
-            else
-            {
-                _needToPerform = true;
-            }
-
-            _chargingTimer = 0;
+            PerformAbility(shootCount);
         }
         
+        if (!_input && value)
+        {
+            OnStartHolding?.Invoke();
+        }
+
         _input = value;
     }
 
     public void SetInfinity(bool value)
     {
         infinite = value;
+    }
+
+    public void SetCooldown(float newCooldown)
+    {
+        cooldown = newCooldown;
     }
 
     public bool IsInfinite() => infinite;
@@ -204,6 +180,10 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
     {
         return abilityLifetime;
     }
+
+    public float GetCooldown() => cooldown;
+    public float GetCooldownProgress() => 1f - _cooldownTimer / cooldown;
+    public float GetCooldownTimer() => _cooldownTimer;
     
     public Vector3 GetPerformDirection()
     {
