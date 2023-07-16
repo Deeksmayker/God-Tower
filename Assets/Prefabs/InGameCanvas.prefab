@@ -810,6 +810,7 @@ GameObject:
   - component: {fileID: 2111654052415154931}
   - component: {fileID: 2111654052415154957}
   - component: {fileID: 2111654052415154930}
+  - component: {fileID: 5580890617984897253}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -867,8 +868,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Next one
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d2952e132a7982e4ca6b19bb76b35753, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: d2952e132a7982e4ca6b19bb76b35753,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -934,6 +936,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5580890617984897253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111654052415154928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u0417\u0430\u043D\u043E\u0432\u043E"
+  enText: Again
 --- !u!1 &2111654052596059770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,6 +1445,7 @@ GameObject:
   - component: {fileID: 2111654053216730543}
   - component: {fileID: 2111654053216730537}
   - component: {fileID: 2111654053216730542}
+  - component: {fileID: 4816107397397851560}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1486,15 +1503,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: Another one failed
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d2952e132a7982e4ca6b19bb76b35753, type: 2}
+  m_sharedMaterial: {fileID: 6345096079029554295, guid: d2952e132a7982e4ca6b19bb76b35753,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1553,6 +1571,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4816107397397851560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111654053216730540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c57c54bc16524bbfa5e95b3e7e5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruText: "\u041F\u0430\u0434\u0435\u043D\u0438\u0435"
+  enText: Fall
 --- !u!1 &2111654053291635007
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,7 +2778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ruText: "\u041D\u043E\u0432\u044B\u0435 \u0441\u0435\u043A\u0440\u0435\u0442\u043D\u044B\u0435
     \u0444\u0430\u0439\u043B\u044B"
-  enText: New Record!
+  enText: New Secret File Unlocked
 --- !u!1 &5652468847976968015
 GameObject:
   m_ObjectHideFlags: 0

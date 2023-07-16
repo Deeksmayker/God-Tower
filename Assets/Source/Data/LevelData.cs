@@ -20,6 +20,7 @@ public class LevelData
 
     public bool SecretTutorialUnlockedAfterPassing;
 
+    public DifficultyData.Difficulties MaxCompletedDifficulty = DifficultyData.Difficulties.Easy;
 
     public LevelData(Levels level, bool avaliable, float record, float recordForSRank, float recordForARank, float recordForBRank, float recordForCRank)
     {
@@ -42,7 +43,7 @@ public class LevelData
         if (time == 0)
             return "-";
 
-        if (time <= RecordForSRank && (!inLevel || DifficultyData.CurrentDifficulty != DifficultyData.Difficulties.Easy))
+        if (time <= RecordForSRank && MaxCompletedDifficulty >= DifficultyData.Difficulties.Normal)
             return "S";
         if (time <= RecordForARank)
             return "A";

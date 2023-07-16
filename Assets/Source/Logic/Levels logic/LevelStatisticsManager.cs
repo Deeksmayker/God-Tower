@@ -27,6 +27,9 @@ public class LevelStatisticsManager : MonoCache
         _levelEnded = true;
         LevelsManager.SetNextLevelToAvaliable(level);
 
+        if (GetCurrentLevelData().MaxCompletedDifficulty < DifficultyData.CurrentDifficulty)
+            GetCurrentLevelData().MaxCompletedDifficulty = DifficultyData.CurrentDifficulty;
+
         if (GetCurrentLevelData().Record == 0 && GetCurrentLevelData().SecretTutorialUnlockedAfterPassing)
             OnNewSecretTutorial?.Invoke();
 
