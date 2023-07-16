@@ -5,7 +5,7 @@ public class DeathTrigger : MonoCache
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<BaseHealthHandler>(out var health))
+        if (other.TryGetComponent<IHealthHandler>(out var health))
         {
             health.Die();
         }

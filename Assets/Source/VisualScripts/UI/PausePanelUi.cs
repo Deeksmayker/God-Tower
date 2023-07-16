@@ -28,6 +28,9 @@ public class PausePanelUi : MonoBehaviour
         settingsButton.onClick.AddListener(OpenSettings);
         exitButton.onClick.AddListener(Exit);
         closeSettingsWindowButton.onClick.AddListener(CloseSettingsWindow);
+
+        settingsWindow.SetActive(true);
+        settingsWindow.SetActive(false);
     }
 
     private void OnDestroy()

@@ -8,8 +8,10 @@ using UnityEngine.Events;
 
 public class RoomDoor : MonoCache
 {
+    [SerializeField] private RoomParent connectedRoom;
     [SerializeField] private bool trackEnemies = true;
     [SerializeField] private EnemyGroup[] groupsToTrack;
+    [SerializeField] private GameObject[] objectsToEnableOnOpen;
 
     [SerializeField] private float height = 250;
     [SerializeField] private float openSpeed = 300f;
@@ -41,6 +43,11 @@ public class RoomDoor : MonoCache
         if (!trackEnemies)
             return;
 
+        if (connectedRoom)
+        {
+            groupsToTrack = connectedRoom.GetComponentsInChildren<EnemyGroup>();
+        }
+
         _enemiesCount = 0;
 
         for (var i = 0; i < groupsToTrack.Length; i++)
@@ -53,7 +60,6 @@ public class RoomDoor : MonoCache
                     _enemiesCount++;
                     health.OnDied += HandleEnemyDied;
                 }
-
             }
         }
     }
@@ -70,6 +76,21 @@ public class RoomDoor : MonoCache
         desiredPosition += Vector3.up * height;
         _speed = closeSpeed;
         _closed = false;
+
+        for (var i = 0; i < objectsToEnableOnOpen.Length; i++)
+        {
+            objectsToEnableOnOpen[i].SetActive(true);
+        }
+
+        if (connectedRoom)
+        {
+            var timeTotem = connectedRoom.GetComponentInChildren<TimeTotem>();
+
+            if (timeTotem)
+            {
+                timeTotem.StopCanceling();
+            }
+        }
 
         _audioSource.Play();
     }

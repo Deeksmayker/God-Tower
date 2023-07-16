@@ -12,7 +12,8 @@ public static class LevelsManager
         {
             new LevelData(LevelData.Levels.L0_1, true, 0, 15, 40, 45, 50),
             new LevelData(LevelData.Levels.L1_1, true, 0, 33, 40, 45, 50),
-            new LevelData(LevelData.Levels.L1_2, false, 0, 45, 50, 55, 60)
+            new LevelData(LevelData.Levels.L1_2, false, 0, 45, 50, 55, 60),
+            new LevelData(LevelData.Levels.L2_1, false, 0, 60, 70, 75, 90)
         };
 
         _levels[1].SecretTutorialUnlockedAfterPassing = true;
