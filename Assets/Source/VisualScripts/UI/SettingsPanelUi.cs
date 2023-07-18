@@ -50,6 +50,8 @@ public class SettingsPanelUi : MonoCache
         senseSlider.onValueChanged.RemoveListener(SetSenseValue);
         soundSlider.onValueChanged.RemoveListener(SetSfxVolume);
         musicSlider.onValueChanged.RemoveListener(SetMusicVolume);
+
+        SavesManager.SaveAllData();
     }
 
     public void SetSfxVolume(float value)
@@ -70,5 +72,10 @@ public class SettingsPanelUi : MonoCache
     {
         senseValueText.text = Math.Round(value, 2).ToString();
         SettingsController.Sensitivity = value;
+    }
+
+    public void SetLanguage(string value)
+    {
+        LanguageManager.SetLanguage(value);
     }
 }

@@ -4,9 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUi : MonoCache
 {
+    [SerializeField] private GameObject settingsPanel;
+
     private void Awake()
     {
         SavesManager.LoadAllData();
+
+        settingsPanel.SetActive(true);
+        settingsPanel.SetActive(false);
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;

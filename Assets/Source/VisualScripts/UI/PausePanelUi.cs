@@ -1,7 +1,9 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 public class PausePanelUi : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class PausePanelUi : MonoBehaviour
 
     [SerializeField] private Button closeSettingsWindowButton;
 
+    [Inject] private PlayerInput _input;
+
     private bool _isWindowOpen;
 
     private void Start()
@@ -24,6 +28,9 @@ public class PausePanelUi : MonoBehaviour
         settingsButton.onClick.AddListener(OpenSettings);
         exitButton.onClick.AddListener(Exit);
         closeSettingsWindowButton.onClick.AddListener(CloseSettingsWindow);
+
+        settingsWindow.SetActive(true);
+        settingsWindow.SetActive(false);
     }
 
     private void OnDestroy()
@@ -39,6 +46,7 @@ public class PausePanelUi : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && _isWindowOpen)
         {
             ResumeGame();
+            return;
         }
         
         if (Input.GetKeyDown(KeyCode.Escape) && !_isWindowOpen)
@@ -52,7 +60,7 @@ public class PausePanelUi : MonoBehaviour
             _isWindowOpen = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (_input.actions["Restart"].WasPressedThisFrame())
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
