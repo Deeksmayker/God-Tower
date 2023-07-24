@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &2734764703766690187
 VisualEffect:
@@ -53,15 +53,15 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 10
+      - m_Value: 5
         m_Name: MinScale
         m_Overridden: 1
-      - m_Value: 20
+      - m_Value: 10
         m_Name: MaxScale
         m_Overridden: 1
     m_Vector2f:
       m_Array:
-      - m_Value: {x: 1, y: 4}
+      - m_Value: {x: 0.2, y: 0.5}
         m_Name: MinMaxLifetime
         m_Overridden: 1
     m_Vector3f:
@@ -87,10 +87,10 @@ VisualEffect:
       - m_Value: 1
         m_Name: BurstCount
         m_Overridden: 1
-      - m_Value: 1
+      - m_Value: 0
         m_Name: SpawnRate
         m_Overridden: 1
-      - m_Value: 10
+      - m_Value: 1
         m_Name: OverDistanceSpawn
         m_Overridden: 1
     m_Matrix4x4f:
@@ -168,4 +168,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c96a81858d23d41ab4fba646ea2970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDespawn: 5
+  timeToDespawn: 1

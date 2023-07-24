@@ -13,7 +13,7 @@ public static class SavesManager
         public string Language = "EN";
     }
 
-    private const string LEVELS_SUB = "/levels";
+    private const string LEVELS_SUB = "/levels1";
     private const string SETTINGS_SUB = "/settings";
 
     public static void SaveAllData()

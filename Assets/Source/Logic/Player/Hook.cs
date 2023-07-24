@@ -4,12 +4,14 @@ using NTC.Global.Cache;
 using NTC.Global.Pool;
 using System;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Hook : MonoCache
 {
     [SerializeField] private LayerMask hookTargetLayers;
     [SerializeField] private Transform camTransform;
 
+    [SerializeField] private float hookInitialPower;
     [SerializeField] private float hookPower;
     [SerializeField] private float hookUpPower;
     [SerializeField] private float cooldown;
@@ -20,9 +22,12 @@ public class Hook : MonoCache
     [SerializeField] private ShakePreset hookShake;
     [SerializeField] private Animator handAnimator;
 
+    private Vector3 _hookPoint;
+
     private float _timer;
 
     private bool _input;
+    private bool _hooking;
 
     private IMover _mover;
     //private PlayerStyleController _playerStyleController;
@@ -45,7 +50,12 @@ public class Hook : MonoCache
 
         //_currentHookPower = Mathf.Lerp(minHookPower, maxHookPower, _playerStyleController.GetCurrentStyle01());
 
-        if (_input)
+        if (_hooking)
+        {
+            HookToTarget(_hookPoint);
+        }
+
+        /*if (_input)
         {
             var target = CheckForHookTarget();
             if (target.Equals(Vector3.zero))
@@ -54,12 +64,12 @@ public class Hook : MonoCache
             HookToTarget(target);
             MakeHookVisual(target);
             _timer = cooldown;
-        }
+        }*/
     }
 
     public Vector3 CheckForHookTarget()
     {
-        if (Physics.SphereCast(camTransform.position - camTransform.forward * hookRadius / 2, hookRadius, camTransform.forward, out var hitInfo, hookDistance, hookTargetLayers))
+        if (Physics.SphereCast(camTransform.position - camTransform.forward * hookRadius / 4, hookRadius, camTransform.forward, out var hitInfo, hookDistance, hookTargetLayers))
         {
             return hitInfo.point;
         }
@@ -68,17 +78,39 @@ public class Hook : MonoCache
 
     public void HookToTarget(Vector3 targetPos)
     {
-        var direction = (targetPos - transform.position).normalized;
-        _mover.SetVelocity(direction * hookPower);
-        _mover.AddVerticalVelocity(hookUpPower);
+        var direction = targetPos - transform.position;
 
-        OnHook?.Invoke();
+        var speedMultiplier = direction.magnitude / 50;
+        speedMultiplier = Mathf.Clamp(speedMultiplier, 0.5f, 1);
+
+        var addedSpeed = hookPower * speedMultiplier * Time.deltaTime * direction.normalized;
+
+        var velocityDirectionDot = Vector3.Dot(direction.normalized, _mover.GetVelocity().normalized);
+
+        if (speedMultiplier < 1 && velocityDirectionDot > 0.3f && (velocityDirectionDot * _mover.GetVelocity()).magnitude > 50)
+        {
+            addedSpeed = -addedSpeed * (1f - speedMultiplier);
+        }
+
+        _mover.AddVelocity(addedSpeed);
+        _mover.AddVerticalVelocity(hookUpPower * 2 * Time.deltaTime);
+
+        var effect = NightPool.Spawn(vfx, transform.position, Quaternion.identity);
+        effect.SetTarget(targetPos);
+        effect.SetStartPoint(transform.position);
+
+        /*var direction = (targetPos - transform.position).normalized;
+        _mover.SetVelocity(direction * hookPower);
+        _mover.AddVerticalVelocity(hookUpPower);*/
+
+        //OnHook?.Invoke();
     }
 
     public void MakeHookVisual(Vector3 targetPos)
     {
-        var effect = NightPool.Spawn(vfx, transform.position);
+        var effect = NightPool.Spawn(vfx, transform.position, Quaternion.identity);
         effect.SetTarget(targetPos);
+        effect.SetStartPoint(transform.position);
 
         CameraService.Instance.ShakeCamera(hookShake);
 
@@ -87,6 +119,28 @@ public class Hook : MonoCache
 
     public void SetInput(bool value)
     {
+        if (!_hooking && value && _timer <= 0)
+        {
+            _hookPoint = CheckForHookTarget();
+
+            if (!_hookPoint.Equals(Vector3.zero))
+            {
+                _hooking = true;
+
+                _mover.SetVelocity((_hookPoint - transform.position).normalized * hookInitialPower);
+                _mover.AddVerticalVelocity(hookUpPower);
+
+                MakeHookVisual(_hookPoint);
+                OnHook?.Invoke();
+            }
+        }
+
+        if (_hooking && !value)
+        {
+            _hooking = false;
+            _timer = cooldown;
+        }
+
         _input = value;
     }
 }

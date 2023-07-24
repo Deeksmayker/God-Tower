@@ -102,7 +102,7 @@ public class PlayerInputHandler : MonoCache
 
         if (_hook)
         {
-            _hook.SetInput(_playerInput.actions["Hook"].WasPressedThisFrame());
+            _hook.SetInput(_playerInput.actions["Hook"].IsInProgress());
         }
         /*if (_pickUpDetector != null)
         {

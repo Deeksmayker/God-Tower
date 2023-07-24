@@ -168,7 +168,7 @@ MonoBehaviour:
   force: {x: 2, y: 2}
   multiplier: 5
   inverseX: 1
-  inverseY: 1
+  inverseY: 0
   minMaxX: {x: -8, y: 8}
   minMaxY: {x: -8, y: 8}
 --- !u!1 &394014186
@@ -3150,7 +3150,7 @@ Transform:
   - {fileID: 7602446913380586936}
   - {fileID: 7256776211257979131}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3998808300210842282
 CharacterController:
@@ -3233,7 +3233,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   hitBoxSize: {x: 10, y: 10, z: 10}
-  envHitBoxSize: {x: 2.5, y: 2.5, z: 5}
+  envHitBoxSize: {x: 1, y: 2.5, z: 5}
   damage: 20
   hitPayoffForce: 30
   forwardRecoilForce: 20
@@ -3424,10 +3424,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   camTransform: {fileID: 3998808298746309513}
-  hookPower: 80
-  hookUpPower: 20
+  hookInitialPower: 50
+  hookPower: 40
+  hookUpPower: 15
   cooldown: 0.5
-  hookRadius: 15
+  hookRadius: 20
   hookDistance: 1000
   vfx: {fileID: 4908521231261656995, guid: 323eeb84f88f58640a115e48857e4f3c, type: 3}
   hookShake: {fileID: 11400000, guid: be7bd7213b9642d469c226709bcfae93, type: 2}
