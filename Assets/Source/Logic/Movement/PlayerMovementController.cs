@@ -397,10 +397,10 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers)
             && !(_dash && Vector3.Dot(hit.normal, _velocity.normalized) < -0.5f);
 
-        if (needToResolveWallCollision && Vector3.Dot(hit.normal, _velocity.normalized) <= -0.9f)
+        if (needToResolveWallCollision && Vector3.Dot(hit.normal, _velocity.normalized) <= -0.95f)
         {
             StopDash(true);
-            SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);
+            SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) * 0.9f);
             OnBounce?.Invoke(hit.normal);
         }
 
