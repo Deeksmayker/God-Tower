@@ -106,6 +106,18 @@ public class Hook : MonoCache
         //OnHook?.Invoke();
     }
 
+    public void MakeInitialHook(Vector3 targetPos)
+    {
+        var directionNorm = (_hookPoint - transform.position).normalized;
+
+        var velocityDot = Vector3.Dot(directionNorm, _mover.GetVelocity().normalized);
+
+        var addedVelocity = velocityDot > 0 ? _mover.GetVelocity().magnitude * velocityDot : 0;
+
+        _mover.SetVelocity(directionNorm * (hookInitialPower + addedVelocity));
+        _mover.AddVerticalVelocity(hookUpPower);
+    }
+
     public void MakeHookVisual(Vector3 targetPos)
     {
         var effect = NightPool.Spawn(vfx, transform.position, Quaternion.identity);
@@ -127,8 +139,7 @@ public class Hook : MonoCache
             {
                 _hooking = true;
 
-                _mover.SetVelocity((_hookPoint - transform.position).normalized * hookInitialPower);
-                _mover.AddVerticalVelocity(hookUpPower);
+                MakeInitialHook(_hookPoint);
 
                 MakeHookVisual(_hookPoint);
                 OnHook?.Invoke();
