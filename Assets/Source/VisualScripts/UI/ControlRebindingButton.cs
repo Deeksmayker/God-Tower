@@ -5,8 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ControlRebindingButton : MonoBehaviour
@@ -37,7 +35,8 @@ public class ControlRebindingButton : MonoBehaviour
     private void StartRebinding()
     {
         OnStartRebinding?.Invoke();
-        
+      
+
         _rebindingOperation = inputActionReference.action.PerformInteractiveRebinding()
             .OnMatchWaitForAnother(0.1f)
             .OnComplete(operation => {OnCompleteRebinding();})

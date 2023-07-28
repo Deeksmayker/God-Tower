@@ -1,6 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public static class SavesManager
 {
@@ -11,7 +12,10 @@ public static class SavesManager
         public float SFXVolume = 0.5f;
         public float MusicVolume = 0.5f;
         public string Language = "EN";
+        public InputAction[] KeyBindsActions;
     }
+
+    public static SettingsData LoadedSettignsData;
 
     private const string LEVELS_SUB = "/levels1";
     private const string SETTINGS_SUB = "/settings";
@@ -31,14 +35,14 @@ public static class SavesManager
             stream.Close();
         }
 
-        var settingsData = new SettingsData();
-        settingsData.Sensitivity = SettingsController.Sensitivity;
-        settingsData.SFXVolume = SettingsController.SFXVolume;
-        settingsData.MusicVolume = SettingsController.AmbientVolume;
-        settingsData.Language = LanguageManager.CurrentLanguage;
+        LoadedSettignsData = new SettingsData();
+        LoadedSettignsData.Sensitivity = SettingsController.Sensitivity;
+        LoadedSettignsData.SFXVolume = SettingsController.SFXVolume;
+        LoadedSettignsData.MusicVolume = SettingsController.AmbientVolume;
+        LoadedSettignsData.Language = LanguageManager.CurrentLanguage;
 
         FileStream stream1 = new FileStream(Application.persistentDataPath + SETTINGS_SUB, FileMode.Create);
-        formatter.Serialize(stream1 , settingsData);
+        formatter.Serialize(stream1 , LoadedSettignsData);
         stream1.Close();
     }
 
@@ -65,13 +69,13 @@ public static class SavesManager
         }
 
         var stream1 = new FileStream(Application.persistentDataPath + SETTINGS_SUB, FileMode.Open);
-        var settingsData = formatter.Deserialize(stream1) as SettingsData;
+        LoadedSettignsData = formatter.Deserialize(stream1) as SettingsData;
 
-        SettingsController.SFXVolume = settingsData.SFXVolume;
-        SettingsController.AmbientVolume = settingsData.MusicVolume;
-        SettingsController.Sensitivity = settingsData.Sensitivity;
+        SettingsController.SFXVolume = LoadedSettignsData.SFXVolume;
+        SettingsController.AmbientVolume = LoadedSettignsData.MusicVolume;
+        SettingsController.Sensitivity = LoadedSettignsData.Sensitivity;
 
-        LanguageManager.SetLanguage(settingsData.Language);
+        LanguageManager.SetLanguage(LoadedSettignsData.Language);
 
         stream1.Close();
     }

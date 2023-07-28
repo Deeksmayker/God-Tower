@@ -1,12 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using NTC.Global.Cache;
-using Unity.Mathematics;
 using UnityEngine;
-using Zenject;
 using Random = UnityEngine.Random;
 
 public class RunnerAiController : BaseAiController
@@ -116,7 +113,7 @@ public class RunnerAiController : BaseAiController
 
         if ((_timeOnPosition > timeChangeLocation || _cantAttackTime > cantAttackTimeToChangeLocation) && moveToPoints)
         {
-            TryFindPositionToMove();
+            StartCoroutine(TryFindPositionToMove());
         }
     }
 
@@ -127,7 +124,7 @@ public class RunnerAiController : BaseAiController
         _moving = !value;
     }
 
-    private async UniTask TryFindPositionToMove()
+    private IEnumerator TryFindPositionToMove()
     {
         for (var i = 0; i < _movePoints.Count; i++)
         {
@@ -148,10 +145,10 @@ public class RunnerAiController : BaseAiController
                 _currentPoint = _movePoints[i];
                 _currentPoint.TakePoint();
                 MoveToOtherPosition(pointPosition);
-                return;
+                yield break;
             }
 
-            await UniTask.NextFrame();
+            yield return null;
         }
 
         var timer = 0f;
@@ -168,7 +165,7 @@ public class RunnerAiController : BaseAiController
 
             if (_movePoints[index].IsOccupied() || IsWallInDirection(direction, randomMovePoint))
             {
-                await UniTask.NextFrame();
+                yield return null;
                 continue;
             }
             
@@ -177,7 +174,7 @@ public class RunnerAiController : BaseAiController
             _currentPoint = _movePoints[index];
             _currentPoint.TakePoint();
             MoveToOtherPosition(randomMovePoint);
-            return;
+            yield break;
         }
 
         _moving = false;
