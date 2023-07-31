@@ -277,7 +277,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
     public float GetAttackCooldown()
     {
-        return _isHitAnything ? cooldown / 2 : cooldown;
+        return _isHitAnything ? cooldown / 4 : cooldown;
     }
 
     public float GetTimerValueForCurrentAttackState()

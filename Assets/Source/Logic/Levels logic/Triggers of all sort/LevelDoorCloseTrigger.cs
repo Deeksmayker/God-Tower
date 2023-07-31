@@ -26,7 +26,10 @@ public class LevelDoorCloseTrigger : MonoCache
         {
             for (var i = 0; i < objectsToDisable.Length; i++)
             {
-                objectsToDisable[i].SetActive(false);
+                if (objectsToDisable[i])
+                {
+                    objectsToDisable[i].SetActive(false);
+                }
             }
         }
     }

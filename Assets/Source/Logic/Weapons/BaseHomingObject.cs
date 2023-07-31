@@ -89,6 +89,11 @@ public class BaseHomingObject : MonoCache, IImpacter
         DealDamage(other, Damage);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        ownRigidbody.AddForce(Vector3.up * 100);
+    }
+
     protected override void Run()
     {
         if (trailEffect)

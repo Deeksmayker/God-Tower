@@ -393,13 +393,20 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20
+        var needToResolveWallCollision = hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20
             && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers)
-            && !(_dash && Vector3.Dot(hit.normal, _velocity) < -0.5f))
+            && !(_dash && Vector3.Dot(hit.normal, _velocity.normalized) < -0.5f);
+
+        if (needToResolveWallCollision && Vector3.Dot(hit.normal, _velocity.normalized) <= -0.95f)
         {
             StopDash(true);
-            SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) / 2);
+            SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) * 0.9f);
             OnBounce?.Invoke(hit.normal);
+        }
+
+        else if (needToResolveWallCollision)
+        {
+            AddVelocity(hit.normal * (-Vector3.Dot(_velocity.normalized, hit.normal) * _velocity.magnitude));
         }
     }
 
@@ -454,6 +461,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     public void AddVerticalVelocity(float addedVelocity)
     {
         _velocity.y += addedVelocity;
+
+        _velocity.y = Mathf.Clamp(_velocity.y, -200, 100);
     }
 
     public void SetVelocity(Vector3 newVelocity)

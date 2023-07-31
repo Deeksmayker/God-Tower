@@ -6,7 +6,8 @@ public class LevelData
         L0_1,
         L1_1,
         L1_2,
-        L2_1
+        L2_1,
+        L3_1
     }
 
     public Levels Level;
