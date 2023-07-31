@@ -36,7 +36,7 @@ public class SettingsPanelUi : MonoCache
         graphicsDropdown.ClearOptions();
         graphicsDropdown.AddOptions(QualitySettings.names.ToList());
         graphicsDropdown.value = QualitySettings.GetQualityLevel();
-        graphicsDropdown.onValueChanged.AddListener(QualitySettings.SetQualityLevel);
+        graphicsDropdown.onValueChanged.AddListener(HandleGraphicsChanged);
     }
 
     protected override void OnDisabled()
@@ -82,5 +82,11 @@ public class SettingsPanelUi : MonoCache
     public void SetGrassQuality(int value)
     {
         SettingsController.GrassQualityValue = (SettingsController.GrassQuality)value;
+    }
+
+    private void HandleGraphicsChanged(int value)
+    {
+        Debug.Log("changed " + value);
+        QualitySettings.SetQualityLevel(value);
     }
 }
