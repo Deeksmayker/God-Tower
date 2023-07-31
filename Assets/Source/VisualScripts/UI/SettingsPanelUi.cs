@@ -78,4 +78,9 @@ public class SettingsPanelUi : MonoCache
     {
         LanguageManager.SetLanguage(value);
     }
+
+    public void SetGrassQuality(int value)
+    {
+        SettingsController.GrassQualityValue = (SettingsController.GrassQuality)value;
+    }
 }

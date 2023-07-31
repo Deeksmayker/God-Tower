@@ -1,4 +1,4 @@
-using ModestTree;
+﻿using ModestTree;
 using System.Linq;
 using UnityEngine;
 
@@ -11,13 +11,16 @@ public static class LevelsManager
         _levels = new LevelData[]
         {
             new LevelData(LevelData.Levels.L0_1, true, 0, 14, 40, 45, 50),
-            new LevelData(LevelData.Levels.L1_1, true, 0, 30, 40, 50, 55),
-            new LevelData(LevelData.Levels.L1_2, false, 0, 40, 50, 55, 60),
-            new LevelData(LevelData.Levels.L2_1, false, 0, 50, 70, 75, 90)
+            new LevelData(LevelData.Levels.L1_1, true, 0, 30, 40, 50, 60),
+            new LevelData(LevelData.Levels.L1_2, false, 0, 50, 60, 70, 80),
+            new LevelData(LevelData.Levels.L2_1, false, 0, 60, 70, 80, 90),
+            new LevelData(LevelData.Levels.L3_1, false, 0, 90, 70, 80, 90)
         };
 
         _levels[1].SecretTutorialUnlockedAfterPassing = true;
         _levels[2].SecretTutorialUnlockedAfterPassing = true;
+        _levels[3].SecretTutorialUnlockedAfterPassing = true;
+        _levels[4].SecretTutorialUnlockedAfterPassing = true;
     }
 
     public static LevelData GetLevelData(LevelData.Levels level)

@@ -12,12 +12,12 @@ public static class SavesManager
         public float SFXVolume = 0.5f;
         public float MusicVolume = 0.5f;
         public string Language = "EN";
-        public InputAction[] KeyBindsActions;
+        public SettingsController.GrassQuality GrassQualityValue;
     }
 
     public static SettingsData LoadedSettignsData;
 
-    private const string LEVELS_SUB = "/levels1";
+    private const string LEVELS_SUB = "/levels";
     private const string SETTINGS_SUB = "/settings";
 
     public static void SaveAllData()
@@ -40,6 +40,7 @@ public static class SavesManager
         LoadedSettignsData.SFXVolume = SettingsController.SFXVolume;
         LoadedSettignsData.MusicVolume = SettingsController.AmbientVolume;
         LoadedSettignsData.Language = LanguageManager.CurrentLanguage;
+        LoadedSettignsData.GrassQualityValue = SettingsController.GrassQualityValue;
 
         FileStream stream1 = new FileStream(Application.persistentDataPath + SETTINGS_SUB, FileMode.Create);
         formatter.Serialize(stream1 , LoadedSettignsData);
@@ -74,6 +75,7 @@ public static class SavesManager
         SettingsController.SFXVolume = LoadedSettignsData.SFXVolume;
         SettingsController.AmbientVolume = LoadedSettignsData.MusicVolume;
         SettingsController.Sensitivity = LoadedSettignsData.Sensitivity;
+        SettingsController.GrassQualityValue = LoadedSettignsData.GrassQualityValue;
 
         LanguageManager.SetLanguage(LoadedSettignsData.Language);
 

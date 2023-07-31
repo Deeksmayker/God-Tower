@@ -79,7 +79,8 @@ public class RoomDoor : MonoCache
 
         for (var i = 0; i < objectsToEnableOnOpen.Length; i++)
         {
-            objectsToEnableOnOpen[i].SetActive(true);
+            if (objectsToEnableOnOpen[i])
+                objectsToEnableOnOpen[i].SetActive(true);
         }
 
         if (connectedRoom)
