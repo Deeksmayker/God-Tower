@@ -74,10 +74,10 @@ public class StealKick : MonoCache, IMeleeAttacker
 
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
-            PerformAttack(layersToHit, hitBoxSize);
+            PerformAttack(layersToHit, hitBoxSize, hitPayoffForce);
 
             if (_timer >= attackDuration / 2)
-                PerformAttack(envLayers, envHitBoxSize);
+                PerformAttack(envLayers, envHitBoxSize, hitPayoffForce * 2);
         }
 
         if (GetCurrentAttackState() != MeleeAttackStates.Resting)
@@ -89,7 +89,7 @@ public class StealKick : MonoCache, IMeleeAttacker
     }
 
     [ContextMenu("Imitate Kick")]
-    public void PerformAttack(LayerMask layers, Vector3 hitbox)
+    public void PerformAttack(LayerMask layers, Vector3 hitbox, float hitPayoffPower)
     {
         Array.Clear(_attackHitsContainer, 0, _attackHitsContainer.Length);
 
@@ -158,7 +158,8 @@ public class StealKick : MonoCache, IMeleeAttacker
         if (_attackHitsContainer[0] && !_isHitAnything)
         {
             HandleHit();
-            _mover.SetVerticalVelocity(hitPayoffForce);
+            if (_mover.GetVelocity().y < hitPayoffPower)
+                _mover.SetVerticalVelocity(hitPayoffPower);
             _isHitAnything = true;
             _timer /= 2;
         }

@@ -19,6 +19,7 @@ public class PlayerStyleController : MonoCache
     [SerializeField] private AudioSource styleMeterAudioSource;
     [SerializeField] private AudioClip styleFullOneShotClip;
 
+    private float _currentStyleReduceRate;
     private float _currentStyle;
 
     [Inject] private PostProcessingController _postProcessingController;
@@ -29,6 +30,15 @@ public class PlayerStyleController : MonoCache
 
     private void Awake()
     {
+        if (DifficultyData.CurrentDifficulty == DifficultyData.Difficulties.Easy)
+        {
+            _currentStyleReduceRate = 0;
+        }
+        else
+        {
+            _currentStyleReduceRate = styleReduceRate;
+        }
+
         _abilitiesHandler = Get<AbilitiesHandler>();
         _mover = Get<PlayerMovementController>();
         _kicker = Get<StealKick>(); 
@@ -53,7 +63,7 @@ public class PlayerStyleController : MonoCache
 
     protected override void Run()
     {
-        var removedStyle = _mover.IsGrounded() ? styleReduceRate : styleReduceRate / 2;
+        var removedStyle = _mover.IsGrounded() ? _currentStyleReduceRate : _currentStyleReduceRate / 2;
 
         _currentStyle -= removedStyle * Time.deltaTime;
 

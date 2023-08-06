@@ -83,8 +83,8 @@ public class Kicker : MonoCache, IMeleeAttacker
 
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
-            PerformAttack(layersToHit, hitBoxSize);
-            PerformAttack(environmentLayers, environmentHitboxSize);
+            PerformAttack(layersToHit, hitBoxSize, _currentPayoffPowerVector.y);
+            PerformAttack(environmentLayers, environmentHitboxSize, _currentPayoffPowerVector.y);
         }
 
         if (GetCurrentAttackState() != MeleeAttackStates.Resting)
@@ -96,7 +96,7 @@ public class Kicker : MonoCache, IMeleeAttacker
     }
 
     [ContextMenu("Imitate Kick")]
-    public void PerformAttack(LayerMask layers, Vector3 hitbox)
+    public void PerformAttack(LayerMask layers, Vector3 hitbox, float hitPayoffForce)
     {
         Array.Clear(_attackHitsContainer, 0, _attackHitsContainer.Length);
 
@@ -151,7 +151,7 @@ public class Kicker : MonoCache, IMeleeAttacker
 
         if (_attackHitsContainer[0] && !_isHitAnything)
         {
-            _mover.SetVerticalVelocity(_currentPayoffPowerVector.y);
+            _mover.SetVerticalVelocity(hitPayoffForce);
             _mover.AddVelocity(new Vector3(
                 GetAttackDirection().x * _currentPayoffPowerVector.x,
                 0,

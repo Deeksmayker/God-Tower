@@ -12,7 +12,7 @@ public static class LevelsManager
         {
             new LevelData(LevelData.Levels.L0_1, true, 0, 14, 40, 45, 50),
             new LevelData(LevelData.Levels.L1_1, true, 0, 30, 40, 50, 60),
-            new LevelData(LevelData.Levels.L1_2, false, 0, 50, 60, 70, 80),
+            new LevelData(LevelData.Levels.L1_2, false, 0, 43, 60, 70, 80),
             new LevelData(LevelData.Levels.L2_1, false, 0, 60, 70, 80, 90),
             new LevelData(LevelData.Levels.L3_1, false, 0, 90, 70, 80, 90)
         };
