@@ -182,7 +182,7 @@ public class HandsVisual : MonoCache
         var ability = hand.GetHandAbility();
         var t = 1f;
        
-        while (t > 0 && hand.GetHandAbility() != null && hand.GetHandAbility() == ability)
+        while (t > 0 && hand.GetHandAbility() != null && hand.GetHandAbility() == ability && hand.HandMeshRenderer)
         {
             hand.HandMeshRenderer.GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetFloat("_ColorCoverage", t);

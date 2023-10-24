@@ -3150,7 +3150,7 @@ Transform:
   - {fileID: 7602446913380586936}
   - {fileID: 7256776211257979131}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3998808300210842282
 CharacterController:
@@ -3235,7 +3235,7 @@ MonoBehaviour:
   hitBoxSize: {x: 10, y: 10, z: 10}
   envHitBoxSize: {x: 1, y: 2.5, z: 5}
   damage: 20
-  hitPayoffForce: 30
+  hitPayoffForce: 20
   forwardRecoilForce: 20
   preparingTime: 0.02
   attackDuration: 0.75

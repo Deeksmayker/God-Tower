@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3644932574962252415}
   - component: {fileID: 7909685727785206043}
   - component: {fileID: 4993875887923928560}
-  - component: {fileID: 227093217208638433}
+  - component: {fileID: 7404420781128298372}
   m_Layer: 0
   m_Name: DeathPlane
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7356783038044724930
 MonoBehaviour:
@@ -296,9 +296,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 185.2, y: 10, z: 150}
-  m_Center: {x: 0, y: -6, z: 0}
---- !u!114 &227093217208638433
+  m_Size: {x: 185.2, y: 50, z: 150}
+  m_Center: {x: 0, y: -20.37, z: 0}
+--- !u!114 &7404420781128298372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -307,6 +307,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 610003217843168306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b87b8c876afe1ee44b3ae77fe209da65, type: 3}
+  m_Script: {fileID: 11500000, guid: 7adda52de2daf384e81e92ca073bab1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damagePlayer: 1
+  playerPushForce: 500
