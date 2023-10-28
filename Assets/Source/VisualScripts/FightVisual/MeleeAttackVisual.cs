@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 public class MeleeAttackVisual : MonoCache
 {
     [SerializeField] private Animation animationTarget;
-    [SerializeField] private VisualEffect parryEffect;
+    private ParticleSystem parryEffect;
     [SerializeField] private bool shakeCamera;
     [SerializeField] private ShakePreset kickShakePreset;
     [SerializeField] private ShakePreset hitShakePreset;
@@ -23,8 +23,10 @@ public class MeleeAttackVisual : MonoCache
 
         if (_meleeAttacker is null)
         {
-            Debug.LogError("No melee attacker on prefab");  
+            Debug.LogError("No melee attacker on prefab");
         }
+
+        parryEffect = (Resources.Load(ResPath.Particles + "PlayerHitParticles") as GameObject).GetComponent<ParticleSystem>();
 
     }
 
@@ -41,7 +43,7 @@ public class MeleeAttackVisual : MonoCache
         _meleeAttacker.OnHit -= HandleHit;
         _meleeAttacker.OnParry -= HandleParry;
     }
-    
+
     private void HandleAttack()
     {
         if (animationTarget != null)
@@ -53,7 +55,7 @@ public class MeleeAttackVisual : MonoCache
 
         if (shakeCamera)
         {
-            CameraService.Instance.ShakeCamera(kickShakePreset);
+            CameraService.Instance.ShakeCamera(0.15f);
         }
     }
 
@@ -61,10 +63,11 @@ public class MeleeAttackVisual : MonoCache
     {
         var effect = NightPool.Spawn(parryEffect, transform.position + _meleeAttacker.GetAttackDirection(),
             Quaternion.LookRotation(_meleeAttacker.GetAttackDirection()));
+        effect.Play();
 
         if (shakeCamera)
         {
-            CameraService.Instance.ShakeCamera(hitShakePreset);
+            CameraService.Instance.ShakeCamera(0.4f);
         }
     }
 
@@ -72,7 +75,7 @@ public class MeleeAttackVisual : MonoCache
     {
         var effect = NightPool.Spawn(parryEffect, transform.position + _meleeAttacker.GetAttackDirection(),
             Quaternion.LookRotation(_meleeAttacker.GetAttackDirection()));
-        
+
         HandleHit();
     }
 }

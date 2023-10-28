@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9905048694e748418864cc74e4c00b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   dumpLoadedEffect: {fileID: 2734764703766690187, guid: 3bf47eeb9f6f7f54dbec3b6b54e02f86,
     type: 3}
   noAbilityColor: {r: 2.4913445, g: 2.4913445, b: 2.4913445, a: 0}
@@ -165,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1023153bb75d0b94e82667643af5a270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   force: {x: 2, y: 2}
   multiplier: 5
   inverseX: 1
@@ -239,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6417037573b43cca439dedbbdbadcdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   damageMultiplier: 1
 --- !u!1 &398174133
 GameObject:
@@ -1160,9 +1163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168f4f7ed1b8401991e2e524d1cd522d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   animationTarget: {fileID: 8970179928658585028}
-  parryEffect: {fileID: 2734764703766690187, guid: 027692673381ac14eafd31385cc49e16,
-    type: 3}
   shakeCamera: 1
   kickShakePreset: {fileID: 11400000, guid: be7bd7213b9642d469c226709bcfae93, type: 2}
   hitShakePreset: {fileID: 11400000, guid: 719def726682805499e6230696fdecf9, type: 2}
@@ -1178,6 +1180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a6d2f5784b4efa88c2be144b1be47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   jumpShakePreset: {fileID: 11400000, guid: bd3dc534d6b00354393cf60a428004d4, type: 2}
 --- !u!114 &6741278154318378353
 MonoBehaviour:
@@ -1191,6 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825c81120a22ffd49b90682bdc40d273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   slidingSparksEffect: {fileID: 4768845201575766844}
   bounceEffect: {fileID: 2734764703766690187, guid: 994b0e4ffea14bd4c987b124a5887aa4,
     type: 3}
@@ -1434,6 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64717da88c448d19d0714806c029ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   attackPerformClips:
   - {fileID: 8300000, guid: b16dcd756bbaafc42b74e7bd7286a36e, type: 3}
   attackHitClips:
@@ -1551,6 +1556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e90c08dd8c4bf989426b1bd5c31205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   effectsController: {fileID: 6741278154318378353}
   slidingAudioSource: {fileID: 3262024250285768881}
   jumpClips:
@@ -2541,6 +2547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   rapidShakePreset: {fileID: 11400000, guid: 1424216921372f84781f49fb7bbb05c7, type: 2}
   durableShakePreset: {fileID: 11400000, guid: 6c4a5ad0bae6bd84a916d777ee8f4f44, type: 2}
   makeDurableShakeOnStart: 0
@@ -2556,6 +2563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7e8588317749da873659463438aa23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   HandAnimator: {fileID: 0}
   HandMeshRenderer: {fileID: 0}
 --- !u!114 &206257263
@@ -2746,6 +2754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e7b76266b7830419d3170e8d8f3e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   addedVerticalSpeed: 30
 --- !u!136 &7872997131959220950
 CapsuleCollider:
@@ -2875,6 +2884,7 @@ GameObject:
   - component: {fileID: 1137967106}
   - component: {fileID: 2292159567300001313}
   - component: {fileID: 5238936183812696310}
+  - component: {fileID: 3994516934976961553}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3014,6 +3024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91134ac71e574ce3916de09d539b6229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
 --- !u!114 &1137967106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3021,7 +3032,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808298643400553}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f87a7755ac781d24ea42a80a30abbe0f, type: 3}
   m_Name: 
@@ -3040,6 +3051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b8586ae563b024db76210025f34b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   volume: {fileID: 7021654372833778275}
   smooth: 0.1
   maxVignetteIntensity: 0.4
@@ -3057,10 +3069,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7201c41fb5c5a044ba9f269571850d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   speedThreshold: 25
   maxSpeed: 100
   addedFovToMax: 20
   fovChangeRate: 10
+--- !u!114 &3994516934976961553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808298643400553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ee1c62c905bb24ea7c9cf3d9d40b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TraumaExponent: 2
+  MaximumAngularShake: {x: 40, y: 40, z: 40}
+  MaximumTranslationShake: {x: 0, y: 0, z: 0}
 --- !u!1 &3998808298746309512
 GameObject:
   m_ObjectHideFlags: 0
@@ -3122,6 +3150,7 @@ GameObject:
   - component: {fileID: 16026984469209041}
   - component: {fileID: 3998808300210840912}
   - component: {fileID: 578364562917549123}
+  - component: {fileID: 702805688622243959}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -3190,6 +3219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba6856339a845779b25f8d47fae6c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   cameraRoot: {fileID: 3998808298746309513}
   walkForwardOnStart: 1
 --- !u!114 &2140864504
@@ -3204,6 +3234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef9e94975b748e5a654afd5135d2425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   laserAbilityPrefab: {fileID: 3216269069128228425, guid: c7af7e11377f74d4e86dc715793dfc00,
     type: 3}
   grenadeAbilityPrefab: {fileID: 3232058061232070227, guid: 06f3cea25764ba048a1c32d55a377e3a,
@@ -3225,6 +3256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9711b9377f58e4ab9e8ca8249cd78a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   directionTarget: {fileID: 444436189}
   layersToHit:
     serializedVersion: 2
@@ -3254,9 +3286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a790e3aadd1b4d2fa3809e9dc342fb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   lookRotationTransform: {fileID: 3998808298746309513}
   jumpContinueInput: 0.2
-  autoJump: 1
+  autoJump: 0
 --- !u!114 &3998808298923127482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3269,6 +3302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d7426bc9da47bb896065a29f540d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   layersToSteal:
     serializedVersion: 2
     m_Bits: 256
@@ -3295,6 +3329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddc7e42f3b84b43ba85dbcc20b4342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   canDie: 1
   canStartDying: 0
   oneHealthDeathProtection: 0
@@ -3316,6 +3351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e11307b5bd84400852e79cca2d04333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   cameraTransform: {fileID: 3998808298746309513}
   m_XSensitivity: 0.1
   m_YSensitivity: 0.1
@@ -3337,6 +3373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41afc8f7e6d400bb14e4f65e07ff8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   timeStopOnKickHit: 0.05
   timeStopOnParry: 0.05
 --- !u!114 &3998808298923127473
@@ -3351,6 +3388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332c9740f46e4f5ab5579efe3df01071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   source: {fileID: 1551784981}
   takeDamageClip: {fileID: 8300000, guid: 09b553c9261391f4fb8af6ead0618039, type: 3}
   camShake: {fileID: 11400000, guid: 719def726682805499e6230696fdecf9, type: 2}
@@ -3366,6 +3404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c7b809aea12eb4dbeb6c60353eebef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   radiusObject: {fileID: 255045707089274207}
   startRadius: 0
   maxRadius: 150
@@ -3385,6 +3424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da24e8a6c5fd0f94082877ccab709ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
 --- !u!114 &1102217480231806896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3397,6 +3437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4a246e60ecfcc48ac82a7709bb2134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   styleReduceRate: 0.08
   stylePerKill: 0.1
   addedDashDuration: 0.5
@@ -3420,6 +3461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6846707a5778fa4fa32d91eaaba4635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   hookTargetLayers:
     serializedVersion: 2
     m_Bits: 16384
@@ -3476,6 +3518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5833d9407de8847abc05f57e16aa19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   m_Friction: 6
   m_Gravity: 40
   m_JumpForce: 20
@@ -3502,6 +3545,22 @@ MonoBehaviour:
   baseDashDuration: 0.3
   minDashDuration: 0.3
   baseDashCooldown: 1
+--- !u!114 &702805688622243959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc02fabbf2a162d428fd3c5633706a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  shootPoint: {fileID: 1644204099}
+  camDirection: {fileID: 3998808298746309513}
+  bigBallCooldown: 1
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0
@@ -4228,6 +4287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d509ce2f91cf76c4cb098b46fa3da886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   angleOfRotationForZ: 5
   angleOfRotationForX: 5
   rotationSpeed: 5
@@ -4310,6 +4370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d926ceddfdea48e7902cd93daff8891d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   rapidShakePreset: {fileID: 11400000, guid: 1424216921372f84781f49fb7bbb05c7, type: 2}
   durableShakePreset: {fileID: 11400000, guid: 6c4a5ad0bae6bd84a916d777ee8f4f44, type: 2}
   makeDurableShakeOnStart: 0
@@ -4325,6 +4386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62853142e5a5445ea2758fd4af36bf54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   HandAnimator: {fileID: 0}
   HandMeshRenderer: {fileID: 0}
 --- !u!114 &4905871059429823450
@@ -4606,6 +4668,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DashEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640340263942605254, guid: c08473128069616448908c0652716889,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

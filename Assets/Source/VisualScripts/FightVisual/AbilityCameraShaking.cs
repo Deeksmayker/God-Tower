@@ -29,11 +29,11 @@ public class AbilityCameraShaking : MonoCache
 
     private void HandlePerformingAbility()
     {
-        CameraService.Instance.ShakeCamera(shakePreset);
+        CameraService.Instance.ShakeCamera(0.3f);
     }
 
     private void HandleDump()
     {
-        CameraService.Instance.ShakeCamera(shakePresetOnDump);
+        CameraService.Instance.ShakeCamera(0.5f);
     }
 }

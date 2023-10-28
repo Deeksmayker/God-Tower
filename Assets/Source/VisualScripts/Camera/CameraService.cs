@@ -8,16 +8,26 @@ public class CameraService : MonoCache
 {
     public static CameraService Instance;
 
+    private StressReceiver _stressReceiver;
+
     private bool _shaking;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+
+        _stressReceiver = GetComponent<StressReceiver>();
         Instance = this;
     }
 
-    public void ShakeCamera(ShakePreset shakeSettings)
+    public void ShakeCamera(float stress)
     {
-        if (_shaking)
+        _stressReceiver.InduceStress(stress);
+
+        /*if (_shaking)
         {
             DOTween.Clear();
         }
@@ -34,7 +44,7 @@ public class CameraService : MonoCache
         if (rotationShaking.isOn)
         {
             AnimationShortCuts.ShakeRotationAnimation(transform, shakeSettings).OnKill(() => _shaking = false);
-        }
+        }*/
     }
 
     public Tween ShakeCameraPosition(ShakePreset shakePreset)

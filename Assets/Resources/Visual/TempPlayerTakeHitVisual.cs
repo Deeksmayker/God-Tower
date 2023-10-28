@@ -40,7 +40,7 @@ public class TempPlayerTakeHitVisual : MonoCache
 
     private void HandleTakeHit()
     {
-        CameraService.Instance.ShakeCamera(camShake);
+        CameraService.Instance.ShakeCamera(0.5f);
         source.PlayOneShot(takeDamageClip);
         ChangePostProcess();
     }

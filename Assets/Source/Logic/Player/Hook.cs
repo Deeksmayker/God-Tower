@@ -124,7 +124,7 @@ public class Hook : MonoCache
         effect.SetTarget(targetPos);
         effect.SetStartPoint(transform.position);
 
-        CameraService.Instance.ShakeCamera(hookShake);
+        CameraService.Instance.ShakeCamera(0.2f);
 
         handAnimator.SetTrigger("StealAbility");
     }

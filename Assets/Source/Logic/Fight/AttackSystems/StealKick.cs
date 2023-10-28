@@ -137,6 +137,11 @@ public class StealKick : MonoCache, IMeleeAttacker
                 return;
             }
 
+            if (_attackHitsContainer[i].TryGetComponent<PlayerBigBall>(out var kinematic))
+            {
+                kinematic.HandleImpulse(GetAttackDirection(), 500);
+            }
+
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, hitType);
 
             var abilityGiver = _attackHitsContainer[i].GetComponentInParent<IGiveAbility>();
@@ -158,6 +163,7 @@ public class StealKick : MonoCache, IMeleeAttacker
         if (_attackHitsContainer[0] && !_isHitAnything)
         {
             HandleHit();
+            MakeForwardRecoil(-0.1f);
             if (_mover.GetVelocity().y < hitPayoffPower)
                 _mover.SetVerticalVelocity(hitPayoffPower);
             _isHitAnything = true;
@@ -203,7 +209,7 @@ public class StealKick : MonoCache, IMeleeAttacker
         _mover.StopDash();
     }
 
-    private void MakeForwardRecoil()
+    private void MakeForwardRecoil(float direction = 1)
     {
 
         var horizontalVelocity = _mover.GetVelocity();
@@ -211,7 +217,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
         var resultVelocity = _mover.GetVelocity();
         resultVelocity += GetAttackDirection() * forwardRecoilForce;
-        resultVelocity = resultVelocity.magnitude * GetAttackDirection();
+        resultVelocity = resultVelocity.magnitude * GetAttackDirection() * direction;
 
         _mover.SetVelocity(resultVelocity);
 
