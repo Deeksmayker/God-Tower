@@ -116,8 +116,6 @@ public class StealKick : MonoCache, IMeleeAttacker
 
             var hitPosition = hitBoxCenter;
 
-            var hitType = HitTypes.NormalPoint;
-
             if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseExplosiveObject>(out var explosive))
             {
                 explosive.MakeExplosiveSuper();
@@ -142,7 +140,7 @@ public class StealKick : MonoCache, IMeleeAttacker
                 kinematic.HandleImpulse(GetAttackDirection(), 500);
             }
 
-            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, hitType);
+            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, "Player Kick");
 
             var abilityGiver = _attackHitsContainer[i].GetComponentInParent<IGiveAbility>();
             var healthHandler = _attackHitsContainer[i].GetComponentInParent<IHealthHandler>();

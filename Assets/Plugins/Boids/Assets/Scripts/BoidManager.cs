@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BoidManager : MonoBehaviour {
 
+    [SerializeField] private Transform flyTarget;
+
     const int threadGroupSize = 1024;
 
     public BoidSettings settings;
@@ -13,7 +15,7 @@ public class BoidManager : MonoBehaviour {
     void Start () {
         boids = FindObjectsOfType<Boid> ();
         foreach (Boid b in boids) {
-            b.Initialize (settings, null);
+            b.Initialize (settings, flyTarget);
         }
     }
 

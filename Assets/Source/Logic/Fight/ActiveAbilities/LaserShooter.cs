@@ -7,6 +7,7 @@ public class LaserShooter : MonoCache, IMakeLaser, IImpacter
 {
     [SerializeField] private LayerMask hitTakerLayers;
     [SerializeField] private LayerMask environmentLayers;
+    [SerializeField] private string hitName = "Player Laser";
 
     [SerializeField] private float damage = 20;
     [SerializeField] private float radius = 3;
@@ -28,17 +29,10 @@ public class LaserShooter : MonoCache, IMakeLaser, IImpacter
         {
             var hitTransform = hitInfo.transform;
 
-            var hitType = HitTypes.NormalPoint;
-
-            if (hitTransform.GetComponent<IWeakPoint>() != null)
-            {
-                hitType = HitTypes.WeakPoint;
-            }
-
             if (hitInfo.transform.TryGetComponent<ITakeHit>(out var hitTaker))
             {
                 OnHitToHitTaker?.Invoke(hitInfo, direction);
-                hitTaker.TakeHit(damage, hitInfo.point, hitType);
+                hitTaker.TakeHit(damage, hitInfo.point, hitName);
                 OnImpact?.Invoke(hitInfo.point);
                 return;
             }

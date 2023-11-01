@@ -175,11 +175,6 @@ public class BaseHomingObject : MonoCache, IImpacter
 
         OnImpact?.Invoke(hitPosition);
 
-        var hitType = HitTypes.NormalPoint;
-
-        if (other.GetComponent<IWeakPoint>() != null)
-            hitType = HitTypes.WeakPoint;
-
         if (other.TryGetComponent<BaseExplosiveObject>(out var explosive))
         {
             explosive.MakeExplosiveSuper();
@@ -190,7 +185,7 @@ public class BaseHomingObject : MonoCache, IImpacter
 
         if (other.TryGetComponent<ITakeHit>(out var takeHit))
         {
-            takeHit.TakeHit(damage, hitPosition, hitType);
+            takeHit.TakeHit(damage, hitPosition, "Homing");
             OnDestroy?.Invoke();
             //await UniTask.NextFrame();
             Destroy(gameObject);            

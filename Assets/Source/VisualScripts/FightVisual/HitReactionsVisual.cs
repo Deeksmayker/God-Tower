@@ -72,7 +72,7 @@ public class HitReactionsVisual : MonoCache
 
         for (var i = 0; i < _hitTakers.Length; i++)
         {
-            _hitTakers[i].OnTakeHitWithPosition += HandleHitBuffer;
+            _hitTakers[i].OnTakeHitWithAttackerPosition += HandleHitBuffer;
         }
     }
 
@@ -84,7 +84,7 @@ public class HitReactionsVisual : MonoCache
 
         for (var i = 0; i < _hitTakers.Length; i++)
         {
-            _hitTakers[i].OnTakeHitWithPosition -= HandleHitBuffer;
+            _hitTakers[i].OnTakeHitWithAttackerPosition -= HandleHitBuffer;
         }
     }
 
