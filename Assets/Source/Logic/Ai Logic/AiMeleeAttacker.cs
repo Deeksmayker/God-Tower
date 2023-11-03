@@ -36,7 +36,7 @@ public class AiMeleeAttacker : MonoCache, IAiMeleeAttackController
     {
         if (TryGetComponent<IHealthHandler>(out var health))
         {
-            health.OnStun += DisallowAttack;
+            //health.OnStun += DisallowAttack;
         }
     }
     
@@ -44,7 +44,7 @@ public class AiMeleeAttacker : MonoCache, IAiMeleeAttackController
     {
         if (TryGetComponent<IHealthHandler>(out var health))
         {
-            health.OnStun -= DisallowAttack;
+            //health.OnStun -= DisallowAttack;
         }
     }
 

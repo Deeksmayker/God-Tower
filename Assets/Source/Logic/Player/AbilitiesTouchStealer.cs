@@ -21,7 +21,7 @@ public class AbilitiesTouchStealer : MonoCache
             _abilitiesHandler.SetNewLeftAbility(giver);
         }
 
-        if (other.TryGetComponent<BaseHealthHandler>(out var health) && health.InStun())
+        if (other.TryGetComponent<IHealthHandler>(out var health))
         {
             health.Die();
 

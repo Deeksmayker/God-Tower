@@ -16,7 +16,7 @@ public class PlayerInputHandler : MonoCache
     
     private PlayerMovementController _mover;
     private IJumper _jumper;
-    private IMeleeAttacker _meleeAttacker;
+    private NewKick _meleeAttacker;
     private AbilitiesHandler _abilitiesHandler;
     private AirSlamer _slamer;
     private GroundSlider _slider;
@@ -32,7 +32,7 @@ public class PlayerInputHandler : MonoCache
         _mover = Get<PlayerMovementController>();
         _playerInput = Get<PlayerInput>();
         _jumper = Get<IJumper>();
-        _meleeAttacker = Get<IMeleeAttacker>();
+        _meleeAttacker = Get<NewKick>();
         _abilitiesHandler = Get<AbilitiesHandler>();
         _slamer = Get<AirSlamer>();
         _slider = Get<GroundSlider>();
@@ -49,7 +49,7 @@ public class PlayerInputHandler : MonoCache
 
         if (_mover != null)
         {
-            _mover.SetHorizontalInput(_playerInput.actions["Move"].ReadValue<Vector2>());
+            _mover.SetInput(_playerInput.actions["Move"].ReadValue<Vector2>());
 
             _mover.SetDashInput(_playerInput.actions["Dash"].IsInProgress());
         }

@@ -410,7 +410,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         }
     }
 
-    public void SetHorizontalInput(Vector2 input)
+    public void SetInput(Vector3 input)
     {
         m_MoveInput = new Vector3(input.x, 0, input.y);
     }

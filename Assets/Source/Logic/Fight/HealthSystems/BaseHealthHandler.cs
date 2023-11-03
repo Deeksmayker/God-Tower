@@ -5,8 +5,9 @@ using NTC.Global.Pool;
 using UnityEngine;
 using Zenject;
 
-public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbilityOpportunity
+public class BaseHealthHandler : MonoCache//, IHealthHandler, ITrackingGiveAbilityOpportunity
 {
+    /*
     [SerializeField] private bool canDie = true;
     [SerializeField] private bool canStartDying = true;
     [SerializeField] private bool oneHealthDeathProtection;
@@ -157,7 +158,7 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
         canStartDying = value;
     }
 
-    public float GetHealth()
+    public float GetHealth01()
     {
         return health;
     }
@@ -173,4 +174,9 @@ public class BaseHealthHandler : MonoCache, IHealthHandler, ITrackingGiveAbility
     {
         return _stunTimer;
     }
+
+    public void ChangeHealth(float changeValue)
+    {
+        throw new NotImplementedException();
+    }*/
 }

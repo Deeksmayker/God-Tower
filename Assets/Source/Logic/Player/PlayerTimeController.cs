@@ -19,13 +19,11 @@ public class PlayerTimeController : MonoCache
 
     protected override void OnEnabled()
     {
-        _kicker.OnParry += HandleParry;
         _kicker.OnHit += HandleKickHit;
     }
     
     protected override void OnDisabled()
     {
-        _kicker.OnParry -= HandleParry;
         _kicker.OnHit -= HandleKickHit;
     }
 

@@ -15,13 +15,13 @@ public class LevelLeversObserver : MonoCache
     {
         for (var i = 0; i < connectedObjects.Length; i++)
         {
-            connectedObjects[i].OnStun += HandleObjectDie;
-            connectedObjects[i].OnRevive += HandleObjectRevive;
+            //connectedObjects[i].OnStun += HandleObjectDie;
+            //connectedObjects[i].OnRevive += HandleObjectRevive;
         }
 
         for (var i = 0; i < connectedEnemies.Length; i++)
         {
-            connectedEnemies[i].OnDied += HandleObjectDie;
+            //connectedEnemies[i].OnDied += HandleObjectDie;
         }
     }
 
@@ -29,13 +29,13 @@ public class LevelLeversObserver : MonoCache
     {
         for (var i = 0; i < connectedObjects.Length; i++)
         {
-            connectedObjects[i].OnRevive -= HandleObjectRevive;
-            connectedObjects[i].OnStun -= HandleObjectDie;
+            //connectedObjects[i].OnRevive -= HandleObjectRevive;
+            //connectedObjects[i].OnStun -= HandleObjectDie;
         }
 
         for (var i = 0; i < connectedEnemies.Length; i++)
         {
-            connectedEnemies[i].OnDied -= HandleObjectDie;
+            //connectedEnemies[i].OnDied -= HandleObjectDie;
         }
     }
 
@@ -46,7 +46,7 @@ public class LevelLeversObserver : MonoCache
         {
             for (var i = 0; i < connectedObjects.Length; i++)
             {
-                connectedObjects[i].SetNeedRecovery(false);
+                ////////////////////////////connectedObjects[i].SetNeedRecovery(false);
             }
             
             OnAllObjectsDied.Invoke();

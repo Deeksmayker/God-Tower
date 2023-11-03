@@ -196,13 +196,13 @@ public class RunnerAiController : BaseAiController
         while (distanceToNewPos > 1 && timer < 5f)
         {
             var direction = Vector3.Normalize(newPosition - _position);
-            _mover.SetHorizontalVelocity(direction * moveSpeed);
+            //_mover.SetHorizontalVelocity(direction * moveSpeed);
             distanceToNewPos = Vector3.Distance(_position, newPosition);
             timer += Time.deltaTime;
             await UniTask.NextFrame();
         }
         
-        _mover.SetHorizontalVelocity(Vector3.zero);
+       // _mover.SetHorizontalVelocity(Vector3.zero);
         _moving = false;
     }
 

@@ -109,7 +109,7 @@ public class DefaultMover : MonoCache, IMover
         }
     }
 
-    public void SetHorizontalInput(Vector2 input)
+    public void SetInput(Vector3 input)
     {
         _horizontalInput = input;
     }

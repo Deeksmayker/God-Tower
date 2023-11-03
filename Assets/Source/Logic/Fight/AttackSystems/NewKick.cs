@@ -4,18 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static IMeleeAttacker;
 
-public class StealKick : MonoCache, IMeleeAttacker
+public class NewKick : MonoCache, IMeleeAttacker
 {
     [SerializeField] private Transform directionTarget;
-    [SerializeField] private LayerMask layersToHit;
-    [SerializeField] private LayerMask envLayers;
     [SerializeField] private Vector3 hitBoxSize;
     [SerializeField] private Vector3 envHitBoxSize;
 
     [Header("Impact")]
     [SerializeField] private int damage = 1;
-    [SerializeField] private float hitPayoffForce;
-    [SerializeField] private float forwardRecoilForce = 30f;
 
     [Header("Timers")]
     [SerializeField] private float preparingTime;
@@ -24,7 +20,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
     [Header("Parry")]
     [SerializeField] private bool allowParry = true;
-    [SerializeField] private float parryProjectileBoostVelocity = 70;
+    [SerializeField] private float parryDuration;
 
     private Collider[] _attackHitsContainer = new Collider[10];
     private List<int> _objectsAlreadyTakeHit = new();
@@ -34,25 +30,18 @@ public class StealKick : MonoCache, IMeleeAttacker
     private bool _isHitAnything;
 
     private float _timer;
-    private float _baseForwardRecoilForce;
+    private float _baseKickDashForce;
 
     private MeleeAttackStates _attackState = MeleeAttackStates.Resting;
-
-    private PlayerMovementController _mover;
-    private AbilitiesHandler _abilitiesHandler;
 
     public event Action OnStartPreparingAttack;
     public event Action OnStartAttack;
     public event Action OnEndAttack;
     public event Action OnHit;
-    public event Action<GameObject> OnHitWithObject;
     public event Action OnParry;
 
     private void Awake()
     {
-        _baseForwardRecoilForce = forwardRecoilForce;
-        _mover = Get<PlayerMovementController>();
-        _abilitiesHandler = Get<AbilitiesHandler>();
     }
 
     /*protected override void OnEnabled()
@@ -75,10 +64,10 @@ public class StealKick : MonoCache, IMeleeAttacker
 
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
-            PerformAttack(layersToHit, hitBoxSize, hitPayoffForce);
+            PerformAttack(Layers.EnemyHurtBox, hitBoxSize);
 
             if (_timer >= attackDuration / 2)
-                PerformAttack(envLayers, envHitBoxSize, hitPayoffForce * 2);
+                PerformAttack(Layers.Environment, envHitBoxSize);
         }
 
         if (GetCurrentAttackState() != MeleeAttackStates.Resting)
@@ -90,7 +79,7 @@ public class StealKick : MonoCache, IMeleeAttacker
     }
 
     [ContextMenu("Imitate Kick")]
-    public void PerformAttack(LayerMask layers, Vector3 hitbox, float hitPayoffPower)
+    public void PerformAttack(LayerMask layers, Vector3 hitbox)
     {
         Array.Clear(_attackHitsContainer, 0, _attackHitsContainer.Length);
 
@@ -117,55 +106,14 @@ public class StealKick : MonoCache, IMeleeAttacker
 
             var hitPosition = hitBoxCenter;
 
-            if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseExplosiveObject>(out var explosive))
-            {
-                explosive.MakeExplosiveSuper();
-                explosive.RestoreCollisionImmune();
-                var direction = GetAttackDirection();
-                direction.y -= 0.1f;
-                explosive.Rb.velocity = direction * parryProjectileBoostVelocity;
-                OnParry?.Invoke();
-                return;
-            }
-
-            if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseHomingObject>(out var homing))
-            {
-                homing.BecomeSuperHoming();
-                homing.ownRigidbody.velocity += (GetAttackDirection() * 100);
-                OnParry?.Invoke();
-                return;
-            }
-
-            if (_attackHitsContainer[i].TryGetComponent<PlayerBigBall>(out var kinematic))
-            {
-                kinematic.HandleImpulse(GetAttackDirection(), 500);
-            }
-
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, "Player Kick");
 
-            var abilityGiver = _attackHitsContainer[i].GetComponentInParent<IGiveAbility>();
-            var healthHandler = _attackHitsContainer[i].GetComponentInParent<IHealthHandler>();
-
-            if (abilityGiver != null && abilityGiver.CanGiveAbility())
-            {
-                _abilitiesHandler.SetNewLeftAbility(abilityGiver);
-            }
-
-            if (healthHandler != null)
-            {
-                healthHandler.Die();
-            }
-
-            OnHit?.Invoke();
-            OnHitWithObject?.Invoke(_attackHitsContainer[i].gameObject);
         }
 
         if (_attackHitsContainer[0] && !_isHitAnything)
         {
+            OnHit?.Invoke();
             HandleHit();
-            MakeForwardRecoil(-0.1f);
-            if (_mover.GetVelocity().y < hitPayoffPower)
-                _mover.SetVerticalVelocity(hitPayoffPower);
             _isHitAnything = true;
             _timer /= 2;
         }
@@ -192,7 +140,6 @@ public class StealKick : MonoCache, IMeleeAttacker
                 break;
             case MeleeAttackStates.Attacking:
                 OnStartAttack?.Invoke();
-                MakeForwardRecoil();
                 _timer = GetAttackDuration();
                 break;
             case MeleeAttackStates.Cooldown:
@@ -206,49 +153,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
     private void HandleHit()
     {
-        _mover.StopDash();
     }
-
-    private void MakeForwardRecoil(float direction = 1)
-    {
-
-        var horizontalVelocity = _mover.GetVelocity();
-        horizontalVelocity.y = 0;
-
-        var resultVelocity = _mover.GetVelocity();
-        resultVelocity += GetAttackDirection() * forwardRecoilForce;
-        resultVelocity = resultVelocity.magnitude * GetAttackDirection() * direction;
-
-        _mover.SetVelocity(resultVelocity);
-
-
-        /*if (Vector3.Dot(horizontalVelocity, GetAttackDirection()) >= 0)
-        {
-            var resultVelocity = _mover.GetVelocity();
-            resultVelocity += GetAttackDirection() * forwardRecoilForce;
-            resultVelocity = resultVelocity.magnitude * GetAttackDirection();
-
-            _mover.SetVelocity(resultVelocity);
-        }
-
-        else
-        {
-            _mover.AddVelocity(GetAttackDirection() * forwardRecoilForce);
-        }*/
-    }
-
-    /*private void MakeForwardRecoil()
-    {
-        var resultVelocity = _mover.GetVelocity();
-        resultVelocity += GetAttackDirection() * _currentDashPower;
-        resultVelocity = resultVelocity.magnitude * GetAttackDirection();
-
-        *//*if (GetAttackDirection().y < -0.5f)
-            resultVelocity *= 2f;*//*
-
-        resultVelocity.y = Mathf.Clamp(resultVelocity.y, -100, 20);
-        _mover.SetVelocity(resultVelocity);
-    }*/
 
     public void AllowAttack()
     {
@@ -259,13 +164,6 @@ public class StealKick : MonoCache, IMeleeAttacker
     {
         _canAttack = false;
     }
-
-    public void SetForwardRecoilForce(float value)
-    {
-        forwardRecoilForce = value;
-    }
-
-    public float GetBaseForwardRecoilPower() => _baseForwardRecoilForce;
 
     public MeleeAttackStates GetCurrentAttackState()
     {
@@ -334,3 +232,4 @@ public class StealKick : MonoCache, IMeleeAttacker
 
     }
 }
+

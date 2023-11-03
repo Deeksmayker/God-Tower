@@ -33,11 +33,11 @@ public class HomingStackedAbility : StackedAbility
             if (_targetsHashes.ContainsKey(hash))
                 continue;
 
-            var health = _targets[i].GetComponent<IHealthHandler>();
-            if (health == null || health.InStun())
-                continue;
+            var health = _targets[i].GetComponentInChildren<ITakeHit>();
+//            if (health == null || health.InStun())
+  //              continue;
 
-            health.HandleHit(20);
+            health.TakeHit(20, transform.position, "Homing laser");
 
             targetPos = _targets[i].transform.position;
 

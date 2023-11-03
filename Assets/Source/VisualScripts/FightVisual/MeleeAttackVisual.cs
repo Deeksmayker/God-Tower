@@ -34,14 +34,12 @@ public class MeleeAttackVisual : MonoCache
     {
         _meleeAttacker.OnStartPreparingAttack += HandleAttack;
         _meleeAttacker.OnHit += HandleHit;
-        _meleeAttacker.OnParry += HandleParry;
     }
 
     protected override void OnDisabled()
     {
         _meleeAttacker.OnStartPreparingAttack -= HandleAttack;
         _meleeAttacker.OnHit -= HandleHit;
-        _meleeAttacker.OnParry -= HandleParry;
     }
 
     private void HandleAttack()

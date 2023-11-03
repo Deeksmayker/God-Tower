@@ -1,5 +1,7 @@
+using UnityEngine;
+
 public static class Layers
 {
-    public static string Environment { get; } = "Environment";
-
+    public static LayerMask Environment { get; } = LayerMask.GetMask("Environment"); 
+    public static LayerMask EnemyHurtBox { get; } = LayerMask.GetMask("EnemyHurtBox", "EnemyProjectile");
 }

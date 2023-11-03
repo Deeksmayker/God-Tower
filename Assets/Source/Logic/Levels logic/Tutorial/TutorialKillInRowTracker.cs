@@ -22,7 +22,7 @@ public class TutorialKillInRowTracker : MonoBehaviour
     {
         for (var i = 0; i < _connectedEnemies.Count; i++)
         {
-            _connectedEnemies[i].OnDied += HandleEnemyDied;
+            //_connectedEnemies[i].OnDied += HandleEnemyDied;
         }
     }
 
@@ -30,7 +30,7 @@ public class TutorialKillInRowTracker : MonoBehaviour
     {
         for (var i = 0; i < _connectedEnemies.Count; i++)
         {
-            _connectedEnemies[i].OnDied -= HandleEnemyDied;
+            //_connectedEnemies[i].OnDied -= HandleEnemyDied;
         }
     }
 

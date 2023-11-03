@@ -24,14 +24,12 @@ public class MeleeAttackAudio : MonoCache
     {
         _meleeAttacker.OnStartPreparingAttack += HandleAttackPerform;
         _meleeAttacker.OnHit += HandleAttackHit;
-        _meleeAttacker.OnParry += HandleAttackHit;
     }
 
     protected override void OnDisabled()
     {
         _meleeAttacker.OnStartPreparingAttack -= HandleAttackPerform;
         _meleeAttacker.OnHit -= HandleAttackHit;
-        _meleeAttacker.OnParry -= HandleAttackHit;
     }
 
     private void HandleAttackPerform()

@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boid : MonoBehaviour {
+public class Boid : MonoBehaviour, IMover
+{
 
     BoidSettings settings;
 
@@ -29,6 +31,11 @@ public class Boid : MonoBehaviour {
     Transform cachedTransform;
     Transform target;
 
+    private bool _moveMyself = true;
+
+    public event Action OnLanding;
+    public event Action<Vector3> OnBounce;
+
     void Awake () {
         material = transform.GetComponentInChildren<MeshRenderer> ().material;
         cachedTransform = transform;
@@ -51,7 +58,14 @@ public class Boid : MonoBehaviour {
         }
     }
 
-    public void UpdateBoid () {
+    public void UpdateBoid () 
+    {
+        if (!_moveMyself)
+        {
+            transform.position += velocity * Time.deltaTime;
+            return;
+        }
+
         Vector3 acceleration = Vector3.zero;
 
         if (target != null) {
@@ -118,4 +132,48 @@ public class Boid : MonoBehaviour {
         return Vector3.ClampMagnitude (v, settings.maxSteerForce);
     }
 
+    public void SetInput(Vector3 input)
+    {
+        Debug.LogError("NO INPUT FOR BOIDS");
+    }
+
+    public void SetVerticalVelocity(float velocity)
+    {
+        this.velocity.y = velocity;
+    }
+
+    public void AddVerticalVelocity(float addedVelocity)
+    {
+        this.velocity.y += addedVelocity;
+    }
+
+    public void SetVelocity(Vector3 newVelocity)
+    {
+        this.velocity = newVelocity; 
+    }
+
+    public void AddVelocity(Vector3 addedVelocityVector)
+    {
+        this.velocity += addedVelocityVector;
+    }
+
+    public void SetInputResponse(bool value)
+    {
+        _moveMyself = value; 
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
+
+    public float GetVelocityMagnitude()
+    {
+        return velocity.magnitude;
+    }
+
+    public bool IsGrounded()
+    {
+        throw new NotImplementedException();
+    }
 }

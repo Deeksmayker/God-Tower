@@ -11,8 +11,8 @@ public class VisibleEventsTracker : MonoBehaviour
     {
         if (TryGetComponent<IHealthHandler>(out var healthHandler))
         {
-            healthHandler.OnStun += () => OnStun.Invoke();
-            healthHandler.OnRevive += () => OnRevive.Invoke();
+            //healthHandler.OnStun += () => OnStun.Invoke();
+            //healthHandler.OnRevive += () => OnRevive.Invoke();
             healthHandler.OnDied += () => OnDied.Invoke();
         }
     }

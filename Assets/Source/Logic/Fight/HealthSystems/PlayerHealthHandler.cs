@@ -2,7 +2,7 @@ using NTC.Global.Cache;
 using System;
 using UnityEngine;
 
-public class PlayerHealthHandler : MonoCache
+public class PlayerHealthHandler : MonoCache, IHealthHandler
 {
     [SerializeField] private float health;
 
@@ -41,5 +41,25 @@ public class PlayerHealthHandler : MonoCache
         {
             OnDied?.Invoke();
         }
+    }
+
+    public void Die(bool order = false)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ChangeHealth(float changeValue)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetHealth(float value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public float GetHealth01()
+    {
+        throw new NotImplementedException();
     }
 }

@@ -25,7 +25,7 @@ public class DefaultAiGroundPlayerChaser : MonoCache, IAiMovementController
     {
         if (TryGetComponent<IHealthHandler>(out var health))
         {
-            health.OnStun += Stop;
+           // health.OnStun += Stop;
         }
 
         _agent.updateRotation = false;
@@ -35,7 +35,7 @@ public class DefaultAiGroundPlayerChaser : MonoCache, IAiMovementController
     {
         if (TryGetComponent<IHealthHandler>(out var health))
         {
-            health.OnStun -= Stop;
+          //  health.OnStun -= Stop;
         }
     }
     

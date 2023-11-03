@@ -10,7 +10,7 @@ public class WaterTrigger : MonoCache
     {
         if (other.TryGetComponent<PlayerUnit>(out var player) && _damagePlayer)
         {
-            player.Get<IHealthHandler>().HandleHit(1);
+            player.GetComponentInChildren<ITakeHit>().TakeHit(1, player.transform.position - Vector3.down, "Toxic sludge");
         }
     }
 

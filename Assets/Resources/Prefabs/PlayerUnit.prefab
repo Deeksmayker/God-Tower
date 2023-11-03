@@ -2204,6 +2204,53 @@ Transform:
   m_Father: {fileID: 4984469442132554140}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &970486495111764072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3891179052529361914}
+  - component: {fileID: 7841603695281724649}
+  m_Layer: 6
+  m_Name: KickInteractions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3891179052529361914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970486495111764072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3998808300210840913}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7841603695281724649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970486495111764072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f761581d0312ec6459f79188f7fce727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  forwardDashForce: 10
+  hitPayoffForce: 20
 --- !u!1 &1180001084854221373
 GameObject:
   m_ObjectHideFlags: 0
@@ -3137,10 +3184,8 @@ GameObject:
   - component: {fileID: 3998808300210842282}
   - component: {fileID: 3998808300210842286}
   - component: {fileID: 2140864504}
-  - component: {fileID: 7346594362803391657}
   - component: {fileID: 3998808300210842284}
   - component: {fileID: 3998808298923127482}
-  - component: {fileID: 2131039298}
   - component: {fileID: 3998808298923127483}
   - component: {fileID: 2131039314}
   - component: {fileID: 3998808298923127473}
@@ -3151,6 +3196,8 @@ GameObject:
   - component: {fileID: 3998808300210840912}
   - component: {fileID: 578364562917549123}
   - component: {fileID: 702805688622243959}
+  - component: {fileID: 8402367924735542489}
+  - component: {fileID: 2654970541796572807}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -3178,8 +3225,9 @@ Transform:
   - {fileID: 1551784979}
   - {fileID: 7602446913380586936}
   - {fileID: 7256776211257979131}
+  - {fileID: 3891179052529361914}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3998808300210842282
 CharacterController:
@@ -3221,7 +3269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   cameraRoot: {fileID: 3998808298746309513}
-  walkForwardOnStart: 1
+  walkForwardOnStart: 0
 --- !u!114 &2140864504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3229,7 +3277,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ef9e94975b748e5a654afd5135d2425, type: 3}
   m_Name: 
@@ -3244,36 +3292,6 @@ MonoBehaviour:
   leftAbility: 0
   rightAbility: 0
   infiniteAbilities: 0
---- !u!114 &7346594362803391657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a9711b9377f58e4ab9e8ca8249cd78a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  directionTarget: {fileID: 444436189}
-  layersToHit:
-    serializedVersion: 2
-    m_Bits: 6272
-  envLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  hitBoxSize: {x: 10, y: 10, z: 10}
-  envHitBoxSize: {x: 1, y: 2.5, z: 5}
-  damage: 20
-  hitPayoffForce: 20
-  forwardRecoilForce: 20
-  preparingTime: 0.02
-  attackDuration: 0.75
-  cooldown: 0.25
-  allowParry: 1
-  parryProjectileBoostVelocity: 200
 --- !u!114 &3998808300210842284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3317,28 +3335,6 @@ MonoBehaviour:
   OnAbilityEmpty:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2131039298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eddc7e42f3b84b43ba85dbcc20b4342e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  canDie: 1
-  canStartDying: 0
-  oneHealthDeathProtection: 0
-  needToRecovery: 0
-  health: 100
-  hitsToDie: 3
-  damageImmuneTime: 0.3
-  stunDuration: 5
-  healOnRoomCompleted: 0
 --- !u!114 &3998808298923127483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3561,6 +3557,42 @@ MonoBehaviour:
   shootPoint: {fileID: 1644204099}
   camDirection: {fileID: 3998808298746309513}
   bigBallCooldown: 1
+--- !u!114 &8402367924735542489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c823d7316c7184da1f61121c2416f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  directionTarget: {fileID: 3998808298746309513}
+  hitBoxSize: {x: 5, y: 5, z: 5}
+  envHitBoxSize: {x: 5, y: 1, z: 3}
+  damage: 1
+  preparingTime: 0.1
+  attackDuration: 0.3
+  cooldown: 1
+  allowParry: 0
+  parryDuration: 0
+--- !u!114 &2654970541796572807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e10ecd5ffcac3848ad7520a59486ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  health: 10
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

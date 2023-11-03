@@ -67,8 +67,8 @@ public class GroundSlider : MonoCache
 
         if (_sliding)
         {
-            var multiplier = _mover.GetHorizontalSpeed() > baseSlideSpeed ? speedIncreaseRate / 10 : speedIncreaseRate;
-            _mover.SetHorizontalVelocity(Vector3.MoveTowards(_mover.GetVelocity(), _slideDirection * baseSlideSpeed, speedIncreaseRate * Time.deltaTime));
+            //var multiplier = _mover.GetHorizontalSpeed() > baseSlideSpeed ? speedIncreaseRate / 10 : speedIncreaseRate;
+            //_mover.SetHorizontalVelocity(Vector3.MoveTowards(_mover.GetVelocity(), _slideDirection * baseSlideSpeed, speedIncreaseRate * Time.deltaTime));
 
             if (_timer <= 0)
             {
@@ -83,13 +83,13 @@ public class GroundSlider : MonoCache
         _sliding = true;
         
         _ch.height = colliderHeight;
-        _mover.RecalculateGroundCheckerPosition();
+       // _mover.RecalculateGroundCheckerPosition();
         
-        _slideDirection = _mover.GetHorizontalInput().x * transform.right +
-                          _mover.GetHorizontalInput().y * transform.forward;
+        //_slideDirection = _mover.GetHorizontalInput().x * transform.right +
+          //                _mover.GetHorizontalInput().y * transform.forward;
         if (_slideDirection.Equals(Vector3.zero))
             _slideDirection = transform.forward;
-        _mover.SetHorizontalVelocity(_slideDirection * (_mover.GetVelocity().magnitude / 2 > baseSlideSpeed ? _mover.GetVelocity().magnitude / 2 : baseSlideSpeed));
+        //_mover.SetHorizontalVelocity(_slideDirection * (_mover.GetVelocity().magnitude / 2 > baseSlideSpeed ? _mover.GetVelocity().magnitude / 2 : baseSlideSpeed));
         _mover.SetInputResponse(false);
         _mover.SetVerticalVelocity(-30);
 
@@ -112,7 +112,7 @@ public class GroundSlider : MonoCache
         slidingParticles.Stop();
         _ch.height = _defaultHeight;
         _sliding = false;
-        _mover.RecalculateGroundCheckerPosition();
+        //_mover.RecalculateGroundCheckerPosition();
         _mover.SetInputResponse(true);
     }
     

@@ -26,7 +26,7 @@ public class PlayerStyleController : MonoCache
 
     private AbilitiesHandler _abilitiesHandler;
     private PlayerMovementController _mover;
-    private StealKick _kicker;
+    private NewKick _kicker;
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class PlayerStyleController : MonoCache
 
         _abilitiesHandler = Get<AbilitiesHandler>();
         _mover = Get<PlayerMovementController>();
-        _kicker = Get<StealKick>(); 
+        _kicker = Get<NewKick>(); 
     }
 
     protected override void OnEnabled()
@@ -70,7 +70,7 @@ public class PlayerStyleController : MonoCache
         _currentStyle = Mathf.Clamp01(_currentStyle);
 
         _mover.SetDashDuration(Mathf.Lerp(_mover.GetBaseDashDuration(), _mover.GetBaseDashDuration() + addedDashDuration, _currentStyle));
-        _kicker.SetForwardRecoilForce(Mathf.Lerp(_kicker.GetBaseForwardRecoilPower(), _kicker.GetBaseForwardRecoilPower() + addedKickForwardRecoilForce, _currentStyle));
+        //_kicker.SetForwardRecoilForce(Mathf.Lerp(_kicker.GetBaseForwardRecoilPower(), _kicker.GetBaseForwardRecoilPower() + addedKickForwardRecoilForce, _currentStyle));
 
         _postProcessingController.SetMotionBlurIntensity(Mathf.Pow(_currentStyle, 3));
         fullscreenMaterial.SetFloat("_Alpha", Mathf.Lerp(0, maxAlpha, Mathf.Pow(_currentStyle, 3)));
