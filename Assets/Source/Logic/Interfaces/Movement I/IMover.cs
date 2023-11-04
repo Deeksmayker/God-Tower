@@ -11,6 +11,7 @@ public interface IMover
     public void SetVerticalVelocity(float velocity);
     public void AddVerticalVelocity(float addedVelocity);
     public void SetVelocity(Vector3 newVelocity);
+    public void AddForce(Vector3 force);
     public void AddVelocity(Vector3 addedVelocityVector);
     public void SetInputResponse(bool value);
     

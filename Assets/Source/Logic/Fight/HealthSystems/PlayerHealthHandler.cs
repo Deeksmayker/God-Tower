@@ -45,21 +45,29 @@ public class PlayerHealthHandler : MonoCache, IHealthHandler
 
     public void Die(bool order = false)
     {
-        throw new NotImplementedException();
+        Log("I'm a dead man");
+        OnDied?.Invoke();
     }
 
     public void ChangeHealth(float changeValue)
     {
-        throw new NotImplementedException();
+         health = Mathf.Clamp(health - changeValue, 0, _maxHealth);
+
+        OnHit?.Invoke();
+        OnHealthChanged?.Invoke(health);
+        if (health <= 0)
+        {
+            Die();
+        }
     }
 
     public void SetHealth(float value)
     {
-        throw new NotImplementedException();
+        health = value;
     }
 
     public float GetHealth01()
     {
-        throw new NotImplementedException();
+        return health / _maxHealth;
     }
 }

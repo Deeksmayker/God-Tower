@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using DG.Tweening;
 using NTC.Global.Cache;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class DefaultMover : MonoCache, IMover
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckRadius;
+    [SerializeField, Description("For Add Force")] private float weight = 1;
     
     [SerializeField] private bool alignMovementWithRotation;
     
@@ -192,5 +194,10 @@ public class DefaultMover : MonoCache, IMover
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
+    }
+
+    public void AddForce(Vector3 force)
+    {
+        _velocity += force / weight;
     }
 }

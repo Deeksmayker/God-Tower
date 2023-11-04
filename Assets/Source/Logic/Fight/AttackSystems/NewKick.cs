@@ -12,6 +12,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
     [Header("Impact")]
     [SerializeField] private int damage = 1;
+    [SerializeField] private float kickPushForce = 50;
 
     [Header("Timers")]
     [SerializeField] private float preparingTime;
@@ -107,7 +108,12 @@ public class NewKick : MonoCache, IMeleeAttacker
             var hitPosition = hitBoxCenter;
 
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, "Player Kick");
+            _attackHitsContainer[i].GetComponent<IMover>()?.AddForce(GetAttackDirection() * kickPushForce);
 
+            if (_attackHitsContainer[i].TryGetComponent<Rigidbody>(out var rb))
+            {
+                rb.AddForce(GetAttackDirection() * kickPushForce);
+            }
         }
 
         if (_attackHitsContainer[0] && !_isHitAnything)

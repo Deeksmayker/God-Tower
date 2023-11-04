@@ -58,8 +58,15 @@ public class Boid : MonoBehaviour, IMover
         }
     }
 
+    private void OnDisable()
+    {
+        position = Vector3.positiveInfinity;
+    }
+
     public void UpdateBoid () 
     {
+        if (!this)
+            return;
         if (!_moveMyself)
         {
             transform.position += velocity * Time.deltaTime;
@@ -175,5 +182,10 @@ public class Boid : MonoBehaviour, IMover
     public bool IsGrounded()
     {
         throw new NotImplementedException();
+    }
+
+    public void AddForce(Vector3 force)
+    {
+        velocity += force;
     }
 }

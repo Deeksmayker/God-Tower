@@ -31,6 +31,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     [SerializeField] private MovementSettings m_GroundSettings = new MovementSettings(7, 14, 10);
     [SerializeField] private MovementSettings m_AirSettings = new MovementSettings(7, 2, 2);
     [SerializeField] private MovementSettings m_StrafeSettings = new MovementSettings(1, 50, 50);
+    [SerializeField] private float weight = 5;
 
     [Header("Dash")]
     [SerializeField] private LayerMask environmentLayers;
@@ -527,5 +528,10 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     public bool IsGrounded()
     {
         return _ch.isGrounded;
+    }
+
+    public void AddForce(Vector3 force)
+    {
+        _velocity += force / weight;
     }
 }
