@@ -1,6 +1,7 @@
 ﻿using NTC.Global.Cache;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder.Shapes;
 
 [RequireComponent(typeof(PlayerUnit))]
 public class PlayerInputHandler : MonoCache
@@ -21,7 +22,7 @@ public class PlayerInputHandler : MonoCache
     private AirSlamer _slamer;
     private GroundSlider _slider;
     private Hook _hook;
-    private PlayerBallShooter _ballShooter;
+    private SphereShooter _sphereShooter;
     //private PickUpDetector _pickUpDetector;
     //private Thrower _thrower;
     
@@ -37,7 +38,7 @@ public class PlayerInputHandler : MonoCache
         _slamer = Get<AirSlamer>();
         _slider = Get<GroundSlider>();
         _hook = Get<Hook>();
-        _ballShooter = Get<PlayerBallShooter>();
+        _sphereShooter = Get<SphereShooter>();
         //_pickUpDetector = GetComponentInChildren<PickUpDetector>();
         //_thrower = GetComponentInChildren<Thrower>();
     }
@@ -80,18 +81,6 @@ public class PlayerInputHandler : MonoCache
             _meleeAttacker.SetInput(_playerInput.actions["Kick"].WasPressedThisFrame());
         }
 
-        if (_abilitiesHandler != null)
-        {
-            //_abilitiesHandler.SetRightStealInput(_playerInput.actions["RightSteal"].WasPressedThisFrame());
-            _abilitiesHandler.SetLeftStealInput(_playerInput.actions["LeftSteal"].IsInProgress());
-
-            if (_canShoot && !TimeController.Instance.IsPaused)
-            {
-                //_abilitiesHandler.SetRightAbilityInput(_playerInput.actions["RightAttack"].IsInProgress());
-                _abilitiesHandler.SetLeftAbilityInput(_playerInput.actions["LeftAttack"].IsInProgress());
-            }
-        }
-
         if (_slamer != null)
         {
             _slamer.SetInput(_playerInput.actions["Slam"].WasPressedThisFrame());
@@ -107,9 +96,9 @@ public class PlayerInputHandler : MonoCache
             _hook.SetInput(_playerInput.actions["Hook"].IsInProgress());
         }
 
-        if (_ballShooter)
+        if (_sphereShooter)
         {
-            _ballShooter.SetInput(_playerInput.actions["LeftAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
+            _sphereShooter.SetInput(_playerInput.actions["LeftAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
         }
         /*if (_pickUpDetector != null)
         {
