@@ -1896,7 +1896,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1849502635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2914,7 +2913,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3998808298643400553
 GameObject:
   m_ObjectHideFlags: 0
@@ -3045,7 +3043,6 @@ MonoBehaviour:
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
-  m_AllowHDROutput: 1
   m_UseScreenCoordOverride: 0
   m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
@@ -3198,6 +3195,7 @@ GameObject:
   - component: {fileID: 702805688622243959}
   - component: {fileID: 8402367924735542489}
   - component: {fileID: 2654970541796572807}
+  - component: {fileID: 7175471727830082155}
   m_Layer: 6
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -3532,6 +3530,7 @@ MonoBehaviour:
     MaxSpeed: 5
     Acceleration: 100
     Deceleration: 100
+  weight: 5
   environmentLayers:
     serializedVersion: 2
     m_Bits: 512
@@ -3548,7 +3547,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc02fabbf2a162d428fd3c5633706a83, type: 3}
   m_Name: 
@@ -3574,6 +3573,7 @@ MonoBehaviour:
   hitBoxSize: {x: 5, y: 5, z: 5}
   envHitBoxSize: {x: 5, y: 1, z: 3}
   damage: 1
+  kickPushForce: 50
   preparingTime: 0.1
   attackDuration: 0.3
   cooldown: 1
@@ -3593,6 +3593,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   health: 10
+--- !u!114 &7175471727830082155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998808300210840915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8584929bc1d5546b2531aad21135f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  _shootStartPoint: {fileID: 1644204099}
+  _camDirection: {fileID: 3998808298746309513}
+  _smallSpherePrefab: {fileID: 5045003326119308057, guid: 9d36ace2628060747a4ac99ead171f48,
+    type: 3}
+  _bigSpherePrefab: {fileID: 5045003326119308057, guid: c7b9bf1466eb75a4b99f7f8dedfa5887,
+    type: 3}
+  _bigSphereCooldown: 0.5
+  _timeBeforeAutoShoot: 0.5
+  _spherePerSecond: 5
 --- !u!1 &3998808300644396506
 GameObject:
   m_ObjectHideFlags: 0

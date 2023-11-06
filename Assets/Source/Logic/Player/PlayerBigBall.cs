@@ -1,13 +1,19 @@
+using System;
 using DG.Tweening;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerBigBall : MonoCache
 {
-    [SerializeField] private float preparingTime;
-    [SerializeField] private float acceleration;
-
+    [SerializeField] private float _acceleration;
+    [SerializeField] private float _rotationSpeed;
+    
+    public event Action Started;
+    public event Action ImpulseHandled;
+    public event Action Collided;
+    
     private ParticleSystem _hitParticles;
 
     private Rigidbody _rb;
@@ -30,12 +36,15 @@ public class PlayerBigBall : MonoCache
         transform.DOScale(_startScale, 0.5f).SetEase(Ease.InOutBounce);
 
         _hitParticles = (Resources.Load(ResPath.Particles + "BallHitParticles") as GameObject).GetComponent<ParticleSystem>();
+
+        _rb.AddTorque(RandomUtils.GetRandomNormalizedVector() * _rotationSpeed);
+        
+        Started?.Invoke();
     }
 
     protected override void FixedRun()
     {
-        _rb.velocity += transform.forward * acceleration * Mathf.Clamp01(Time.time - _startTime);
-        //base.FixedRun();
+        _rb.velocity += transform.forward * _acceleration * Mathf.Clamp01(Time.time - _startTime);
         _lastVelocity = _rb.velocity;
     }
 
@@ -49,6 +58,10 @@ public class PlayerBigBall : MonoCache
         var particles = NightPool.Spawn(_hitParticles, transform.position);
         particles.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
         particles.Play();
+        
+        //TODO: написать логику дамага
+        
+        Collided?.Invoke();
     }
 
     public void SetVelocity(Vector3 newVelocity)
@@ -58,8 +71,9 @@ public class PlayerBigBall : MonoCache
 
     public void HandleImpulse(Vector3 direction, float power)
     {
-        //base.HandleImpulse(direction, power);
         transform.rotation = Quaternion.LookRotation(direction);
         _rb.velocity = direction * power;
+        
+        ImpulseHandled?.Invoke();
     }
 }
