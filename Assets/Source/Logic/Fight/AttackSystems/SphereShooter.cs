@@ -46,18 +46,15 @@ public class SphereShooter : MonoCache
         }
         else
         {
-            if (_sphereShootTimer > 0 && _sphereShootTimer <= _timeBeforeAutoShoot)
+            if (_bigSphereCooldownTimer > 0)
             {
-                if (_bigSphereCooldownTimer > 0)
-                {
-                    _bigSphereCooldownTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    SpawnBigSphere();
-                    
-                    _bigSphereCooldownTimer = _bigSphereCooldown;
-                }
+                _bigSphereCooldownTimer -= Time.deltaTime;
+            }
+            if (_sphereShootTimer > 0 && _sphereShootTimer <= _timeBeforeAutoShoot && _bigSphereCooldownTimer <= 0)
+            {
+                SpawnBigSphere();
+            
+                _bigSphereCooldownTimer = _bigSphereCooldown;
             }
 
             _sphereShootTimer = 0;
@@ -73,7 +70,7 @@ public class SphereShooter : MonoCache
         {
             var spawnedSphere = Instantiate(_smallSpherePrefab, _shootStartPoint.position, _camDirection.rotation)
                 .GetComponent<PlayerSmallSphere>();
-            spawnedSphere.SetVelocity(_playerMover.GetVelocity());
+            spawnedSphere.SetVelocity(new Vector3(_playerMover.GetVelocity().x, 0, _playerMover.GetVelocity().z));
             _spawnTimer = 0f;
         }
     }
