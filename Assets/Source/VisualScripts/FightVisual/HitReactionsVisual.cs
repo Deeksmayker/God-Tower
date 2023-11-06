@@ -66,25 +66,25 @@ public class HitReactionsVisual : MonoCache
 
     protected override void OnEnabled()
     {
-        _healthHandler.OnStun += HandleStun;
+        //_healthHandler.OnStun += HandleStun;
         _healthHandler.OnDied += HandleDie;
-        _healthHandler.OnRevive += RestoreColor;
+        ////_healthHandler.OnRevive += RestoreColor;
 
         for (var i = 0; i < _hitTakers.Length; i++)
         {
-            _hitTakers[i].OnTakeHitWithPosition += HandleHitBuffer;
+            _hitTakers[i].OnTakeHitWithAttackerPosition += HandleHitBuffer;
         }
     }
 
     protected override void OnDisabled()
     {
-        _healthHandler.OnStun -= HandleStun;
+        //_healthHandler.OnStun -= HandleStun;
         _healthHandler.OnDied -= HandleDie;
-        _healthHandler.OnRevive -= RestoreColor;
+        //_healthHandler.OnRevive -= RestoreColor;
 
         for (var i = 0; i < _hitTakers.Length; i++)
         {
-            _hitTakers[i].OnTakeHitWithPosition -= HandleHitBuffer;
+            _hitTakers[i].OnTakeHitWithAttackerPosition -= HandleHitBuffer;
         }
     }
 

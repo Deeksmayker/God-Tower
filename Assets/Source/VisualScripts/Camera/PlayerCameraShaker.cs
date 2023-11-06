@@ -25,6 +25,6 @@ public class PlayerCameraShaker : MonoCache
 
     private void HandleJump()
     {
-        CameraService.Instance.ShakeCamera(jumpShakePreset);
+        CameraService.Instance.ShakeCamera(0.15f);
     }
 }

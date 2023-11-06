@@ -16,11 +16,12 @@ public class PlayerInputHandler : MonoCache
     
     private PlayerMovementController _mover;
     private IJumper _jumper;
-    private IMeleeAttacker _meleeAttacker;
+    private NewKick _meleeAttacker;
     private AbilitiesHandler _abilitiesHandler;
     private AirSlamer _slamer;
     private GroundSlider _slider;
     private Hook _hook;
+    private PlayerBallShooter _ballShooter;
     //private PickUpDetector _pickUpDetector;
     //private Thrower _thrower;
     
@@ -31,11 +32,12 @@ public class PlayerInputHandler : MonoCache
         _mover = Get<PlayerMovementController>();
         _playerInput = Get<PlayerInput>();
         _jumper = Get<IJumper>();
-        _meleeAttacker = Get<IMeleeAttacker>();
+        _meleeAttacker = Get<NewKick>();
         _abilitiesHandler = Get<AbilitiesHandler>();
         _slamer = Get<AirSlamer>();
         _slider = Get<GroundSlider>();
         _hook = Get<Hook>();
+        _ballShooter = Get<PlayerBallShooter>();
         //_pickUpDetector = GetComponentInChildren<PickUpDetector>();
         //_thrower = GetComponentInChildren<Thrower>();
     }
@@ -47,7 +49,7 @@ public class PlayerInputHandler : MonoCache
 
         if (_mover != null)
         {
-            _mover.SetHorizontalInput(_playerInput.actions["Move"].ReadValue<Vector2>());
+            _mover.SetInput(_playerInput.actions["Move"].ReadValue<Vector2>());
 
             _mover.SetDashInput(_playerInput.actions["Dash"].IsInProgress());
         }
@@ -103,6 +105,11 @@ public class PlayerInputHandler : MonoCache
         if (_hook)
         {
             _hook.SetInput(_playerInput.actions["Hook"].IsInProgress());
+        }
+
+        if (_ballShooter)
+        {
+            _ballShooter.SetInput(_playerInput.actions["LeftAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
         }
         /*if (_pickUpDetector != null)
         {

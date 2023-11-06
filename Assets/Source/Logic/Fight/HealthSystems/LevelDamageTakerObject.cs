@@ -101,7 +101,7 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
         health = value;
     }
 
-    public float GetHealth()
+    public float GetHealth01()
     {
         return health;
     }
@@ -122,6 +122,11 @@ public class LevelDamageTakerObject : MonoCache, IHealthHandler
     }
 
     public float GetCurrentReviveTimer()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ChangeHealth(float changeValue)
     {
         throw new NotImplementedException();
     }

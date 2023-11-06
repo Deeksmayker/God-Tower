@@ -25,7 +25,7 @@ public class HealthHud : MonoCache
 
         if (healthSlider != null)
         {
-            healthSlider.value = _playerHealthHandler.GetHealth();
+            healthSlider.value = _playerHealthHandler.GetHealth01();
         }
     }
 

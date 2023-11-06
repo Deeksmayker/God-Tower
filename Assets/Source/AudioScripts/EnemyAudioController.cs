@@ -23,7 +23,7 @@ public class EnemyAudioController : MonoCache
         if (_healthHandler != null)
         {
             _healthHandler.OnHit += HandleTakeHit;
-            _healthHandler.OnStun += HandleStartDying;
+            //_healthHandler.OnStun += HandleStartDying;
             _healthHandler.OnDied += HandleDie;
         }
     }
@@ -33,7 +33,7 @@ public class EnemyAudioController : MonoCache
         if (_healthHandler != null)
         {
             _healthHandler.OnHit -= HandleTakeHit;
-            _healthHandler.OnStun -= HandleStartDying;
+           // _healthHandler.OnStun -= HandleStartDying;
             _healthHandler.OnDied -= HandleDie;
         }
     }

@@ -184,13 +184,8 @@ public class BaseExplosiveObject : MonoCache, IMakeExplosion, IImpacter
             _objectsAlreadyTakeHit.Add(hitHash);
             
             var hitPosition = _attackHitsContainer[i].ClosestPoint(transform.position);
-
-            var hitType = HitTypes.NormalPoint;
-
-            if (_attackHitsContainer[i].GetComponent<IWeakPoint>() != null)
-                hitType = HitTypes.WeakPoint;
             
-            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(_currentDamage, hitPosition, hitType);
+            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(_currentDamage, hitPosition, "Explosive");
 
             if (!_attackHitsContainer[i])
                 break;

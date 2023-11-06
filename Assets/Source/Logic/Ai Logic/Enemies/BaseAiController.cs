@@ -19,8 +19,8 @@ public class BaseAiController : MonoCache, IAiController
     {
         if (TryGetComponent<IHealthHandler>(out var health))
         {
-            health.OnStun += HandleDying;
-            health.OnRevive += HandleRevive;
+           // health.OnStun += HandleDying;
+            //health.OnRevive += HandleRevive;
         }
     }
 
@@ -28,8 +28,8 @@ public class BaseAiController : MonoCache, IAiController
     {
         if (TryGetComponent<IHealthHandler>(out var health))
         {
-            health.OnStun -= HandleDying;
-            health.OnRevive -= HandleRevive;
+            //health.OnStun -= HandleDying;
+          //  health.OnRevive -= HandleRevive;
         }
     }
 

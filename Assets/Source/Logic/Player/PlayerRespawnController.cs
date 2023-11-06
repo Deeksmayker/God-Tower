@@ -10,7 +10,7 @@ public class PlayerRespawnController : MonoCache
         Get<CharacterController>().enabled = false;
         transform.position = (_currenRespawnTransform.position);
         Get<CharacterController>().enabled = true;
-        Get<IMover>().SetHorizontalVelocity(Vector3.zero);
+        Get<IMover>().SetVelocity(Vector3.zero);
     }
 
     public void SetRespawnPoint(Transform transform)

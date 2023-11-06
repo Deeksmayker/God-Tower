@@ -120,8 +120,8 @@ public class DefaultActiveAbility : MonoCache, IActiveAbility
 
         if (_healthHandler != null)
         {
-            if (_healthHandler.InStun())
-                return;
+            //if (_healthHandler.InStun())
+              //  return;
         }
 
         PerformAbility(count);

@@ -45,6 +45,7 @@ public class StealKick : MonoCache, IMeleeAttacker
     public event Action OnStartAttack;
     public event Action OnEndAttack;
     public event Action OnHit;
+    public event Action<GameObject> OnHitWithObject;
     public event Action OnParry;
 
     private void Awake()
@@ -116,8 +117,6 @@ public class StealKick : MonoCache, IMeleeAttacker
 
             var hitPosition = hitBoxCenter;
 
-            var hitType = HitTypes.NormalPoint;
-
             if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseExplosiveObject>(out var explosive))
             {
                 explosive.MakeExplosiveSuper();
@@ -137,7 +136,12 @@ public class StealKick : MonoCache, IMeleeAttacker
                 return;
             }
 
-            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, hitType);
+            if (_attackHitsContainer[i].TryGetComponent<PlayerBigBall>(out var kinematic))
+            {
+                kinematic.HandleImpulse(GetAttackDirection(), 500);
+            }
+
+            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, "Player Kick");
 
             var abilityGiver = _attackHitsContainer[i].GetComponentInParent<IGiveAbility>();
             var healthHandler = _attackHitsContainer[i].GetComponentInParent<IHealthHandler>();
@@ -153,11 +157,13 @@ public class StealKick : MonoCache, IMeleeAttacker
             }
 
             OnHit?.Invoke();
+            OnHitWithObject?.Invoke(_attackHitsContainer[i].gameObject);
         }
 
         if (_attackHitsContainer[0] && !_isHitAnything)
         {
             HandleHit();
+            MakeForwardRecoil(-0.1f);
             if (_mover.GetVelocity().y < hitPayoffPower)
                 _mover.SetVerticalVelocity(hitPayoffPower);
             _isHitAnything = true;
@@ -203,7 +209,7 @@ public class StealKick : MonoCache, IMeleeAttacker
         _mover.StopDash();
     }
 
-    private void MakeForwardRecoil()
+    private void MakeForwardRecoil(float direction = 1)
     {
 
         var horizontalVelocity = _mover.GetVelocity();
@@ -211,7 +217,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
         var resultVelocity = _mover.GetVelocity();
         resultVelocity += GetAttackDirection() * forwardRecoilForce;
-        resultVelocity = resultVelocity.magnitude * GetAttackDirection();
+        resultVelocity = resultVelocity.magnitude * GetAttackDirection() * direction;
 
         _mover.SetVelocity(resultVelocity);
 

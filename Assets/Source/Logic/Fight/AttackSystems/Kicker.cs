@@ -123,8 +123,6 @@ public class Kicker : MonoCache, IMeleeAttacker
 
             var hitPosition = hitBoxCenter;
 
-            var hitType = HitTypes.NormalPoint;
-
             if (allowParry && _attackHitsContainer[i].TryGetComponent<BaseExplosiveObject>(out var explosive))
             {
                 explosive.MakeExplosiveSuper();
@@ -144,7 +142,7 @@ public class Kicker : MonoCache, IMeleeAttacker
                 return;
             }
             
-            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, hitType);
+            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, "Player Old Kick");
             
             OnHit?.Invoke();
         }
