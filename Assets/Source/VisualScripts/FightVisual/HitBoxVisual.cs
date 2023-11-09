@@ -4,7 +4,7 @@ using UnityEngine;
 public class HitBoxVisual : MonoCache
 {
     private Color _flashColor = new Color(1f, 0.7f, 0.2f) * 2;
-    private float _flashTime = 0.2f;
+    private float _flashTime = 0.05f;
 
     private Color _baseColor;
 

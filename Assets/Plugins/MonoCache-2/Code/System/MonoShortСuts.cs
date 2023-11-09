@@ -39,9 +39,9 @@ namespace NTC.Global.System
             Debug.LogError(msg);
         }
 
-        protected void DrawLine(Vector3 from, Vector3 to)
+        protected void DrawLine(Vector3 from, Vector3 to, float duration = 0.1f)
         {
-            Debug.DrawLine(from, to, Color.green);
+            Debug.DrawLine(from, to, Color.green, duration);
         }
     }
 }
