@@ -17,7 +17,6 @@ public class PlayerLocator : MonoCache
         if (Physics.Raycast(transform.position, GetDirectionToPlayerNorm(), out var hit, locatePlayerRange, Layers.PlayerBase | Layers.Environment))
         {
             Log("see something but is it player - " + (hit.transform.GetComponent<PlayerUnit>() != null));
-            Debug.Log(hit.transform.name);
             return hit.transform.GetComponent<PlayerUnit>();
         }
         return false;

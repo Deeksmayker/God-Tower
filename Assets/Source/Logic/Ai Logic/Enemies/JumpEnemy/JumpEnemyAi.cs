@@ -26,26 +26,33 @@ public class JumpEnemyAi : MonoCache
 
     protected override void OnEnabled()
     {
-        //_stunController.OnStun += HandleStun;
-        //_stunController.OnRecover += HandleRecover;
+        _stunController.OnStun += HandleStun;
+        _stunController.OnRecover += HandleRecover;
         _mover.OnLanding += HandleLanding;
     }
 
     protected override void OnDisabled()
     {
-        //_stunController.OnStun -= HandleStun;
-        //_stunController.OnRecover -= HandleRecover
+        _stunController.OnStun -= HandleStun;
+        _stunController.OnRecover -= HandleRecover;
         _mover.OnLanding -= HandleLanding;
     }
 
     protected override void Run()
     {
+        if (_inStun && !_mover.IsGrounded())
+        {
+            _makingSecondJump = false;
+            _timer = GetCurrentJumpInterval();
+        }
         _timer -= Time.deltaTime;
 
         if (_inStun || _timer > 0)
             return;
 
         var jumpDirection = _playerLocator.IsPlayerVisible() && _makingSecondJump ? _playerLocator.GetDirectionToPlayerNorm() : GetRandomJumpDirection();
+        if (_playerLocator.IsPlayerVisible())
+            jumpDirection.y += 0.1f;
         Log("Player visibility - " + _playerLocator.IsPlayerVisible());
         Log("Making second jump - " + _makingSecondJump);
         Log("Fighting - " + _inFight);
@@ -78,11 +85,13 @@ public class JumpEnemyAi : MonoCache
     private void HandleStun()
     {
         _inStun = true;
+        _mover.SetJumpTimer(100);
     }
 
     private void HandleRecover()
     {
         _inStun = false;
+        _mover.SetJumpTimer(0);
     }
 
     private float GetCurrentJumpInterval()

@@ -9,6 +9,7 @@ public class JumpEnemyMover : MonoCache, IMover
     [SerializeField] private float gravity;
 
     private float _distanceToCheckWalls = 100;
+    private float _inJumpTimer;
 
     private bool _onWall;
     private bool _lastFrameGrounded;
@@ -32,6 +33,9 @@ public class JumpEnemyMover : MonoCache, IMover
 
     protected override void Run()
     {
+        if (_inJumpTimer > 0)
+            _inJumpTimer -= Time.deltaTime;
+
         if (!_ch.isGrounded && !_onWall)
         {
             PredictLandingNormal();
@@ -58,13 +62,22 @@ public class JumpEnemyMover : MonoCache, IMover
     public void JumpToDirection(Vector3 direction)
     {
         _velocity = direction * jumpForce;
+        DrawLine(transform.position, transform.position + _velocity, 5, 1);
         _onWall = false;
+        _inJumpTimer = 0.2f;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        _currentContactNormal = hit.normal;
         Log("We hit something guys");
+        if (_inJumpTimer > 0)
+        {
+            if (Vector3.Dot(_velocity.normalized, hit.normal) < 0)
+                _velocity = Vector3.Reflect(_velocity * 0.8f, hit.normal);
+            return;
+        }
+
+        _currentContactNormal = hit.normal;
         if (hit.normal.y < 0.4f)
         {
             Log("We on the wall guys");
@@ -93,13 +106,18 @@ public class JumpEnemyMover : MonoCache, IMover
         }
     }
 
+    public void SetJumpTimer(float value)
+    {
+        _inJumpTimer = value;
+    }
+
     public Vector3 GetCurrentNormal() => _currentContactNormal;
     public bool OnWall() => _onWall;
 
 
     public void AddForce(Vector3 force)
     {
-        throw new NotImplementedException();
+        _velocity = force;
     }
 
     public void AddVelocity(Vector3 addedVelocityVector)
