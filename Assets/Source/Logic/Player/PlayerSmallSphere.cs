@@ -8,6 +8,7 @@ public class PlayerSmallSphere : MonoCache
 {
     [SerializeField] private float _startVelocity;
     [SerializeField] private float _maxSpread;
+    [SerializeField] private float _damage;
 
     private ParticleSystem _hitParticles;
 
@@ -23,8 +24,8 @@ public class PlayerSmallSphere : MonoCache
 
     private void Start()
     {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(_startScale, 0.5f).SetEase(Ease.InOutBounce);
+        transform.localScale = Vector3.one / 10;
+        transform.DOScale(_startScale * 4, 1.5f).SetEase(Ease.InCubic).SetLink(gameObject);
 
         var randomNumberX = Random.Range(-_maxSpread / 2, _maxSpread / 2);
         var randomNumberY = Random.Range(-_maxSpread, _maxSpread);
@@ -34,7 +35,7 @@ public class PlayerSmallSphere : MonoCache
         
         _rb.velocity += _startVelocity * spreadedDirection;
 
-        _hitParticles = (Resources.Load(ResPath.Particles + "BallHitParticles") as GameObject).GetComponent<ParticleSystem>();
+        _hitParticles = (Resources.Load(ResPath.Particles + "SmallBallHitParticles") as GameObject).GetComponent<ParticleSystem>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -48,7 +49,12 @@ public class PlayerSmallSphere : MonoCache
         particles.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
         particles.Play();
         
-        //TODO: написать логику дамага
+        if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
+        {
+            victim.TakeHit(_damage, transform.position, "Small ball");
+        }
+
+        gameObject.AddComponent<Death>();
     }
 
     public void SetVelocity(Vector3 newVelocity)
