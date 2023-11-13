@@ -1,52 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7893295128165547882
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
-  m_Name: Bloom
-  m_EditorClassIdentifier: 
-  active: 1
-  skipIterations:
-    m_OverrideState: 0
-    m_Value: 1
-  threshold:
-    m_OverrideState: 1
-    m_Value: 0.5
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0.5
-  scatter:
-    m_OverrideState: 1
-    m_Value: 0.772
-  clamp:
-    m_OverrideState: 0
-    m_Value: 65536
-  tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-  highQualityFiltering:
-    m_OverrideState: 1
-    m_Value: 1
-  downscale:
-    m_OverrideState: 0
-    m_Value: 0
-  maxIterations:
-    m_OverrideState: 0
-    m_Value: 6
-  dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
-    dimension: 1
-  dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
 --- !u!114 &-7043148664549120329
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -296,6 +249,47 @@ MonoBehaviour:
   saturation:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-2030173082505370442
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbde013ac70c2864cb373e0c373ae10d, type: 3}
+  m_Name: GodBloomEffectComponent
+  m_EditorClassIdentifier: 
+  active: 1
+  threshold:
+    m_OverrideState: 1
+    m_Value: 1.31
+  intensity:
+    m_OverrideState: 1
+    m_Value: 5.2
+  scatter:
+    m_OverrideState: 1
+    m_Value: 0.159
+  clamp:
+    m_OverrideState: 1
+    m_Value: 65472
+  maxIterations:
+    m_OverrideState: 0
+    m_Value: 6
+  tint:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    hdr: 0
+  textureDensity:
+    m_OverrideState: 1
+    m_Value: 45
+  textureCutoff:
+    m_OverrideState: 1
+    m_Value: 0.221
+  scrollDirection:
+    m_OverrideState: 0
+    m_Value: {x: 0.09, y: -0.1}
 --- !u!114 &-1008992496647944193
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -335,7 +329,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 849379129802519247}
-  - {fileID: -7893295128165547882}
   - {fileID: -7011558710299706105}
   - {fileID: -4030562926164521107}
   - {fileID: -3937692315761249452}
@@ -343,6 +336,7 @@ MonoBehaviour:
   - {fileID: -3390112108660492369}
   - {fileID: -6749625155574067387}
   - {fileID: -7043148664549120329}
+  - {fileID: -2030173082505370442}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3

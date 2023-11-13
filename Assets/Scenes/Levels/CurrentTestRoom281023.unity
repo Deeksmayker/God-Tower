@@ -301,6 +301,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7175471727830082155, guid: efcca681c6aa2c64db2c7085334d7c9c,
         type: 3}
+      propertyPath: _spherePerSecond
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7175471727830082155, guid: efcca681c6aa2c64db2c7085334d7c9c,
+        type: 3}
       propertyPath: _timeBeforeAutoShoot
       value: 0.3
       objectReference: {fileID: 0}

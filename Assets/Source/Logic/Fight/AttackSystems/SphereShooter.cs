@@ -63,7 +63,7 @@ public class SphereShooter : MonoCache
 
     private void SpawnSmallSphere()
     {
-        var timeForSpawn = 1 / _spherePerSecond;
+        var timeForSpawn = 1f / _spherePerSecond;
                 
         _spawnTimer += Time.deltaTime;
         if (_spawnTimer >= timeForSpawn)
