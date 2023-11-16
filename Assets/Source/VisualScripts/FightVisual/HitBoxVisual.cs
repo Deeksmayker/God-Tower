@@ -20,7 +20,7 @@ public class HitBoxVisual : MonoCache
     {
         _hitBox = Get<ITakeHit>();
         _renderer = GetComponentInChildren<MeshRenderer>();
-        _baseColor = _renderer.material.GetColor("_Color");
+        _baseColor = _renderer.material.GetColor("_EmissionColor");
         _materialPropertyBlock = new MaterialPropertyBlock();
         _renderer.SetPropertyBlock(_materialPropertyBlock);
     }
@@ -41,7 +41,7 @@ public class HitBoxVisual : MonoCache
 
         if (_flashTimer <= 0)
         {
-            _materialPropertyBlock.SetColor("_Color", _baseColor);
+            _materialPropertyBlock.SetColor("_EmissionColor", _baseColor);
             _renderer.SetPropertyBlock(_materialPropertyBlock);
         }
     }
@@ -53,7 +53,7 @@ public class HitBoxVisual : MonoCache
 
         _flashTimer = _flashTime;
 
-        _materialPropertyBlock.SetColor("_Color", _flashColor);
+        _materialPropertyBlock.SetColor("_EmissionColor", _flashColor);
         _renderer.SetPropertyBlock(_materialPropertyBlock);
     }
 }

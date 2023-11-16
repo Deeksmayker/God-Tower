@@ -7,6 +7,7 @@ public class GodBloomPostProcessPass : ScriptableRenderPass
 {
     private Material _bloomMaterial;
     private Material _compositeMaterial;
+    private Material _chromaticAberrationMaterial;
 
     private GodBloomEffectComponent _bloomEffect;
 
@@ -23,10 +24,11 @@ public class GodBloomPostProcessPass : ScriptableRenderPass
     private GraphicsFormat hdrFormat;
 
 
-    public GodBloomPostProcessPass(Material bloomMaterial, Material compositeMaterial)
+    public GodBloomPostProcessPass(Material bloomMaterial, Material compositeMaterial, Material chromaticAberrationMaterial)
     {
         _bloomMaterial = bloomMaterial;
         _compositeMaterial = compositeMaterial;
+        _chromaticAberrationMaterial = chromaticAberrationMaterial;
 
         renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
 
@@ -82,10 +84,14 @@ public class GodBloomPostProcessPass : ScriptableRenderPass
             _compositeMaterial.SetFloat("_Cutoff", _bloomEffect.textureCutoff.value);
             _compositeMaterial.SetFloat("_Density", _bloomEffect.textureDensity.value);
             _compositeMaterial.SetVector("_Direction", _bloomEffect.scrollDirection.value);
+            _compositeMaterial.SetFloat("_DistortionAmount", _bloomEffect.distortionAmount.value);
+            _compositeMaterial.SetVector("_DistortionRange", _bloomEffect.distortionRange.value);
+
+            _chromaticAberrationMaterial.SetTexture("_MainTex", _cameraColorTarget);
             //Blitter.BlitCameraTexture(cmd, _cameraColorTarget, _cameraColorTarget, _compositeMaterial, 0);
+
+            //Blitter.BlitCameraTexture(cmd, _cameraColorTarget, _cameraColorTarget, _chromaticAberrationMaterial, 0);
         }
-
-
 
         context.ExecuteCommandBuffer(cmd);
         cmd.Clear();

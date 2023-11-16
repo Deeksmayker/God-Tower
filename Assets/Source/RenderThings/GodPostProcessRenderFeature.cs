@@ -7,9 +7,12 @@ public class GodPostProcessRenderFeature : ScriptableRendererFeature
 {
     [SerializeField] private Shader bloomShader;
     [SerializeField] private Shader compositeShader;
+    [SerializeField] private Shader chromaticAberrationShader;
 
     private Material _bloomMaterial;
     [SerializeField] private Material _compositeMaterial;
+
+    [SerializeField] private Material _chromaticAberrationMaterial;
 
     private GodBloomPostProcessPass m_godBloomPass;
 
@@ -22,8 +25,9 @@ public class GodPostProcessRenderFeature : ScriptableRendererFeature
     {
         _bloomMaterial = CoreUtils.CreateEngineMaterial(bloomShader);
         //_compositeMaterial = CoreUtils.CreateEngineMaterial(compositeShader);
+        //_chromaticAberrationMaterial = CoreUtils.CreateEngineMaterial(chromaticAberrationShader);
 
-        m_godBloomPass = new GodBloomPostProcessPass(_bloomMaterial, _compositeMaterial);
+        m_godBloomPass = new GodBloomPostProcessPass(_bloomMaterial, _compositeMaterial, _chromaticAberrationMaterial);
     }
 
     public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
@@ -36,6 +40,7 @@ public class GodPostProcessRenderFeature : ScriptableRendererFeature
     protected override void Dispose(bool disposing)
     {
         CoreUtils.Destroy(_bloomMaterial);
-        CoreUtils.Destroy(_compositeMaterial);
+        //CoreUtils.Destroy(_compositeMaterial);
+        //CoreUtils.Destroy(_chromaticAberrationMaterial);
     }
 }

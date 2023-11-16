@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.6020381, g: 0.7101575, b: 0.7830189, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -302,7 +302,7 @@ PrefabInstance:
     - target: {fileID: 7175471727830082155, guid: efcca681c6aa2c64db2c7085334d7c9c,
         type: 3}
       propertyPath: _spherePerSecond
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7175471727830082155, guid: efcca681c6aa2c64db2c7085334d7c9c,
         type: 3}
@@ -745,7 +745,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fbd49e0dda90a4d43a3761863148f43c, type: 2}
+      objectReference: {fileID: 2100000, guid: 0a6392a650f087b4fa66f211239a7570, type: 2}
     - target: {fileID: 919132149155446097, guid: 60817aac30f75e8408d3215bbeb6f13b,
         type: 3}
       propertyPath: m_Name

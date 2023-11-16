@@ -72,6 +72,23 @@ MonoBehaviour:
   cropToFit:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-5357813240843253139
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a47665284696d4a9c9a38dc649896c, type: 3}
+  m_Name: PixelizeEffectComponent
+  m_EditorClassIdentifier: 
+  active: 1
+  passEvent: 550
+  screenHeight:
+    m_OverrideState: 1
+    m_Value: 300
 --- !u!114 &-4380348147767589949
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -130,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   intensity:
     m_OverrideState: 1
     m_Value: 0
@@ -264,13 +281,13 @@ MonoBehaviour:
   active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.31
+    m_Value: 1.83
   intensity:
     m_OverrideState: 1
-    m_Value: 5.2
+    m_Value: 30.66
   scatter:
     m_OverrideState: 1
-    m_Value: 0.159
+    m_Value: 0.061
   clamp:
     m_OverrideState: 1
     m_Value: 65472
@@ -278,18 +295,24 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 6
   tint:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
     hdr: 0
   textureDensity:
     m_OverrideState: 1
-    m_Value: 45
+    m_Value: 70
   textureCutoff:
     m_OverrideState: 1
-    m_Value: 0.221
+    m_Value: 0.507
   scrollDirection:
     m_OverrideState: 0
     m_Value: {x: 0.09, y: -0.1}
+  distortionAmount:
+    m_OverrideState: 1
+    m_Value: 500
+  distortionRange:
+    m_OverrideState: 1
+    m_Value: {x: 0.05, y: 0}
 --- !u!114 &-1008992496647944193
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -337,6 +360,7 @@ MonoBehaviour:
   - {fileID: -6749625155574067387}
   - {fileID: -7043148664549120329}
   - {fileID: -2030173082505370442}
+  - {fileID: -5357813240843253139}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
