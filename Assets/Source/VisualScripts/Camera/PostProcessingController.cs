@@ -15,23 +15,23 @@ public class PostProcessingController : MonoCache
     [SerializeField] private float maxChromaticAberrationIntensity = 0.8f;
 
     private Vignette _vignette;
-    private Bloom _bloom;
+   // private Bloom _bloom;
     private ChromaticAberration _chromaticAberration;
     private MotionBlur _motiouBlur;
 
     private float _defaultVignetteIntensity;
-    private float _defaultBloomIntensity;
+    //private float _defaultBloomIntensity;
     private float _defaultChromaticAberrationIntensity;
 
     protected override void OnEnabled()
     {
         volume.profile.TryGet<Vignette>(out _vignette);
-        volume.profile.TryGet<Bloom>(out _bloom);
+        //volume.profile.TryGet<Bloom>(out _bloom);
         volume.profile.TryGet<ChromaticAberration>(out _chromaticAberration);
         volume.profile.TryGet<MotionBlur>(out _motiouBlur);
         
         _defaultVignetteIntensity = _vignette.intensity.value;
-        _defaultBloomIntensity = _bloom.intensity.value;
+        //_defaultBloomIntensity = _bloom.intensity.value;
         _defaultChromaticAberrationIntensity = _chromaticAberration.intensity.value;
     }
 
@@ -97,7 +97,7 @@ public class PostProcessingController : MonoCache
     #endregion
 
     #region BloomControll
-    
+    /*
     /// <summary>
     /// Позволяет задать новое значение интенсивности Bloom. Если задать time, то интенсивность плавно измениться на нужное значение.
     /// </summary>
@@ -172,7 +172,7 @@ public class PostProcessingController : MonoCache
     {
         ChangeColorWithTime(_bloom.tint, color, time);
     }
-
+*/
     #endregion
     
     #region ChromaticAberrationControll

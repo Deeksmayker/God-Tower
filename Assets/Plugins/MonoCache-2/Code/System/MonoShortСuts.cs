@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject.ReflectionBaking.Mono.Cecil;
 
 namespace NTC.Global.System
 {
@@ -39,9 +40,13 @@ namespace NTC.Global.System
             Debug.LogError(msg);
         }
 
-        protected void DrawLine(Vector3 from, Vector3 to)
+        protected void DrawLine(Vector3 from, Vector3 to, float duration = 0.1f, int color = 0)
         {
-            Debug.DrawLine(from, to, Color.green);
+            if (!debug)
+                return;
+            color = Mathf.Clamp(color, 0, 2);
+            var colors = new[] { Color.green, Color.yellow, Color.red }; 
+            Debug.DrawLine(from, to, colors[color], duration);
         }
     }
 }

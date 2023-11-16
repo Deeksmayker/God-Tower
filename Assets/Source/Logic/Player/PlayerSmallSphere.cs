@@ -51,7 +51,9 @@ public class PlayerSmallSphere : MonoCache
         
         if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
         {
+
             victim.TakeHit(_damage, transform.position, "Small ball");
+
         }
 
         gameObject.AddComponent<Death>();

@@ -63,7 +63,7 @@ public class SphereShooter : MonoCache
 
     private void SpawnSmallSphere()
     {
-        var timeForSpawn = 1 / _spherePerSecond;
+        var timeForSpawn = 1f / _spherePerSecond;
                 
         _spawnTimer += Time.deltaTime;
         if (_spawnTimer >= timeForSpawn)
@@ -71,7 +71,11 @@ public class SphereShooter : MonoCache
             var spawnedSphere = Instantiate(_smallSpherePrefab, _shootStartPoint.position, _camDirection.rotation)
                 .GetComponent<PlayerSmallSphere>();
             spawnedSphere.SetVelocity(new Vector3(_playerMover.GetVelocity().x, 0, _playerMover.GetVelocity().z));
-            _spawnTimer = 0f;
+
+            _spawnTimer -= timeForSpawn;
+
+            //CameraService.Instance.ShakeCamera(.05f);
+
         }
     }
 
