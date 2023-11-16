@@ -62,7 +62,9 @@ public class JumpEnemyMover : MonoCache, IMover
     public void JumpToDirection(Vector3 direction)
     {
         _velocity = direction * jumpForce;
+
         DrawLine(transform.position, transform.position + _velocity, 5, 1);
+
         _onWall = false;
         _inJumpTimer = 0.2f;
     }

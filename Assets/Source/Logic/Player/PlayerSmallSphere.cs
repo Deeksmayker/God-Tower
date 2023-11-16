@@ -8,6 +8,7 @@ public class PlayerSmallSphere : MonoCache
 {
     [SerializeField] private float _startVelocity;
     [SerializeField] private float _maxSpread;
+    [SerializeField] private float _damage;
 
     private ParticleSystem _hitParticles;
 
@@ -50,7 +51,9 @@ public class PlayerSmallSphere : MonoCache
         
         if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
         {
-            victim.TakeHit(1, transform.position, "Small ball");
+
+            victim.TakeHit(_damage, transform.position, "Small ball");
+
         }
 
         gameObject.AddComponent<Death>();

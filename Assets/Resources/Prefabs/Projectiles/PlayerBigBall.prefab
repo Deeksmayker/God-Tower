@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5087335165076047961}
   - component: {fileID: 2016161264813869370}
   - component: {fileID: 7191560144934548694}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: PlayerBigBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-5087335165076047961
 MonoBehaviour:
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   _acceleration: 5
-  _rotationSpeed: 10
+  _damage: 1
 --- !u!54 &2016161264813869370
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   time: 20
+  dieByDeathComponent: 0
 --- !u!1 &7785958372653542753
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8143663009371460648}
   - component: {fileID: 3037532909865978134}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
