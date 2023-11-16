@@ -138,7 +138,7 @@ public class StealKick : MonoCache, IMeleeAttacker
 
             if (_attackHitsContainer[i].TryGetComponent<PlayerBigBall>(out var kinematic))
             {
-                kinematic.HandleKick(GetAttackDirection());
+                kinematic.HandleImpulse(GetAttackDirection(), 500);
             }
 
             _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, "Player Kick");

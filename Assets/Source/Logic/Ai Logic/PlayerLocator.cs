@@ -25,9 +25,7 @@ public class PlayerLocator : MonoCache
     public Vector3 GetDirectionToPlayerNorm()
     {
         var direction = (_targetPoint.transform.position - transform.position).normalized;
-
         DrawLine(transform.position, transform.position + direction * locatePlayerRange, 2);
-
         return direction;
     }
 
