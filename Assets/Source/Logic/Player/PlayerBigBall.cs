@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using DG.Tweening;
 using NTC.Global.Cache;
 using NTC.Global.Pool;
@@ -9,8 +8,7 @@ using UnityEngine.Serialization;
 public class PlayerBigBall : MonoCache
 {
     [SerializeField] private float _acceleration;
-    [SerializeField] private float _damage;
-    [SerializeField] private float kickPushForce = 50;
+    [SerializeField] private float _rotationSpeed;
     
     public event Action Started;
     public event Action ImpulseHandled;
@@ -39,6 +37,8 @@ public class PlayerBigBall : MonoCache
 
         _hitParticles = (Resources.Load(ResPath.Particles + "BallHitParticles") as GameObject).GetComponent<ParticleSystem>();
 
+        _rb.AddTorque(RandomUtils.GetRandomNormalizedVector() * _rotationSpeed);
+        
         Started?.Invoke();
     }
 
@@ -59,10 +59,7 @@ public class PlayerBigBall : MonoCache
         particles.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
         particles.Play();
         
-        if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
-        {
-            victim.TakeHit(_damage, transform.position, "Big ball");
-        }
+        //TODO: написать логику дамага
         
         Collided?.Invoke();
     }
@@ -72,10 +69,10 @@ public class PlayerBigBall : MonoCache
         _rb.velocity = newVelocity;
     }
 
-    public void HandleKick(Vector3 direction)
+    public void HandleImpulse(Vector3 direction, float power)
     {
         transform.rotation = Quaternion.LookRotation(direction);
-        _rb.velocity = direction * kickPushForce;
+        _rb.velocity = direction * power;
         
         ImpulseHandled?.Invoke();
     }

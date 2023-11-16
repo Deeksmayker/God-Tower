@@ -111,9 +111,6 @@ public class NewKick : MonoCache, IMeleeAttacker
             _attackHitsContainer[i].GetComponentInParent<IMover>()?.AddForce(GetAttackDirection() * kickPushForce);
             _attackHitsContainer[i].GetComponentInParent<IInStun>()?.StartStun();
 
-            _attackHitsContainer[i].GetComponent<PlayerBigBall>()?.HandleKick(GetAttackDirection());
-
-
             if (_attackHitsContainer[i].TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.AddForce(GetAttackDirection() * kickPushForce);
