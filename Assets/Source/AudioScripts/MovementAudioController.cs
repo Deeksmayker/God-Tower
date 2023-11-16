@@ -16,6 +16,7 @@ public class MovementAudioController : MonoCache
     [SerializeField] private AudioClip[] hookClips;
 
     private float _stepTimer;
+    private float _landingTimer;
 
     private IMover _mover;
     private IJumper _jumper;
@@ -68,14 +69,20 @@ public class MovementAudioController : MonoCache
     
     protected override void Run()
     {
+        if (_landingTimer > 0)
+            _landingTimer -= Time.deltaTime;
         MakeSlidingSound();
     }
 
     private void HandleLanding()
     {
+        if (_landingTimer > 0)
+            return;
+
         var clip = AudioUtils.GetRandomClip(landingClips);
         AudioUtils.RandomiseAudioSourceParams(ref _audioSource, true, true, 0.2f, 0.1f, 0.3f);
         _audioSource.PlayOneShot(clip);
+        _landingTimer = 0.2f;
     }
 
     private void HandleJump()

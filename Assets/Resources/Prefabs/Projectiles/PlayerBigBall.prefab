@@ -36,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 8143663009371460648}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2293118052955393303
 MeshFilter:
@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  preparingTime: 1
-  acceleration: 5
+  _acceleration: 5
+  _rotationSpeed: 10
 --- !u!54 &2016161264813869370
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Death : MonoCache
 {
     [SerializeField] private float dissolveDuration = 0.5f;
-    [SerializeField] private float flashDuration = 0.1f;
+    [SerializeField] private float flashDuration = 0.05f;
 
     private float _timer;
 

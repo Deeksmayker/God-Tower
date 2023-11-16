@@ -4,6 +4,7 @@ using UnityEngine;
 public class DeleteAfterTime : MonoCache
 {
     [SerializeField] private float time;
+    [SerializeField] private bool dieByDeathComponent;
 
     private float _startTime;
 
@@ -16,6 +17,12 @@ public class DeleteAfterTime : MonoCache
     {
         if (Time.time - _startTime >= time)
         {
+            if (dieByDeathComponent)
+            {
+                gameObject.AddComponent<Death>();
+                Destroy(this);
+                return;
+            }
             Destroy(gameObject);
         }
     }
