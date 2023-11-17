@@ -20,7 +20,7 @@ public class SphereShooter : MonoCache
     [Header("Small sphere data")]
     [SerializeField] private float _timeBeforeAutoShoot = 1f;
     [SerializeField] private int _spherePerSecond = 3;
-    
+
     private IMover _playerMover;
     
     private float _bigSphereCooldownTimer;

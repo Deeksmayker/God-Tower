@@ -19,7 +19,7 @@ public class GodBloomEffectComponent : VolumeComponent, IPostProcessComponent
     public Vector2Parameter scrollDirection = new Vector2Parameter(new Vector2());
     public FloatParameter distortionAmount = new FloatParameter(100, true);
     public Vector2Parameter distortionRange = new Vector2Parameter(new Vector2(-1, 1));
-    
+
 
     public bool IsActive()
     {

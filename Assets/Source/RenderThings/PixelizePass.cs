@@ -15,6 +15,7 @@ public class PixelizePass : ScriptableRenderPass
     //private int pointBufferID = Shader.PropertyToID("_PointBuffer");
 
     private Material material;
+    private Material gradientMapMaterial;
     private int pixelScreenHeight, pixelScreenWidth;
 
     public PixelizePass()
@@ -23,6 +24,7 @@ public class PixelizePass : ScriptableRenderPass
         this.settings = stack.GetComponent<PixelizeEffectComponent>();
         this.renderPassEvent = settings.passEvent;
         if (material == null) material = CoreUtils.CreateEngineMaterial("Hidden/Custom/Pixelize");
+        gradientMapMaterial = CoreUtils.CreateEngineMaterial("Hidden/GradientMap");
     }
 
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -52,6 +54,7 @@ public class PixelizePass : ScriptableRenderPass
         CommandBuffer cmd = CommandBufferPool.Get();
         using (new ProfilingScope(cmd, new ProfilingSampler("Pixelize Pass")))
         {
+
             // No-shader variant
             //Blit(cmd, colorBuffer, pointBuffer);
             //Blit(cmd, pointBuffer, pixelBuffer);
@@ -59,6 +62,13 @@ public class PixelizePass : ScriptableRenderPass
 
             Blit(cmd, colorBuffer, pixelBuffer, material);
             Blit(cmd, pixelBuffer, colorBuffer);
+            if (settings.Enabled.value)
+            {
+                gradientMapMaterial.SetTexture("_GradientMap", settings.gradientTexture.value);
+                gradientMapMaterial.SetFloat("_Intensity", settings.intensity.value);
+                Blit(cmd, colorBuffer, pixelBuffer, gradientMapMaterial);
+                Blit(cmd, pixelBuffer, colorBuffer);
+            }
         }
 
         context.ExecuteCommandBuffer(cmd);
