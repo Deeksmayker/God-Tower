@@ -24,6 +24,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     [SerializeField] private float m_Friction = 6;
     [SerializeField] private float m_Gravity = 20;
     [SerializeField] private float m_JumpForce = 8;
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private float groundCheckRadius;
     [Tooltip("Automatically jump when holding jump button")]
     [SerializeField] private bool m_AutoBunnyHop = false;
     [Tooltip("How precise air control is")]
@@ -105,10 +107,12 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
              _currentDashCharges = dashCharges;
          }*/
 
-        if (!_isGrounded && _ch.isGrounded)
+        var newGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, Layers.Environment | Layers.EnemyHurtBox);
+
+        if (newGrounded && !IsGrounded())
             OnLanding?.Invoke();
 
-        _isGrounded = _ch.isGrounded;
+        _isGrounded = newGrounded;
 
         if (!_dash && _currentDashCharges < dashCharges)
         {
@@ -527,11 +531,17 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     public bool IsGrounded()
     {
-        return _ch.isGrounded;
+        return _isGrounded;
     }
 
     public void AddForce(Vector3 force)
     {
         _velocity += force / weight;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
     }
 }

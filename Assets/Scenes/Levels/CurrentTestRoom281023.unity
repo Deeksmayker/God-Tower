@@ -494,6 +494,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 578364562917549123, guid: efcca681c6aa2c64db2c7085334d7c9c,
+        type: 3}
+      propertyPath: groundCheckPoint
+      value: 
+      objectReference: {fileID: 1565798524}
+    - target: {fileID: 578364562917549123, guid: efcca681c6aa2c64db2c7085334d7c9c,
+        type: 3}
+      propertyPath: groundCheckRadius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3472917351022047528, guid: efcca681c6aa2c64db2c7085334d7c9c,
         type: 3}
       propertyPath: m_Layer
@@ -1666,6 +1676,12 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!4 &1565798524 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 421572061, guid: efcca681c6aa2c64db2c7085334d7c9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 380239470}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1582692760
 PrefabInstance:
   m_ObjectHideFlags: 0
