@@ -24,6 +24,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     [SerializeField] private float m_Friction = 6;
     [SerializeField] private float m_Gravity = 20;
     [SerializeField] private float m_JumpForce = 8;
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private float groundCheckRadius;
     [Tooltip("Automatically jump when holding jump button")]
     [SerializeField] private bool m_AutoBunnyHop = false;
     [Tooltip("How precise air control is")]
@@ -49,8 +51,11 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     private Vector3 m_MoveDirectionNorm = Vector3.zero;
     private Vector3 _velocity = Vector3.zero;
+    private Vector3 _currentUpNormal;
 
     private int _currentDashCharges;
+
+    private const float c_verticalVelocityToBreakSlopeMovement = 10;
 
     private float _dashTimer;
     private float _dashCooldownTimer;
@@ -60,6 +65,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private bool m_JumpQueued = false;
 
     private bool _isGrounded = true;
+    private bool _contactedWithEnvThisFrame;
+    private bool _previousContactedWithEnv;
 
     private bool _dashInput;
     private bool _dashHoldInput;
@@ -105,10 +112,12 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
              _currentDashCharges = dashCharges;
          }*/
 
-        if (!_isGrounded && _ch.isGrounded)
+        var newGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, Layers.Environment | Layers.EnemyHurtBox);
+
+        if (newGrounded && _currentUpNormal.y > 0.5f && !IsGrounded())
             OnLanding?.Invoke();
 
-        _isGrounded = _ch.isGrounded;
+        _isGrounded = newGrounded && _currentUpNormal.y > 0.5f;
 
         if (!_dash && _currentDashCharges < dashCharges)
         {
@@ -129,7 +138,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         }
 
         // Set movement state.
-        else if (_ch.isGrounded)
+        else if (IsGrounded())
         {
             GroundMove();
         }
@@ -138,8 +147,29 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             AirMove();
         }
 
+        if (_previousContactedWithEnv && Physics.Raycast(groundCheckPoint.position, Vector3.down, out var hit, 10, Layers.Environment) && hit.normal.y < 0.99f)
+        {
+            var projectVelocity = Vector3.ProjectOnPlane(_velocity, _currentUpNormal).normalized;
+            var magnitude = _velocity.magnitude;
+            if (_velocity.y - (projectVelocity * magnitude).y < c_verticalVelocityToBreakSlopeMovement)
+            {
+                _velocity = projectVelocity * _velocity.magnitude;
+                _ch.Move(Vector3.down * 0.1f);
+            }
+        }
+
         // Move the character.
         _ch.Move(_velocity * Time.deltaTime);
+
+        if (_contactedWithEnvThisFrame)
+        {
+            _contactedWithEnvThisFrame = false;
+            _previousContactedWithEnv = true;
+        }
+        else if (_previousContactedWithEnv)
+        {
+            _previousContactedWithEnv = false;
+        }
     }
 
     // Handle air movement.
@@ -193,7 +223,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private void AirControl(Vector3 targetDir, float targetSpeed)
     {
         // Only control air movement when moving forward or backward.
-        if (Mathf.Abs(m_MoveInput.z) < 0.001 || Mathf.Abs(targetSpeed) < 0.001)
+        if (Mathf.Abs(m_MoveInput.z) < 0.001)
         {
             return;
         }
@@ -249,7 +279,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
         // Reset the gravity velocity
         if (_velocity.y <= 0)
-            _velocity.y = -m_Gravity * Time.deltaTime;
+            _velocity.y = -.1f;
 
         if (m_JumpQueued)
         {
@@ -266,7 +296,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         float drop = 0;
 
         // Only apply friction when grounded.
-        if (_ch.isGrounded)
+        if (IsGrounded())
         {
             float control = speed < m_GroundSettings.Deceleration ? m_GroundSettings.Deceleration : speed;
             drop = control * m_Friction * Time.deltaTime * t;
@@ -291,7 +321,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     // Calculates acceleration based on desired speed and direction.
     private void Accelerate(Vector3 targetDir, float targetSpeed, float accel)
     {
-        float currentspeed = Vector3.Dot(_velocity, targetDir);
+        float currentspeed = Vector3.Dot(_velocity.normalized, targetDir);
+        currentspeed *= _velocity.magnitude;
         float addspeed = targetSpeed - currentspeed;
         if (addspeed <= 0)
         {
@@ -394,6 +425,16 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (hit.normal.y > 0)
+            _currentUpNormal = hit.normal;
+
+        if (Mathf.Pow(2, hit.gameObject.layer) == (int)Layers.Environment)
+        {
+            _previousContactedWithEnv = true;
+            _contactedWithEnvThisFrame = true;
+        }
+
+
         var needToResolveWallCollision = hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20
             && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers)
             && !(_dash && Vector3.Dot(hit.normal, _velocity.normalized) < -0.5f);
@@ -527,11 +568,17 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     public bool IsGrounded()
     {
-        return _ch.isGrounded;
+        return _isGrounded;
     }
 
     public void AddForce(Vector3 force)
     {
         _velocity += force / weight;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
     }
 }
