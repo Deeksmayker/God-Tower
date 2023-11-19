@@ -1,42 +1,43 @@
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using UnityEngine;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 public class PostProcessingController : MonoCache
 {
-    [SerializeField] private Volume volume;
-    [SerializeField] private float smooth = 0.1f;
+    [SerializeField] private Volume _volume;
+    [SerializeField] private float _smooth = 0.1f;
     [Space] 
-    [SerializeField] private float maxVignetteIntensity = 0.8f;
-    [SerializeField] private float maxBloomIntensity = 8f;
-    [SerializeField] private float maxChromaticAberrationIntensity = 0.8f;
+    [SerializeField] private float _maxVignetteIntensity = 0.8f;
+    [SerializeField] private float _maxChromaticAberrationIntensity = 0.8f;
 
     private Vignette _vignette;
-   // private Bloom _bloom;
+    private MotionBlur _motionBlur;
     private ChromaticAberration _chromaticAberration;
-    private MotionBlur _motiouBlur;
+    private GodBloomEffectComponent _bloomEffectComponent;
+    private PixelizeEffectComponent _pixelizeEffectComponent;
 
     private float _defaultVignetteIntensity;
-    //private float _defaultBloomIntensity;
     private float _defaultChromaticAberrationIntensity;
 
     protected override void OnEnabled()
     {
-        volume.profile.TryGet<Vignette>(out _vignette);
-        //volume.profile.TryGet<Bloom>(out _bloom);
-        volume.profile.TryGet<ChromaticAberration>(out _chromaticAberration);
-        volume.profile.TryGet<MotionBlur>(out _motiouBlur);
-        
+        _volume.profile.TryGet<Vignette>(out _vignette);
+        _volume.profile.TryGet<MotionBlur>(out _motionBlur);
+        _volume.profile.TryGet<ChromaticAberration>(out _chromaticAberration);
+        _volume.profile.TryGet<GodBloomEffectComponent>(out _bloomEffectComponent);
+        _volume.profile.TryGet<PixelizeEffectComponent>(out _pixelizeEffectComponent);
+
         _defaultVignetteIntensity = _vignette.intensity.value;
-        //_defaultBloomIntensity = _bloom.intensity.value;
         _defaultChromaticAberrationIntensity = _chromaticAberration.intensity.value;
     }
 
     #region VingnetteControll
-    
+
     /// <summary>
     /// Позволяет задать новое значение ширины виньетки. Если задать time, то ширина плавно измениться на нужное значение.
     /// </summary>
@@ -44,12 +45,12 @@ public class PostProcessingController : MonoCache
     /// <param name="time"> Время в секундах, за которое будет достигнуто новое значение. </param>
     public void SetVignetteIntensity(float intensity, float smooth = -1)
     {
-        if (intensity > maxVignetteIntensity)
-            intensity = maxVignetteIntensity;
-        
+        if (intensity > _maxVignetteIntensity)
+            intensity = _maxVignetteIntensity;
+
         if (smooth.Equals(-1))
-            smooth = this.smooth;
-        
+            smooth = this._smooth;
+
         ChangeIntensityWithSmooth(_vignette.intensity, intensity, smooth);
     }
 
@@ -60,19 +61,19 @@ public class PostProcessingController : MonoCache
     public void ResetVignetteIntensity(float smooth = -1)
     {
         if (smooth.Equals(-1))
-            smooth = this.smooth;
-        
+            smooth = this._smooth;
+
         ChangeIntensityWithSmooth(_vignette.intensity, _defaultVignetteIntensity, smooth);
     }
-    
+
     /// <summary>
     /// Позволяет задать значение интенсивности по-умолчанию для Vignette.
     /// </summary>
     /// <param name="intensity"> Новое значение по-умолчанию</param>
     public void SetDefaultVignetteIntensity(float intensity)
     {
-        if (intensity > maxVignetteIntensity)
-            intensity = maxVignetteIntensity;
+        if (intensity > _maxVignetteIntensity)
+            intensity = _maxVignetteIntensity;
 
         _defaultVignetteIntensity = intensity;
     }
@@ -83,7 +84,7 @@ public class PostProcessingController : MonoCache
     /// <param name="intensity"> Новое максимальное значение интенсивности. </param>
     public void SetMaxVignetteIntensity(float intensity)
     {
-        maxVignetteIntensity = intensity;
+        _maxVignetteIntensity = intensity;
     }
 
     /// <summary>
@@ -97,84 +98,14 @@ public class PostProcessingController : MonoCache
     #endregion
 
     #region BloomControll
-    /*
-    /// <summary>
-    /// Позволяет задать новое значение интенсивности Bloom. Если задать time, то интенсивность плавно измениться на нужное значение.
-    /// </summary>
-    /// <param name="intensity"> Новое значение интенсивности Bloom. </param>
-    /// <param name="time"> Время в секундах, за которое будет достигнуто новое значение. </param>
-    public void SetBloomIntensity(float intensity, float smooth = -1)
+
+    public void SetMotionBlurIntensity(float value)
     {
-        if (intensity > maxBloomIntensity)
-            intensity = maxBloomIntensity;
-        
-        if (smooth.Equals(-1))
-            smooth = this.smooth;
-        
-        ChangeIntensityWithSmooth(_bloom.intensity, intensity, smooth);
+        _motionBlur.intensity.value = value;
     }
 
-    /// <summary>
-    /// Возвращает интенсивность Bloom в исходное состояние. Если задать time, то интенсивность плавно измениться на исходное значение.
-    /// </summary>
-    /// <param name="time"> Время в секундах, за которое будет достигнуто исходное значение. </param>
-    public void ResetBloomIntensity(float smooth = -1)
-    {
-        if (smooth.Equals(-1))
-            smooth = this.smooth;
-        
-        ChangeIntensityWithSmooth(_bloom.intensity, _defaultBloomIntensity, smooth);
-    }
-    
-    /// <summary>
-    /// Позволяет задать значение интенсивности по-умолчанию для Bloom.
-    /// </summary>
-    /// <param name="intensity"> Новое значение по-умолчанию</param>
-    public void SetDefaultBloomIntensity(float intensity)
-    {
-        if (intensity > maxBloomIntensity)
-            intensity = maxBloomIntensity;
-        
-        _defaultBloomIntensity = intensity;
-    }
-    
-    /// <summary>
-    /// Позволяет задать максимальное значение интенсивности Bloom.
-    /// </summary>
-    /// <param name="intensity"> Новое максимальное значение интенсивности. </param>
-    public void SetMaxBloomIntensity(float intensity)
-    {
-        maxBloomIntensity = intensity;
-    }
-
-    /// <summary>
-    /// Позволяет изменить цвет Bloom на время <paramref name="time"/>. 
-    /// </summary>
-    public void SetBloomColor(Color color, float time)
-    {
-        ChangeColorWithTime(_bloom.tint, color, time);
-    }
-
-    /// <summary>
-    /// Позволяет плавно менять цвет Bloom из цвета <paramref name="from"/> в цвет <paramref name="to"/> по процентам.
-    /// </summary>
-    /// <param name="from"> Начальный цвет. Эквивалент <paramref name="percent"/> = 1. </param>
-    /// <param name="to"> Конечный цвет. Эквивалент <paramref name="percent"/> = 0. </param>
-    /// <param name="percent"> Проценты, в соответствии с которыми будет происходить переход. Чем больше <paramref name="percent"/>,
-    /// тем ближе цвет будет к <paramref name="from"/>. </param>
-    /// <param name="time"> Время, за которое будет происходить плавный переход. </param>
-    public void ChangeBloomColorByPercentage(Color from, Color to, float percent, float time = 0.1f)
-    {
-        ChangeColorByPercentage(_bloom.tint, from, to, percent, time);
-    }
-
-    public void SetBloomTintColor(Color color, float time)
-    {
-        ChangeColorWithTime(_bloom.tint, color, time);
-    }
-*/
     #endregion
-    
+
     #region ChromaticAberrationControll
 
     /// <summary>
@@ -184,12 +115,12 @@ public class PostProcessingController : MonoCache
     /// <param name="time"> Время в секундах, за которое будет достигнуто новое значение. </param>
     public void SetChromaticAberrationIntensity(float intensity, float smooth = -1)
     {
-        if (intensity > maxChromaticAberrationIntensity)
-            intensity = maxChromaticAberrationIntensity;
+        if (intensity > _maxChromaticAberrationIntensity)
+            intensity = _maxChromaticAberrationIntensity;
 
         if (smooth.Equals(-1))
-            smooth = this.smooth;
-        
+            smooth = this._smooth;
+
         ChangeIntensityWithSmooth(_chromaticAberration.intensity, intensity, smooth);
     }
 
@@ -200,30 +131,154 @@ public class PostProcessingController : MonoCache
     public void ResetChromaticAberrationIntensity(float smooth = -1)
     {
         if (smooth.Equals(-1))
-            smooth = this.smooth;
-        
+            smooth = this._smooth;
+
         ChangeIntensityWithSmooth(_chromaticAberration.intensity, _defaultChromaticAberrationIntensity, smooth);
     }
-    
+
     /// <summary>
     /// Позволяет задать значение интенсивности по-умолчанию для Chromatic Aberration.
     /// </summary>
     /// <param name="intensity"> Новое значение по-умолчанию</param>
     public void SetDefaultChromaticAberrationIntensity(float intensity)
     {
-        if (intensity > maxChromaticAberrationIntensity)
-            intensity = maxChromaticAberrationIntensity;
-        
+        if (intensity > _maxChromaticAberrationIntensity)
+            intensity = _maxChromaticAberrationIntensity;
+
         _defaultChromaticAberrationIntensity = intensity;
     }
-    
+
     /// <summary>
     /// Позволяет задать максимальное значение интенсивности Chromatic Aberration.
     /// </summary>
     /// <param name="intensity"> Новое максимальное значение интенсивности. </param>
     public void SetMaxChromaticAberrationIntensity(float intensity)
     {
-        maxChromaticAberrationIntensity = intensity;
+        _maxChromaticAberrationIntensity = intensity;
+    }
+
+    #endregion
+
+    #region GodBloomEffectComponentControll
+
+    public void SetThresholdBloom(float threshold, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeFloatParameterWithSmooth(_bloomEffectComponent.threshold, threshold, smooth);
+        }
+        else
+        {
+            _bloomEffectComponent.threshold.value = threshold;
+        }
+    }
+
+    public void SetIntensityBloom(float intensity, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeFloatParameterWithSmooth(_bloomEffectComponent.intensity, intensity, smooth);
+        }
+        else
+        {
+            _bloomEffectComponent.intensity.value = intensity;
+        }
+    }
+
+    public void SetScatterBloom(float scatter, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeFloatParameterWithSmooth(_bloomEffectComponent.scatter, Mathf.Clamp01(scatter), smooth);
+        }
+        else
+        {
+            _bloomEffectComponent.scatter.value = Mathf.Clamp01(scatter);
+        }
+    }
+
+    public void SetTextureDensityBloom(int density, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeIntParameterWithSmooth(_bloomEffectComponent.textureDensity, density, smooth);
+        }
+        else
+        {
+            _bloomEffectComponent.textureDensity.value = density;
+        }
+    }
+
+    public void SetTextureCutoffBloom(float cutoff, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeFloatParameterWithSmooth(_bloomEffectComponent.textureCutoff, Mathf.Clamp01(cutoff), smooth);
+        }
+        else
+        {
+            _bloomEffectComponent.textureCutoff.value = Mathf.Clamp01(cutoff);
+        }
+    }
+
+    public void SetScrollDirectionBloom(Vector2 direction)
+    {
+        _bloomEffectComponent.scrollDirection.value = direction;
+    }
+
+    public void SetDistortionAmountBloom(float distortionAmount, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeFloatParameterWithSmooth(_bloomEffectComponent.distortionAmount, distortionAmount, smooth);
+        }
+        else
+        {
+            _bloomEffectComponent.distortionAmount.value = distortionAmount;
+        }
+    }
+
+    public void SetDistortionRangeBloom(Vector2 range)
+    {
+        _bloomEffectComponent.distortionRange.value = range;
+    }
+
+    #endregion
+
+    #region PixelizeEffectComponentControll
+
+    public void SetScreenHeightPixelize(int screenHeight, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeIntParameterWithSmooth(_pixelizeEffectComponent.screenHeight, screenHeight, smooth);
+        }
+        else
+        {
+            _pixelizeEffectComponent.screenHeight.value = screenHeight;
+        }
+    }
+
+    public void TurnPixelize(bool value)
+    {
+        _pixelizeEffectComponent.Enabled.value = value;
+    }
+
+    public void SetGradientTexturePixelize(Texture2D texture)
+    {
+        _pixelizeEffectComponent.gradientTexture.value = texture;
+    }
+
+    public void SetIntensityPixelize(float intensity, float smooth = -1)
+    {
+        if (smooth > 0)
+        {
+            ChangeFloatParameterWithSmooth(_pixelizeEffectComponent.intensity, intensity, smooth);
+        }
+        else
+        {
+            _pixelizeEffectComponent.intensity.value = intensity;
+        }
     }
 
     #endregion
@@ -233,16 +288,16 @@ public class PostProcessingController : MonoCache
     private void ChangeColorByPercentage(ColorParameter targetColor, Color from, Color to, float percent, float time)
     {
         var deltaColor = new Color(Mathf.Abs(from.r - to.r), Mathf.Abs(from.g - to.g), Mathf.Abs(from.b - to.b));
-        ChangeColorWithTime(targetColor ,new Color(
-            Mathf.Abs(targetColor.value.r - deltaColor.r * percent), 
+        ChangeColorWithTime(targetColor, new Color(
+            Mathf.Abs(targetColor.value.r - deltaColor.r * percent),
             Mathf.Abs(targetColor.value.g - deltaColor.g * percent),
             Mathf.Abs(targetColor.value.b - deltaColor.b * percent)), time);
     }
-    
+
     private async UniTask ChangeIntensityWithSmooth(FloatParameter currentIntensity, float intensity, float smooth)
     {
         var step = intensity * smooth;
-        
+
         if (currentIntensity.value < intensity)
         {
             while (currentIntensity.value < intensity)
@@ -273,10 +328,53 @@ public class PostProcessingController : MonoCache
         }
     }
 
-    #endregion
-
-    public void SetMotionBlurIntensity(float value)
+    private async Task ChangeFloatParameterWithSmooth(FloatParameter floatParameter, float value, float smooth)
     {
-        _motiouBlur.intensity.value = value;
+        var step = value * smooth;
+
+        if (floatParameter.value < value)
+        {
+            while (floatParameter.value < value)
+            {
+                await Task.Delay(10);
+                floatParameter.value += step;
+            }
+        }
+        else
+        {
+            while (floatParameter.value > value)
+            {
+                await Task.Delay(10);
+                floatParameter.value -= step;
+            }
+        }
+
+        floatParameter.value = value;
     }
+
+    private async Task ChangeIntParameterWithSmooth(IntParameter floatParameter, int value, float smooth)
+    {
+        var step = (int)Mathf.Round(value * smooth);
+
+        if (floatParameter.value < value)
+        {
+            while (floatParameter.value < value)
+            {
+                await Task.Delay(10);
+                floatParameter.value += step;
+            }
+        }
+        else
+        {
+            while (floatParameter.value > value)
+            {
+                await Task.Delay(10);
+                floatParameter.value -= step;
+            }
+        }
+
+        floatParameter.value = value;
+    }
+
+    #endregion
 }
