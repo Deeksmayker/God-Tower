@@ -18,6 +18,9 @@ public class GodPostProcessRenderFeature : ScriptableRendererFeature
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
+#if UNITY_EDITOR
+        if (renderingData.cameraData.isSceneViewCamera) return;
+#endif
         renderer.EnqueuePass(m_godBloomPass);
     }
 
@@ -32,6 +35,9 @@ public class GodPostProcessRenderFeature : ScriptableRendererFeature
 
     public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
     {
+#if UNITY_EDITOR
+        if (renderingData.cameraData.isSceneViewCamera) return;
+#endif
         m_godBloomPass.ConfigureInput(ScriptableRenderPassInput.Depth);
         m_godBloomPass.ConfigureInput(ScriptableRenderPassInput.Color);
         m_godBloomPass.SetTarget(renderer.cameraColorTargetHandle, renderer.cameraDepthTargetHandle);

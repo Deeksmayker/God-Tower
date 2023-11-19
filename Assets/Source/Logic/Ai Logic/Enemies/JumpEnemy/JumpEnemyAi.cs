@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class JumpEnemyAi : MonoCache
 {
+    [SerializeField] private bool _detectingPlayer = true;
     [SerializeField] private float calmJumpInterval = 1f;
     [SerializeField] private float fightJumpInterval = 0.5f;
+
+    private const float c_DistanceToCheckWalls = 150f;
 
     private float _timer;
 
@@ -50,28 +53,45 @@ public class JumpEnemyAi : MonoCache
         if (_inStun || _timer > 0)
             return;
 
-        var jumpDirection = _playerLocator.IsPlayerVisible() && _makingSecondJump ? _playerLocator.GetDirectionToPlayerNorm() : GetRandomJumpDirection();
+        var jumpDirection = _detectingPlayer && _playerLocator.IsPlayerVisible() && _makingSecondJump ? _playerLocator.GetDirectionToPlayerNorm() : GetRandomJumpDirection();
         if (_playerLocator.IsPlayerVisible())
             jumpDirection.y += 0.1f;
-        Log("Player visibility - " + _playerLocator.IsPlayerVisible());
-        Log("Making second jump - " + _makingSecondJump);
-        Log("Fighting - " + _inFight);
+        //Log("Player visibility - " + _playerLocator.IsPlayerVisible());
+        //Log("Making second jump - " + _makingSecondJump);
+        //Log("Fighting - " + _inFight);
         Jump(jumpDirection);
     }
 
     private Vector3 GetRandomJumpDirection()
     {
-        var x = Random.Range(-80, _mover.OnWall() ? 5 : 80);
-        var y = Random.Range(-80, 80);
-        var z = Random.Range(-80, 80);
-        var direction = Quaternion.Euler(x, y, z) * _mover.GetCurrentNormal();
+        var direction = Vector3.zero;
+        var tryCount = 5;
+
+        for (var i = 0; i < tryCount; i++)
+        {
+            var x = Random.Range(-80, _mover.OnWall() ? 5 : 80);
+            var y = Random.Range(-80, 80);
+            var z = Random.Range(-80, 80);
+            direction = Quaternion.Euler(x, y, z) * _mover.GetCurrentNormal();
+
+            if (Physics.Raycast(transform.position, direction, c_DistanceToCheckWalls, Layers.Environment))
+            {
+                break;
+            }
+
+            if (i == tryCount - 1)
+            {
+                direction = Random.insideUnitSphere.normalized;
+                direction.y = .1f;
+            }
+        }
         Log(direction.ToString());
         return direction;
-
     }
 
     private void Jump(Vector3 direction)
     {
+        Log("Jumping in directoin - " + direction);
         _makingSecondJump = !_makingSecondJump;
         _mover.JumpToDirection(direction);
         _timer += 10;
@@ -85,18 +105,18 @@ public class JumpEnemyAi : MonoCache
     private void HandleStun()
     {
         _inStun = true;
-        _mover.SetJumpTimer(100);
+        _mover.StartStun();
     }
 
     private void HandleRecover()
     {
         _inStun = false;
-        _mover.SetJumpTimer(0);
+        _mover.EndStun();
     }
 
     private float GetCurrentJumpInterval()
     {
         var multiplier = _makingSecondJump ? 0.5f : 1f;
         return _inFight ? fightJumpInterval * multiplier : calmJumpInterval * multiplier;
-    } 
+    }
 }

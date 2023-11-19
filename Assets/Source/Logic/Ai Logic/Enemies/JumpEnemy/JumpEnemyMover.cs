@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NTC.Global.Cache;
 using System;
 using UnityEditor.Rendering;
@@ -8,11 +9,13 @@ public class JumpEnemyMover : MonoCache, IMover
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravity;
 
-    private float _distanceToCheckWalls = 100;
+
     private float _inJumpTimer;
+    private float _baseChHeight;
 
     private bool _onWall;
     private bool _lastFrameGrounded;
+    private bool _inStun;
 
     private Quaternion _desiredAngle;
 
@@ -21,6 +24,7 @@ public class JumpEnemyMover : MonoCache, IMover
     private Vector3 _currentContactNormal;
 
     private CharacterController _ch;
+    private RotateMaker _rotator;
 
     public event Action OnLanding;
     public event Action<Vector3> OnBounce;
@@ -28,6 +32,9 @@ public class JumpEnemyMover : MonoCache, IMover
     private void Awake()
     {
         _ch = GetComponent<CharacterController>();
+        _rotator = GetComponent<RotateMaker>();
+
+        _baseChHeight = _ch.height;
     }
 
 
@@ -48,7 +55,11 @@ public class JumpEnemyMover : MonoCache, IMover
             _velocity = new Vector3(horizontalVelocity.x, _velocity.y, horizontalVelocity.z);
         }
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, _desiredAngle, Time.deltaTime * 5);
+        if (!_inStun)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, _desiredAngle, Time.deltaTime * 5);
+        }
+
         if (!_onWall)
             _velocity.y += gravity * Time.deltaTime;
         
@@ -61,6 +72,9 @@ public class JumpEnemyMover : MonoCache, IMover
 
     public void JumpToDirection(Vector3 direction)
     {
+        _ch.height = 1;
+        DOTween.To(x => _ch.height = x, 1f, _baseChHeight, 0.5f);
+        Log("Mover Jumping to direction - " + direction);
         _velocity = direction * jumpForce;
         DrawLine(transform.position, transform.position + _velocity, 5, 1);
         _onWall = false;
@@ -69,8 +83,8 @@ public class JumpEnemyMover : MonoCache, IMover
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Log("We hit something guys");
-        if (_inJumpTimer > 0)
+        //Log("We hit something guys");
+        if (_inStun)
         {
             if (Vector3.Dot(_velocity.normalized, hit.normal) < 0)
                 _velocity = Vector3.Reflect(_velocity * 0.8f, hit.normal);
@@ -80,7 +94,7 @@ public class JumpEnemyMover : MonoCache, IMover
         _currentContactNormal = hit.normal;
         if (hit.normal.y < 0.4f)
         {
-            Log("We on the wall guys");
+            //Log("We on the wall guys");
             if (!_onWall)
                 OnLanding?.Invoke();
             _onWall = true;
@@ -88,7 +102,7 @@ public class JumpEnemyMover : MonoCache, IMover
         }
         else
         {
-            Log("We on floor guys");
+            //Log("We on floor guys");
             _onWall = false;
             if (!_lastFrameGrounded)
                 OnLanding?.Invoke();
@@ -109,6 +123,22 @@ public class JumpEnemyMover : MonoCache, IMover
     public void SetJumpTimer(float value)
     {
         _inJumpTimer = value;
+    }
+
+    public void StartStun()
+    {
+        _rotator.SetTorque(UnityEngine.Random.insideUnitSphere.normalized * 1000);
+
+        _inStun = true;
+    }
+
+    public void EndStun()
+    {
+        _inStun = false;
+        _onWall = false;
+        _inJumpTimer = 0;
+
+        _rotator.StopTorque();
     }
 
     public Vector3 GetCurrentNormal() => _currentContactNormal;

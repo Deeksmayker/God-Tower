@@ -807,6 +807,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2839024526327932231, guid: 5e936e7174b59fe47962c1ff925dcbad,
         type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839024526327932231, guid: 5e936e7174b59fe47962c1ff925dcbad,
+        type: 3}
       propertyPath: ShapeModule.type
       value: 5
       objectReference: {fileID: 0}
@@ -844,6 +849,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2839024526327932231, guid: 5e936e7174b59fe47962c1ff925dcbad,
+        type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 2839024526327932231, guid: 5e936e7174b59fe47962c1ff925dcbad,
         type: 3}
@@ -1431,6 +1441,7 @@ GameObject:
   - component: {fileID: 1120508623}
   - component: {fileID: 1120508624}
   - component: {fileID: 1120508625}
+  - component: {fileID: 1120508626}
   m_Layer: 8
   m_Name: JumpingEnemy
   m_TagString: Untagged
@@ -1549,6 +1560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  _detectingPlayer: 1
   calmJumpInterval: 3
   fightJumpInterval: 1
 --- !u!114 &1120508625
@@ -1566,6 +1578,19 @@ MonoBehaviour:
   debug: 0
   health: 20
   stunDuration: 2
+--- !u!114 &1120508626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120508617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c3c7d1e6ede1943b930a3bd4fcec90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
 --- !u!4 &1183069883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3998808300210840913, guid: efcca681c6aa2c64db2c7085334d7c9c,
@@ -2087,7 +2112,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742627487}
   m_LocalRotation: {x: 0, y: 0, z: 0.6303372, w: 0.77632153}
-  m_LocalPosition: {x: 17.39, y: 14.35, z: -0.980052}
+  m_LocalPosition: {x: 7.4, y: 16.4, z: -1.01}
   m_LocalScale: {x: 1, y: 105.93811, z: 16.494}
   m_ConstrainProportionsScale: 0
   m_Children: []
