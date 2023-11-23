@@ -47,7 +47,6 @@ public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
 
     public void ChangeHealth(float changeValue)
     {
-        Debug.Log(changeValue);
         health = Mathf.Clamp(health + changeValue, 0, _maxHealth);
 
         if (health <= 0)

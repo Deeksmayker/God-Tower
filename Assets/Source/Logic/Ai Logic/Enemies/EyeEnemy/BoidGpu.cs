@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boid : MonoBehaviour, IMover
+public class BoidGpu : MonoBehaviour, IMover
 {
 
     BoidSettings settings;
@@ -35,7 +35,7 @@ public class Boid : MonoBehaviour, IMover
 
     public event Action OnLanding;
     public event Action<Vector3> OnBounce;
-
+/*
     void Awake () {
         material = transform.GetComponentInChildren<MeshRenderer> ().material;
         cachedTransform = transform;
@@ -138,6 +138,7 @@ public class Boid : MonoBehaviour, IMover
         Vector3 v = vector.normalized * settings.maxSpeed - velocity;
         return Vector3.ClampMagnitude (v, settings.maxSteerForce);
     }
+*/
 
     public void SetInput(Vector3 input)
     {

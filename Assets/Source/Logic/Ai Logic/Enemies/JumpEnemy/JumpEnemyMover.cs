@@ -114,9 +114,10 @@ public class JumpEnemyMover : MonoCache, IMover
         if (Physics.Raycast(transform.position, _velocity.normalized, out var hit, 100, Layers.Environment))
         {
             if (hit.normal.y < 0.4f)
-                _desiredAngle = Quaternion.LookRotation(hit.normal);
+                _desiredAngle = Quaternion.LookRotation(hit.normal + UnityEngine.Random.insideUnitSphere.normalized * UnityEngine.Random.Range(-.5f, .5f));
             else
-                _desiredAngle = Quaternion.LookRotation(new Vector3(_lastNonZeroVelocity.x, 0, _lastNonZeroVelocity.z).normalized, hit.normal);
+                _desiredAngle = Quaternion.LookRotation(new Vector3(_lastNonZeroVelocity.x, 0, _lastNonZeroVelocity.z).normalized,
+                    hit.normal + UnityEngine.Random.insideUnitSphere.normalized * UnityEngine.Random.Range(-.5f, .5f));
         }
     }
 

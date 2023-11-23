@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoidManager : MonoBehaviour {
+public class BoidManagerGpu : MonoBehaviour {
 
     [SerializeField] private Transform flyTarget;
 
@@ -10,11 +10,11 @@ public class BoidManager : MonoBehaviour {
 
     public BoidSettings settings;
     public ComputeShader compute;
-    Boid[] boids;
-
+    BoidGpu[] boids;
+/*
     void Start () {
-        boids = FindObjectsOfType<Boid> ();
-        foreach (Boid b in boids) {
+        boids = FindObjectsOfType<BoidGpu> ();
+        foreach (BoidGpu b in boids) {
             b.Initialize (settings, flyTarget);
         }
     }
@@ -54,7 +54,7 @@ public class BoidManager : MonoBehaviour {
 
             boidBuffer.Release ();
         }
-    }
+    }*/
 
     public struct BoidData {
         public Vector3 position;
