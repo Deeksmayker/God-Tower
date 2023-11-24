@@ -36,7 +36,7 @@ public class GodPostProcessRenderFeature : ScriptableRendererFeature
     public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
     {
 #if UNITY_EDITOR
-        if (renderingData.cameraData.isSceneViewCamera) return;
+        if (renderingData.cameraData.cameraType != CameraType.Game) return;
 #endif
         m_godBloomPass.ConfigureInput(ScriptableRenderPassInput.Depth);
         m_godBloomPass.ConfigureInput(ScriptableRenderPassInput.Color);

@@ -1,4 +1,5 @@
 using NTC.Global.Cache;
+using System.Threading.Tasks;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -20,6 +21,9 @@ public class BoidsBehaviour : MonoCache
 
         public void Execute(int index, TransformAccess transform)
         {
+            if (!transform.isValid)
+                return;
+
             var velocity = Velocities[index] + Accelerations[index] * DeltaTime;
             var speed = velocity.magnitude;
             var dir = velocity / speed;
@@ -144,6 +148,13 @@ public class BoidsBehaviour : MonoCache
         }
 
         _transformAccessArray = new TransformAccessArray(transforms);
+
+        InvokeRepeating(nameof(SpawnB), 5, 3);
+    }
+
+    private void SpawnB()
+    {
+        SpawnBoids(Vector3.zero, Vector3.up * 10, 50);
     }
 
     private JobHandle _accelerationJobHandle;
@@ -152,6 +163,9 @@ public class BoidsBehaviour : MonoCache
     protected override void Run()
     {
         _moveJobHandle.Complete();
+
+        if (_transformAccessArray.length == 0)
+            return;
 
         var accelerationJob = new AccelerationJob()
         {
@@ -176,6 +190,10 @@ public class BoidsBehaviour : MonoCache
 
     protected override void LateRun()
     {
+        _accelerationJobHandle.Complete();
+        if (_transformAccessArray.length == 0)
+            return;
+
         var moveJob = new BoidMoveJob()
         {
             Positions = _positions,
@@ -185,21 +203,23 @@ public class BoidsBehaviour : MonoCache
             MaxSpeed = settings.maxSpeed,
             DeltaTime = Time.deltaTime
         };
-        _accelerationJobHandle.Complete();
-        /*
-        for (var i = _index; i < _index + 50 && i < numberOfBoids; i++)
+        
+        for (var i = _index; i < _index + 100 && i < _transformAccessArray.length; i++)
         {
+            if (!_transformAccessArray[i])
+                continue;
             if (IsHeadingForCollision(_positions[i], _velocities[i].normalized))
             {
-                var collisionAvoidDir = ObstacleRays(_positions[i], _velocities[i].normalized);
+                var collisionAvoidDir = ObstacleRays(_transformAccessArray[i], _positions[i], _velocities[i].normalized);
                 var collisionAvoidForce = SteerTowards(collisionAvoidDir, _velocities[i]) * settings.avoidCollisionWeight;
-                _accelerations[i] += collisionAvoidForce;
+                _accelerations[i] = collisionAvoidForce;
             }
         }
 
-        _index += 50;
-        _index %= numberOfBoids;
-        */
+        _index += 100;
+        _index %= _transformAccessArray.length;
+        //Debug.Log(_index);
+        
         _moveJobHandle = moveJob.Schedule(_transformAccessArray);
         
     }
@@ -212,13 +232,11 @@ public class BoidsBehaviour : MonoCache
         return false;
     }
 
-    Vector3 ObstacleRays (Vector3 position, Vector3 forward) {
+    Vector3 ObstacleRays (Transform transf, Vector3 position, Vector3 forward) {
         Vector3[] rayDirections = BoidHelper.directions;
 
         for (int i = 0; i < rayDirections.Length; i++) {
-            if (!_transformAccessArray[i])
-                continue;
-            Vector3 dir = _transformAccessArray[i].TransformDirection(rayDirections[i]);
+            Vector3 dir = transf.TransformDirection(rayDirections[i]);
             Ray ray = new Ray (position, dir);
             if (!Physics.SphereCast (ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask)) {
                 return dir;
@@ -233,8 +251,66 @@ public class BoidsBehaviour : MonoCache
         return Vector3.ClampMagnitude (v, settings.maxSteerForce);
     }
 
+    public async void SpawnBoids(Vector3 position, Vector3 startVelocity, int count)
+    {
+        _accelerationJobHandle.Complete();
+        _moveJobHandle.Complete();
+
+        int currentAliveCount = await GetAliveBoidsCount();
+
+        var newTransforms = new Transform[currentAliveCount + count];
+        var newPositions = new NativeArray<Vector3>(currentAliveCount + count, Allocator.Persistent);
+        var newVelocities = new NativeArray<Vector3>(currentAliveCount + count, Allocator.Persistent);
+        var newAccelerations = new NativeArray<Vector3>(currentAliveCount + count, Allocator.Persistent);
+
+        var index = 0;
+        for (var i = 0; i < _transformAccessArray.length; i++)
+        {
+            if (!_transformAccessArray[i])
+                continue;
+            newTransforms[index] = _transformAccessArray[i];
+            newPositions[index] = _positions[i];
+            newVelocities[index] = _velocities[i];
+            //newAccelerations[index] = _accelerations[i];
+            index++;
+        }
+
+        for (var i = index; i < index + count; i++)
+        {
+            newPositions[i] = position + Random.insideUnitSphere;
+            newVelocities[i] = startVelocity;
+            newTransforms[i] = Instantiate(entityPrefab, newPositions[i], Quaternion.identity).transform;
+        }
+
+        _transformAccessArray = new TransformAccessArray(newTransforms);
+        _positions = newPositions;
+        _velocities = newVelocities;
+        _accelerations = newAccelerations;
+
+        //newPositions.Dispose();
+        //newVelocities.Dispose();
+        //newAccelerations.Dispose();
+    }
+
+    public async Task<int> GetAliveBoidsCount()
+    {
+        var count = 0;
+        for (var i = 0; i < _transformAccessArray.length; i++)
+        {
+            if (!_transformAccessArray[i])
+                continue;
+            count++;
+            if (count % 50 == 0)
+                await Task.Yield();
+        }
+
+        return count;
+    }
+
     private void OnDestroy()
     {
+        _moveJobHandle.Complete();
+
         _positions.Dispose();
         _velocities.Dispose();
         _accelerations.Dispose();
