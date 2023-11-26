@@ -23,7 +23,7 @@ public class PlayerSmallSphere : MonoCache
 
     private void Start()
     {
-        transform.localScale = Vector3.one / 10;
+        transform.localScale = Vector3.one / 2;
         transform.DOScale(_startScale * 4, 1.5f).SetEase(Ease.InCubic).SetLink(gameObject);
 
         var randomNumberX = Random.Range(-_maxSpread / 2, _maxSpread / 2);

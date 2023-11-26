@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder.Shapes;
+using UnityTemplateProjects;
 
 [RequireComponent(typeof(PlayerUnit))]
 public class PlayerInputHandler : MonoCache
@@ -23,6 +24,7 @@ public class PlayerInputHandler : MonoCache
     private GroundSlider _slider;
     private Hook _hook;
     private SphereShooter _sphereShooter;
+    private UnityTemplateProjects.SimpleCameraController _flyCam;
     //private PickUpDetector _pickUpDetector;
     //private Thrower _thrower;
     
@@ -39,6 +41,7 @@ public class PlayerInputHandler : MonoCache
         _slider = Get<GroundSlider>();
         _hook = Get<Hook>();
         _sphereShooter = Get<SphereShooter>();
+        _flyCam = Get<SimpleCameraController>();
         //_pickUpDetector = GetComponentInChildren<PickUpDetector>();
         //_thrower = GetComponentInChildren<Thrower>();
     }
@@ -99,6 +102,19 @@ public class PlayerInputHandler : MonoCache
         if (_sphereShooter)
         {
             _sphereShooter.SetInput(_playerInput.actions["LeftAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
+        }
+
+        if (_flyCam != null && Input.GetKeyDown(KeyCode.I))
+        {
+            var noclipEnabled = _flyCam.enabled;
+            _mover.enabled = noclipEnabled;
+            GetComponentInChildren<CameraLook>().enabled = noclipEnabled;
+            _flyCam.enabled = !noclipEnabled;
+
+            if (noclipEnabled){
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
         /*if (_pickUpDetector != null)
         {
