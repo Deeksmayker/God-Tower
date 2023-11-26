@@ -108,6 +108,11 @@ public class PostProcessingController : MonoCache
 
     #region ChromaticAberrationControll
 
+    public ChromaticAberration GetChromaticAberration()
+    {
+        return _chromaticAberration;
+    }
+    
     /// <summary>
     /// Позволяет задать новое значение интенсивности Chromatic Aberration. Если задать time, то интенсивность плавно измениться на нужное значение.
     /// </summary>
@@ -161,7 +166,12 @@ public class PostProcessingController : MonoCache
 
     #region GodBloomEffectComponentControll
 
-    public void SetThresholdBloom(float threshold, float smooth = -1)
+    public GodBloomEffectComponent GetGodBloomEffectComponent()
+    {
+        return _bloomEffectComponent;
+    }
+    
+    public void SetThresholdGodBloom(float threshold, float smooth = -1)
     {
         if (smooth > 0)
         {
@@ -173,7 +183,7 @@ public class PostProcessingController : MonoCache
         }
     }
 
-    public void SetIntensityBloom(float intensity, float smooth = -1)
+    public void SetIntensityGodBloom(float intensity, float smooth = -1)
     {
         if (smooth > 0)
         {
@@ -185,7 +195,7 @@ public class PostProcessingController : MonoCache
         }
     }
 
-    public void SetScatterBloom(float scatter, float smooth = -1)
+    public void SetScatterGodBloom(float scatter, float smooth = -1)
     {
         if (smooth > 0)
         {
@@ -197,7 +207,7 @@ public class PostProcessingController : MonoCache
         }
     }
 
-    public void SetTextureDensityBloom(int density, float smooth = -1)
+    public void SetTextureDensityGodBloom(int density, float smooth = -1)
     {
         if (smooth > 0)
         {
@@ -209,7 +219,7 @@ public class PostProcessingController : MonoCache
         }
     }
 
-    public void SetTextureCutoffBloom(float cutoff, float smooth = -1)
+    public void SetTextureCutoffGodBloom(float cutoff, float smooth = -1)
     {
         if (smooth > 0)
         {
@@ -221,12 +231,12 @@ public class PostProcessingController : MonoCache
         }
     }
 
-    public void SetScrollDirectionBloom(Vector2 direction)
+    public void SetScrollDirectionGodBloom(Vector2 direction)
     {
         _bloomEffectComponent.scrollDirection.value = direction;
     }
 
-    public void SetDistortionAmountBloom(float distortionAmount, float smooth = -1)
+    public void SetDistortionAmountGodBloom(float distortionAmount, float smooth = -1)
     {
         if (smooth > 0)
         {
@@ -238,7 +248,7 @@ public class PostProcessingController : MonoCache
         }
     }
 
-    public void SetDistortionRangeBloom(Vector2 range)
+    public void SetDistortionRangeGodBloom(Vector2 range)
     {
         _bloomEffectComponent.distortionRange.value = range;
     }
@@ -247,6 +257,11 @@ public class PostProcessingController : MonoCache
 
     #region PixelizeEffectComponentControll
 
+    public PixelizeEffectComponent GetPixelizeEffectComponent()
+    {
+        return _pixelizeEffectComponent;
+    }
+    
     public void SetScreenHeightPixelize(int screenHeight, float smooth = -1)
     {
         if (smooth > 0)
@@ -264,7 +279,7 @@ public class PostProcessingController : MonoCache
         _pixelizeEffectComponent.Enabled.value = value;
     }
 
-    public void SetGradientTexturePixelize(Texture2D texture)
+    public void SetGradientTexturePixelize(Texture texture)
     {
         _pixelizeEffectComponent.gradientTexture.value = texture;
     }
