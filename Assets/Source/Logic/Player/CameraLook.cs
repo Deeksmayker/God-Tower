@@ -7,17 +7,17 @@ public class CameraLook : MonoCache
 {
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float m_XSensitivity = 2f;
-      [SerializeField] private float m_YSensitivity = 2f;
-      [SerializeField] private bool m_ClampVerticalRotation = true;
-      [SerializeField] private float m_MinimumX = -90F;
-      [SerializeField] private float m_MaximumX = 90F;
-      [SerializeField] private bool m_Smooth = false;
-      [SerializeField] private float m_SmoothTime = 5f;
-      [SerializeField] private bool m_LockCursor = true;
+    [SerializeField] private float m_YSensitivity = 2f;
+    [SerializeField] private bool m_ClampVerticalRotation = true;
+    [SerializeField] private float m_MinimumX = -90F;
+    [SerializeField] private float m_MaximumX = 90F;
+    [SerializeField] private bool m_Smooth = false;
+    [SerializeField] private float m_SmoothTime = 5f;
+    [SerializeField] private bool m_LockCursor = true;
 
-      private Quaternion m_CharacterTargetRot;
-      private Quaternion m_CameraTargetRot;
-      private bool m_cursorIsLocked = true;
+    private Quaternion m_CharacterTargetRot;
+    private Quaternion m_CameraTargetRot;
+    private bool m_cursorIsLocked = true;
 
     private bool _responseToInput = true;
         
