@@ -76,7 +76,9 @@ public class JumpEnemyMover : MonoCache, IMover
         DOTween.To(x => _ch.height = x, 1f, _baseChHeight, 0.5f);
         Log("Mover Jumping to direction - " + direction);
         _velocity = direction * jumpForce;
+
         DrawLine(transform.position, transform.position + _velocity, 5, 1);
+
         _onWall = false;
         _inJumpTimer = 0.2f;
     }

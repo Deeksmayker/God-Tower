@@ -71,9 +71,11 @@ public class SphereShooter : MonoCache
             var spawnedSphere = Instantiate(_smallSpherePrefab, _shootStartPoint.position, _camDirection.rotation)
                 .GetComponent<PlayerSmallSphere>();
             spawnedSphere.SetVelocity(new Vector3(_playerMover.GetVelocity().x, 0, _playerMover.GetVelocity().z));
+
             _spawnTimer -= timeForSpawn;
 
             //CameraService.Instance.ShakeCamera(.05f);
+
         }
     }
 
