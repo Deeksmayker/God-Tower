@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
             enemyTransform.position = position;
             enemyTransform.forward = Random.insideUnitSphere;
 
-            enemyTransform.GetComponent<IEnemy>().Killed += OnEnemyKilled;
+            //enemyTransform.GetComponent<IEnemy>().Killed += OnEnemyKilled;
         }
     }
 

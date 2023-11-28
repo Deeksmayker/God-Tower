@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7281011966044638141}
   - component: {fileID: 1013427162400147998}
   - component: {fileID: 7257885377944155367}
+  - component: {fileID: 3027781073958671832}
   m_Layer: 7
   m_Name: CentipedeEnemy
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 8927628615119195153}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1120351769047289419
 Rigidbody:
@@ -117,6 +118,22 @@ MonoBehaviour:
   debug: 0
   health: 20
   stunDuration: 2
+--- !u!114 &3027781073958671832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3170742759052837195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5abd515069ee7fa4b947640c72f5b2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  headTarget: {fileID: 8927628615119195153}
+  attackCooldown: 0
+  headSpeed: 1
 --- !u!1 &6884470116042033624
 GameObject:
   m_ObjectHideFlags: 0

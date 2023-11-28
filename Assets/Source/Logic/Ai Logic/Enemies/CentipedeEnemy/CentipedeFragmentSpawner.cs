@@ -207,4 +207,6 @@ public class CentipedeFragmentSpawner : MonoCache
         if (_dead) return;
         _lastFragmentHitIndex = i;
     }
+
+    public int GetFragmentsLength() => _fragments.Length;
 }
