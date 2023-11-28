@@ -22,6 +22,7 @@ public class CentipedeFragmentSpawner : MonoCache
 
     private void Awake()
     {
+        MoveToClosestPoint();
         SpawnCentipedeFragments();
     }
 
@@ -86,7 +87,7 @@ public class CentipedeFragmentSpawner : MonoCache
         for (var i = 1; i < fragmentCount; i++)
         {
             _fragments[i] = Instantiate(fragmentPrefab, transform);
-            _fragments[i].transform.position = _fragments[i-1].transform.position + Vector3.up * _fragments[i-1].transform.localScale.y * (i == 1 ? 1 : 1.5f);
+            _fragments[i].transform.position = _fragments[i-1].transform.position + transform.up * _fragments[i-1].transform.localScale.y * (i == 1 ? 1 : 1.5f);
 
             var currentScaleMultiplier = Mathf.Lerp(scaleMultiplier, 1, (float)i / (float)fragmentCount);
             _fragments[i].transform.localScale *= currentScaleMultiplier;
@@ -99,7 +100,7 @@ public class CentipedeFragmentSpawner : MonoCache
         }
 
         _head = Instantiate(headPrefab, transform);
-        _head.transform.position = _fragments[_fragments.Length-1].transform.position + Vector3.up * _fragments[_fragments.Length-1].transform.localScale.y * 1.5f;
+        _head.transform.position = _fragments[_fragments.Length-1].transform.position + transform.up * _fragments[_fragments.Length-1].transform.localScale.y * 1.5f;
         _head.SetParentJoint(_fragments[_fragments.Length-1].GetRb());
         _head.SetIndex(_fragments.Length);
         _head.OnFragmentHit += SetLastFragmentHitIndex;
@@ -116,6 +117,29 @@ public class CentipedeFragmentSpawner : MonoCache
         {
             healthHandler.SubscribeToHitTakers();
         }
+    }
+
+    private void MoveToClosestPoint()
+    {
+        RaycastHit closestHit = new();
+        var hits = new RaycastHit[6];
+
+        Physics.Raycast(transform.position, Vector3.down, out hits[0], 100, Layers.Environment);
+        Physics.Raycast(transform.position, -Vector3.forward, out hits[1], 100, Layers.Environment);
+        Physics.Raycast(transform.position, Vector3.up, out hits[2], 100, Layers.Environment);
+        Physics.Raycast(transform.position, Vector3.forward, out hits[3], 100, Layers.Environment);
+        Physics.Raycast(transform.position, Vector3.right, out hits[4], 100, Layers.Environment);
+        Physics.Raycast(transform.position, Vector3.left, out hits[5], 100, Layers.Environment);
+        
+        closestHit = hits[0];
+        for (var i = 1; i < hits.Length; i++)
+        {
+            if (Vector3.Distance(closestHit.point, transform.position) > Vector3.Distance(hits[i].point, transform.position))
+                closestHit = hits[i];
+        }
+
+        transform.position = closestHit.point;
+        transform.rotation = Quaternion.FromToRotation(Vector3.up, closestHit.normal);
     }
 
     private void HandleStun()
@@ -171,8 +195,10 @@ public class CentipedeFragmentSpawner : MonoCache
                 d.SetDissolveDuration(dissolveDuration);
             }
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.1f);
         }
+
+        yield return new WaitForSeconds(dissolveDuration);
         Destroy(gameObject);
     }
 
