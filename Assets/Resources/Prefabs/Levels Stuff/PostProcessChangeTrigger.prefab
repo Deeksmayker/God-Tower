@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5155597920776079774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7368689230701308536}
+  - component: {fileID: 7727273597504256261}
+  - component: {fileID: 2020052839894872110}
+  m_Layer: 13
+  m_Name: PostProcessChangeTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7368689230701308536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155597920776079774}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 76.73574, y: 22.073235, z: 7.4296145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7727273597504256261
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155597920776079774}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 20, y: 20, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2020052839894872110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155597920776079774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1089448585fd82347a2e4edfca0a6c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  _isChangedOnEnter: 1
+  _changeBackOnExit: 0
+  _changeGodBloom: 0
+  _changeGodBloomSmooth: 1
+  _godBloomThreshold: 0
+  _godBloomIntensity: 0
+  _godBloomTextureDensity: 0
+  _godBloomTextureCutoff: 0
+  _godBloomScrollDirection: {x: 0, y: 0}
+  _godBloomDistortionAmount: 0
+  _godBloomDistortionRange: {x: 0, y: 0}
+  _changePixelize: 0
+  _changePixelizeSmooth: 1
+  _pixelizeEnabled: 1
+  _pixelizeGradientTexture: {fileID: 2800000, guid: c86b75da43daa4e4eb48db6d1a3a5ec8,
+    type: 3}
+  _pixelizeIntensity: 0
+  _pixelizeScreenHeight: 0
+  _changeAberration: 0
+  _changeAberrationSmooth: 1
+  _aberrationIntensity: 0

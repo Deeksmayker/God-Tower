@@ -149,7 +149,7 @@ public class BoidsBehaviour : MonoCache
 
         _transformAccessArray = new TransformAccessArray(transforms);
 
-        InvokeRepeating(nameof(SpawnB), 5, 3);
+        //InvokeRepeating(nameof(SpawnB), 5, 3);
     }
 
     private void SpawnB()
