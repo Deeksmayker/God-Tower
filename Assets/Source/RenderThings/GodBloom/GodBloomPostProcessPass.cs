@@ -45,6 +45,9 @@ public class GodBloomPostProcessPass : ScriptableRenderPass
             m_BloomMipUp[i] = RTHandles.Alloc(m_BloomMipUp[i], name: "_BloomMipUp" + i);
             m_BloomMipDown[i] = RTHandles.Alloc(m_BloomMipDown[i], name: "_BloomMipDown" + i);
 
+            VolumeStack stack = VolumeManager.instance.stack;
+            _bloomEffect = stack.GetComponent<GodBloomEffectComponent>();
+
             const FormatUsage usage = FormatUsage.Linear | FormatUsage.Render;
             if (SystemInfo.IsFormatSupported(GraphicsFormat.B10G11R11_UFloatPack32, usage))
             {
@@ -73,9 +76,19 @@ public class GodBloomPostProcessPass : ScriptableRenderPass
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
-        VolumeStack stack = VolumeManager.instance.stack;
-        _bloomEffect = stack.GetComponent<GodBloomEffectComponent>();
         CommandBuffer cmd = CommandBufferPool.Get();
+
+        if (cmd == null)
+        {
+            return;
+        }
+
+        if (_cameraColorTarget == null)
+        {
+            cmd.Clear();
+            CommandBufferPool.Release(cmd);
+            return;
+        }
 
         using (new ProfilingScope(cmd, new ProfilingSampler("Custom post process effect")))
         {

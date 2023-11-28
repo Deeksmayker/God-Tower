@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Death : MonoCache
 {
-    [SerializeField] private float dissolveDuration = 0.5f;
-    [SerializeField] private float flashDuration = 0.05f;
+    private float dissolveDuration = 0.5f;
+    private float flashDuration = 0.05f;
 
     private float _timer;
 
@@ -27,6 +27,11 @@ public class Death : MonoCache
 
         _materialPropertyBlock.SetColor("_Color", _flashColor);
         StartCoroutine(WaitAndChangeColor(flashDuration, _deadColor));
+    }
+
+    public void SetDissolveDuration(float value)
+    {
+        dissolveDuration = value;
     }
 
     protected override void Run()

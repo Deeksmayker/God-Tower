@@ -65,14 +65,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   m_Settings:
-    AOMethod: 1
+    AOMethod: 0
     Downsample: 0
     AfterOpaque: 0
     Source: 1
     NormalSamples: 1
-    Intensity: 0.5
+    Intensity: 1
     DirectLightingStrength: 0.25
-    Radius: 0.25
+    Radius: 5
     Samples: 0
     BlurQuality: 0
     Falloff: 100
@@ -146,10 +146,10 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 0
+  m_RenderingMode: 1
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 0
-  m_AccurateGbufferNormals: 1
+  m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
 --- !u!114 &101366630894519702
 MonoBehaviour:
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c54e5ccc583582488bdb07f46312c62, type: 3}
   m_Name: GodPostProcessRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   bloomShader: {fileID: 4800000, guid: 5f1864addb451f54bae8c86d230f736e, type: 3}
   compositeShader: {fileID: -6465566751694194690, guid: 844c21d8c5653914586f3713516e4e5c,
     type: 3}

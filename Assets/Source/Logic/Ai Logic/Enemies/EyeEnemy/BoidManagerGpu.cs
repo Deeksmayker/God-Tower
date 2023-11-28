@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using ModestTree;
 using UnityEngine;
 
-public class BoidManager : MonoBehaviour {
+public class BoidManagerGpu : MonoBehaviour {
 
     [SerializeField] private Transform flyTarget;
 
@@ -11,19 +10,17 @@ public class BoidManager : MonoBehaviour {
 
     public BoidSettings settings;
     public ComputeShader compute;
-    Boid[] boids;
-
-    private void Start() 
-    {
-        boids = FindObjectsOfType<Boid> ();
-        foreach (Boid b in boids) {
+    BoidGpu[] boids;
+/*
+    void Start () {
+        boids = FindObjectsOfType<BoidGpu> ();
+        foreach (BoidGpu b in boids) {
             b.Initialize (settings, flyTarget);
         }
     }
 
-    private void Update() 
-    {
-        if (boids != null || boids.IsEmpty()) {
+    void Update () {
+        if (boids != null) {
 
             int numBoids = boids.Length;
             var boidData = new BoidData[numBoids];
@@ -57,17 +54,9 @@ public class BoidManager : MonoBehaviour {
 
             boidBuffer.Release ();
         }
-        else
-        {
-            boids = FindObjectsOfType<Boid> ();
-            foreach (Boid b in boids) {
-                b.Initialize (settings, flyTarget);
-            }
-        }
-    }
+    }*/
 
-    public struct BoidData 
-    {
+    public struct BoidData {
         public Vector3 position;
         public Vector3 direction;
 

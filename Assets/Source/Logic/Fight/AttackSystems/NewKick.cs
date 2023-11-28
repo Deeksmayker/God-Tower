@@ -107,7 +107,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
             var hitPosition = hitBoxCenter;
 
-            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(damage, hitPosition, "Player Kick");
+            _attackHitsContainer[i].GetComponent<ITakeHit>()?.TakeHit(-damage, hitPosition, "Player Kick");
             _attackHitsContainer[i].GetComponentInParent<IMover>()?.AddForce(GetAttackDirection() * kickPushForce);
             _attackHitsContainer[i].GetComponentInParent<IInStun>()?.StartStun();
 
@@ -116,7 +116,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
             if (_attackHitsContainer[i].TryGetComponent<Rigidbody>(out var rb))
             {
-                rb.AddForce(GetAttackDirection() * kickPushForce);
+                rb.AddForce(GetAttackDirection() * kickPushForce * 5, ForceMode.Impulse);
             }
         }
 

@@ -91,13 +91,13 @@ MonoBehaviour:
     m_Value: 300
   Enabled:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   gradientTexture:
     m_OverrideState: 1
-    m_Value: {fileID: 2800000, guid: 3a2fea9e9c9f54c44a62d476cfbb4172, type: 3}
+    m_Value: {fileID: 2800000, guid: 499ebeb8be0265c4a93b471d4884e5c9, type: 3}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 1
 --- !u!114 &-4380348147767589949
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbde013ac70c2864cb373e0c373ae10d, type: 3}
   m_Name: GodBloomEffectComponent
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   threshold:
     m_OverrideState: 1
     m_Value: 1.83
@@ -318,7 +318,7 @@ MonoBehaviour:
     m_Value: {x: 0.09, y: -0.1}
   distortionAmount:
     m_OverrideState: 1
-    m_Value: 500
+    m_Value: 0
   distortionRange:
     m_OverrideState: 1
     m_Value: {x: 0.05, y: 0}

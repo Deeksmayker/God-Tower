@@ -8,7 +8,6 @@ public class PlayerSmallSphere : MonoCache
 {
     [SerializeField] private float _startVelocity;
     [SerializeField] private float _maxSpread;
-    [SerializeField] private float _damage;
 
     private ParticleSystem _hitParticles;
 
@@ -24,7 +23,7 @@ public class PlayerSmallSphere : MonoCache
 
     private void Start()
     {
-        transform.localScale = Vector3.one / 10;
+        transform.localScale = Vector3.one / 2;
         transform.DOScale(_startScale * 4, 1.5f).SetEase(Ease.InCubic).SetLink(gameObject);
 
         var randomNumberX = Random.Range(-_maxSpread / 2, _maxSpread / 2);
@@ -51,9 +50,7 @@ public class PlayerSmallSphere : MonoCache
         
         if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
         {
-
-            victim.TakeHit(_damage, transform.position, "Small ball");
-
+            victim.TakeHit(-1, transform.position, "Small ball");
         }
 
         gameObject.AddComponent<Death>();
