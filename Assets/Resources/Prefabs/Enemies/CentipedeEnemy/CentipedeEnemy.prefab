@@ -99,8 +99,8 @@ MonoBehaviour:
   headPrefab: {fileID: 3852450553230858963, guid: 4a1f7a635dfd72043a5edf455e657b43,
     type: 3}
   _headTarget: {fileID: 1652047111682675457}
-  fragmentCount: 10
-  scaleMultiplier: 1.5
+  fragmentCount: 20
+  scaleMultiplier: 2
   minUpForce: 5
   maxUpForce: 20
 --- !u!114 &7257885377944155367
@@ -130,10 +130,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abd515069ee7fa4b947640c72f5b2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
+  debug: 1
   headTarget: {fileID: 8927628615119195153}
-  attackCooldown: 0
+  attackCooldown: 5
   headSpeed: 1
+  headAttackSpeed: 0.5
+  projectileThrowPower: 1000
+  _rangeAttack: 1
+  _meleeAttack: 0
 --- !u!1 &6884470116042033624
 GameObject:
   m_ObjectHideFlags: 0
