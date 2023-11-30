@@ -13,6 +13,7 @@ public class PixelizeEffectComponent : VolumeComponent, IPostProcessComponent
     public BoolParameter Enabled = new BoolParameter(false, true);
     public Texture2DParameter gradientTexture = new Texture2DParameter(null, true);
     public ClampedFloatParameter intensity = new ClampedFloatParameter(1, 0, 10, true);
+    public ClampedFloatParameter opacity = new ClampedFloatParameter(1, 0, 1, true);
 
     public bool IsActive()
     {

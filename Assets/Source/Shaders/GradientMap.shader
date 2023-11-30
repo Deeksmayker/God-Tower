@@ -40,7 +40,7 @@ Shader"Hidden/GradientMap"
             }
 
             sampler2D _MainTex, _GradientMap;
-float _Intensity;
+			float _Intensity, _Opacity;
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -51,7 +51,7 @@ float _Intensity;
                 gradient *= gradient.a;
                 gradient += (1 - gradient.a) * col;
                 
-                return gradient;
+                return lerp(col, gradient, _Opacity);
             }
             ENDCG
         }

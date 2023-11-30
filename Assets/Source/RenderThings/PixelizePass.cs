@@ -66,6 +66,7 @@ public class PixelizePass : ScriptableRenderPass
             {
                 gradientMapMaterial.SetTexture("_GradientMap", settings.gradientTexture.value);
                 gradientMapMaterial.SetFloat("_Intensity", settings.intensity.value);
+                gradientMapMaterial.SetFloat("_Opacity", settings.opacity.value);
                 Blit(cmd, colorBuffer, pixelBuffer, gradientMapMaterial);
                 Blit(cmd, pixelBuffer, colorBuffer);
             }
