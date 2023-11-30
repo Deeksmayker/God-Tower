@@ -14,7 +14,7 @@ namespace Source.VisualScripts.Postprocessing
 
         [Header("God Bloom")]
         [SerializeField] private bool _changeGodBloom;
-        [SerializeField] private float _changeGodBloomSmooth = 1;
+        [SerializeField] private float godBloomTimeToChange = 1;
         [SerializeField] private float _godBloomThreshold;
         [SerializeField] private float _godBloomIntensity;
         [SerializeField] private int _godBloomTextureDensity;
@@ -33,16 +33,23 @@ namespace Source.VisualScripts.Postprocessing
 
         [Header("Pixelize")] 
         [SerializeField] private bool _changePixelize;
-        [SerializeField] private float _changePixelizeSmooth = 1;
-        [SerializeField] private bool _pixelizeEnabled;
-        [SerializeField] private Texture _pixelizeGradientTexture;
-        [SerializeField] private float _pixelizeIntensity;
+        [SerializeField] private float pixelizeChangeTime = 1;
         [SerializeField] private int _pixelizeScreenHeight;
-        
-        private bool _oldPixelizeEnabled;
-        private Texture _oldPixelizeGradientTexture;
-        private float _oldPixelizeIntensity;
+
         private int _oldPixelizeScreenHeight;
+
+		[Header("Gradient")]
+		[SerializeField] private bool changeGradient;
+        [SerializeField] private bool gradientEnabled;
+		[SerializeField] private float gradientChangeTime = 1;
+        [SerializeField] private Texture gradientTexture;
+        [SerializeField] private float gradientIntensity;
+		[SerializeField] private float gradientOpacity;
+        
+        private bool _oldGradientEnabled;
+        private Texture _oldGradientTexture;
+        private float _oldGradientIntensity;
+		private float _oldGradientOpacity;
 
         [Header("Chromatic aberration")] 
         [SerializeField] private bool _changeAberration;
@@ -57,42 +64,52 @@ namespace Source.VisualScripts.Postprocessing
         {
             if (!other.GetComponent<PlayerUnit>() || !_isChangedOnEnter) return;
 
-            if (_changeBackOnExit)
+            if (!_changeBackOnExit)
             {
-                playerExited += BackPostProcessing;
-                
-                if (_changeGodBloom)
-                {
-                    var oldGodBloom = _postProcessingController.GetGodBloomEffectComponent();
-
-                    _oldGodBloomIntensity = oldGodBloom.intensity.value;
-                    _oldGodBloomThreshold = oldGodBloom.threshold.value;
-                    _oldGodBloomDistortionRange = oldGodBloom.distortionRange.value;
-                    _oldGodBloomDistortionAmount = oldGodBloom.distortionAmount.value;
-                    _oldGodBloomScrollDirection = oldGodBloom.scrollDirection.value;
-                    _oldGodBloomTextureCutoff = oldGodBloom.textureCutoff.value;
-                    _oldGodBloomTextureDensity = oldGodBloom.textureDensity.value;
-                }
-
-                if (_changePixelize)
-                {
-                    var oldPixelize = _postProcessingController.GetPixelizeEffectComponent();
-
-                    _oldPixelizeEnabled = oldPixelize.Enabled.value;
-                    _oldPixelizeIntensity = oldPixelize.intensity.value;
-                    _oldPixelizeGradientTexture = oldPixelize.gradientTexture.value;
-                    _oldPixelizeScreenHeight = oldPixelize.screenHeight.value;
-                }
-
-                if (_changeAberration)
-                {
-                    var oldAberration = _postProcessingController.GetChromaticAberration();
-
-                    _oldAberrationIntensity = oldAberration.intensity.value;
-                }
+				ChangePostProcessing();
+				return;
             }
+			Debug.Log("i'm here");
 
-            ChangePostProcessing();
+			playerExited += BackPostProcessing;
+			
+			if (_changeGodBloom)
+			{
+				var oldGodBloom = _postProcessingController.GetGodBloomEffectComponent();
+
+				_oldGodBloomIntensity = oldGodBloom.intensity.value;
+				_oldGodBloomThreshold = oldGodBloom.threshold.value;
+				_oldGodBloomDistortionRange = oldGodBloom.distortionRange.value;
+				_oldGodBloomDistortionAmount = oldGodBloom.distortionAmount.value;
+				_oldGodBloomScrollDirection = oldGodBloom.scrollDirection.value;
+				_oldGodBloomTextureCutoff = oldGodBloom.textureCutoff.value;
+				_oldGodBloomTextureDensity = oldGodBloom.textureDensity.value;
+			}
+
+			if (_changePixelize)
+			{
+				Debug.Log("remembering pixelize");
+				var oldPixelize = _postProcessingController.GetPixelizeEffectComponent();
+				_oldPixelizeScreenHeight = oldPixelize.screenHeight.value;
+			}
+
+			if (changeGradient){
+				Debug.Log("remembering gradient");
+				var oldGradient = _postProcessingController.GetPixelizeEffectComponent();
+				_oldGradientEnabled = oldGradient.Enabled.value;
+				_oldGradientIntensity = oldGradient.intensity.value;
+				_oldGradientTexture = oldGradient.gradientTexture.value;
+				_oldGradientOpacity = oldGradient.opacity.value;
+			}
+
+			if (_changeAberration)
+			{
+				var oldAberration = _postProcessingController.GetChromaticAberration();
+
+				_oldAberrationIntensity = oldAberration.intensity.value;
+			}
+
+			ChangePostProcessing();
         }
 
         private void OnTriggerExit(Collider other)
@@ -108,22 +125,26 @@ namespace Source.VisualScripts.Postprocessing
         {
             if (_changeGodBloom)
             {
-                _postProcessingController.SetThresholdGodBloom(_godBloomThreshold, _changeGodBloomSmooth);
-                _postProcessingController.SetIntensityGodBloom(_godBloomIntensity, _changeGodBloomSmooth);
-                _postProcessingController.SetTextureDensityGodBloom(_godBloomTextureDensity, _changeGodBloomSmooth);
-                _postProcessingController.SetTextureCutoffGodBloom(_godBloomTextureCutoff, _changeGodBloomSmooth);
+                _postProcessingController.SetThresholdGodBloom(_godBloomThreshold, godBloomTimeToChange);
+                _postProcessingController.SetIntensityGodBloom(_godBloomIntensity, godBloomTimeToChange);
+                _postProcessingController.SetTextureDensityGodBloom(_godBloomTextureDensity, godBloomTimeToChange);
+                _postProcessingController.SetTextureCutoffGodBloom(_godBloomTextureCutoff, godBloomTimeToChange);
                 _postProcessingController.SetScrollDirectionGodBloom(_godBloomScrollDirection);
-                _postProcessingController.SetDistortionAmountGodBloom(_godBloomDistortionAmount, _changeGodBloomSmooth);
+                _postProcessingController.SetDistortionAmountGodBloom(_godBloomDistortionAmount, godBloomTimeToChange);
                 _postProcessingController.SetDistortionRangeGodBloom(_godBloomDistortionRange);
             }
 
             if (_changePixelize)
             {
-                _postProcessingController.TurnPixelize(_pixelizeEnabled);
-                _postProcessingController.SetGradientTexturePixelize(_pixelizeGradientTexture);
-                _postProcessingController.SetIntensityPixelize(_pixelizeIntensity, _changePixelizeSmooth);
-                _postProcessingController.SetScreenHeightPixelize(_pixelizeScreenHeight, _changePixelizeSmooth);
+                _postProcessingController.SetScreenHeightPixelize(_pixelizeScreenHeight, pixelizeChangeTime);
             }
+
+			if (changeGradient){
+                _postProcessingController.TurnGradient(gradientEnabled);
+                _postProcessingController.SetGradientTexture(gradientTexture);
+                _postProcessingController.SetGradientIntensity(gradientIntensity, gradientChangeTime);
+                _postProcessingController.SetGradientOpacity(gradientOpacity, gradientChangeTime);
+			}
 
             if (_changeAberration)
             {
@@ -138,22 +159,26 @@ namespace Source.VisualScripts.Postprocessing
             
             if (_changeGodBloom)
             {
-                _postProcessingController.SetThresholdGodBloom(_oldGodBloomThreshold, _changeGodBloomSmooth);
-                _postProcessingController.SetIntensityGodBloom(_oldGodBloomIntensity, _changeGodBloomSmooth);
-                _postProcessingController.SetTextureDensityGodBloom(_oldGodBloomTextureDensity, _changeGodBloomSmooth);
-                _postProcessingController.SetTextureCutoffGodBloom(_oldGodBloomTextureCutoff, _changeGodBloomSmooth);
+                _postProcessingController.SetThresholdGodBloom(_oldGodBloomThreshold, godBloomTimeToChange);
+                _postProcessingController.SetIntensityGodBloom(_oldGodBloomIntensity, godBloomTimeToChange);
+                _postProcessingController.SetTextureDensityGodBloom(_oldGodBloomTextureDensity, godBloomTimeToChange);
+                _postProcessingController.SetTextureCutoffGodBloom(_oldGodBloomTextureCutoff, godBloomTimeToChange);
                 _postProcessingController.SetScrollDirectionGodBloom(_oldGodBloomScrollDirection);
-                _postProcessingController.SetDistortionAmountGodBloom(_oldGodBloomDistortionAmount, _changeGodBloomSmooth);
+                _postProcessingController.SetDistortionAmountGodBloom(_oldGodBloomDistortionAmount, godBloomTimeToChange);
                 _postProcessingController.SetDistortionRangeGodBloom(_oldGodBloomDistortionRange);
             }
 
             if (_changePixelize)
             {
-                _postProcessingController.TurnPixelize(_oldPixelizeEnabled);
-                _postProcessingController.SetGradientTexturePixelize(_oldPixelizeGradientTexture);
-                _postProcessingController.SetIntensityPixelize(_oldPixelizeIntensity, _changePixelizeSmooth);
-                _postProcessingController.SetScreenHeightPixelize(_oldPixelizeScreenHeight, _changePixelizeSmooth);
+                _postProcessingController.SetScreenHeightPixelize(_oldPixelizeScreenHeight, pixelizeChangeTime);
             }
+
+			if (changeGradient){
+                _postProcessingController.TurnGradient(_oldGradientEnabled);
+                _postProcessingController.SetGradientTexture(_oldGradientTexture);
+                _postProcessingController.SetGradientIntensity(_oldGradientIntensity, gradientChangeTime);
+                _postProcessingController.SetGradientOpacity(_oldGradientOpacity, gradientChangeTime);
+			}
 
             if (_changeAberration)
             {

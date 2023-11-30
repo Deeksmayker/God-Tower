@@ -1548,13 +1548,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
+      propertyPath: changeGradient
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
       propertyPath: _changePixelize
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
+      propertyPath: gradientEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: gradientOpacity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: gradientTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: c86b75da43daa4e4eb48db6d1a3a5ec8, type: 3}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
       propertyPath: _changeBackOnExit
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: gradientIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: _pixelizeScreenHeight
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5155597920776079774, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
@@ -1564,7 +1594,7 @@ PrefabInstance:
     - target: {fileID: 5155597920776079774, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
