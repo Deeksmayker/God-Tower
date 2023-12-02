@@ -12,6 +12,7 @@ public class CentipedeFragmentSpawner : MonoCache
     [SerializeField] private float scaleMultiplier;
     [SerializeField] private float minUpForce, maxUpForce;
 
+	private float _height;
     private float _startSpring;
     private int _lastFragmentHitIndex;
     private bool _dead;
@@ -110,7 +111,9 @@ public class CentipedeFragmentSpawner : MonoCache
         _headSpring = _head.GetComponent<SpringJoint>();
         _headSpring.connectedBody = _headTarget;
         _startSpring = _headSpring.spring;
+		_headSpring.minDistance = GetFragmentsLength() * scaleMultiplier * 0.2f;
 
+		_height = (_head.transform.position - _fragments[0].transform.position).magnitude;
 
         var healthHandler = GetComponent<CentipedeHealthSystem>();
         if (healthHandler != null)
@@ -152,10 +155,10 @@ public class CentipedeFragmentSpawner : MonoCache
         var t = 0f;
         while (t < 1)
         {
-            if (!gameObject)
+            if (!_headSpring)
                 return;
-            t += Time.deltaTime;
-            _headSpring.spring = Mathf.Lerp(0, _startSpring, t);
+            t += Time.deltaTime / (GetFragmentsLength()*0.1f);
+            _headSpring.spring = Mathf.Lerp(0, _startSpring, t*t);
             await Task.Yield();
         }
     }
@@ -207,4 +210,16 @@ public class CentipedeFragmentSpawner : MonoCache
         if (_dead) return;
         _lastFragmentHitIndex = i;
     }
+
+	public float GetHeight()
+	{
+		return _height;
+	}
+
+    public int GetFragmentsLength() => _fragments.Length;
+
+	public bool IsCentipedeCapable()
+	{
+		return !_dead;
+	}
 }

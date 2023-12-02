@@ -50,7 +50,7 @@ public class TempPlayerTakeHitVisual : MonoCache
         postProcessingController.SetVignetteColor(Color.red, 1);
         //postProcessingController.SetBloomIntensity(10);
         postProcessingController.SetChromaticAberrationIntensity(1);
-        postProcessingController.SetVignetteIntensity(1);
+        //postProcessingController.SetVignetteIntensity(1);
         
         await UniTask.Delay(150);
         

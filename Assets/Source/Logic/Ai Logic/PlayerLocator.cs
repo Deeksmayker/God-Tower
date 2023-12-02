@@ -31,6 +31,11 @@ public class PlayerLocator : MonoCache
         return direction;
     }
 
+	public Vector3 GetPlayerPos()
+	{
+		return _targetPoint.transform.position;
+	}
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

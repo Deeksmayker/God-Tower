@@ -39,19 +39,19 @@ Shader"Hidden/GradientMap"
                 return o;
             }
 
-            sampler2D _MainTex, _GradientMap;
-float _Intensity;
+            sampler2D _MainTex, _GradientMap, _SecondGradientMap;
+			float _Intensity, _Opacity, _GradientT;
 
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
 				float grayscale = (col.r + col.g + col.b) / 3;
 				grayscale *= _Intensity;
-				fixed4 gradient = tex2D(_GradientMap, grayscale);
+				fixed4 gradient = lerp(tex2D(_GradientMap, grayscale), tex2D(_SecondGradientMap, grayscale), _GradientT);
                 gradient *= gradient.a;
                 gradient += (1 - gradient.a) * col;
                 
-                return gradient;
+                return lerp(col, gradient, _Opacity);
             }
             ENDCG
         }

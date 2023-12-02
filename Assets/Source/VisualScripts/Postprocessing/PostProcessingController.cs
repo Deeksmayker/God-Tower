@@ -1,16 +1,12 @@
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using NTC.Global.Cache;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 
 public class PostProcessingController : MonoCache
 {
     [SerializeField] private Volume _volume;
-    [SerializeField] private float _smooth = 0.1f;
     [Space] 
     [SerializeField] private float _maxVignetteIntensity = 0.8f;
     [SerializeField] private float _maxChromaticAberrationIntensity = 0.8f;
@@ -38,38 +34,19 @@ public class PostProcessingController : MonoCache
 
     #region VingnetteControll
 
-    /// <summary>
-    /// Позволяет задать новое значение ширины виньетки. Если задать time, то ширина плавно измениться на нужное значение.
-    /// </summary>
-    /// <param name="intensity"> Новое значение ширины виньетки. </param>
-    /// <param name="time"> Время в секундах, за которое будет достигнуто новое значение. </param>
-    public void SetVignetteIntensity(float intensity, float smooth = -1)
+    public void SetVignetteIntensity(float intensity, float time = 0)
     {
         if (intensity > _maxVignetteIntensity)
             intensity = _maxVignetteIntensity;
 
-        if (smooth.Equals(-1))
-            smooth = this._smooth;
-
-        ChangeIntensityWithSmooth(_vignette.intensity, intensity, smooth);
+        ChangeFloatParamInTime(_vignette.intensity, intensity, time);
     }
 
-    /// <summary>
-    /// Возвращает ширину виньетки в исходное состояние. Если задать time, то ширина плавно измениться на исходное значение.
-    /// </summary>
-    /// <param name="time"> Время в секундах, за которое будет достигнуто исходное значение. </param>
-    public void ResetVignetteIntensity(float smooth = -1)
+    public void ResetVignetteIntensity(float time = 0)
     {
-        if (smooth.Equals(-1))
-            smooth = this._smooth;
-
-        ChangeIntensityWithSmooth(_vignette.intensity, _defaultVignetteIntensity, smooth);
+        ChangeFloatParamInTime(_vignette.intensity, _defaultVignetteIntensity, time);
     }
 
-    /// <summary>
-    /// Позволяет задать значение интенсивности по-умолчанию для Vignette.
-    /// </summary>
-    /// <param name="intensity"> Новое значение по-умолчанию</param>
     public void SetDefaultVignetteIntensity(float intensity)
     {
         if (intensity > _maxVignetteIntensity)
@@ -78,19 +55,12 @@ public class PostProcessingController : MonoCache
         _defaultVignetteIntensity = intensity;
     }
 
-    /// <summary>
-    /// Позволяет задать максимальное значение интенсивности Vignette.
-    /// </summary>
-    /// <param name="intensity"> Новое максимальное значение интенсивности. </param>
     public void SetMaxVignetteIntensity(float intensity)
     {
         _maxVignetteIntensity = intensity;
     }
 
-    /// <summary>
-    /// Позволяет изменить цвет виньетки за время <paramref name="time"/>. 
-    /// </summary>
-    public void SetVignetteColor(Color color, float time)
+    public void SetVignetteColor(Color color, float time = 0)
     {
         ChangeColorWithTime(_vignette.color, color, time);
     }
@@ -113,38 +83,19 @@ public class PostProcessingController : MonoCache
         return _chromaticAberration;
     }
     
-    /// <summary>
-    /// Позволяет задать новое значение интенсивности Chromatic Aberration. Если задать time, то интенсивность плавно измениться на нужное значение.
-    /// </summary>
-    /// <param name="intensity"> Новое значение интенсивности Chromatic Aberration. </param>
-    /// <param name="time"> Время в секундах, за которое будет достигнуто новое значение. </param>
-    public void SetChromaticAberrationIntensity(float intensity, float smooth = -1)
+    public void SetChromaticAberrationIntensity(float intensity, float time = 0)
     {
         if (intensity > _maxChromaticAberrationIntensity)
             intensity = _maxChromaticAberrationIntensity;
 
-        if (smooth.Equals(-1))
-            smooth = this._smooth;
-
-        ChangeIntensityWithSmooth(_chromaticAberration.intensity, intensity, smooth);
+        ChangeFloatParamInTime(_chromaticAberration.intensity, intensity, time);
     }
 
-    /// <summary>
-    /// Возвращает интенсивность Chromatic Aberration в исходное состояние. Если задать time, то интенсивность плавно измениться на исходное значение.
-    /// </summary>
-    /// <param name="time"> Время в секундах, за которое будет достигнуто исходное значение. </param>
-    public void ResetChromaticAberrationIntensity(float smooth = -1)
+    public void ResetChromaticAberrationIntensity(float time = 0)
     {
-        if (smooth.Equals(-1))
-            smooth = this._smooth;
-
-        ChangeIntensityWithSmooth(_chromaticAberration.intensity, _defaultChromaticAberrationIntensity, smooth);
+        ChangeFloatParamInTime(_chromaticAberration.intensity, _defaultChromaticAberrationIntensity, time);
     }
 
-    /// <summary>
-    /// Позволяет задать значение интенсивности по-умолчанию для Chromatic Aberration.
-    /// </summary>
-    /// <param name="intensity"> Новое значение по-умолчанию</param>
     public void SetDefaultChromaticAberrationIntensity(float intensity)
     {
         if (intensity > _maxChromaticAberrationIntensity)
@@ -153,10 +104,6 @@ public class PostProcessingController : MonoCache
         _defaultChromaticAberrationIntensity = intensity;
     }
 
-    /// <summary>
-    /// Позволяет задать максимальное значение интенсивности Chromatic Aberration.
-    /// </summary>
-    /// <param name="intensity"> Новое максимальное значение интенсивности. </param>
     public void SetMaxChromaticAberrationIntensity(float intensity)
     {
         _maxChromaticAberrationIntensity = intensity;
@@ -171,64 +118,29 @@ public class PostProcessingController : MonoCache
         return _bloomEffectComponent;
     }
     
-    public void SetThresholdGodBloom(float threshold, float smooth = -1)
+    public void SetThresholdGodBloom(float threshold, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeFloatParameterWithSmooth(_bloomEffectComponent.threshold, threshold, smooth);
-        }
-        else
-        {
-            _bloomEffectComponent.threshold.value = threshold;
-        }
+        ChangeFloatParamInTime(_bloomEffectComponent.threshold, threshold, time);
     }
 
-    public void SetIntensityGodBloom(float intensity, float smooth = -1)
+    public void SetIntensityGodBloom(float intensity, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeFloatParameterWithSmooth(_bloomEffectComponent.intensity, intensity, smooth);
-        }
-        else
-        {
-            _bloomEffectComponent.intensity.value = intensity;
-        }
+        ChangeFloatParamInTime(_bloomEffectComponent.intensity, intensity, time);
     }
 
-    public void SetScatterGodBloom(float scatter, float smooth = -1)
+    public void SetScatterGodBloom(float scatter, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeFloatParameterWithSmooth(_bloomEffectComponent.scatter, Mathf.Clamp01(scatter), smooth);
-        }
-        else
-        {
-            _bloomEffectComponent.scatter.value = Mathf.Clamp01(scatter);
-        }
+        ChangeFloatParamInTime(_bloomEffectComponent.scatter, Mathf.Clamp01(scatter), time);
     }
 
-    public void SetTextureDensityGodBloom(int density, float smooth = -1)
+    public void SetTextureDensityGodBloom(int density, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeIntParameterWithSmooth(_bloomEffectComponent.textureDensity, density, smooth);
-        }
-        else
-        {
-            _bloomEffectComponent.textureDensity.value = density;
-        }
+        ChangeIntParamInTime(_bloomEffectComponent.textureDensity, density, time);
     }
 
-    public void SetTextureCutoffGodBloom(float cutoff, float smooth = -1)
+    public void SetTextureCutoffGodBloom(float cutoff, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeFloatParameterWithSmooth(_bloomEffectComponent.textureCutoff, Mathf.Clamp01(cutoff), smooth);
-        }
-        else
-        {
-            _bloomEffectComponent.textureCutoff.value = Mathf.Clamp01(cutoff);
-        }
+        ChangeFloatParamInTime(_bloomEffectComponent.textureCutoff, Mathf.Clamp01(cutoff), time);
     }
 
     public void SetScrollDirectionGodBloom(Vector2 direction)
@@ -236,16 +148,9 @@ public class PostProcessingController : MonoCache
         _bloomEffectComponent.scrollDirection.value = direction;
     }
 
-    public void SetDistortionAmountGodBloom(float distortionAmount, float smooth = -1)
+    public void SetDistortionAmountGodBloom(float distortionAmount, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeFloatParameterWithSmooth(_bloomEffectComponent.distortionAmount, distortionAmount, smooth);
-        }
-        else
-        {
-            _bloomEffectComponent.distortionAmount.value = distortionAmount;
-        }
+        ChangeFloatParamInTime(_bloomEffectComponent.distortionAmount, distortionAmount, time);
     }
 
     public void SetDistortionRangeGodBloom(Vector2 range)
@@ -262,39 +167,53 @@ public class PostProcessingController : MonoCache
         return _pixelizeEffectComponent;
     }
     
-    public void SetScreenHeightPixelize(int screenHeight, float smooth = -1)
+    public void SetScreenHeightPixelize(int screenHeight, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeIntParameterWithSmooth(_pixelizeEffectComponent.screenHeight, screenHeight, smooth);
-        }
-        else
-        {
-            _pixelizeEffectComponent.screenHeight.value = screenHeight;
-        }
+        ChangeIntParamInTime(_pixelizeEffectComponent.screenHeight, screenHeight, time);
     }
 
-    public void TurnPixelize(bool value)
+    public void TurnGradient(bool value)
     {
         _pixelizeEffectComponent.Enabled.value = value;
     }
 
-    public void SetGradientTexturePixelize(Texture texture)
+    public async void SetGradientTexture(Texture texture, float time = 0)
     {
-        _pixelizeEffectComponent.gradientTexture.value = texture;
+		if (texture == null){
+			await SetGradientOpacity(0, time);
+			TurnGradient(false);
+			_pixelizeEffectComponent.gradientTexture.value = null;
+			_pixelizeEffectComponent.secondGradientTexture.value = null;
+			return;
+		}
+
+		_pixelizeEffectComponent.gradientTexture.value = _pixelizeEffectComponent.secondGradientTexture.value; 
+		if (_pixelizeEffectComponent.gradientTexture == null){
+			await SetGradientOpacity(0, 0);
+			_pixelizeEffectComponent.gradientTexture.value = texture;
+		}
+
+        _pixelizeEffectComponent.secondGradientTexture.value = texture;
+
+		var t = 0f;
+		while (t < 1){
+			t += Time.deltaTime;
+			_pixelizeEffectComponent.gradientT.value = t;
+			await Task.Yield();
+		}
+
+		_pixelizeEffectComponent.gradientTexture.value = _pixelizeEffectComponent.secondGradientTexture.value; 
     }
 
-    public void SetIntensityPixelize(float intensity, float smooth = -1)
+    public void SetGradientIntensity(float intensity, float time = 0)
     {
-        if (smooth > 0)
-        {
-            ChangeFloatParameterWithSmooth(_pixelizeEffectComponent.intensity, intensity, smooth);
-        }
-        else
-        {
-            _pixelizeEffectComponent.intensity.value = intensity;
-        }
+        ChangeFloatParamInTime(_pixelizeEffectComponent.intensity, intensity, time);
     }
+
+	public async Task SetGradientOpacity(float opacity, float time = 0)
+	{
+		await ChangeFloatParamInTime(_pixelizeEffectComponent.opacity, opacity, time);
+	}
 
     #endregion
 
@@ -309,86 +228,46 @@ public class PostProcessingController : MonoCache
             Mathf.Abs(targetColor.value.b - deltaColor.b * percent)), time);
     }
 
-    private async UniTask ChangeIntensityWithSmooth(FloatParameter currentIntensity, float intensity, float smooth)
+    private async Task ChangeFloatParamInTime(FloatParameter currentIntensity, float intensity, float time)
     {
-        var step = intensity * smooth;
+		var startIntensity = currentIntensity.value;
+		var t = 0f;
 
-        if (currentIntensity.value < intensity)
-        {
-            while (currentIntensity.value < intensity)
-            {
-                await UniTask.Delay(10);
-                currentIntensity.value += step;
-            }
-        }
-        else
-        {
-            while (currentIntensity.value > intensity)
-            {
-                await UniTask.Delay(10);
-                currentIntensity.value -= step;
-            }
-        }
+		while (t < 1 && time > 0){
+			t += Time.deltaTime / time;
+			currentIntensity.value = Mathf.Lerp(startIntensity, intensity, t);
+			await Task.Yield();
+		}
 
         currentIntensity.value = intensity;
     }
 
-    private async UniTask ChangeColorWithTime(ColorParameter from, Color to, float time)
+    private async void ChangeColorWithTime(ColorParameter from, Color to, float time)
     {
-        while (time > 0)
-        {
-            from.value = Color.Lerp(from.value, to, 0.1f / time);
-            time -= 0.1f;
-            await UniTask.Delay(2);
-        }
+		var startColor = from.value;
+		var t = 0f;
+
+		while (t < 1 && time > 0){
+			t += Time.deltaTime / time;
+			from.value = Color.Lerp(startColor, to, t);
+			await Task.Yield();
+		}
+
+		from.value = to;
     }
 
-    private async Task ChangeFloatParameterWithSmooth(FloatParameter floatParameter, float value, float smooth)
+    private async void ChangeIntParamInTime(IntParameter intParam, int value, float time)
     {
-        var step = value * smooth;
+		var startInt = intParam.value;
+		var t = 0f;
 
-        if (floatParameter.value < value)
-        {
-            while (floatParameter.value < value)
-            {
-                await Task.Delay(10);
-                floatParameter.value += step;
-            }
-        }
-        else
-        {
-            while (floatParameter.value > value)
-            {
-                await Task.Delay(10);
-                floatParameter.value -= step;
-            }
-        }
+		while (t < 1 && time > 0){
+			t += Time.deltaTime / time;
+			intParam.value = (int)Mathf.Round(Mathf.Lerp(startInt, value, t));
+			await Task.Yield();
+		}
 
-        floatParameter.value = value;
-    }
-
-    private async Task ChangeIntParameterWithSmooth(IntParameter floatParameter, int value, float smooth)
-    {
-        var step = (int)Mathf.Round(value * smooth);
-
-        if (floatParameter.value < value)
-        {
-            while (floatParameter.value < value)
-            {
-                await Task.Delay(10);
-                floatParameter.value += step;
-            }
-        }
-        else
-        {
-            while (floatParameter.value > value)
-            {
-                await Task.Delay(10);
-                floatParameter.value -= step;
-            }
-        }
-
-        floatParameter.value = value;
+		intParam.value = value;
     }
 
     #endregion

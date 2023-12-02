@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -2819974350543686791}
   - component: {fileID: 4795378131206103054}
   - component: {fileID: 1691433776203291903}
+  - component: {fileID: 6260673132966868261}
   m_Layer: 7
   m_Name: CentipedeHead
   m_TagString: Untagged
@@ -212,9 +213,9 @@ SpringJoint:
   m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_Spring: 30
-  m_Damper: 0.2
-  m_MinDistance: 0
+  m_Spring: 50
+  m_Damper: 2
+  m_MinDistance: 3
   m_MaxDistance: 0
   m_Tolerance: 0.025
   m_BreakForce: Infinity
@@ -250,3 +251,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+--- !u!114 &6260673132966868261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644346525775013774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342f4e5f999a2b34bba780a1151d1a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  locatePlayerRange: 50

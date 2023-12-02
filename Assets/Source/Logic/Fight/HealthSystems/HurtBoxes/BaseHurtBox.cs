@@ -13,9 +13,9 @@ public class BaseHurtBox : MonoCache, ITakeHit
 
     public void TakeHit(float damage, Vector3 attackerPos, string attackName)
     {
-        OnTakeHit?.Invoke(damage * damageMultiplier);
+        OnTakeHit?.Invoke(-damage * damageMultiplier);
         OnTakeHitWithAttackerPosition?.Invoke(attackerPos);
         OnTakeHitWithAttackName?.Invoke(attackName);
-        OnTakeHitWithDescription?.Invoke(damage * damageMultiplier, attackerPos, attackName);
+        OnTakeHitWithDescription?.Invoke(-damage * damageMultiplier, attackerPos, attackName);
     }
 }
