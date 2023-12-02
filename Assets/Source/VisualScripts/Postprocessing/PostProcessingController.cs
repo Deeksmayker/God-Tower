@@ -177,9 +177,22 @@ public class PostProcessingController : MonoCache
         _pixelizeEffectComponent.Enabled.value = value;
     }
 
-    public async void SetGradientTexture(Texture texture)
+    public async void SetGradientTexture(Texture texture, float time = 0)
     {
+		if (texture == null){
+			await SetGradientOpacity(0, time);
+			TurnGradient(false);
+			_pixelizeEffectComponent.gradientTexture.value = null;
+			_pixelizeEffectComponent.secondGradientTexture.value = null;
+			return;
+		}
+
 		_pixelizeEffectComponent.gradientTexture.value = _pixelizeEffectComponent.secondGradientTexture.value; 
+		if (_pixelizeEffectComponent.gradientTexture == null){
+			await SetGradientOpacity(0, 0);
+			_pixelizeEffectComponent.gradientTexture.value = texture;
+		}
+
         _pixelizeEffectComponent.secondGradientTexture.value = texture;
 
 		var t = 0f;
@@ -197,9 +210,9 @@ public class PostProcessingController : MonoCache
         ChangeFloatParamInTime(_pixelizeEffectComponent.intensity, intensity, time);
     }
 
-	public void SetGradientOpacity(float opacity, float time = 0)
+	public async Task SetGradientOpacity(float opacity, float time = 0)
 	{
-		ChangeFloatParamInTime(_pixelizeEffectComponent.opacity, opacity, time);
+		await ChangeFloatParamInTime(_pixelizeEffectComponent.opacity, opacity, time);
 	}
 
     #endregion
@@ -215,7 +228,7 @@ public class PostProcessingController : MonoCache
             Mathf.Abs(targetColor.value.b - deltaColor.b * percent)), time);
     }
 
-    private async void ChangeFloatParamInTime(FloatParameter currentIntensity, float intensity, float time)
+    private async Task ChangeFloatParamInTime(FloatParameter currentIntensity, float intensity, float time)
     {
 		var startIntensity = currentIntensity.value;
 		var t = 0f;

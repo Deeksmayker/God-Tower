@@ -1112,6 +1112,139 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1681318993
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: timeToChange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: changeGradient
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: _changePixelize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: gradientEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: gradientOpacity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: gradientTexture
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: _changeBackOnExit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: gradientIntensity
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: _pixelizeScreenHeight
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155597920776079774, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_Name
+      value: PostProcessChangeTrigger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155597920776079774, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 133.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 22.073235
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368689230701308536, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727273597504256261, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 59.22
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff, type: 3}
 --- !u!1 &1742627487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,6 +1681,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
+      propertyPath: timeToChange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
+        type: 3}
       propertyPath: changeGradient
       value: 1
       objectReference: {fileID: 0}
@@ -1570,21 +1708,21 @@ PrefabInstance:
         type: 3}
       propertyPath: gradientTexture
       value: 
-      objectReference: {fileID: 2800000, guid: c86b75da43daa4e4eb48db6d1a3a5ec8, type: 3}
+      objectReference: {fileID: 2800000, guid: 499ebeb8be0265c4a93b471d4884e5c9, type: 3}
     - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
       propertyPath: _changeBackOnExit
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
       propertyPath: gradientIntensity
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2020052839894872110, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
       propertyPath: _pixelizeScreenHeight
-      value: 50
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5155597920776079774, guid: 6d74ad9b73f8bfd4c9b5e09392a27eff,
         type: 3}
