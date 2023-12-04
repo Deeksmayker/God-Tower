@@ -22,6 +22,8 @@ public class PostProcessingController : MonoCache
 
     protected override void OnEnabled()
     {
+		if (!_volume) _volume = FindObjectOfType<Volume>();
+
         _volume.profile.TryGet<Vignette>(out _vignette);
         _volume.profile.TryGet<MotionBlur>(out _motionBlur);
         _volume.profile.TryGet<ChromaticAberration>(out _chromaticAberration);

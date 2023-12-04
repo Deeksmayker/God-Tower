@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3551868038169104263}
   - component: {fileID: 3379574032265825995}
   - component: {fileID: 5656796772867946210}
+  - component: {fileID: -261854727722241486}
   m_Layer: 8
   m_Name: JumpingEnemy
   m_TagString: Untagged
@@ -134,6 +135,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4c3c7d1e6ede1943b930a3bd4fcec90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+--- !u!114 &-261854727722241486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184231340739994612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09cb78cdc5bacdf4cb85ab99c40aad67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0

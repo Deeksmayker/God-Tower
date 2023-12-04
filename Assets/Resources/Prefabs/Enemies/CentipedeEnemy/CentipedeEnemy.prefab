@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1013427162400147998}
   - component: {fileID: 7257885377944155367}
   - component: {fileID: 3027781073958671832}
+  - component: {fileID: -5064559074716502663}
   m_Layer: 7
   m_Name: CentipedeEnemy
   m_TagString: Untagged
@@ -138,6 +139,19 @@ MonoBehaviour:
   projectileThrowPower: 1000
   _rangeAttack: 1
   _meleeAttack: 0
+--- !u!114 &-5064559074716502663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3170742759052837195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09cb78cdc5bacdf4cb85ab99c40aad67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
 --- !u!1 &6884470116042033624
 GameObject:
   m_ObjectHideFlags: 0
