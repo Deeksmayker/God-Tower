@@ -1,12 +1,12 @@
-using System.Collections.Generic;
 using NTC.Global.Cache;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class WaveController : MonoCache
 {
-    [SerializeField] private List<Wave> _waves;
-    [SerializeField] private UnityEvent _wavesEnded;
+    [SerializeField] private Wave[] _waves;
+    public UnityEvent WavesEnded;
+    public UnityEvent WavesStarted;
 
     private int _currentWaveNumber;
     private bool _wavesIsStarted;
@@ -15,15 +15,17 @@ public class WaveController : MonoCache
     {
         _waves[0]?.StartWave();
 
-        for (int i = 0; i < _waves.Count; i++)
+        for (int i = 0; i < _waves.Length; i++)
         {
-            _waves[i].Ended += () =>
+            _waves[i].OnEnded += () =>
             {
+				Log("Wave " + _currentWaveNumber + " Ended");
                 _currentWaveNumber += 1;
 
-                if (_waves.Count <= _currentWaveNumber)
+                if (_waves.Length <= _currentWaveNumber)
                 {
-                    _wavesEnded?.Invoke();
+					Log("All waves ended");
+                    WavesEnded?.Invoke();
                     return;
                 }
 
@@ -38,6 +40,7 @@ public class WaveController : MonoCache
         {
             StartWaves();
             _wavesIsStarted = true;
+			WavesStarted.Invoke();
         }
     }
 }

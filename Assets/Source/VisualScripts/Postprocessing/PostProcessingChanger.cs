@@ -63,6 +63,26 @@ namespace Source.VisualScripts.Postprocessing
 		private static float s_changingTimer;
 		private static bool s_changedThisFrame;
 
+		protected override void OnEnabled(){
+			var wave = GetComponent<Wave>();
+			if (wave){
+				wave.OnEnded += StartThis;
+			}
+
+			var waveController = GetComponent<WaveController>();
+			if (waveController){
+				waveController.WavesStarted.AddListener(StartThis);
+				waveController.WavesEnded.AddListener(End);
+			}
+		}
+
+		protected override void OnDisabled(){
+			var wave = GetComponent<Wave>();
+			if (wave){
+				wave.OnEnded += StartThis;
+			}
+		}
+
 		protected override void Run(){
 			if (!s_changedThisFrame && s_changingTimer > 0){
 				s_changedThisFrame = true;
@@ -85,7 +105,17 @@ namespace Source.VisualScripts.Postprocessing
         private void OnTriggerEnter(Collider other)
         {
             if (!other.GetComponent<PlayerUnit>() || !_isChangedOnEnter) return;
+			StartThis();
 
+        }
+
+        private void OnTriggerExit(Collider other){
+			if (!other.GetComponent<PlayerUnit>())
+				return;
+			End();
+        }
+
+		private void StartThis(){
 			_inside = true;
 			if (s_changingTimer > 0){
 				_needChange = !_needChange;
@@ -93,9 +123,9 @@ namespace Source.VisualScripts.Postprocessing
 			}
 
 			HandleEnter();
-        }
+		}
 
-        private void OnTriggerExit(Collider other){
+		private void End(){
 			_inside = false;
 			if (s_changingTimer > 0){
 				_needChange = !_needChange;
@@ -104,10 +134,10 @@ namespace Source.VisualScripts.Postprocessing
 
 			HandleExit();
             
-            if (!other.GetComponent<PlayerUnit>() || _isChangedOnEnter) return;
+            if (_isChangedOnEnter) return;
 
             ChangePostProcessing();
-        }
+		}
 
 		private void HandleEnter(){
 

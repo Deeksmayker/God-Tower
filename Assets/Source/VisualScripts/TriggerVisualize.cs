@@ -2,6 +2,8 @@ using UnityEngine;
 using NTC.Global.Cache;
 
 public class TriggerVisualize : MonoCache{
+	[SerializeField] private Color baseColor = Color.green;
+
 	private BoxCollider _col;
 
 	private bool _inside;
@@ -23,7 +25,7 @@ public class TriggerVisualize : MonoCache{
 	}
 
 	private void OnDrawGizmos(){
-		var color = _inside ? Color.red : Color.green;
+		var color = _inside ? Color.red : baseColor;
 		color.a = 0.1f;
 		Gizmos.color = color;
 

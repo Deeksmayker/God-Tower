@@ -222,7 +222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   _volume: {fileID: 0}
-  _smooth: 0.1
   _maxVignetteIntensity: 0.8
   _maxChromaticAberrationIntensity: 0.8
 --- !u!1 &2093009703883698553
@@ -305,7 +304,7 @@ Transform:
   - {fileID: 2093009705546337044}
   - {fileID: 7350638539682238382}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1906613496
 MonoBehaviour:

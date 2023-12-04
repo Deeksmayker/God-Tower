@@ -12,6 +12,8 @@ public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
 
     private float _stunTimer;
 
+	private bool _dead;
+
     public event Action OnHit;
     public event Action<float> OnHealthChanged;
     public event Action OnHealthAdd;
@@ -63,8 +65,10 @@ public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
 
     public void Die(bool order = false)
     {
-        OnDied?.Invoke();
+		if (_dead) return;
         gameObject.AddComponent<Death>();
+        OnDied?.Invoke();
+		_dead = true;
     }
 
     public float GetHealth01()
