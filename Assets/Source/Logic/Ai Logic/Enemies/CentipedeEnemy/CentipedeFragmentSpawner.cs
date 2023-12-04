@@ -124,22 +124,7 @@ public class CentipedeFragmentSpawner : MonoCache
 
     private void MoveToClosestPoint()
     {
-        RaycastHit closestHit = new();
-        var hits = new RaycastHit[6];
-
-        Physics.Raycast(transform.position, Vector3.down, out hits[0], 100, Layers.Environment);
-        Physics.Raycast(transform.position, -Vector3.forward, out hits[1], 100, Layers.Environment);
-        Physics.Raycast(transform.position, Vector3.up, out hits[2], 100, Layers.Environment);
-        Physics.Raycast(transform.position, Vector3.forward, out hits[3], 100, Layers.Environment);
-        Physics.Raycast(transform.position, Vector3.right, out hits[4], 100, Layers.Environment);
-        Physics.Raycast(transform.position, Vector3.left, out hits[5], 100, Layers.Environment);
-        
-        closestHit = hits[0];
-        for (var i = 1; i < hits.Length; i++)
-        {
-            if (Vector3.Distance(closestHit.point, transform.position) > Vector3.Distance(hits[i].point, transform.position))
-                closestHit = hits[i];
-        }
+		var closestHit = PhysicsUtils.GetClosestSurfaceHit(transform.position);
 
         transform.position = closestHit.point;
         transform.rotation = Quaternion.FromToRotation(Vector3.up, closestHit.normal);

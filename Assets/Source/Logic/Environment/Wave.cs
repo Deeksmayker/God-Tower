@@ -32,6 +32,7 @@ public class Wave : MonoCache
 
 	private void Awake(){
 		_jumpingPrefab = (Resources.Load(ResPath.Enemies + "JumpEnemy/JumpingEnemy") as GameObject).GetComponent<Enemy>();
+		_centipedePrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemy") as GameObject).GetComponent<Enemy>();
 	}
 
     public async void StartWave(){
