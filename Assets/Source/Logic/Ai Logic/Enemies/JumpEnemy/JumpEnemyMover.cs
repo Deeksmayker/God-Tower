@@ -35,6 +35,8 @@ public class JumpEnemyMover : MonoCache, IMover
         _rotator = GetComponent<RotateMaker>();
 
         _baseChHeight = _ch.height;
+
+		StickToClosestSurface();
     }
 
 
@@ -118,7 +120,8 @@ public class JumpEnemyMover : MonoCache, IMover
             if (hit.normal.y < 0.4f)
                 _desiredAngle = Quaternion.LookRotation(hit.normal + UnityEngine.Random.insideUnitSphere.normalized * UnityEngine.Random.Range(-.5f, .5f));
             else
-                _desiredAngle = Quaternion.LookRotation(new Vector3(_lastNonZeroVelocity.x, 0, _lastNonZeroVelocity.z).normalized,
+                _desiredAngle = Quaternion.LookRotation(
+						new Vector3(_lastNonZeroVelocity.x, 0, _lastNonZeroVelocity.z).normalized,
                     hit.normal + UnityEngine.Random.insideUnitSphere.normalized * UnityEngine.Random.Range(-.5f, .5f));
         }
     }
@@ -143,6 +146,16 @@ public class JumpEnemyMover : MonoCache, IMover
 
         _rotator.StopTorque();
     }
+
+	private void StickToClosestSurface(){
+		var closestHit = PhysicsUtils.GetClosestSurfaceHit(transform.position);
+
+		//_onWall = closestHit.normal.y > 0.4f;
+		transform.position = closestHit.point;
+		if (closestHit.normal.y < 0.6f)
+			transform.rotation = Quaternion.LookRotation(closestHit.normal);
+		_ch.Move(-closestHit.normal);
+	}
 
     public Vector3 GetCurrentNormal() => _currentContactNormal;
     public bool OnWall() => _onWall;

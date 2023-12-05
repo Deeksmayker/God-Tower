@@ -45,7 +45,7 @@ public class EyeEnemyHealthSystem : MonoCache, IHealthHandler
             return;
 
         Log("ah hit " + damage);
-        ChangeHealth(-damage);
+        ChangeHealth(damage);
         _mover.SetInputResponse(false);
     }
 

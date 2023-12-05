@@ -118,6 +118,8 @@ public class BoidsBehaviour : MonoCache
         }
     }
 
+	public static BoidsBehaviour Instance;
+
     [SerializeField] private int numberOfBoids;
 
     [SerializeField] private GameObject entityPrefab;
@@ -132,8 +134,13 @@ public class BoidsBehaviour : MonoCache
 
     private TransformAccessArray _transformAccessArray;
 
-    private void Start()
-    {
+	private void Awake(){
+		if (Instance != null && Instance != this){
+			Destroy(gameObject);
+			return;
+		}
+		Instance = this;
+
         _targetTransform = FindObjectOfType<PlayerTargetPoint>().transform;
 
         _positions = new NativeArray<Vector3>(numberOfBoids, Allocator.Persistent);
@@ -148,14 +155,7 @@ public class BoidsBehaviour : MonoCache
         }
 
         _transformAccessArray = new TransformAccessArray(transforms);
-
-        //InvokeRepeating(nameof(SpawnB), 5, 3);
-    }
-
-    private void SpawnB()
-    {
-        SpawnBoids(Vector3.zero, Vector3.up * 10, 50);
-    }
+	}
 
     private JobHandle _accelerationJobHandle;
     private JobHandle _moveJobHandle;
@@ -292,8 +292,16 @@ public class BoidsBehaviour : MonoCache
         //newAccelerations.Dispose();
     }
 
+	private int _aliveCount = 50;
+	private float _lastTimeCheckedAliveCount;
     public async Task<int> GetAliveBoidsCount()
     {
+		if (Time.time - _lastTimeCheckedAliveCount < 3){
+			return _aliveCount;
+		}
+
+		_lastTimeCheckedAliveCount = Time.time;
+
         var count = 0;
         for (var i = 0; i < _transformAccessArray.length; i++)
         {
@@ -304,6 +312,7 @@ public class BoidsBehaviour : MonoCache
                 await Task.Yield();
         }
 
+		_aliveCount = count;
         return count;
     }
 
