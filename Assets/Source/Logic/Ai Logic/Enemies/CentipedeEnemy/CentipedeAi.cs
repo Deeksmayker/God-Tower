@@ -108,7 +108,9 @@ public class CentipedeAi : MonoCache
 		Log("Centipede range ttacking");
 
 		var proj = Instantiate(_projectile, _playerLocator.transform.position, Quaternion.identity);
-		proj.GetComponent<Rigidbody>().AddForce(projectileThrowPower * _playerLocator.GetDirectionToPlayerNorm(), ForceMode.Acceleration);
+		var dir = _playerLocator.GetDirectionToPlayerNorm();
+		dir.y += 0.15f;
+		proj.GetComponent<Rigidbody>().AddForce(projectileThrowPower * dir, ForceMode.Acceleration);
 
 		_attacking = false;
 		_cooldownTimer = attackCooldown;
