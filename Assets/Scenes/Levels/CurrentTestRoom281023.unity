@@ -185,18 +185,6 @@ Transform:
   m_Father: {fileID: 918083655}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &207927336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 348891371176724804, guid: d29b5042b79ca8b4cadbec02e46ef41e,
-    type: 3}
-  m_PrefabInstance: {fileID: 6173600995353849552}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09cb78cdc5bacdf4cb85ab99c40aad67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &207927338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9200063112082324783, guid: d29b5042b79ca8b4cadbec02e46ef41e,
@@ -1751,10 +1739,6 @@ MonoBehaviour:
   _spawns:
   - enemy: 0
     point: {fileID: 46449506}
-    spawnDelay: 2
-    onSceneEnemy: {fileID: 207927336}
-  - enemy: 1
-    point: {fileID: 46449506}
     spawnDelay: 3
     onSceneEnemy: {fileID: 0}
 --- !u!114 &1827842267
@@ -2439,6 +2423,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 539570907411249169, guid: fcf5682bd0237134a8b4b70740c92c32,
+        type: 3}
+      propertyPath: gradientTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: c86b75da43daa4e4eb48db6d1a3a5ec8, type: 3}
     - target: {fileID: 539570907411249169, guid: fcf5682bd0237134a8b4b70740c92c32,
         type: 3}
       propertyPath: gradientIntensity

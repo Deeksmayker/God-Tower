@@ -58,6 +58,8 @@ namespace Source.VisualScripts.Postprocessing
 		private bool _inside;
 		private bool _needChange;
 
+		private bool _weOnWaveController;
+
         private event Action playerExited;
 
 		private static float s_changingTimer;
@@ -71,6 +73,7 @@ namespace Source.VisualScripts.Postprocessing
 
 			var waveController = GetComponent<WaveController>();
 			if (waveController){
+				_weOnWaveController = true;
 				waveController.WavesStarted.AddListener(StartThis);
 				waveController.WavesEnded.AddListener(End);
 			}
@@ -104,13 +107,13 @@ namespace Source.VisualScripts.Postprocessing
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.GetComponent<PlayerUnit>() || !_isChangedOnEnter) return;
+            if (_weOnWaveController || !other.GetComponent<PlayerUnit>() || !_isChangedOnEnter) return;
 			StartThis();
 
         }
 
         private void OnTriggerExit(Collider other){
-			if (!other.GetComponent<PlayerUnit>())
+			if (_weOnWaveController || !other.GetComponent<PlayerUnit>())
 				return;
 			End();
         }
