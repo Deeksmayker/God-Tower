@@ -17,6 +17,7 @@ public class PlayerBigBall : MonoCache
     public event Action Collided;
     
     private ParticleSystem _hitParticles;
+    private ParticleSystem _hitEnemyParticles;
 
     private Rigidbody _rb;
 
@@ -40,6 +41,7 @@ public class PlayerBigBall : MonoCache
         //transform.DOScale(_startScale, 0.5f).SetEase(Ease.InOutBounce);
 
         _hitParticles = (Resources.Load(ResPath.Particles + "BallHitParticles") as GameObject).GetComponent<ParticleSystem>();
+        _hitEnemyParticles = (Resources.Load(ResPath.Particles + "BallHitEnemyParticles") as GameObject).GetComponent<ParticleSystem>();
 
         Started?.Invoke();
     }
@@ -55,6 +57,7 @@ public class PlayerBigBall : MonoCache
         //Log("Collided with " + collision.gameObject.name);
 
 		bool foundTarget = false;
+		var vectorToCol = collision.transform.position - transform.position;
 
         if (true ){//collision.gameObject.TryGetComponent<EyeEnemy>(out var eye)){
 			Physics.OverlapSphereNonAlloc(transform.position, 100, _enemiesAround, Layers.EnemyHurtBox);
@@ -77,16 +80,22 @@ public class PlayerBigBall : MonoCache
 
         transform.rotation = Quaternion.LookRotation(_rb.velocity);
 
-        var particles = NightPool.Spawn(_hitParticles, transform.position);
-        particles.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
-        particles.Play();
-        
+        var hitEnemy = false;
         if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
         {
             victim.TakeHit(_damage, transform.position, "Big ball");
+			hitEnemy = true;
         }
-        
+		collision.gameObject.GetComponentInParent<IMover>()?.AddForce(vectorToCol.normalized * _rb.velocity.magnitude * 0.1f);
+		collision.gameObject.GetComponentInParent<IInStun>()?.StartStun();
+
         Collided?.Invoke();
+		
+		if (_rb.velocity.magnitude < 30) return;
+        var particles = NightPool.Spawn(hitEnemy ? _hitEnemyParticles : _hitParticles, transform.position);
+        particles.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
+        particles.Play();
+        
     }
 
     public void SetVelocity(Vector3 newVelocity)

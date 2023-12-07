@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHealthHandler : MonoCache, IHealthHandler
 {
     [SerializeField] private float health;
+	[SerializeField] private GameObject deadCamPrefab;
 
     private float _maxHealth;
 
@@ -47,11 +48,14 @@ public class PlayerHealthHandler : MonoCache, IHealthHandler
     {
         Log("I'm a dead man");
         OnDied?.Invoke();
+
+		//Instantiate(deadCamPrefab, transform.position, transform.rotation);
+		//Destroy(gameObject);
     }
 
     public void ChangeHealth(float changeValue)
     {
-         health = Mathf.Clamp(health - changeValue, 0, _maxHealth);
+         health = Mathf.Clamp(health + changeValue, 0, _maxHealth);
 
         OnHit?.Invoke();
         OnHealthChanged?.Invoke(health);

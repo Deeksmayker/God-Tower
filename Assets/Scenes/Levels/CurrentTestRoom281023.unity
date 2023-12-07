@@ -260,6 +260,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2292159567300001313, guid: efcca681c6aa2c64db2c7085334d7c9c,
+        type: 3}
+      propertyPath: _volume
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3998808300210840913, guid: efcca681c6aa2c64db2c7085334d7c9c,
         type: 3}
       propertyPath: m_RootOrder
@@ -393,11 +398,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7279697583198527372, guid: 63ceb08ff9d19f14ba1395ce3bf98d2f,
-        type: 3}
-      propertyPath: _volume
-      value: 
-      objectReference: {fileID: 713566449}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -753,15 +753,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   _spawns:
-  - enemy: 1
+  - enemy: 0
     point: {fileID: 1598561323}
     spawnDelay: 2
     onSceneEnemy: {fileID: 0}
-  - enemy: 1
+  - enemy: 0
     point: {fileID: 1620497346}
     spawnDelay: 2
     onSceneEnemy: {fileID: 0}
-  - enemy: 1
+  - enemy: 0
     point: {fileID: 1862264352}
     spawnDelay: 2
     onSceneEnemy: {fileID: 0}
@@ -798,18 +798,6 @@ MonoBehaviour:
   gradientOpacity: 0.7
   _changeAberration: 0
   _aberrationIntensity: 0
---- !u!114 &713566449 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7021654372833778275, guid: efcca681c6aa2c64db2c7085334d7c9c,
-    type: 3}
-  m_PrefabInstance: {fileID: 380239470}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &784532555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,12 +1567,12 @@ PrefabInstance:
     - target: {fileID: 539570907411249169, guid: fcf5682bd0237134a8b4b70740c92c32,
         type: 3}
       propertyPath: _godBloomDistortionAmount
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 539570907411249169, guid: fcf5682bd0237134a8b4b70740c92c32,
         type: 3}
       propertyPath: _godBloomDistortionRange.x
-      value: 0.05
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 1027933739714114011, guid: fcf5682bd0237134a8b4b70740c92c32,
         type: 3}
@@ -2864,6 +2852,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3027781073958671832, guid: 9376c87e76fc64544b830d8a5684ff2b,
+        type: 3}
+      propertyPath: attackCooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3027781073958671832, guid: 9376c87e76fc64544b830d8a5684ff2b,
+        type: 3}
+      propertyPath: projectileThrowPower
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 3170742759052837195, guid: 9376c87e76fc64544b830d8a5684ff2b,
         type: 3}
       propertyPath: m_Name
