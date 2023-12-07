@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class PostProcessingController : MonoCache
 {
-    [SerializeField] private Volume _volume;
+    private Volume _volume;
     [Space] 
     [SerializeField] private float _maxVignetteIntensity = 0.8f;
     [SerializeField] private float _maxChromaticAberrationIntensity = 0.8f;
@@ -20,7 +20,7 @@ public class PostProcessingController : MonoCache
     private float _defaultVignetteIntensity;
     private float _defaultChromaticAberrationIntensity;
 
-    protected override void OnEnabled()
+	private void Awake()
     {
 		if (!_volume) _volume = FindObjectOfType<Volume>();
 

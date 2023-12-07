@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Death : MonoCache
 {
-    private float dissolveDuration = 0.5f;
-    private float flashDuration = 0.05f;
+    private float dissolveDuration = 1f;
+    private float flashDuration = 0.2f;
 
     private float _timer;
 
-    private Color _deadColor = new Color(1f, 0, 0) * 2;
-    private Color _flashColor = new Color(1f, 0.7f, 0.2f) * 2;
+    private Color _deadColor = new Color(1f, 0, 0) * 3;
+    private Color _flashColor = new Color(1f, 0.7f, 0.2f) * 5;
 
     private MeshRenderer[] _meshRenderers;
     private MaterialPropertyBlock _materialPropertyBlock;

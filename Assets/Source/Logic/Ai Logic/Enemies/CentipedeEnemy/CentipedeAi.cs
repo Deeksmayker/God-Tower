@@ -109,8 +109,8 @@ public class CentipedeAi : MonoCache
 
 		var proj = Instantiate(_projectile, _playerLocator.transform.position, Quaternion.identity);
 		var dir = _playerLocator.GetDirectionToPlayerNorm();
-		dir.y += 0.15f;
-		proj.GetComponent<Rigidbody>().AddForce(projectileThrowPower * dir, ForceMode.Acceleration);
+		dir.y += 0.1f;
+		proj.GetComponent<Rigidbody>().AddForce(projectileThrowPower * dir, ForceMode.Force);
 
 		_attacking = false;
 		_cooldownTimer = attackCooldown;
