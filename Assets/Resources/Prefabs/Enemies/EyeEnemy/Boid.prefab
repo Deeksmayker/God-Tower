@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5707093839625530183}
   - component: {fileID: 2997425395649994608}
   - component: {fileID: 1459767883521575801}
-  - component: {fileID: 4475243953160472687}
+  - component: {fileID: 1936005824487095265}
   m_Layer: 7
   m_Name: Boid
   m_TagString: Untagged
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
---- !u!114 &4475243953160472687
+--- !u!114 &1936005824487095265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,15 +108,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9200607288991498957}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c53657e503d7a4738b0a9fa634fc1b92, type: 3}
+  m_Script: {fileID: 11500000, guid: 90875b853af14fa4db0997b845fb85d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  forward: {x: 0, y: 0, z: 0}
-  avgFlockHeading: {x: 0, y: 0, z: 0}
-  avgAvoidanceHeading: {x: 0, y: 0, z: 0}
-  centreOfFlockmates: {x: 0, y: 0, z: 0}
-  numPerceivedFlockmates: 0
 --- !u!1001 &6024706099781458563
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -107,21 +107,21 @@ MonoBehaviour:
   debug: 0
   _isChangedOnEnter: 1
   _changeBackOnExit: 1
-  timeToChange: 5
+  timeToChange: 2
   _changeGodBloom: 0
-  _godBloomThreshold: 0
-  _godBloomIntensity: 0
-  _godBloomTextureDensity: 0
-  _godBloomTextureCutoff: 0
+  _godBloomThreshold: 1.83
+  _godBloomIntensity: 6.63
+  _godBloomTextureDensity: 70
+  _godBloomTextureCutoff: 0.507
   _godBloomScrollDirection: {x: 0, y: 0}
   _godBloomDistortionAmount: 0
-  _godBloomDistortionRange: {x: 0, y: 0}
-  _changePixelize: 1
-  _pixelizeScreenHeight: 200
-  changeGradient: 1
+  _godBloomDistortionRange: {x: 0.05, y: 0}
+  _changePixelize: 0
+  _pixelizeScreenHeight: 500
+  changeGradient: 0
   gradientEnabled: 1
-  gradientTexture: {fileID: 2800000, guid: f5692271315a4784f886de73e09e0e4c, type: 3}
-  gradientIntensity: 0.2
+  gradientTexture: {fileID: 2800000, guid: 3a2fea9e9c9f54c44a62d476cfbb4172, type: 3}
+  gradientIntensity: 1
   gradientOpacity: 1
   _changeAberration: 0
   _aberrationIntensity: 0

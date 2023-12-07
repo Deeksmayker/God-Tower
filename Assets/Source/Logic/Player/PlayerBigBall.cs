@@ -22,6 +22,8 @@ public class PlayerBigBall : MonoCache
 
     private Vector3 _lastVelocity;
 
+	private Collider[] _enemiesAround = new Collider[30];
+
     private float _startTime;
     private Vector3 _startScale;
 
@@ -34,8 +36,8 @@ public class PlayerBigBall : MonoCache
 
     private void Start()
     {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(_startScale, 0.5f).SetEase(Ease.InOutBounce);
+        //transform.localScale = Vector3.zero;
+        //transform.DOScale(_startScale, 0.5f).SetEase(Ease.InOutBounce);
 
         _hitParticles = (Resources.Load(ResPath.Particles + "BallHitParticles") as GameObject).GetComponent<ParticleSystem>();
 
@@ -44,15 +46,35 @@ public class PlayerBigBall : MonoCache
 
     protected override void FixedRun()
     {
-        _rb.velocity += transform.forward * _acceleration * Mathf.Clamp01(Time.time - _startTime);
+        //_rb.velocity += transform.forward * _acceleration * Mathf.Clamp01(Time.time - _startTime);
         _lastVelocity = _rb.velocity;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Log("Collided with " + collision.gameObject.name);
+        //Log("Collided with " + collision.gameObject.name);
 
-        _rb.velocity = Vector3.Reflect(_lastVelocity, collision.GetContact(0).normal);
+		bool foundTarget = false;
+
+        if (true ){//collision.gameObject.TryGetComponent<EyeEnemy>(out var eye)){
+			Physics.OverlapSphereNonAlloc(transform.position, 100, _enemiesAround, Layers.EnemyHurtBox);
+			for (var i = 1; i < _enemiesAround.Length; i++){
+				var col = _enemiesAround[i];
+				if (!col || col.Equals(collision)) continue;
+				var dir = col.transform.position - transform.position;
+				if (col.GetComponent<EyeEnemy>() 
+						&& !Physics.Raycast(transform.position, dir.normalized, dir.magnitude, Layers.Environment)){
+					_rb.velocity = dir.normalized * _lastVelocity.magnitude;
+					foundTarget = true;
+					Log("Found eye and going to it - " + i);
+					break;
+				}
+			}
+		}
+
+		if (!foundTarget)
+			_rb.velocity = Vector3.Reflect(_lastVelocity, collision.GetContact(0).normal);
+
         transform.rotation = Quaternion.LookRotation(_rb.velocity);
 
         var particles = NightPool.Spawn(_hitParticles, transform.position);

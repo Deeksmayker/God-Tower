@@ -13,6 +13,8 @@ public class WaveController : MonoCache
 
     private void StartWaves()
     {
+		if (_waves.Length <= 0) return;
+
         _waves[0]?.StartWave();
 
         for (int i = 0; i < _waves.Length; i++)

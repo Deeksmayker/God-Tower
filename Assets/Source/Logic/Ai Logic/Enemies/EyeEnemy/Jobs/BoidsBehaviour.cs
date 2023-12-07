@@ -277,6 +277,7 @@ public class BoidsBehaviour : MonoCache
 
         for (var i = index; i < index + count; i++)
         {
+			if (i >= newTransforms.Length) break;
             newPositions[i] = position + Random.insideUnitSphere;
             newVelocities[i] = startVelocity;
             newTransforms[i] = Instantiate(entityPrefab, newPositions[i], Quaternion.identity).transform;
