@@ -65,7 +65,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
-            PerformAttack(Layers.EnemyHurtBox, hitBoxSize);
+            PerformAttack(Layers.Hitable, hitBoxSize);
 
             if (_timer >= attackDuration / 2)
                 PerformAttack(Layers.Environment, envHitBoxSize);
@@ -111,13 +111,12 @@ public class NewKick : MonoCache, IMeleeAttacker
             _attackHitsContainer[i].GetComponentInParent<IMover>()?.AddForce(GetAttackDirection() * kickPushForce);
             _attackHitsContainer[i].GetComponentInParent<IInStun>()?.StartStun();
 
-            _attackHitsContainer[i].GetComponent<PlayerBigBall>()?.HandleKick(GetAttackDirection());
-
-
             if (_attackHitsContainer[i].TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.AddForce(GetAttackDirection() * kickPushForce * 5, ForceMode.Impulse);
             }
+
+            _attackHitsContainer[i].GetComponent<PlayerBigBall>()?.HandleKick(GetAttackDirection());
         }
 
         if (_attackHitsContainer[0] && !_isHitAnything)

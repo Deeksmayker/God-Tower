@@ -81,7 +81,7 @@ public class SphereShooter : MonoCache
 
     private void SpawnBigSphere()
     {
-        var spawnedSphere = Instantiate(_bigSpherePrefab, _shootStartPoint.position, _camDirection.rotation)
+        var spawnedSphere = Instantiate(_bigSpherePrefab, _shootStartPoint.position + _shootStartPoint.forward * 2, _camDirection.rotation)
             .GetComponent<PlayerBigBall>();
         spawnedSphere.SetVelocity(_playerMover.GetVelocity());
     }

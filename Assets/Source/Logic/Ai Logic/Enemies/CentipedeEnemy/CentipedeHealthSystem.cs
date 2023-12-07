@@ -17,6 +17,8 @@ public class CentipedeHealthSystem : MonoCache, IHealthHandler, IInStun
     private float _maxHealth;
     private float _stunTimer;
 
+	private bool _dead;
+
     private void Awake()
     {
         _maxHealth = health;
@@ -74,6 +76,9 @@ public class CentipedeHealthSystem : MonoCache, IHealthHandler, IInStun
 
     public void Die(bool order = false)
     {
+		if (_dead) return;
+
+		_dead = true;
         OnDied?.Invoke();
     }
 
