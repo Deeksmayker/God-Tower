@@ -19,22 +19,29 @@ public class WaveController : MonoCache
 
         for (int i = 0; i < _waves.Length; i++)
         {
-            _waves[i].OnEnded += () =>
-            {
-				Log("Wave " + _currentWaveNumber + " Ended");
-                _currentWaveNumber += 1;
-
-                if (_waves.Length <= _currentWaveNumber)
-                {
-					Log("All waves ended");
-                    WavesEnded?.Invoke();
-                    return;
-                }
-
-                _waves[_currentWaveNumber].StartWave();
-            };
+            _waves[i].OnEnded += HandleWaveEnd; 
         }
     }
+
+	protected override void OnDisabled(){
+		for (var i = 0; i < _waves.Length; i++){
+			_waves[i].OnEnded -= HandleWaveEnd;
+		}
+	}
+
+	private void HandleWaveEnd(){
+		Log("Wave " + _currentWaveNumber + " Ended");
+		_currentWaveNumber += 1;
+
+		if (_waves.Length <= _currentWaveNumber)
+		{
+			Log("All waves ended");
+			WavesEnded?.Invoke();
+			return;
+		}
+
+		_waves[_currentWaveNumber].StartWave();
+	}
 
     private void OnTriggerEnter(Collider other)
     {

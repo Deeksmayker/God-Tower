@@ -146,7 +146,7 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 1
+  m_RenderingMode: 2
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: GodPostProcessRenderFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  bloomShader: {fileID: 4800000, guid: 5f1864addb451f54bae8c86d230f736e, type: 3}
+  bloomShader: {fileID: 4800000, guid: 5d77e29c73f83824085f3577a8f27508, type: 3}
   compositeShader: {fileID: -6465566751694194690, guid: 844c21d8c5653914586f3713516e4e5c,
     type: 3}
   chromaticAberrationShader: {fileID: -6465566751694194690, guid: 2337598845f90044a9b168fd19c4794f,
@@ -199,3 +199,5 @@ MonoBehaviour:
   m_Name: PixelizeFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+  pixelize: {fileID: 4800000, guid: 21a16dc9bab09d2498d8ea188ffa9738, type: 3}
+  gradient: {fileID: 4800000, guid: d7009da0e9444d74298634b28e37895a, type: 3}

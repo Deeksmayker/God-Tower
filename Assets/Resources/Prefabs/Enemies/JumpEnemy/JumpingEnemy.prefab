@@ -80,6 +80,7 @@ MonoBehaviour:
   debug: 0
   jumpForce: 100
   gravity: -30
+  damage: 10
 --- !u!114 &8974071422017198814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,8 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   _detectingPlayer: 1
-  calmJumpInterval: 3
-  fightJumpInterval: 1
+  calmJumpInterval: 1
+  fightJumpInterval: 0.5
 --- !u!114 &3379574032265825995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  health: 20
+  health: 10
   stunDuration: 2
 --- !u!114 &5656796772867946210
 MonoBehaviour:

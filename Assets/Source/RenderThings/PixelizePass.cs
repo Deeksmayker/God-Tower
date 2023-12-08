@@ -18,13 +18,13 @@ public class PixelizePass : ScriptableRenderPass
     private Material gradientMapMaterial;
     private int pixelScreenHeight, pixelScreenWidth;
 
-    public PixelizePass()
+    public PixelizePass(Shader pixelize, Shader gradient)
     {
         var stack = VolumeManager.instance.stack;
         this.settings = stack.GetComponent<PixelizeEffectComponent>();
         this.renderPassEvent = settings.passEvent;
-        if (material == null) material = CoreUtils.CreateEngineMaterial("Hidden/Custom/Pixelize");
-        gradientMapMaterial = CoreUtils.CreateEngineMaterial("Hidden/GradientMap");
+        if (material == null) material = CoreUtils.CreateEngineMaterial(pixelize);
+        gradientMapMaterial = CoreUtils.CreateEngineMaterial(gradient);
     }
 
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)

@@ -13,12 +13,14 @@ public class TempPlayerTakeHitVisual : MonoCache
 
     [Inject] private PostProcessingController postProcessingController;
 
+    private IHealthHandler _healthHandler;
+
     protected override void OnEnabled()
     {
-        var healthHandler = Get<IHealthHandler>();
-        healthHandler.OnHit += HandleTakeHit;
-        healthHandler.OnHealthChanged += SetDefaultValuePostProcessing;
-        healthHandler.OnHealthAdd += RefreshPostProcessing;
+         _healthHandler = Get<IHealthHandler>();
+        _healthHandler.OnHit += HandleTakeHit;
+        _healthHandler.OnHealthChanged += SetDefaultValuePostProcessing;
+        _healthHandler.OnHealthAdd += RefreshPostProcessing;
     }
 
     private void SetDefaultValuePostProcessing(float value)
@@ -26,9 +28,9 @@ public class TempPlayerTakeHitVisual : MonoCache
         value = Mathf.Clamp(value, 0, 100);
 
         //postProcessingController.SetBloomColor(Color.Lerp(Color.white, Color.red, 1 - value / 100), 0.2f);
-        postProcessingController.SetDefaultVignetteIntensity(1 - value / 100);
+        //postProcessingController.SetDefaultVignetteIntensity(1 - value / 100);
         //postProcessingController.SetDefaultBloomIntensity(5 - value / 20);
-        postProcessingController.SetDefaultChromaticAberrationIntensity(1 - value / 100);
+        //postProcessingController.SetDefaultChromaticAberrationIntensity(1 - value / 100);
     }
 
     private void RefreshPostProcessing()
@@ -47,16 +49,28 @@ public class TempPlayerTakeHitVisual : MonoCache
 
     private async UniTask ChangePostProcess()
     {
-        postProcessingController.SetVignetteColor(Color.red, 1);
-        //postProcessingController.SetBloomIntensity(10);
-        postProcessingController.SetChromaticAberrationIntensity(1);
-        //postProcessingController.SetVignetteIntensity(1);
+        ChangeVignette();
+        ChangeChromatic();
+    }
+
+    private async UniTask ChangeVignette()
+    {
+        postProcessingController.SetVignetteColor(Color.red, 0.25f);
+        postProcessingController.SetVignetteIntensity(0.5f, 0.25f);
+
+        await UniTask.Delay(300);
+        postProcessingController.SetVignetteColor(Color.black, 0.5f);
+        postProcessingController.SetVignetteIntensity(Mathf.Max(0.05f, (1f - _healthHandler.GetHealth01()) * 0.35f), 0.4f);
+    }
+
+    private async UniTask ChangeChromatic()
+    {
+        postProcessingController.SetChromaticAberrationIntensity(1, 0.2f);
         
-        await UniTask.Delay(150);
+        await UniTask.Delay(200);
         
-        postProcessingController.SetVignetteColor(Color.black, 5);
         //postProcessingController.ResetBloomIntensity(0.02f);
-        postProcessingController.ResetChromaticAberrationIntensity(0.02f);
-        postProcessingController.ResetVignetteIntensity(0.02f);
+        postProcessingController.ResetChromaticAberrationIntensity(1f);
+
     }
 }

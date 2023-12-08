@@ -13,4 +13,12 @@ public class BaseHitBox : MonoCache
             victim.TakeHit(damage, transform.position, attackerName);
         }
     }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
+        {
+            victim.TakeHit(damage, transform.position, attackerName);
+        }
+    }
 }
