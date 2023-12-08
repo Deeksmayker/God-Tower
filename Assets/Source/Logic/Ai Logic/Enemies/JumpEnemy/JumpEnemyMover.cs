@@ -8,6 +8,7 @@ public class JumpEnemyMover : MonoCache, IMover
 {
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravity;
+    [SerializeField] private float damage = 10;
 
 
     private float _inJumpTimer;
@@ -111,6 +112,10 @@ public class JumpEnemyMover : MonoCache, IMover
             if (!_lastFrameGrounded)
                 OnLanding?.Invoke();
         }
+
+		if (hit.gameObject.TryGetComponent<PlayerUnit>(out var player)){
+			player.GetComponentInChildren<ITakeHit>()?.TakeHit(damage, transform.position, "JUMPER");
+		}
     }
 
     private void PredictLandingNormal()

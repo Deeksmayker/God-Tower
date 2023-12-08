@@ -184,6 +184,8 @@ GameObject:
   - component: {fileID: 394014187}
   - component: {fileID: 394014188}
   - component: {fileID: 394014189}
+  - component: {fileID: 4651503946170345626}
+  - component: {fileID: 7834684651732308188}
   m_Layer: 10
   m_Name: HurtBox
   m_TagString: Untagged
@@ -202,7 +204,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2219781575440629729}
   m_Father: {fileID: 3998808300210840913}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,8 +228,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 2
+  m_Radius: 0.4
+  m_Height: 3.01
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &394014189
@@ -243,6 +246,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   damageMultiplier: 1
+--- !u!114 &4651503946170345626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394014186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bfe5e967251e04a83871f969667aea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eyeDamage: 5
+--- !u!54 &7834684651732308188
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394014186}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &398174133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,7 +2816,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7256776211257979131
 Transform:
   m_ObjectHideFlags: 0
@@ -3099,7 +3142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  _volume: {fileID: 0}
   _maxVignetteIntensity: 0.8
   _maxChromaticAberrationIntensity: 0.8
 --- !u!114 &5238936183812696310
@@ -3143,7 +3185,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3998808298746309513}
-  - component: {fileID: 3529110989683007125}
   m_Layer: 0
   m_Name: CamRoot
   m_TagString: Untagged
@@ -3170,19 +3211,6 @@ Transform:
   m_Father: {fileID: 3998808300210840913}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3529110989683007125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3998808298746309512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ccb5da7cc7e6b34d882614be0d46bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
 --- !u!1 &3998808300210840915
 GameObject:
   m_ObjectHideFlags: 0
@@ -3329,7 +3357,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3d7426bc9da47bb896065a29f540d74, type: 3}
   m_Name: 
@@ -3409,7 +3437,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54c7b809aea12eb4dbeb6c60353eebef, type: 3}
   m_Name: 
@@ -3442,7 +3470,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3998808300210840915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e4a246e60ecfcc48ac82a7709bb2134, type: 3}
   m_Name: 
@@ -3610,9 +3638,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 1
-  health: 10
-  deadCamPrefab: {fileID: 3402949446484013687, guid: 2b524f64e7262484b91a02072e0527f0,
-    type: 3}
+  health: 100
+  deadMan: {fileID: 0}
+  dmgImmortalTime: 0.3
+  pushForcePerDamage: 10
 --- !u!114 &7175471727830082155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4243,6 +4272,51 @@ Transform:
   m_Father: {fileID: 5027666680509279082}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7107343379132490899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2219781575440629729}
+  - component: {fileID: 798096820850494233}
+  m_Layer: 10
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2219781575440629729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7107343379132490899}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.546, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 394014187}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &798096820850494233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7107343379132490899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccb5da7cc7e6b34d882614be0d46bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
 --- !u!1 &7422619187724032125
 GameObject:
   m_ObjectHideFlags: 0
