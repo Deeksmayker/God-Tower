@@ -1,4 +1,4 @@
-Shader"Hidden/GradientMap"
+Shader"Custom/GradientMap"
 {
     Properties
     {

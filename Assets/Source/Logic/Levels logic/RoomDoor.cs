@@ -40,6 +40,7 @@ public class RoomDoor : MonoCache
 
     protected override void OnEnabled()
     {
+		/*
         if (!trackEnemies)
             return;
 
@@ -62,6 +63,7 @@ public class RoomDoor : MonoCache
                 }
             }
         }
+		*/
     }
 
     protected override void Run()

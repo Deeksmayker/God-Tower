@@ -1,6 +1,5 @@
 using NTC.Global.Cache;
 using System;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun

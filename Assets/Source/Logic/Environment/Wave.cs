@@ -10,7 +10,8 @@ public class Wave : MonoCache
 		Jumping,
 		Eyes,
 		Centipede,
-		CentipedeShort
+		CentipedeShort,
+		CentipedeLong
 	}
 
 	[Serializable]
@@ -29,12 +30,14 @@ public class Wave : MonoCache
     private int _aliveCount;
 	private bool _spawnedAll;
 
-	private Enemy _jumpingPrefab, _eyesSpawnerPrefab, _centipedePrefab, _centipedeShortPrefab;
+	private Enemy _jumpingPrefab, _eyesSpawnerPrefab, _centipedePrefab, _centipedeShortPrefab,
+			_centipedeLongPrefab;
 
 	private void Awake(){
 		_jumpingPrefab = (Resources.Load(ResPath.Enemies + "JumpEnemy/JumpingEnemy") as GameObject).GetComponent<Enemy>();
 		_centipedePrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemy") as GameObject).GetComponent<Enemy>();
 		_centipedeShortPrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemyShort") as GameObject).GetComponent<Enemy>();
+		_centipedeLongPrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemyLong") as GameObject).GetComponent<Enemy>();
 		_eyesSpawnerPrefab = (Resources.Load(ResPath.Enemies + "EyeEnemy/EyeEnemySpawner") as GameObject).GetComponent<Enemy>();
 	}
 
@@ -79,6 +82,9 @@ public class Wave : MonoCache
 				break;
 			case EnemyType.CentipedeShort:
 				return _centipedeShortPrefab;
+				break;
+			case EnemyType.CentipedeLong:
+				return _centipedeLongPrefab;
 				break;
 		}
 

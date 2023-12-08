@@ -69,8 +69,10 @@ public class PlayerHealthHandler : MonoCache, IHealthHandler
 
 		Log($"Health changed by {changeValue} and my health now at {health}");
 
-		if (changeValue < 0)
+		if (changeValue < 0){
 			OnHit?.Invoke();
+			_immortalTimer = dmgImmortalTime;
+		}
         OnHealthChanged?.Invoke(health);
         if (health <= 0)
         {

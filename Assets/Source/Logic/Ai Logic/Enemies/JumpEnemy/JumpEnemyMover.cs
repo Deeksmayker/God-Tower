@@ -173,7 +173,7 @@ public class JumpEnemyMover : MonoCache, IMover
 
     public void AddVelocity(Vector3 addedVelocityVector)
     {
-        throw new NotImplementedException();
+		_velocity += addedVelocityVector;
     }
 
     public void AddVerticalVelocity(float addedVelocity)
@@ -208,11 +208,11 @@ public class JumpEnemyMover : MonoCache, IMover
 
     public void SetVelocity(Vector3 newVelocity)
     {
-        throw new NotImplementedException();
+		_velocity = newVelocity;
     }
 
     public void SetVerticalVelocity(float velocity)
     {
-        throw new NotImplementedException();
+		_velocity.y = velocity;
     }
 }

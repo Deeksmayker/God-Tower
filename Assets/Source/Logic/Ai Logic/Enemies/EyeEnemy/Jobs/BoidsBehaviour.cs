@@ -283,6 +283,11 @@ public class BoidsBehaviour : MonoCache
             newTransforms[i] = Instantiate(entityPrefab, newPositions[i], Quaternion.identity).transform;
         }
 
+        _transformAccessArray.Dispose();
+        _positions.Dispose();
+        _velocities.Dispose();
+        _accelerations.Dispose();
+
         _transformAccessArray = new TransformAccessArray(newTransforms);
         _positions = newPositions;
         _velocities = newVelocities;
@@ -309,15 +314,15 @@ public class BoidsBehaviour : MonoCache
             if (!_transformAccessArray[i])
                 continue;
             count++;
-            if (count % 50 == 0)
-                await Task.Yield();
+            //if (count % 50 == 0)
+              //  await Task.Yield();
         }
 
 		_aliveCount = count;
         return count;
     }
 
-    private void OnDestroy()
+	protected override void OnDisabled()
     {
         _moveJobHandle.Complete();
 

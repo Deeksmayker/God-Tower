@@ -132,6 +132,7 @@ public class CentipedeFragmentSpawner : MonoCache
 
     private void HandleStun()
     {
+		if (!_headSpring) return;
         _headSpring.spring = 0;
     }
 
