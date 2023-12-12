@@ -2263,7 +2263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3891179052529361914
 Transform:
   m_ObjectHideFlags: 0
@@ -3269,7 +3269,7 @@ Transform:
   - {fileID: 3891179052529361914}
   - {fileID: 2857518432601118467}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3998808300210842282
 CharacterController:
@@ -3558,20 +3558,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   m_Friction: 6
-  m_Gravity: 40
-  m_JumpForce: 20
+  m_Gravity: 80
+  m_JumpForce: 40
   groundCheckPoint: {fileID: 421572061}
   groundCheckRadius: 0.5
   m_AutoBunnyHop: 1
   m_AirControl: 1
   m_GroundSettings:
-    MaxSpeed: 20
-    Acceleration: 14
+    MaxSpeed: 30
+    Acceleration: 12
     Deceleration: 10
   m_AirSettings:
     MaxSpeed: 20
-    Acceleration: 2
-    Deceleration: 1
+    Acceleration: 10
+    Deceleration: 10
   m_StrafeSettings:
     MaxSpeed: 5
     Acceleration: 100
@@ -3620,6 +3620,9 @@ MonoBehaviour:
   envHitBoxSize: {x: 5, y: 1, z: 3}
   damage: 5
   kickPushForce: 50
+  ballHitAddVelocity: 100
+  hitRecoil: 75
+  enemyHitRecoil: 50
   preparingTime: 0.1
   attackDuration: 0.3
   cooldown: 1
@@ -3637,7 +3640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e10ecd5ffcac3848ad7520a59486ecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   health: 100
   deadMan: {fileID: 0}
   dmgImmortalTime: 0.3
@@ -3659,8 +3662,10 @@ MonoBehaviour:
   _camDirection: {fileID: 3998808298746309513}
   _smallSpherePrefab: {fileID: 5045003326119308057, guid: 9d36ace2628060747a4ac99ead171f48,
     type: 3}
-  _bigSpherePrefab: {fileID: 5045003326119308057, guid: c7b9bf1466eb75a4b99f7f8dedfa5887,
+  _bigSpherePrefab: {fileID: -5087335165076047961, guid: c7b9bf1466eb75a4b99f7f8dedfa5887,
     type: 3}
+  ballCount: 1
+  radius: 0.3
   _bigSphereCooldown: 0.5
   _timeBeforeAutoShoot: 22.36
   _spherePerSecond: 30

@@ -11,8 +11,11 @@ public class NewKick : MonoCache, IMeleeAttacker
     [SerializeField] private Vector3 envHitBoxSize;
 
     [Header("Impact")]
-    [SerializeField] private int damage = 1;
+    [SerializeField] private int damage = 5;
     [SerializeField] private float kickPushForce = 50;
+    [SerializeField] private float ballHitAddVelocity = 50;
+    [SerializeField] private float hitRecoil = 50;
+    [SerializeField] private float enemyHitRecoil = 50;
 
     [Header("Timers")]
     [SerializeField] private float preparingTime;
@@ -29,11 +32,14 @@ public class NewKick : MonoCache, IMeleeAttacker
     private bool _canAttack = true;
     private bool _attackInput;
     private bool _isHitAnything;
+    private bool _recoilMade;
 
     private float _timer;
     private float _baseKickDashForce;
 
     private MeleeAttackStates _attackState = MeleeAttackStates.Resting;
+
+    private IMover _mover;
 
     public event Action OnStartPreparingAttack;
     public event Action OnStartAttack;
@@ -43,6 +49,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
     private void Awake()
     {
+        _mover = GetComponent<IMover>();
     }
 
     /*protected override void OnEnabled()
@@ -116,7 +123,21 @@ public class NewKick : MonoCache, IMeleeAttacker
                 rb.AddForce(GetAttackDirection() * kickPushForce * 5, ForceMode.Impulse);
             }
 
-            _attackHitsContainer[i].GetComponent<PlayerBigBall>()?.HandleKick(GetAttackDirection());
+            var ball = _attackHitsContainer[i].GetComponent<PlayerBigBall>();
+            if (ball){
+                ball.HandleKick(GetAttackDirection());
+                var dir = GetAttackDirection().normalized;
+                dir.y = 1.5f;
+                _mover.SetVelocity(dir.normalized * ballHitAddVelocity);
+                _recoilMade = true;
+            } else if (!_recoilMade && _attackHitsContainer[i].GetComponent<ITakeHit>() != null){
+                var dir = -GetAttackDirection().normalized;
+                dir.y = 5;
+                _mover.SetVelocity(dir.normalized * enemyHitRecoil);
+                _recoilMade = true;
+            } else if (!_recoilMade){
+                _mover.SetVelocity(-GetAttackDirection() * hitRecoil);
+            }
         }
 
         if (_attackHitsContainer[0] && !_isHitAnything)
@@ -156,6 +177,7 @@ public class NewKick : MonoCache, IMeleeAttacker
                 _objectsAlreadyTakeHit.Clear();
                 _timer = GetAttackCooldown();
                 _isHitAnything = false;
+                _recoilMade = false;
                 break;
         }
     }
