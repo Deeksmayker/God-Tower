@@ -34,6 +34,6 @@ public class KickMovement : MonoCache
 
     private void HandleHit()
     {
-        _mover.SetVelocity(_kick.GetAttackDirection() * hitPayoffForce * -1);
+        _mover.AddVelocity(_kick.GetAttackDirection() * hitPayoffForce);
     }
 }

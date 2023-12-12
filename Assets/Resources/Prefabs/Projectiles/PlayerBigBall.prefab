@@ -9789,7 +9789,7 @@ Transform:
   - {fileID: 8917088422239323592}
   - {fileID: 3647800719485810599}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1747343080158091246
 SphereCollider:
@@ -9825,9 +9825,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  _acceleration: 5
   _damage: 5
   kickPushForce: 200
+  findEyesOnCollision: 1
 --- !u!54 &2016161264813869370
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9862,7 +9862,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5045003326119308057}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7595f5f68d96a1943ab7686526dcd69a, type: 3}
   m_Name: 

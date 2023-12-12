@@ -53,6 +53,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private Vector3 _velocity = Vector3.zero;
     private Vector3 _currentUpNormal;
 
+    private float _surfaceAngle;
+
     private int _currentDashCharges;
 
     private const float c_verticalVelocityToBreakSlopeMovement = 10;
@@ -60,6 +62,8 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private float _dashTimer;
     private float _dashCooldownTimer;
     private float _currentDashDuration;
+
+    private float _jumpTimer;
 
     // Used to queue the next jump just before hitting the ground.
     private bool m_JumpQueued = false;
@@ -107,38 +111,33 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     protected override void Run()
     {
-        /* if (IsGrounded())
-         {
-             _currentDashCharges = dashCharges;
-         }*/
-
         var newGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, Layers.Environment | Layers.EnemyHurtBox);
 
-        if (newGrounded && _currentUpNormal.y > 0.5f && !IsGrounded())
+        if (newGrounded && _surfaceAngle < 30 && !IsGrounded())
             OnLanding?.Invoke();
 
-        _isGrounded = newGrounded && _currentUpNormal.y > 0.5f;
+        _isGrounded = newGrounded && _surfaceAngle < 30;
 
-        if (!_dash && _currentDashCharges < dashCharges)
-        {
-            _dashCooldownTimer -= Time.deltaTime;
-
-            if (_dashCooldownTimer <= 0)
-            {
-                _currentDashCharges++;
-
-                if (_currentDashCharges < dashCharges)
-                    _dashCooldownTimer = baseDashCooldown;
-            }
-        }
-
-        if (_dash)
-        {
-            ContinueDash();
-        }
+        // if (!_dash && _currentDashCharges < dashCharges)
+        // {
+        //     _dashCooldownTimer -= Time.deltaTime;
+        //
+        //     if (_dashCooldownTimer <= 0)
+        //     {
+        //         _currentDashCharges++;
+        //
+        //         if (_currentDashCharges < dashCharges)
+        //             _dashCooldownTimer = baseDashCooldown;
+        //     }
+        // }
+        //
+        // if (_dash)
+        // {
+        //     ContinueDash();
+        // }
 
         // Set movement state.
-        else if (IsGrounded())
+        if (IsGrounded())
         {
             GroundMove();
         }
@@ -147,18 +146,13 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
             AirMove();
         }
 
-        if (_previousContactedWithEnv && Physics.Raycast(groundCheckPoint.position, Vector3.down, out var hit, 10, Layers.Environment) && hit.normal.y < 0.99f)
+        if (_jumpTimer <= 0 && OnSlope())
         {
-            var projectVelocity = Vector3.ProjectOnPlane(_velocity, _currentUpNormal).normalized;
-            var magnitude = _velocity.magnitude;
-            if (_velocity.y - (projectVelocity * magnitude).y < c_verticalVelocityToBreakSlopeMovement)
-            {
-                _velocity = projectVelocity * _velocity.magnitude;
-                _ch.Move(Vector3.down * 0.1f);
-            }
+            _velocity = Vector3.ProjectOnPlane(_velocity, _currentUpNormal);
+            _ch.Move(Vector3.down * Time.deltaTime);
         }
 
-        // Move the character.
+        _velocity.y = Mathf.Clamp(_velocity.y, -60, 100);
         _ch.Move(_velocity * Time.deltaTime);
 
         if (_contactedWithEnvThisFrame)
@@ -170,6 +164,9 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         {
             _previousContactedWithEnv = false;
         }
+
+        if (_jumpTimer > 0)
+            _jumpTimer -= Time.deltaTime;
     }
 
     // Handle air movement.
@@ -215,7 +212,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         }
 
         // Apply gravity
-        _velocity.y -= m_Gravity * Time.deltaTime;
+        _velocity.y -= m_Gravity * (_velocity.y > 0 ? 1 : 0.8f) * Time.deltaTime;
     }
 
     // Air control occurs when the player is in the air, it allows players to move side 
@@ -278,8 +275,10 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         Accelerate(wishdir, wishspeed, m_GroundSettings.Acceleration);
 
         // Reset the gravity velocity
-        if (_velocity.y <= 0)
-            _velocity.y = -.1f;
+        // if (_velocity.y <= 0)
+        //     _velocity.y = -.1f;
+        if (_jumpTimer <= 0)
+            _ch.Move(Vector3.down * 0.1f);
 
         if (m_JumpQueued)
         {
@@ -341,10 +340,12 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     private void Jump()
     {
+        if (_jumpTimer > 0) return;
         _velocity.y = m_JumpForce;
         m_JumpQueued = false;
 
         OnJump?.Invoke();
+        _jumpTimer = 0.2f;
     }
 
     private void StartDash()
@@ -428,27 +429,20 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         if (hit.normal.y > 0)
             _currentUpNormal = hit.normal;
 
+        _surfaceAngle = Vector3.Angle(Vector3.up, hit.normal);
+
+		if (hit.normal.y <= -0.99f && _velocity.y > 0){
+			_velocity.y = 0;
+		}
+
         if (Mathf.Pow(2, hit.gameObject.layer) == (int)Layers.Environment)
         {
             _previousContactedWithEnv = true;
             _contactedWithEnvThisFrame = true;
         }
 
-
-        var needToResolveWallCollision = hit.gameObject.layer is not 8 && hit.normal.y <= 0.5f && !IsGrounded() && GetHorizontalSpeed() > 20
-            && !Physics.Raycast(transform.position, Vector3.down, 5, environmentLayers)
-            && !(_dash && Vector3.Dot(hit.normal, _velocity.normalized) < -0.5f);
-
-        if (needToResolveWallCollision && Vector3.Dot(hit.normal, _velocity.normalized) <= -0.95f)
-        {
-            StopDash(true);
-            SetVelocity(Vector3.Reflect(GetVelocity(), hit.normal) * 0.9f);
-            OnBounce?.Invoke(hit.normal);
-        }
-
-        else if (needToResolveWallCollision)
-        {
-            AddVelocity(hit.normal * (-Vector3.Dot(_velocity.normalized, hit.normal) * _velocity.magnitude));
+        if (hit.normal.y > -0.99f){
+            _velocity = Vector3.ProjectOnPlane(_velocity, hit.normal);
         }
     }
 
@@ -493,6 +487,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     public void SetVerticalVelocity(float velocity)
     {
         _velocity.y = velocity;
+        if (_velocity.y > 10) _jumpTimer = 0.2f;
     }
 
     public void SetMaxSpeed(float value)
@@ -505,11 +500,14 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         _velocity.y += addedVelocity;
 
         _velocity.y = Mathf.Clamp(_velocity.y, -200, 100);
+
+        if (_velocity.y > 10) _jumpTimer = 0.2f;
     }
 
     public void SetVelocity(Vector3 newVelocity)
     {
         _velocity = newVelocity;
+        if (_velocity.y > 10) _jumpTimer = 0.2f;
     }
 
     public void SetHorizontalVelocity(Vector3 newVelocity)
@@ -518,14 +516,20 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         _velocity.z = newVelocity.z;
     }
 
+    public bool OnSlope(){
+        return IsGrounded() && _surfaceAngle > 0 && _surfaceAngle < 30;
+    }
+
     public void AddVelocity(Vector3 addedVelocityVector)
     {
         _velocity += addedVelocityVector;
+        if (_velocity.y > 10) _jumpTimer = 0.2f;
     }
 
     public void AddOrSetVelocity(Vector3 addedVeloctiy)
     {
         _velocity = Vector3.RotateTowards(_velocity, addedVeloctiy, 100, 100) + addedVeloctiy;
+        if (_velocity.y > 10) _jumpTimer = 0.2f;
     }
 
     public void SetInputResponse(bool value)
@@ -574,6 +578,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     public void AddForce(Vector3 force)
     {
         _velocity += force / weight;
+        if (_velocity.y > 10) _jumpTimer = 0.2f;
     }
 
     private void OnDrawGizmosSelected()

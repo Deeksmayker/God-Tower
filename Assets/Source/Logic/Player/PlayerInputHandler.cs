@@ -102,6 +102,7 @@ public class PlayerInputHandler : MonoCache
         if (_sphereShooter)
         {
             _sphereShooter.SetInput(_playerInput.actions["LeftAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
+            _sphereShooter.SetAttractInput(_playerInput.actions["RightAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
         }
 
         if (_flyCam != null && Input.GetKeyDown(KeyCode.I))

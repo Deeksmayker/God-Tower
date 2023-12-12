@@ -42,7 +42,7 @@ public class CentipedeAi : MonoCache
 
     protected override void Run()
     {
-		if (!_fragments.IsCentipedeCapable()) return;
+		if (!_fragments || !_fragments.IsCentipedeCapable()) return;
 
 		if (_cooldownTimer > 0){
 			_cooldownTimer -= Time.deltaTime;
