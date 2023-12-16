@@ -21,7 +21,7 @@ PrefabInstance:
     - target: {fileID: 3170742759052837195, guid: 9376c87e76fc64544b830d8a5684ff2b,
         type: 3}
       propertyPath: m_Name
-      value: CentipedeEnemyShort Variant
+      value: CentipedeEnemyShort
       objectReference: {fileID: 0}
     - target: {fileID: 4559561249892386960, guid: 9376c87e76fc64544b830d8a5684ff2b,
         type: 3}
@@ -77,6 +77,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7257885377944155367, guid: 9376c87e76fc64544b830d8a5684ff2b,
+        type: 3}
+      propertyPath: health
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

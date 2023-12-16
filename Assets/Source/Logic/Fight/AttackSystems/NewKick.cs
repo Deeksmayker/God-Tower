@@ -126,10 +126,11 @@ public class NewKick : MonoCache, IMeleeAttacker
             var ball = _attackHitsContainer[i].GetComponent<PlayerBigBall>();
             if (ball){
                 ball.HandleKick(GetAttackDirection());
-                var dir = GetAttackDirection().normalized;
-                dir.y = 1.5f;
-                _mover.SetVelocity(dir.normalized * ballHitAddVelocity);
-                _recoilMade = true;
+                _mover.AddVelocity(Vector3.up * ballHitAddVelocity);
+                // var dir = GetAttackDirection().normalized;
+                // dir.y = 1.5f;
+                // _mover.SetVelocity(dir.normalized * ballHitAddVelocity);
+                // _recoilMade = true;
             } else if (!_recoilMade && _attackHitsContainer[i].GetComponent<ITakeHit>() != null){
                 var dir = -GetAttackDirection().normalized;
                 dir.y = 5;

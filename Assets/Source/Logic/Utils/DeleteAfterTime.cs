@@ -15,6 +15,7 @@ public class DeleteAfterTime : MonoCache
 
     protected override void Run()
     {
+        if (time == 0) return;
         if (Time.time - _startTime >= time)
         {
             if (dieByDeathComponent)
@@ -25,5 +26,9 @@ public class DeleteAfterTime : MonoCache
             }
             Destroy(gameObject);
         }
+    }
+
+    public void SetTime(float time){
+        this.time = time;
     }
 }

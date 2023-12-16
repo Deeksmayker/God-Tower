@@ -57,9 +57,9 @@ public class CentipedeHealthSystem : MonoCache, IHealthHandler, IInStun
     }
 
     [ContextMenu("Stun this thing")]
-    public void StartStun()
+    public void StartStun(float multiplier = 1)
     {
-        _stunTimer = stunDuration;
+        _stunTimer = stunDuration * multiplier;
         OnStun?.Invoke();
     }
 

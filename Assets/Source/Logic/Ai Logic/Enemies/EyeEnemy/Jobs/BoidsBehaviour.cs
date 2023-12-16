@@ -204,7 +204,7 @@ public class BoidsBehaviour : MonoCache
             DeltaTime = Time.deltaTime
         };
         
-        for (var i = _index; i < _index + 100 && i < _transformAccessArray.length; i++)
+        for (var i = 0; i < _transformAccessArray.length; i++)
         {
             if (!_transformAccessArray[i])
                 continue;
