@@ -17,14 +17,14 @@ public class JumpEnemyAi : MonoCache
     private bool _inFight;
     private bool _inStun;
 
-    private JumpEnemyMover _mover;
+    private JumpEnemyRbMover _mover;
     private PlayerLocator _playerLocator;
     private IInStun _stunController;
 
     private void Awake()
     {
-        _mover = Get<JumpEnemyMover>();
-        _playerLocator = Get<PlayerLocator>();
+        _mover = Get<JumpEnemyRbMover>();
+        _playerLocator = GetComponentInChildren<PlayerLocator>();
         _stunController = Get<IInStun>();
         _timer = calmJumpInterval;
     }
@@ -33,14 +33,14 @@ public class JumpEnemyAi : MonoCache
     {
         _stunController.OnStun += HandleStun;
         _stunController.OnRecover += HandleRecover;
-        _mover.OnLanding += HandleLanding;
+        //_mover.OnLanding += HandleLanding;
     }
 
     protected override void OnDisabled()
     {
         _stunController.OnStun -= HandleStun;
         _stunController.OnRecover -= HandleRecover;
-        _mover.OnLanding -= HandleLanding;
+        //_mover.OnLanding -= HandleLanding;
     }
 
     protected override void Run()
@@ -82,7 +82,7 @@ public class JumpEnemyAi : MonoCache
 
         for (var i = 0; i < tryCount; i++)
         {
-            var x = Random.Range(-80, _mover.OnWall() ? 5 : 80);
+            var x = Random.Range(-80, _mover.IsSticking() ? 5 : 80);
             var y = Random.Range(-80, 80);
             var z = Random.Range(-80, 80);
             direction = Quaternion.Euler(x, y, z) * _mover.GetCurrentNormal();

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
   m_Name: FullScreenPassRendererFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   passMaterial: {fileID: 2100000, guid: c076e9961e277a141b37945483c2db17, type: 2}
   injectionPoint: 550
   requirements: 4
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c54e5ccc583582488bdb07f46312c62, type: 3}
   m_Name: GodPostProcessRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   bloomShader: {fileID: 4800000, guid: 5d77e29c73f83824085f3577a8f27508, type: 3}
   compositeShader: {fileID: -6465566751694194690, guid: 844c21d8c5653914586f3713516e4e5c,
     type: 3}

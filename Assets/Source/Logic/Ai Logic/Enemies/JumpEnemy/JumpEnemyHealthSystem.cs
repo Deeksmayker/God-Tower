@@ -28,12 +28,12 @@ public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
     protected override void OnEnabled()
     {
         var hitTaker = GetComponentInChildren<ITakeHit>();
-        hitTaker.OnTakeHit += ChangeHealth;
+        //hitTaker.OnTakeHit += ChangeHealth;
     }
 
     protected override void OnDisabled()
     {
-        GetComponentInChildren<ITakeHit>().OnTakeHit -= ChangeHealth;   
+        //GetComponentInChildren<ITakeHit>().OnTakeHit -= ChangeHealth;   
     }
 
     protected override void Run()

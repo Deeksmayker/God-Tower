@@ -11,7 +11,6 @@ public class JumpEnemyMover : MonoCache, IMover
     [SerializeField] private float gravity;
     [SerializeField] private float damage = 10;
 
-
     private float _inJumpTimer;
     private float _baseChHeight;
 
