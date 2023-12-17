@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4795378131206103054}
   - component: {fileID: 1691433776203291903}
   - component: {fileID: 6260673132966868261}
+  - component: {fileID: 7727323854254790159}
   m_Layer: 8
   m_Name: CentipedeHead
   m_TagString: Untagged
@@ -215,7 +216,7 @@ SpringJoint:
   serializedVersion: 2
   m_Spring: 50
   m_Damper: 2
-  m_MinDistance: 3
+  m_MinDistance: 0
   m_MaxDistance: 0
   m_Tolerance: 0.025
   m_BreakForce: Infinity
@@ -264,4 +265,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  locatePlayerRange: 50
+  locatePlayerRange: 500
+--- !u!114 &7727323854254790159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644346525775013774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f5098fee7c21bf4a9d8ffc49b4617d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  damage: 5
+  attackerName: Centipede Melee

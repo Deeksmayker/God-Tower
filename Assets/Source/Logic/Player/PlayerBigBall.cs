@@ -65,7 +65,7 @@ public class PlayerBigBall : MonoCache
 				var dir = col.transform.position - transform.position;
 				if (col.GetComponent<EyeEnemy>() 
 						&& !Physics.Raycast(transform.position, dir.normalized, dir.magnitude, Layers.Environment)){
-					_rb.velocity = dir.normalized * _lastVelocity.magnitude;
+					_rb.velocity = dir.normalized * _lastVelocity.magnitude*1.01f;
 					foundTarget = true;
 					Log("Found eye and going to it - " + i);
 					break;
@@ -84,8 +84,16 @@ public class PlayerBigBall : MonoCache
             victim.TakeHit(_damage, transform.position, "Big ball");
 			hitEnemy = true;
         }
+        // else{
+        //     var enemiesNearby = Physics.OverlapSphere(transform.position, 50f, Layers.Hitable);
+        //     for (var i = 0; i < enemiesNearby.Length; i++){
+        //         if (enemiesNearby[i].gameObject.TryGetComponent<ITakeHit>(out var victim1)){
+        //             victim1.TakeHit(_damage, transform.position, "Big ball");
+        //         }
+        //     }
+        // }
 		collision.gameObject.GetComponentInParent<IMover>()?.AddForce(vectorToCol.normalized * _rb.velocity.magnitude * 0.1f);
-		collision.gameObject.GetComponentInParent<IInStun>()?.StartStun();
+		collision.gameObject.GetComponentInParent<IInStun>()?.StartStun(0.2f);
 		
 		if (_rb.velocity.magnitude < 30) return;
         var particles = NightPool.Spawn(hitEnemy ? _hitEnemyParticles : _hitParticles, transform.position);
@@ -112,7 +120,7 @@ public class PlayerBigBall : MonoCache
 
 	public void SetActivated(bool isIt){
 		if (!_activated && isIt){
-			transform.DOScale(_startScale, 0.5f).SetEase(Ease.OutQuad);
+			transform.DOScale(_startScale, 0.3f).SetEase(Ease.OutQuad);
 			GetComponentInChildren<TrailRenderer>().emitting = true;
 			GetComponent<SphereCollider>().enabled = true;
 			_rb.isKinematic = false;

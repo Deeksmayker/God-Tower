@@ -6,10 +6,12 @@ public class JumpEnemyAi : MonoCache
     [SerializeField] private bool _detectingPlayer = true;
     [SerializeField] private float calmJumpInterval = 1f;
     [SerializeField] private float fightJumpInterval = 0.5f;
+    [SerializeField] private float homingPlayerPower = 20;
 
     private const float c_DistanceToCheckWalls = 150f;
 
     private float _timer;
+    private float _jumpingOnPlayerTimer;
 
     private bool _makingSecondJump;
     private bool _inFight;
@@ -48,18 +50,29 @@ public class JumpEnemyAi : MonoCache
             _makingSecondJump = false;
             _timer = GetCurrentJumpInterval();
         }
+
+        if (!_inStun && _jumpingOnPlayerTimer > 0){
+            _mover.AccelerateTowardsPoint(_playerLocator.GetPlayerPos(), homingPlayerPower);
+        }
+
+        if (_jumpingOnPlayerTimer > 0) _jumpingOnPlayerTimer -= Time.deltaTime;
         _timer -= Time.deltaTime;
 
         if (_inStun || _timer > 0)
             return;
 
-        var jumpDirection = _detectingPlayer && _playerLocator.IsPlayerVisible() && _makingSecondJump ? _playerLocator.GetDirectionToPlayerNorm() : GetRandomJumpDirection();
+        var onPlayer = _detectingPlayer && _playerLocator.IsPlayerVisible() && _makingSecondJump;
+        var jumpDirection =  onPlayer ? _playerLocator.GetDirectionToPlayerNorm() : GetRandomJumpDirection();
         if (_playerLocator.IsPlayerVisible())
             jumpDirection.y += 0.1f;
         //Log("Player visibility - " + _playerLocator.IsPlayerVisible());
         //Log("Making second jump - " + _makingSecondJump);
         //Log("Fighting - " + _inFight);
         Jump(jumpDirection);
+
+        if (onPlayer){
+            _jumpingOnPlayerTimer = 1.5f;
+        }
     }
 
     private Vector3 GetRandomJumpDirection()

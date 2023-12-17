@@ -37,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 1835421236764763807}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3250094631438959004
 CharacterController:
@@ -58,8 +58,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 6.6
-  m_Radius: 0.94
+  m_Height: 11.08
+  m_Radius: 2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   jumpForce: 100
+  maxFlySpeed: 200
   gravity: -30
   damage: 10
 --- !u!114 &8974071422017198814
@@ -109,8 +110,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   _detectingPlayer: 1
-  calmJumpInterval: 1
-  fightJumpInterval: 0.5
+  calmJumpInterval: 1.5
+  fightJumpInterval: 1.5
+  homingPlayerPower: 200
 --- !u!114 &3379574032265825995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +182,7 @@ Transform:
   m_GameObject: {fileID: 2872665808001001365}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6873455984582888864}

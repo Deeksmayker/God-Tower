@@ -80,10 +80,10 @@ public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
         throw new NotImplementedException();
     }
 
-    public void StartStun()
+    public void StartStun(float multiplier = 1)
     {
         Log("momma i'm in stun");
-        _stunTimer = stunDuration;
+        _stunTimer = stunDuration*multiplier;
         OnStun?.Invoke();
     }
 }

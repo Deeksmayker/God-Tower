@@ -3565,7 +3565,7 @@ MonoBehaviour:
   m_AutoBunnyHop: 1
   m_AirControl: 1
   m_GroundSettings:
-    MaxSpeed: 30
+    MaxSpeed: 20
     Acceleration: 12
     Deceleration: 10
   m_AirSettings:
@@ -3620,8 +3620,8 @@ MonoBehaviour:
   envHitBoxSize: {x: 5, y: 1, z: 3}
   damage: 5
   kickPushForce: 50
-  ballHitAddVelocity: 100
-  hitRecoil: 75
+  ballHitAddVelocity: 10
+  hitRecoil: 20
   enemyHitRecoil: 50
   preparingTime: 0.1
   attackDuration: 0.3

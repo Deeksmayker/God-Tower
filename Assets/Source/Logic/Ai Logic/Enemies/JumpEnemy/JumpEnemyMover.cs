@@ -7,6 +7,7 @@ using UnityEngine;
 public class JumpEnemyMover : MonoCache, IMover
 {
     [SerializeField] private float jumpForce;
+    [SerializeField] private float maxFlySpeed;
     [SerializeField] private float gravity;
     [SerializeField] private float damage = 10;
 
@@ -65,6 +66,10 @@ public class JumpEnemyMover : MonoCache, IMover
 
         if (!_onWall)
             _velocity.y += gravity * Time.deltaTime;
+
+        if (!_onWall && !_inStun){
+
+        }
         
         _ch.Move(_velocity * Time.deltaTime);
 
@@ -131,6 +136,17 @@ public class JumpEnemyMover : MonoCache, IMover
         }
     }
 
+    public void AccelerateTowardsPoint(Vector3 point, float power){
+        if (_onWall && _inStun) return;
+        var damping = 0.05f;
+        _velocity += power * Time.deltaTime * (point-transform.position).normalized;
+        _velocity *= Mathf.Clamp01(1f - damping*Time.deltaTime);
+
+        if (_velocity.sqrMagnitude > maxFlySpeed * maxFlySpeed){
+            _velocity = Vector3.ClampMagnitude(_velocity, maxFlySpeed);
+        }
+    }
+
     public void SetJumpTimer(float value)
     {
         _inJumpTimer = value;
@@ -183,7 +199,7 @@ public class JumpEnemyMover : MonoCache, IMover
 
     public Vector3 GetVelocity()
     {
-        throw new NotImplementedException();
+        return _velocity;
     }
 
     public float GetVelocityMagnitude()
