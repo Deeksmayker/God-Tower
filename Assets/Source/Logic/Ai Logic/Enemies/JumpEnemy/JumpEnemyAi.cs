@@ -94,7 +94,7 @@ public class JumpEnemyAi : MonoCache
             if (i == tryCount - 1)
             {
                 direction = Random.insideUnitSphere.normalized;
-                direction.y = .1f;
+                direction.y = .01f;
             }
         }
         Log(direction.ToString());

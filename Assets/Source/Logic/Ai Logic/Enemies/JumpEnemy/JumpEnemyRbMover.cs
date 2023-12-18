@@ -19,12 +19,17 @@ public class JumpEnemyRbMover : MonoCache{
     private bool _isContacting;
     private bool _sticking;
 
+    //private JumpEnemyHealthSystem _health;
+
     private void Awake(){
+        //_health = GetComponent<JumpEnemyHealthSystem>();
         StickToClosestSurface();
     }
 
     protected override void FixedRun(){
-        if (_inStun) return;
+        if (_inStun || !checkContactPoint) return;
+
+        //Debug.Log("XDD");
 
         if (_notGrabbingTimer > 0) _notGrabbingTimer -= Time.fixedDeltaTime;
         
@@ -71,7 +76,7 @@ public class JumpEnemyRbMover : MonoCache{
 
     public void AccelerateTowardsPoint(Vector3 point, float power){
         if (_inStun) return;
-        var damping = 0.05f;
+        var damping = 0.15f;
 
         for (int i = 0 ; i < grabHands.Length; i++){
             grabHands[i].velocity += power * Time.deltaTime * (point-grabHands[i].transform.position).normalized;
@@ -91,6 +96,7 @@ public class JumpEnemyRbMover : MonoCache{
         //_rotator.SetTorque(UnityEngine.Random.insideUnitSphere.normalized * 1000);
 
         _inStun = true;
+        StopGrab();
     }
 
     public void EndStun()
@@ -135,6 +141,7 @@ public class JumpEnemyRbMover : MonoCache{
 	}
 
     private void OnDrawGizmosSelected(){
+        if (!checkContactPoint) return;
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(checkContactPoint.position, checkContactRadius);
     }
