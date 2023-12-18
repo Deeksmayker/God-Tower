@@ -10,7 +10,7 @@ public class JumpEnemyAi : MonoCache
 
     private const float c_DistanceToCheckWalls = 150f;
 
-    private float _timer;
+    private float _jumpDelayTimer;
     private float _jumpingOnPlayerTimer;
 
     private bool _makingSecondJump;
@@ -26,7 +26,7 @@ public class JumpEnemyAi : MonoCache
         _mover = Get<JumpEnemyRbMover>();
         _playerLocator = GetComponentInChildren<PlayerLocator>();
         _stunController = Get<IInStun>();
-        _timer = calmJumpInterval;
+        _jumpDelayTimer = calmJumpInterval;
     }
 
     protected override void OnEnabled()
@@ -45,10 +45,10 @@ public class JumpEnemyAi : MonoCache
 
     protected override void Run()
     {
-        if (_inStun && !_mover.IsGrounded())
+        if (_inStun && !_mover.IsContacting())
         {
             _makingSecondJump = false;
-            _timer = GetCurrentJumpInterval();
+            _jumpDelayTimer = GetCurrentJumpInterval();
         }
 
         if (!_inStun && _jumpingOnPlayerTimer > 0){
@@ -56,18 +56,17 @@ public class JumpEnemyAi : MonoCache
         }
 
         if (_jumpingOnPlayerTimer > 0) _jumpingOnPlayerTimer -= Time.deltaTime;
-        _timer -= Time.deltaTime;
 
-        if (_inStun || _timer > 0)
+        if (_mover.IsContacting() || _mover.IsSticking()) _jumpDelayTimer -= Time.deltaTime;
+
+        if (_inStun || _jumpDelayTimer > 0)
             return;
 
         var onPlayer = _detectingPlayer && _playerLocator.IsPlayerVisible() && _makingSecondJump;
         var jumpDirection =  onPlayer ? _playerLocator.GetDirectionToPlayerNorm() : GetRandomJumpDirection();
         if (_playerLocator.IsPlayerVisible())
             jumpDirection.y += 0.1f;
-        //Log("Player visibility - " + _playerLocator.IsPlayerVisible());
-        //Log("Making second jump - " + _makingSecondJump);
-        //Log("Fighting - " + _inFight);
+
         Jump(jumpDirection);
 
         if (onPlayer){
@@ -107,12 +106,12 @@ public class JumpEnemyAi : MonoCache
         Log("Jumping in directoin - " + direction);
         _makingSecondJump = !_makingSecondJump;
         _mover.JumpToDirection(direction);
-        _timer += 10;
+        _jumpDelayTimer = GetCurrentJumpInterval();
     }
 
     private void HandleLanding()
     {
-        _timer = GetCurrentJumpInterval();
+        _jumpDelayTimer = GetCurrentJumpInterval();
     }
 
     private void HandleStun()
