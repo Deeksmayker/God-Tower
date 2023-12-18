@@ -15,7 +15,6 @@ public class RbUnit : MonoCache{
     }
 
     public void SetVelocity(Vector3 newVelocity){
-        Debug.Log("SET");
         for (var i = 0; i < _rbs.Length; i++){
             _rbs[i].velocity = newVelocity;
         }

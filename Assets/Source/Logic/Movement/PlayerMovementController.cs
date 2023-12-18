@@ -111,7 +111,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     protected override void Run()
     {
-        var newGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, Layers.Environment | Layers.EnemyHurtBox);
+        var newGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, Layers.Standable);
 
         if (newGrounded && _surfaceAngle < 30 && !IsGrounded())
             OnLanding?.Invoke();

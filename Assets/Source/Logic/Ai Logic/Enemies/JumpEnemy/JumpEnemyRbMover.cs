@@ -29,8 +29,6 @@ public class JumpEnemyRbMover : MonoCache{
     protected override void FixedRun(){
         if (_inStun || !checkContactPoint) return;
 
-        //Debug.Log("XDD");
-
         if (_notGrabbingTimer > 0) _notGrabbingTimer -= Time.fixedDeltaTime;
         
        var newContacting = Physics.CheckSphere(checkContactPoint.position, checkContactRadius, Layers.Environment);
