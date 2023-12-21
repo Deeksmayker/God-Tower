@@ -11,7 +11,8 @@ public class Wave : MonoCache
 		Eyes,
 		Centipede,
 		CentipedeShort,
-		CentipedeLong
+		CentipedeLong,
+        Shield
 	}
 
 	[Serializable]
@@ -31,7 +32,7 @@ public class Wave : MonoCache
 	private bool _spawnedAll;
 
 	private Enemy _jumpingPrefab, _eyesSpawnerPrefab, _centipedePrefab, _centipedeShortPrefab,
-			_centipedeLongPrefab;
+			_centipedeLongPrefab, _shieldPrefab;
 
 	private void Awake(){
 		_jumpingPrefab = (Resources.Load(ResPath.Enemies + "JumpEnemy/JumpingEnemy") as GameObject).GetComponent<Enemy>();
@@ -39,6 +40,7 @@ public class Wave : MonoCache
 		_centipedeShortPrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemyShort") as GameObject).GetComponent<Enemy>();
 		_centipedeLongPrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemyLong") as GameObject).GetComponent<Enemy>();
 		_eyesSpawnerPrefab = (Resources.Load(ResPath.Enemies + "EyeEnemy/EyeEnemySpawner") as GameObject).GetComponent<Enemy>();
+		_shieldPrefab = (Resources.Load(ResPath.Enemies + "ShieldEnemy/ShieldEnemy") as GameObject).GetComponent<Enemy>();
 	}
 
     public async void StartWave(){
@@ -85,6 +87,9 @@ public class Wave : MonoCache
 				break;
 			case EnemyType.CentipedeLong:
 				return _centipedeLongPrefab;
+				break;
+			case EnemyType.Shield:
+				return _shieldPrefab;
 				break;
 		}
 
