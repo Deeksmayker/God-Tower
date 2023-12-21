@@ -1,5 +1,6 @@
 using NTC.Global.Cache;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
@@ -27,13 +28,20 @@ public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
 
     protected override void OnEnabled()
     {
-        var hitTaker = GetComponentInChildren<ITakeHit>();
-        hitTaker.OnTakeHit += ChangeHealth;
+        var hitTakers = GetComponentsInChildren<ITakeHit>();
+        for (var i = 0; i < hitTakers.Length; i++)
+        {
+            hitTakers[i].OnTakeHit += ChangeHealth;
+        }
     }
 
     protected override void OnDisabled()
     {
-        GetComponentInChildren<ITakeHit>().OnTakeHit -= ChangeHealth;   
+        var hitTakers = GetComponentsInChildren<ITakeHit>();
+        for (var i = 0; i < hitTakers.Length; i++)
+        {
+            hitTakers[i].OnTakeHit -= ChangeHealth;
+        }
     }
 
     protected override void Run()
@@ -65,9 +73,19 @@ public class JumpEnemyHealthSystem : MonoCache, IHealthHandler, IInStun
     public void Die(bool order = false)
     {
 		if (_dead) return;
-        gameObject.AddComponent<Death>();
         OnDied?.Invoke();
 		_dead = true;
+
+        var meshes = GetComponentsInChildren<MeshRenderer>();
+        for (var i = 0; i < meshes.Length; i++){
+            meshes[i].gameObject.AddComponent<Death>();
+        }
+        StartCoroutine(WaitAndDestroyMyself());
+    }
+
+    private IEnumerator WaitAndDestroyMyself(){
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
     }
 
     public float GetHealth01()

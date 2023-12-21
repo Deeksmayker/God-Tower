@@ -297,8 +297,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.4
+      scalar: 0.1
+      minScalar: 0.01
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -933,7 +933,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4854,7 +4854,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5926d6069ba14914882ffe6337a42699, type: 2}
+  - {fileID: 2100000, guid: 1deeab0afbd44bd42a016b4e49b2e25b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4919,9 +4919,9 @@ GameObject:
   - component: {fileID: 8765110724970733226}
   - component: {fileID: 8073607083855729049}
   - component: {fileID: 2891204614541502006}
-  - component: {fileID: 4303702776459414060}
+  - component: {fileID: -6324189558068661968}
   m_Layer: 12
-  m_Name: CentipedeProjectile
+  m_Name: ShieldEnemyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4936,7 +4936,7 @@ Transform:
   m_GameObject: {fileID: 5157969869582908782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 108.01311, y: 29.447744, z: -3.8415236}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 263788354768753965}
@@ -4972,7 +4972,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ff3d6946500c39f4cb431bb517f62db6, type: 2}
+  - {fileID: 2100000, guid: 1deeab0afbd44bd42a016b4e49b2e25b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5037,7 +5037,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -5056,9 +5056,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   damage: 5
-  spawnDamageField: 1
-  bounce: 0
---- !u!114 &4303702776459414060
+  spawnDamageField: 0
+  bounce: 1
+--- !u!114 &-6324189558068661968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9926,7 +9926,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4201e4aee5bfd2948ba131b9802cda7b, type: 2}
+  - {fileID: 2100000, guid: 43650054e00f5ca49aea94dfe13a9d55, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10093,8 +10093,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 12
-      minScalar: 6
+      scalar: 3
+      minScalar: 1.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10273,8 +10273,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 12
-      minScalar: 4
+      scalar: 6
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10856,7 +10856,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -14830,7 +14830,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4201e4aee5bfd2948ba131b9802cda7b, type: 2}
+  - {fileID: 2100000, guid: 43650054e00f5ca49aea94dfe13a9d55, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

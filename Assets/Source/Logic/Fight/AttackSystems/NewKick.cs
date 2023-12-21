@@ -120,13 +120,21 @@ public class NewKick : MonoCache, IMeleeAttacker
 
             if (_attackHitsContainer[i].TryGetComponent<Rigidbody>(out var rb))
             {
-                rb.AddForce(GetAttackDirection() * kickPushForce * 5, ForceMode.Impulse);
+                var rbUnit = rb.gameObject.GetComponentInParent<RbUnit>();
+                if (rbUnit){
+                    rbUnit.SetVelocity(GetAttackDirection() * kickPushForce);
+                } else{
+                    rb.AddForce(GetAttackDirection() * kickPushForce * 5, ForceMode.Impulse);
+                }
+
+                //rb.velocity = GetAttackDirection() * kickPushForce;
             }
 
             var ball = _attackHitsContainer[i].GetComponent<PlayerBigBall>();
             if (ball){
                 ball.HandleKick(GetAttackDirection());
                 _mover.AddVelocity(Vector3.up * ballHitAddVelocity);
+                //There was dash on hit ball, maybe later, maybe not
                 // var dir = GetAttackDirection().normalized;
                 // dir.y = 1.5f;
                 // _mover.SetVelocity(dir.normalized * ballHitAddVelocity);
