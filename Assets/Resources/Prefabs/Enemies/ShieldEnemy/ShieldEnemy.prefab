@@ -1313,7 +1313,6 @@ GameObject:
   - component: {fileID: 2779821662796797818}
   - component: {fileID: 3397170208926653592}
   - component: {fileID: 5299779414581533338}
-  - component: {fileID: 1973877517600741993}
   - component: {fileID: 5873249369515463641}
   - component: {fileID: 1515088027449143052}
   m_Layer: 8
@@ -2172,28 +2171,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2456868925447027530}
   m_Mesh: {fileID: 0}
---- !u!64 &1973877517600741993
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2456868925447027530}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!54 &5873249369515463641
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2365,7 +2342,7 @@ Transform:
   - {fileID: 8303684703448950477}
   - {fileID: 4618226627659650074}
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2651869607824285445
 MonoBehaviour:
@@ -2392,7 +2369,7 @@ MonoBehaviour:
   shootCooldown: 5
   shootSpeed: 50
   upForce: 300
-  downForce: 1000
+  downForce: 2000
   bodyBase: {fileID: 3318360374095964463}
   legTips:
   - {fileID: 2253052168287825883}
@@ -3027,7 +3004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  damageMultiplier: 1
+  damageMultiplier: 0.5
 --- !u!114 &6892106843040142404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3483,7 +3460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  damageMultiplier: 1
+  damageMultiplier: 0.5
 --- !u!114 &8866935089165636909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3970,7 +3947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  damageMultiplier: 1
+  damageMultiplier: 0.5
 --- !u!114 &4407034584651869332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4152,8 +4129,6 @@ GameObject:
   - component: {fileID: 3537685514087768902}
   - component: {fileID: 953670479912735556}
   - component: {fileID: 9145806892244227374}
-  - component: {fileID: 3248077233214039772}
-  - component: {fileID: 5632188897023130211}
   m_Layer: 8
   m_Name: Shield
   m_TagString: Untagged
@@ -7234,33 +7209,6 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &3248077233214039772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6105981047609107512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6417037573b43cca439dedbbdbadcdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  damageMultiplier: 0
---- !u!114 &5632188897023130211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6105981047609107512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da03cf1bbaf5d794c8f6bf0ac4ffaf52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
 --- !u!1 &7633830801969444553
 GameObject:
   m_ObjectHideFlags: 0
@@ -7791,7 +7739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  damageMultiplier: 1
+  damageMultiplier: 0.5
 --- !u!114 &269447525180584465
 MonoBehaviour:
   m_ObjectHideFlags: 0

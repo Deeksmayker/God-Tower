@@ -76,7 +76,7 @@ public class PlayerBigBall : MonoCache
 		if (!foundTarget)
 			_rb.velocity = Vector3.Reflect(_lastVelocity, collision.GetContact(0).normal);
 
-        transform.rotation = Quaternion.LookRotation(_rb.velocity);
+        //transform.rotation = Quaternion.LookRotation(_rb.velocity.normalized);
 
         var hitEnemy = false;
         if (collision.gameObject.TryGetComponent<ITakeHit>(out var victim))
@@ -93,7 +93,8 @@ public class PlayerBigBall : MonoCache
         //     }
         // }
 		collision.gameObject.GetComponentInParent<IMover>()?.AddForce(vectorToCol.normalized * _rb.velocity.magnitude * 0.1f);
-		collision.gameObject.GetComponentInParent<IInStun>()?.StartStun(0.2f);
+        if (collision.gameObject.name != "Shield")
+		    collision.gameObject.GetComponentInParent<IInStun>()?.StartStun(0.2f);
 		
 		if (_rb.velocity.magnitude < 30) return;
         var particles = NightPool.Spawn(hitEnemy ? _hitEnemyParticles : _hitParticles, transform.position);

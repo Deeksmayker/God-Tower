@@ -130,6 +130,7 @@ public class NewKick : MonoCache, IMeleeAttacker
                 //rb.velocity = GetAttackDirection() * kickPushForce;
             }
 
+
             var ball = _attackHitsContainer[i].GetComponent<PlayerBigBall>();
             if (ball){
                 ball.HandleKick(GetAttackDirection());
@@ -146,6 +147,11 @@ public class NewKick : MonoCache, IMeleeAttacker
                 _recoilMade = true;
             } else if (!_recoilMade){
                 _mover.SetVelocity(-GetAttackDirection() * hitRecoil);
+            }
+
+            //Interactables
+            if (_attackHitsContainer[i].TryGetComponent<DashHitTrigger>(out var dashTrigger)){
+                _mover.SetVelocity(GetAttackDirection() * dashTrigger.dashPower);
             }
         }
 

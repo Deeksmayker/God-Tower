@@ -70,7 +70,7 @@ public class JumpEnemyAi : MonoCache
         Jump(jumpDirection);
 
         if (onPlayer){
-            _jumpingOnPlayerTimer = 1.5f;
+            _jumpingOnPlayerTimer = 3f;
         }
     }
 
