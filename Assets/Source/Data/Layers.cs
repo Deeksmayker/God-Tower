@@ -6,6 +6,6 @@ public static class Layers
     public static LayerMask PlayerHurtBox { get; } = LayerMask.GetMask("PlayerHurtBox");
     public static LayerMask Environment { get; } = LayerMask.GetMask("Environment"); 
     public static LayerMask EnemyHurtBox { get; } = LayerMask.GetMask("EnemyHurtBox");
-    public static LayerMask Hitable { get; } = LayerMask.GetMask("EnemyHurtBox", "EnemyProjectile", "PlayerProjectile", "EnemyBase");
+    public static LayerMask Hitable { get; } = LayerMask.GetMask("EnemyHurtBox", "EnemyProjectile", "PlayerProjectile", "EnemyBase", "Interactable");
     public static LayerMask Standable { get; } = LayerMask.GetMask("EnemyBase", "Environment");
 }

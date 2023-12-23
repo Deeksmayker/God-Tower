@@ -19,7 +19,6 @@ public class CentipedeProjectile : MonoCache
 	private void OnCollisionEnter(Collision col)
 	{
         var player = col.gameObject.GetComponentInParent<PlayerUnit>() ;
-        Debug.Log(col.gameObject.name);
         if (player)
         {
             player.GetComponentInChildren<ITakeHit>()?.TakeHit(damage, transform.position, "Projectile");

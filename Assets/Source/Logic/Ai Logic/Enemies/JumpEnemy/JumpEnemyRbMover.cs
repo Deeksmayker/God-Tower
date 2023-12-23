@@ -13,7 +13,7 @@ public class JumpEnemyRbMover : MonoCache{
     [SerializeField] private Rigidbody[] grabHands;
     [SerializeField] private Rigidbody bodyBase;
 
-    private float _notGrabbingTimer;
+    private float _dontGrabTimer;
 
     private bool _inStun;
     private bool _isContacting;
@@ -29,7 +29,7 @@ public class JumpEnemyRbMover : MonoCache{
     protected override void FixedRun(){
         if (_inStun || !checkContactPoint) return;
 
-        if (_notGrabbingTimer > 0) _notGrabbingTimer -= Time.fixedDeltaTime;
+        if (_dontGrabTimer > 0) _dontGrabTimer -= Time.fixedDeltaTime;
         
        var newContacting = Physics.CheckSphere(checkContactPoint.position, checkContactRadius, Layers.Environment);
        _isContacting = newContacting;
@@ -38,7 +38,7 @@ public class JumpEnemyRbMover : MonoCache{
            DoUpForce();
        }
 
-       if (!IsGrounded() && _notGrabbingTimer <= 0){
+       if (!IsSticking() && !IsGrounded() && _dontGrabTimer <= 0){
            TryGrab();
        }
     }
@@ -47,7 +47,7 @@ public class JumpEnemyRbMover : MonoCache{
         Log("Jumping to direction - " + direction);
         StopGrab();
         SetVelocity(direction * jumpForce);
-        _notGrabbingTimer = 1f;
+        _dontGrabTimer = 1f;
     }
 
     private void DoUpForce(){
@@ -61,6 +61,7 @@ public class JumpEnemyRbMover : MonoCache{
             if (surfaceClose){
                 grabHands[i].constraints = RigidbodyConstraints.FreezePosition;
                 _sticking = true;
+                SetVelocity(bodyBase.velocity * 0.1f);
             }
         }
     }
@@ -73,8 +74,9 @@ public class JumpEnemyRbMover : MonoCache{
     }
 
     public void AccelerateTowardsPoint(Vector3 point, float power){
-        if (_inStun) return;
+        if (_inStun || !checkContactPoint) return;
         var damping = 0.15f;
+        _dontGrabTimer = 1f;
 
         for (int i = 0 ; i < grabHands.Length; i++){
             grabHands[i].velocity += power * Time.deltaTime * (point-grabHands[i].transform.position).normalized;

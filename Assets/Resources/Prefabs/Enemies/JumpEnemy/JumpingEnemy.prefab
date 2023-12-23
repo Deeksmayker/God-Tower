@@ -835,7 +835,7 @@ Transform:
   - {fileID: 112798656778323240}
   - {fileID: 4949777807721253017}
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8665635774301888218
 MonoBehaviour:
@@ -876,7 +876,7 @@ MonoBehaviour:
   _detectingPlayer: 1
   calmJumpInterval: 3
   fightJumpInterval: 3
-  homingPlayerPower: 300
+  homingPlayerPower: 500
 --- !u!114 &482943390358232131
 MonoBehaviour:
   m_ObjectHideFlags: 0

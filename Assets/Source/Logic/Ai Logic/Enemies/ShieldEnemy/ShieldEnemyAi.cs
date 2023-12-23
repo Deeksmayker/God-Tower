@@ -54,7 +54,7 @@ public class ShieldEnemyAi : MonoCache{
     }
 
     protected override void FixedRun(){
-        if (!bodyTipPoint || !bodyBase) return;
+        if (!bodyTipPoint || !bodyBase || !legTips[0]) return;
 
         if (_inStun){
             if (shield.activeSelf){
