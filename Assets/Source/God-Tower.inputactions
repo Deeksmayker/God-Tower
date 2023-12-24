@@ -121,6 +121,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DebugToggle",
+                    "type": "Button",
+                    "id": "8f9ddd4a-4735-466a-8ed7-59c7b0a2f3dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -390,12 +399,12 @@
                 },
                 {
                     "name": "",
-                    "id": "d38ee6cd-5a59-4931-a616-234ac74a1ae6",
-                    "path": "<Mouse>/rightButton",
+                    "id": "2a959e01-469a-4994-8fb1-e471eb61db40",
+                    "path": "<Keyboard>/backquote",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RightAttack",
+                    "action": "DebugToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
