@@ -466,7 +466,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         if (!input && (_dashGroundInput || IsGrounded()))
             _dashGroundInput = false;
 
-        if (input && IsGrounded())
+        if (input && IsGrounded()) 
             _dashGroundInput = true;
 
         if(input && _dashGroundInput || _dashHoldInput)

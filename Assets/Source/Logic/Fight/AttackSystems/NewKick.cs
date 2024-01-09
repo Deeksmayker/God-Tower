@@ -132,6 +132,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
 
             var ball = _attackHitsContainer[i].GetComponent<PlayerBigBall>();
+            var realBall = _attackHitsContainer[i].GetComponent<RealBall>();
             if (ball){
                 ball.HandleKick(GetAttackDirection());
                 _mover.AddVelocity(Vector3.up * ballHitAddVelocity);
@@ -140,6 +141,9 @@ public class NewKick : MonoCache, IMeleeAttacker
                 // dir.y = 1.5f;
                 // _mover.SetVelocity(dir.normalized * ballHitAddVelocity);
                 // _recoilMade = true;
+            } else if (realBall){
+                realBall.HandleKick(GetAttackDirection());
+                _mover.AddVelocity(Vector3.up * ballHitAddVelocity);
             } else if (!_recoilMade && _attackHitsContainer[i].GetComponent<ITakeHit>() != null){
                 var dir = -GetAttackDirection().normalized;
                 dir.y = 5;

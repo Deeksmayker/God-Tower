@@ -8,6 +8,7 @@ public class PixelizeEffectComponent : VolumeComponent, IPostProcessComponent
     [Header("Pizelize")]
     public RenderPassEvent passEvent = RenderPassEvent.BeforeRenderingPostProcessing;
     public IntParameter screenHeight = new IntParameter(300, true);
+    public BoolParameter PixelizeEnabled = new BoolParameter(false, true);
 
     [Header("Gradient")]
     public BoolParameter Enabled = new BoolParameter(false, true);

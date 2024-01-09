@@ -53,7 +53,7 @@ public class MeleeAttackVisual : MonoCache
 
         if (shakeCamera)
         {
-            CameraService.Instance.ShakeCamera(0.15f);
+            CameraService.Instance.ShakeCamera(0.05f);
         }
     }
 
@@ -65,7 +65,7 @@ public class MeleeAttackVisual : MonoCache
 
         if (shakeCamera)
         {
-            CameraService.Instance.ShakeCamera(0.4f);
+            CameraService.Instance.ShakeCamera(0.1f);
         }
     }
 

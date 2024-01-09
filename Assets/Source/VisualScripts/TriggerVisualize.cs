@@ -29,9 +29,11 @@ public class TriggerVisualize : MonoCache{
 		color.a = 0.1f;
 		Gizmos.color = color;
 
-		Gizmos.DrawCube(transform.position, _col.size);
+		Gizmos.matrix = transform.localToWorldMatrix;
+
+		Gizmos.DrawCube(Vector3.zero + _col.center, _col.size);
 		color.a = 1;
 		Gizmos.color = color;
-		Gizmos.DrawWireCube(transform.position, _col.size);
+		Gizmos.DrawWireCube(Vector3.zero + _col.center, _col.size);
 	}
 }

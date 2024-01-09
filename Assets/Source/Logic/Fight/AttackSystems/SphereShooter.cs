@@ -154,7 +154,7 @@ public class SphereShooter : MonoCache
 
 		for (var i = 0; i < ballCount; i++){
 			if (_input && _balls[i].IsActivated() && !_balls[i].IsFlying()){
-				_balls[i].transform.position = Vector3.Lerp(_balls[i].transform.position, _shootStartPoint.transform.position + _camDirection.forward * 4, damping * Time.deltaTime);
+				_balls[i].transform.position = Vector3.Lerp(_balls[i].transform.position, _shootStartPoint.transform.position + _camDirection.forward * 4 - _camDirection.up * 2, damping * Time.deltaTime);
 				_balls[i].SetVelocity(Vector3.zero);
 			}
 			if (_balls[i].IsActivated()){
