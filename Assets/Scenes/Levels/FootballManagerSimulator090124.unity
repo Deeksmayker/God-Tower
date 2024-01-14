@@ -967,7 +967,7 @@ Transform:
   m_GameObject: {fileID: 1165327098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -979,7 +979,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32620
+  m_Name: pb_Mesh37904
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -1144,7 +1144,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32634
+  m_Name: pb_Mesh32648
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -1376,25 +1376,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38ca6f954790a8c4bbbdf60592871a95, type: 3}
---- !u!1 &1386416770 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1029126016761331943, guid: 6678711f1cd7c8f4a86df238010ae78f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1753226500}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1386416772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386416770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 341cf9342beb19344b1d7cefa1d74cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minTimeScale: 0.1
 --- !u!1 &1640306020 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1650364216699683037, guid: 6678711f1cd7c8f4a86df238010ae78f,
@@ -1414,6 +1395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 8962551235874169541, guid: 7add36896bd1733449a10faa70c591ba, type: 3}
+  timeToFullCharge: 3
 --- !u!120 &1640306023
 LineRenderer:
   serializedVersion: 2
@@ -1539,10 +1521,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelWorkingMinimum
       objectReference: {fileID: 0}
+    - target: {fileID: 1520220034460368354, guid: 6678711f1cd7c8f4a86df238010ae78f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1650364216311123460, guid: 6678711f1cd7c8f4a86df238010ae78f,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.7347507
+      objectReference: {fileID: 0}
+    - target: {fileID: 2421207569479993097, guid: 6678711f1cd7c8f4a86df238010ae78f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6125720577852403596, guid: 6678711f1cd7c8f4a86df238010ae78f,
         type: 3}
@@ -1613,10 +1605,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1029126016761331943, guid: 6678711f1cd7c8f4a86df238010ae78f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1386416772}
     - targetCorrespondingSourceObject: {fileID: 1650364216699683037, guid: 6678711f1cd7c8f4a86df238010ae78f,
         type: 3}
       insertIndex: -1

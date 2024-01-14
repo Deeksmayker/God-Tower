@@ -11,4 +11,5 @@ public static class Layers
     public static LayerMask BallHitable { get; } = LayerMask.GetMask("Environment", "EnemyHurtBox", "EnemyProjectile", "PlayerProjectile", "EnemyBase", "Interactable");
     public static LayerMask Standable { get; } = LayerMask.GetMask("EnemyBase", "Environment");
     public static LayerMask Areas { get; } = LayerMask.GetMask("TriggerArea");
+    public static LayerMask PlayerProjectile { get; } = LayerMask.GetMask("PlayerProjectile");
 }
