@@ -16,6 +16,7 @@ public class RealBall : MonoBehaviour{
     
     public bool BallIsReal = true;
     private bool _deadMan;
+    private bool _hitEnemy;
 
     private SphereCollider _collider;
     
@@ -66,15 +67,14 @@ public class RealBall : MonoBehaviour{
         }
     
         var dir = transform.position - _lastPos;
+        //Main hit
         if (Physics.SphereCast(_lastPos, _collider.radius*2, dir.normalized,
-                               out var hit, dir.magnitude, Layers.BallHitable)){
+                               out var hit, Mathf.Max(_collider.radius*2.5f, dir.magnitude), Layers.BallHitable)){
             HandleHit(hit);
-        } else if (Physics.SphereCast(transform.position, _collider.radius, Vector3.down,
-                                      out var hit2, _collider.radius * 1.5f, Layers.BallHitable)){
-            if (_velocity.magnitude <= 1){
-                _velocity += hit2.normal * gravity * 10 * delta;
-            }else{
-                _velocity = Vector3.Reflect(_velocity, hit2.normal) * reflectVelocityMultiplier;
+        } else if (Physics.Raycast(transform.position, Vector3.down, out var hit2, _collider.radius, Layers.BallHitable)){
+         //Other shit
+            if (_velocity.y < 10){
+                _velocity.y += 10;
             }
         }
         
@@ -102,8 +102,11 @@ public class RealBall : MonoBehaviour{
                 victim.TakeHit(1, hit.point, "Real ball");
                 var particles = Instantiate(_hitEnemyParticles, hit.point, Quaternion.LookRotation(hit.normal));
                 particles.Play();
+                
+                _hitEnemy = true;
             }
             
+            //Target player on reflect
             var targetSpeed = _velocity.magnitude * 0.5f;
             var homingTowardsPlayerPower = 100f;
             _velocity *= 0.5f;
@@ -111,15 +114,17 @@ public class RealBall : MonoBehaviour{
             var playerPos = FindObjectOfType<PlayerUnit>().transform.position;
             _velocity += (playerPos - transform.position).normalized * homingTowardsPlayerPower;
             _velocity = Vector3.ClampMagnitude(_velocity, targetSpeed);
-        } else{
+        } else{ //Environment hit
             _velocity = Vector3.Reflect(_velocity, hit.normal) * reflectVelocityMultiplier;
+            if (_velocity.magnitude < 10){
+                _velocity += 100 * Vector3.up;
+                _velocity = Vector3.ClampMagnitude(_velocity, 20);
+            }
             if (isCapable){
                 var particles1 = Instantiate(_hitParticles, hit.point, Quaternion.identity);
                 particles1.Play();
             }
         }
-        
-        //Destroy(gameObject);
     }
     
     private float _powerMultiplier = 1;
@@ -136,6 +141,6 @@ public class RealBall : MonoBehaviour{
     }
     
     public bool CanBeCollected(){
-        return _lifeTime > 1;
+        return BallIsReal && _lifeTime > 1 || _hitEnemy;
     }
 }

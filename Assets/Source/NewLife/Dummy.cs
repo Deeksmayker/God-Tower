@@ -21,7 +21,9 @@ public class Dummy : MonoBehaviour{
     
     private void HandleHit(float dmg){
         var pos = Random.insideUnitSphere * 50;
-        pos.y = Mathf.Clamp(pos.y, 1, 50);
+        if (pos.y < 3){
+            pos.y += 55;
+        }
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation((FindObjectOfType<PlayerUnit>().transform.position - transform.position).normalized);
     }
