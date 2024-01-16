@@ -48,10 +48,11 @@ public class RealBallShooter : MonoBehaviour{
             
         } else if (Input.GetMouseButtonUp(1)){
             _lr.positionCount = 0;
+            _currentPower = 0;
         } else{
-            _timeSinceAiming += Time.deltaTime;
-            _currentPower -= Time.deltaTime / timeToFullCharge;
-            _currentPower = Mathf.Clamp01(_currentPower);
+            _timeSinceAiming = 100000000;//+= Time.deltaTime;
+            //_currentPower -= Time.deltaTime / timeToFullCharge;
+            //_currentPower = Mathf.Clamp01(_currentPower);
         }
         
         if (_currentBallsCount > 0 && Input.GetKeyDown(KeyCode.F) && _timeSinceAiming < 0.5f){
@@ -78,5 +79,4 @@ public class RealBallShooter : MonoBehaviour{
             }
         }
     }
-    
 }

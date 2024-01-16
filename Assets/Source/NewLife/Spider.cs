@@ -4,6 +4,7 @@ public class Spider : MonoBehaviour{
     [SerializeField] private Transform[] legs;
     [SerializeField] private float moveDelay = 5f;
     [SerializeField] private float walkTime = 1f;
+    [SerializeField] private float speed;
     
     private float _delayTimer;
     private float _walkT;
@@ -37,30 +38,32 @@ public class Spider : MonoBehaviour{
         if (!_walking && _delayTimer <= 0){
             _walking = true;
             _moveStartPosition = transform.position;
-            _foundPlayerPosition = Grid.Instance.PlayerGrid.transform.position;
             _delayTimer = moveDelay;
         } 
         
         if (_walking){
             _walkT += Time.deltaTime / walkTime; 
-            var wishPosition = Vector3.Lerp(_moveStartPosition, _foundPlayerPosition, _walkT * _walkT);
-            wishPosition.y = _startY;
-            transform.position = wishPosition;
+            _foundPlayerPosition = PlayerLocator.Instance.GetPlayerPos();
+            var wishDirection = (_foundPlayerPosition - transform.position).normalized;
+            wishDirection *= speed * Time.deltaTime;
+            transform.position += Grid.Instance.GetMoveDirection(transform.position, wishDirection);
             if (_walkT >= 1){
                 _walkT = 0;
                 _walking = false;
-            }
-            for (int i = 0; i < _legStates.Length; i++){
-                var startY = _legStates[i].legTransform.eulerAngles.y;
-                _legStates[i].legTransform.rotation = Quaternion.AngleAxis(
-                Mathf.Abs(Mathf.Sin(Time.time * _legStates[i].speed) * 40), Vector3.right);
-                _legStates[i].legTransform.eulerAngles = new Vector3(_legStates[i].legTransform.eulerAngles.x,
-                                                         startY, _legStates[i].legTransform.eulerAngles.z);
             }
         } else{
             _delayTimer -= Time.deltaTime;
         }
         
+        //Leg Animation
+        var animationSpeedMultiplier = _walking ? 1f : 0.1f;
+        for (int i = 0; i < _legStates.Length; i++){
+            var startY = _legStates[i].legTransform.eulerAngles.y;
+            _legStates[i].legTransform.rotation = Quaternion.AngleAxis(
+            Mathf.Abs(Mathf.Sin(Time.time * _legStates[i].speed * animationSpeedMultiplier) * 40), Vector3.right);
+            _legStates[i].legTransform.eulerAngles = new Vector3(_legStates[i].legTransform.eulerAngles.x,
+                                                     startY, _legStates[i].legTransform.eulerAngles.z);
+        }
     }   
 }
 

@@ -6,7 +6,7 @@ public class RealBall : MonoBehaviour{
     [SerializeField] private float gravity;
     [SerializeField] private float reflectVelocityMultiplier = 0.9f;
     
-    private Vector3 _lastPos;
+    private Vector3 _lastPosition;
     private Vector3 _velocity;
     
     private float _lifeTime;
@@ -23,7 +23,7 @@ public class RealBall : MonoBehaviour{
     private void Awake(){
         _collider = GetComponent<SphereCollider>();
     
-        _lastPos = transform.position;
+        _lastPosition = transform.position;
         
         _hitParticles = (Resources.Load(ResPath.Particles + "BallHitParticles") as GameObject).GetComponent<ParticleSystem>();
         _hitEnemyParticles = (Resources.Load(ResPath.Particles + "BallHitEnemyParticles") as GameObject).GetComponent<ParticleSystem>();
@@ -35,14 +35,13 @@ public class RealBall : MonoBehaviour{
     }
     
     public Vector3[] PredictPositions(Vector3 startPosition, Vector3 direction){
-        float step = 0.05f;
-        int samples = 50;
-        
-        var elapsedTime = 0f;
+        float step = 0.1f;
+        int samples = 25;
         
         var result = new List<Vector3>();
         transform.position = startPosition;
-        _velocity = direction * speed * _powerMultiplier;
+        _lastPosition = transform.position;
+        HandleKick(direction);
         
         for (int i = 0; i < samples; i++){
             result.Add(transform.position);
@@ -66,9 +65,9 @@ public class RealBall : MonoBehaviour{
             }
         }
     
-        var dir = transform.position - _lastPos;
+        var dir = transform.position - _lastPosition;
         //Main hit
-        if (Physics.SphereCast(_lastPos, _collider.radius*2, dir.normalized,
+        if (Physics.SphereCast(_lastPosition, _collider.radius*2, dir.normalized,
                                out var hit, Mathf.Max(_collider.radius*2.5f, dir.magnitude), Layers.BallHitable)){
             HandleHit(hit);
         } else if (Physics.Raycast(transform.position, Vector3.down, out var hit2, _collider.radius, Layers.BallHitable)){
@@ -80,7 +79,7 @@ public class RealBall : MonoBehaviour{
         
         _velocity.y -= gravity * delta;
         
-        _lastPos = transform.position;
+        _lastPosition = transform.position;
         
         transform.Translate(_velocity * delta);
     }
@@ -92,6 +91,8 @@ public class RealBall : MonoBehaviour{
             return;
         }
         */
+        
+        if (hit.transform.TryGetComponent<RealBall>(out var ball1) && (!BallIsReal || !ball1.BallIsReal)) return;
         
         var isCapable = BallIsReal && _velocity.magnitude >= 10;
         
@@ -109,8 +110,8 @@ public class RealBall : MonoBehaviour{
             //Target player on reflect
             var targetSpeed = _velocity.magnitude * 0.5f;
             var homingTowardsPlayerPower = 100f;
-            _velocity *= 0.5f;
-            _velocity = Vector3.Reflect(_velocity, hit.normal);
+            _velocity *= 0f;
+            //_velocity = Vector3.Reflect(_velocity, hit.normal);
             var playerPos = FindObjectOfType<PlayerUnit>().transform.position;
             _velocity += (playerPos - transform.position).normalized * homingTowardsPlayerPower;
             _velocity = Vector3.ClampMagnitude(_velocity, targetSpeed);
