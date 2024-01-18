@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
 public class DieOnHit : MonoBehaviour{
     private bool _dead;
+    
+    public event Action OnDied;
 
     private void OnEnable(){
         var victims = GetComponentsInChildren<ITakeHit>();
@@ -18,7 +21,7 @@ public class DieOnHit : MonoBehaviour{
         }
     }
     
-    private void Die(float dmg){
+    public void Die(float dmg){
     	if (_dead) return;
 		_dead = true;
 
@@ -31,6 +34,8 @@ public class DieOnHit : MonoBehaviour{
         for (var i = 0; i < colliders.Length; i++){
             colliders[i].enabled = false;
         }
+        
+        OnDied?.Invoke();
         
         StartCoroutine(WaitAndDestroyMyself());
     }

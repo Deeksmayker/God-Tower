@@ -20,10 +20,12 @@ public class Spider : MonoBehaviour{
     
     private void Awake(){
         _collider = GetComponent<SphereCollider>();
+        /*
         if (Physics.Raycast(transform.position, Vector3.down, out var hit, 100, Layers.Environment)){
             transform.position = new Vector3(hit.point.x, hit.point.y + _collider.radius * (transform.localScale.y * 1.3f), hit.point.z);
             _startY = transform.position.y;
         }
+        */
         
         _legStates = new LegState[legs.Length];
         for (int i = 0; i < _legStates.Length; i++){

@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class WaveController : MonoCache
 {
+    [SerializeField] private bool loopWaves;
     [SerializeField] private Wave[] _waves;
     public UnityEvent WavesEnded;
     public UnityEvent WavesStarted;
@@ -37,6 +38,10 @@ public class WaveController : MonoCache
 		{
 			Log("All waves ended");
 			WavesEnded?.Invoke();
+			if (loopWaves){
+			    _currentWaveNumber = 0;
+			    _waves[0].StartWave();
+			}
 			return;
 		}
 

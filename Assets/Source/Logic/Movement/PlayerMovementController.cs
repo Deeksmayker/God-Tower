@@ -149,7 +149,15 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         if (_jumpTimer <= 0 && OnSlope())
         {
             _velocity = Vector3.ProjectOnPlane(_velocity, _currentUpNormal);
-            _ch.Move(Vector3.down * Time.deltaTime);
+            _ch.Move(-transform.up * Time.deltaTime);
+        }
+        
+        var windPowerMultiplier = 1;
+        var areas = Physics.OverlapSphere(transform.position, 1 * transform.localScale.y, Layers.Areas);
+        for (int i = 0; i < areas.Length; i++){
+            if (areas[i].TryGetComponent<WindArea>(out var wind)){
+                _velocity += wind.GetDirection() * windPowerMultiplier * Time.deltaTime;
+            }
         }
 
         _velocity.y = Mathf.Clamp(_velocity.y, -60, 100);
@@ -212,7 +220,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         }
 
         // Apply gravity
-        _velocity.y -= m_Gravity * (_velocity.y > 0 ? 1 : 0.8f) * Time.deltaTime;
+        _velocity -= transform.up * m_Gravity * (_velocity.y > 0 ? 1 : 0.8f) * Time.deltaTime;
     }
 
     // Air control occurs when the player is in the air, it allows players to move side 
@@ -278,7 +286,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         // if (_velocity.y <= 0)
         //     _velocity.y = -.1f;
         if (_jumpTimer <= 0)
-            _ch.Move(Vector3.down * 0.1f);
+            _ch.Move(-transform.up * 0.1f);
 
         if (m_JumpQueued)
         {
@@ -341,7 +349,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
     private void Jump()
     {
         if (_jumpTimer > 0) return;
-        _velocity.y = m_JumpForce;
+        _velocity += transform.up * m_JumpForce;
         m_JumpQueued = false;
 
         OnJump?.Invoke();
@@ -418,7 +426,7 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
 
     private bool CanDash()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 4f, environmentLayers) && _velocity.y < 0)
+        if (Physics.Raycast(transform.position, -transform.up, 4f, environmentLayers) && _velocity.y < 0)
             return false;
 
         return !IsGrounded() && _currentDashCharges > 0 && !_dash;
@@ -429,7 +437,9 @@ public class PlayerMovementController : MonoCache, IMover, IJumper
         if (hit.normal.y > 0)
             _currentUpNormal = hit.normal;
 
-        _surfaceAngle = Vector3.Angle(Vector3.up, hit.normal);
+        if (Physics.Raycast(transform.position, -transform.up, out var hit2, 10, Layers.Environment)){
+            _surfaceAngle = Vector3.Angle(transform.up, hit2.normal);
+        }
 
 		if (hit.normal.y <= -0.99f && _velocity.y > 0){
 			_velocity.y = 0;

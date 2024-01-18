@@ -43,6 +43,8 @@ public class Projectile : MonoBehaviour{
         if (hit.transform.GetComponentInParent<PlayerUnit>()){
             Debug.Log("HIT YA");
             Destroy(gameObject);
+        } else if (hit.transform.GetComponent<RealBall>()){
+            _velocity = Vector3.Reflect(_velocity, hit.normal);
         } else {
             var particles1 = Instantiate(_hitParticles, hit.point, Quaternion.identity);
             particles1.Play();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 
 public class Grid : MonoBehaviour{
     public static Grid Instance;
@@ -9,11 +10,21 @@ public class Grid : MonoBehaviour{
     public GridBlock[] grid;
     public GridBlock PlayerGrid {get; private set;}
     
+    private float _t;
+    
     private void Awake(){
         if (Instance && Instance != this){
             Destroy(this);
             return;
         }
+        
+        /*
+        grid = FindObjectsOfType<GridBlock>();        
+        for (int i = 0; i < grid.Length; i++){
+            grid[i].index = i;
+        }
+        */
+        
         Instance = this;
     }   
     
@@ -22,6 +33,15 @@ public class Grid : MonoBehaviour{
             if (hit.transform.TryGetComponent<GridBlock>(out var block)){
                 PlayerGrid = grid[block.index];
             }
+        }
+        
+        _t += Time.deltaTime / 5;
+        for (int i = 0; i < 20; i++){
+            var originalPosition = new Vector3(grid[i].transform.position.x, 0, grid[i].transform.position.z);
+            grid[i].transform.position = Vector3.Lerp(originalPosition, originalPosition + Vector3.up * 5, _t);
+            
+            originalPosition = new Vector3(grid[399-i].transform.position.x, 0, grid[399-i].transform.position.z);
+            grid[399-i].transform.position = Vector3.Lerp(originalPosition, originalPosition + Vector3.up * 5, _t);
         }
     }
     
@@ -78,6 +98,13 @@ public class Grid : MonoBehaviour{
                 return block.index;
             }
         return -1;
+    }
+    
+    public GridBlock GetBlockAtPosition(Vector3 position, Vector3 gravity){
+        if (Physics.Raycast(position, gravity, out var hit, 100, Layers.Environment) && hit.transform.TryGetComponent<GridBlock>(out var block)){
+            return block;
+        }
+        return null;
     }
     
     [ContextMenu("Populate Area")]
