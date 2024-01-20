@@ -3,12 +3,18 @@ using UnityEngine;
 
 public class PlayerLocator : MonoCache
 {
+    public static PlayerLocator Instance;
+
     [SerializeField] private float locatePlayerRange;
 
     private PlayerTargetPoint _targetPoint;
 
     private void Awake()
     {
+        if (!Instance){
+            Instance = this;
+        }
+    
         _targetPoint = FindObjectOfType<PlayerTargetPoint>();
     }
 
