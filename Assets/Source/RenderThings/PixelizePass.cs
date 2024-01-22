@@ -18,13 +18,13 @@ public class PixelizePass : ScriptableRenderPass
     private Material gradientMapMaterial;
     private int pixelScreenHeight, pixelScreenWidth;
 
-    public PixelizePass()
+    public PixelizePass(Shader pixelize, Shader gradient)
     {
         var stack = VolumeManager.instance.stack;
         this.settings = stack.GetComponent<PixelizeEffectComponent>();
         this.renderPassEvent = settings.passEvent;
-        if (material == null) material = CoreUtils.CreateEngineMaterial("Hidden/Custom/Pixelize");
-        gradientMapMaterial = CoreUtils.CreateEngineMaterial("Hidden/GradientMap");
+        if (material == null) material = CoreUtils.CreateEngineMaterial(pixelize);
+        gradientMapMaterial = CoreUtils.CreateEngineMaterial(gradient);
     }
 
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -35,18 +35,20 @@ public class PixelizePass : ScriptableRenderPass
         //cmd.GetTemporaryRT(pointBufferID, descriptor.width, descriptor.height, 0, FilterMode.Point);
         //pointBuffer = new RenderTargetIdentifier(pointBufferID);
 
-        pixelScreenHeight = settings.screenHeight.value;
-        pixelScreenWidth = (int)(pixelScreenHeight * renderingData.cameraData.camera.aspect + 0.5f);
-
-        material.SetVector("_BlockCount", new Vector2(pixelScreenWidth, pixelScreenHeight));
-        material.SetVector("_BlockSize", new Vector2(1.0f / pixelScreenWidth, 1.0f / pixelScreenHeight));
-        material.SetVector("_HalfBlockSize", new Vector2(0.5f / pixelScreenWidth, 0.5f / pixelScreenHeight));
-
-        descriptor.height = pixelScreenHeight;
-        descriptor.width = pixelScreenWidth;
-
-        cmd.GetTemporaryRT(pixelBufferID, descriptor, FilterMode.Point);
-        pixelBuffer = new RenderTargetIdentifier(pixelBufferID);
+        if (settings.PixelizeEnabled.value){
+            pixelScreenHeight = settings.screenHeight.value;
+            pixelScreenWidth = (int)(pixelScreenHeight * renderingData.cameraData.camera.aspect + 0.5f);
+    
+            material.SetVector("_BlockCount", new Vector2(pixelScreenWidth, pixelScreenHeight));
+            material.SetVector("_BlockSize", new Vector2(1.0f / pixelScreenWidth, 1.0f / pixelScreenHeight));
+            material.SetVector("_HalfBlockSize", new Vector2(0.5f / pixelScreenWidth, 0.5f / pixelScreenHeight));
+    
+            descriptor.height = pixelScreenHeight;
+            descriptor.width = pixelScreenWidth;
+    
+            cmd.GetTemporaryRT(pixelBufferID, descriptor, FilterMode.Point);
+            pixelBuffer = new RenderTargetIdentifier(pixelBufferID);
+        }
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)

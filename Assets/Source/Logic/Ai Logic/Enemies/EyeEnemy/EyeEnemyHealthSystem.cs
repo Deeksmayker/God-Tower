@@ -46,7 +46,7 @@ public class EyeEnemyHealthSystem : MonoCache, IHealthHandler
 
         Log("ah hit " + damage);
         ChangeHealth(damage);
-        _mover.SetInputResponse(false);
+        //_mover.SetInputResponse(false);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -76,7 +76,9 @@ public class EyeEnemyHealthSystem : MonoCache, IHealthHandler
 
     public void Die(bool order = false)
     {
+		if (_dead) return;
         _dead = true;
+		GetComponent<SphereCollider>().enabled = false;
         gameObject.AddComponent<Death>();
     }
 

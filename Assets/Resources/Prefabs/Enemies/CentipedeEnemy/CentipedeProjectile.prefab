@@ -933,7 +933,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4919,7 +4919,7 @@ GameObject:
   - component: {fileID: 8765110724970733226}
   - component: {fileID: 8073607083855729049}
   - component: {fileID: 2891204614541502006}
-  - component: {fileID: 2186660072376959756}
+  - component: {fileID: 4303702776459414060}
   m_Layer: 12
   m_Name: CentipedeProjectile
   m_TagString: Untagged
@@ -5013,7 +5013,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8073607083855729049
 Rigidbody:
@@ -5055,7 +5055,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
---- !u!114 &2186660072376959756
+  damage: 5
+  spawnDamageField: 1
+  bounce: 0
+--- !u!114 &4303702776459414060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5064,12 +5067,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5157969869582908782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5098fee7c21bf4a9d8ffc49b4617d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7595f5f68d96a1943ab7686526dcd69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  damage: 10
-  attackerName: CentipedeProjectile
+  time: 20
+  dieByDeathComponent: 0
 --- !u!1 &7330402236514967461
 GameObject:
   m_ObjectHideFlags: 0
@@ -5176,7 +5179,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -10090,8 +10093,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 4
-      minScalar: 2
+      scalar: 12
+      minScalar: 6
       maxCurve:
         serializedVersion: 2
         m_Curve:

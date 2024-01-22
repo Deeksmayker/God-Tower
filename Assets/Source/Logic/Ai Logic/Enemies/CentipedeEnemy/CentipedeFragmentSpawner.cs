@@ -111,7 +111,7 @@ public class CentipedeFragmentSpawner : MonoCache
         _headSpring = _head.GetComponent<SpringJoint>();
         _headSpring.connectedBody = _headTarget;
         _startSpring = _headSpring.spring;
-		_headSpring.minDistance = GetFragmentsLength() * scaleMultiplier * 0.2f;
+		//_headSpring.minDistance = GetFragmentsLength() * scaleMultiplier * 0.2f;
 
 		_height = (_head.transform.position - _fragments[0].transform.position).magnitude;
 
@@ -132,6 +132,7 @@ public class CentipedeFragmentSpawner : MonoCache
 
     private void HandleStun()
     {
+		if (!_headSpring) return;
         _headSpring.spring = 0;
     }
 
@@ -196,12 +197,18 @@ public class CentipedeFragmentSpawner : MonoCache
         _lastFragmentHitIndex = i;
     }
 
+    public void SetHeadHitBoxState(bool state){
+        _head.GetComponent<BaseHitBox>().enabled = state;
+    }
+
 	public float GetHeight()
 	{
 		return _height;
 	}
 
     public int GetFragmentsLength() => _fragments.Length;
+
+    public Vector3 GetBaseFragmentPos() => _fragments[0].transform.position;
 
 	public bool IsCentipedeCapable()
 	{

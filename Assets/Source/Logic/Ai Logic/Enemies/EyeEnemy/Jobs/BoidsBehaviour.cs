@@ -204,7 +204,7 @@ public class BoidsBehaviour : MonoCache
             DeltaTime = Time.deltaTime
         };
         
-        for (var i = _index; i < _index + 100 && i < _transformAccessArray.length; i++)
+        for (var i = 0; i < _transformAccessArray.length; i++)
         {
             if (!_transformAccessArray[i])
                 continue;
@@ -277,10 +277,16 @@ public class BoidsBehaviour : MonoCache
 
         for (var i = index; i < index + count; i++)
         {
+			if (i >= newTransforms.Length) break;
             newPositions[i] = position + Random.insideUnitSphere;
             newVelocities[i] = startVelocity;
             newTransforms[i] = Instantiate(entityPrefab, newPositions[i], Quaternion.identity).transform;
         }
+
+        _transformAccessArray.Dispose();
+        _positions.Dispose();
+        _velocities.Dispose();
+        _accelerations.Dispose();
 
         _transformAccessArray = new TransformAccessArray(newTransforms);
         _positions = newPositions;
@@ -308,15 +314,15 @@ public class BoidsBehaviour : MonoCache
             if (!_transformAccessArray[i])
                 continue;
             count++;
-            if (count % 50 == 0)
-                await Task.Yield();
+            //if (count % 50 == 0)
+              //  await Task.Yield();
         }
 
 		_aliveCount = count;
         return count;
     }
 
-    private void OnDestroy()
+	protected override void OnDisabled()
     {
         _moveJobHandle.Complete();
 

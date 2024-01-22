@@ -7,21 +7,26 @@ public class CentipedeAi : MonoCache
     [SerializeField] private float attackCooldown;
     [SerializeField] private float headSpeed = 1f;
 	[SerializeField] private float headAttackSpeed = .5f;
+	[SerializeField] private float meleeAttackDuration = 5f;
 
 	[SerializeField] private float projectileThrowPower;
 
-    [SerializeField] private bool _rangeAttack = true;
-    [SerializeField] private bool _meleeAttack;
+    [SerializeField] private bool rangeAttack = true;
+    [SerializeField] private bool meleeAttack;
 	private bool _preparingAttack;
-    private bool _attacking;
+    private bool _rangeAttacking;
+    private bool _meleeAttacking;
 
 	private float _cooldownTimer;
+	private float _meleeAttackTimer;
 
     private Vector3 _startHeadTargetPos;
     private Vector3 _previousPoint, _nextPoint;
     private float _movementRange;
 
     private float _t;
+
+    private Quaternion[] _shootDirs = new Quaternion[]{Quaternion.identity, Quaternion.AngleAxis(30, Vector3.up), Quaternion.AngleAxis(10, Vector3.up), Quaternion.AngleAxis(20, Vector3.up), Quaternion.AngleAxis(-30, Vector3.up), Quaternion.AngleAxis(-10, Vector3.up), Quaternion.AngleAxis(-20, Vector3.up), Quaternion.AngleAxis(15, Vector3.right), Quaternion.AngleAxis(10, Vector3.right), Quaternion.AngleAxis(5, Vector3.right), Quaternion.AngleAxis(-15, Vector3.right), Quaternion.AngleAxis(-10, Vector3.right), Quaternion.AngleAxis(-5, Vector3.right), Quaternion.AngleAxis(-15, Vector3.up) * Quaternion.AngleAxis(-15, Vector3.right), Quaternion.AngleAxis(15, Vector3.up) * Quaternion.AngleAxis(-15, Vector3.right)}; 
 
     private CentipedeFragmentSpawner _fragments;
 	private PlayerLocator _playerLocator;
@@ -42,15 +47,32 @@ public class CentipedeAi : MonoCache
 
     protected override void Run()
     {
-		if (!_fragments.IsCentipedeCapable()) return;
+		if (!_fragments || !_fragments.IsCentipedeCapable()) return;
+
+        if (_meleeAttacking){
+            MakeMeleeAttack();
+            return;
+        }
 
 		if (_cooldownTimer > 0){
 			_cooldownTimer -= Time.deltaTime;
 		}
-		if (!_attacking && !_preparingAttack && _cooldownTimer <= 0 && _rangeAttack) StartPreparingRangeAttack();
+		if (!_rangeAttacking && !_preparingAttack && _cooldownTimer <= 0 && (rangeAttack || meleeAttack))
+            StartPreparingAttack();
 
-        MoveTargetToPoint((_preparingAttack || _attacking) ? headAttackSpeed : headSpeed);
+        MoveTargetToPoint((_preparingAttack || _rangeAttacking) ? headAttackSpeed : headSpeed);
     }
+
+	private void StartPreparingAttack()
+	{
+		Log("Centipede preparing");
+		_preparingAttack = true;
+		_t = 0;
+		_previousPoint = headTarget.position;
+		var dir = _playerLocator.GetDirectionToPlayerNorm();
+		dir.y = 0;
+		_nextPoint = _startHeadTargetPos - dir * _movementRange * 10;
+	}
 
     private void MoveTargetToPoint(float speed)
     {
@@ -67,11 +89,20 @@ public class CentipedeAi : MonoCache
     private void SetNextPoint()
     {
 		if (_preparingAttack){
-			StartPerformingRangeAttack();
-			return;
+            if (meleeAttack && CanMeleeAttack()){
+                PrepareMeleeAttack();
+                return;
+            } else if (rangeAttack){
+                StartPerformingRangeAttack();
+                return;
+            }
 		}
 
-		if (_attacking){
+        if (_meleeAttacking){
+            _meleeAttacking = false;
+        }
+
+		if (_rangeAttacking){
 			PerformRangeAttack();
 			_previousPoint = headTarget.position;
 			_nextPoint = headTarget.position;
@@ -82,22 +113,11 @@ public class CentipedeAi : MonoCache
         _nextPoint = _startHeadTargetPos + Random.insideUnitSphere * _movementRange;
     }
 
-	private void StartPreparingRangeAttack()
-	{
-		Log("Centipede preparing");
-		_preparingAttack = true;
-		_t = 0;
-		_previousPoint = headTarget.position;
-		var dir = _playerLocator.GetDirectionToPlayerNorm();
-		dir.y = 0;
-		_nextPoint = _startHeadTargetPos - dir * _movementRange * 10;
-	}
-
 	private void StartPerformingRangeAttack()
 	{
 		Log("Centipede attacking");
 		_preparingAttack = false;
-		_attacking = true;
+		_rangeAttacking = true;
 		_t = 0;
 		_previousPoint = headTarget.position;
 		_nextPoint = _startHeadTargetPos + _playerLocator.GetDirectionToPlayerNorm() * _movementRange * 20;
@@ -107,17 +127,45 @@ public class CentipedeAi : MonoCache
 	{
 		Log("Centipede range ttacking");
 
-		var proj = Instantiate(_projectile, _playerLocator.transform.position, Quaternion.identity);
-		var dir = _playerLocator.GetDirectionToPlayerNorm();
-		dir.y += 0.15f;
-		proj.GetComponent<Rigidbody>().AddForce(projectileThrowPower * dir, ForceMode.Acceleration);
+        for (var i = 0; i < _shootDirs.Length; i++){
+            var proj = Instantiate(_projectile, _playerLocator.transform.position, Quaternion.identity);
+            var dir = Quaternion.LookRotation(_playerLocator.GetDirectionToPlayerNorm()) * _shootDirs[i];
+            proj.transform.rotation = dir;
+            proj.GetComponent<Rigidbody>().velocity = projectileThrowPower * proj.transform.forward;
+        }
 
-		_attacking = false;
+		_rangeAttacking = false;
 		_cooldownTimer = attackCooldown;
 	}
+
+    private void PrepareMeleeAttack(){
+        _fragments.SetHeadHitBoxState(true);
+        _preparingAttack = false;
+        _meleeAttacking = true;
+    }
+
+    private void MakeMeleeAttack(){
+        headTarget.position = _playerLocator.GetPlayerPos() + _playerLocator.GetDirectionToPlayerNorm();
+        _meleeAttackTimer += Time.deltaTime;
+
+        if (_meleeAttackTimer > meleeAttackDuration){
+            StopMeleeAttack();
+        }
+    }
+
+    private void StopMeleeAttack(){
+        _fragments.SetHeadHitBoxState(false);
+        SetNextPoint();
+        _meleeAttackTimer = 0;
+        _meleeAttacking = false;
+    }
 
 	public bool CanRangeAttack()
 	{
 		return _playerLocator.IsPlayerVisible();
 	}
+
+    public bool CanMeleeAttack(){
+        return (_playerLocator.GetVectorFromPoint(_fragments.GetBaseFragmentPos()).magnitude < _fragments.GetHeight()) && _playerLocator.IsPlayerVisible();
+    }
 }

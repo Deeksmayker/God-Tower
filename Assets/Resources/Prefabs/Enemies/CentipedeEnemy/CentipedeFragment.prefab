@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3852450553230858963}
   - component: {fileID: -161936365264675942}
   - component: {fileID: 4303748440560204958}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: CentipedeFragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!136 &3741854062651252000

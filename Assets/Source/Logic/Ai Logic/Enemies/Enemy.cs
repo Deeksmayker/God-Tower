@@ -6,20 +6,32 @@ public class Enemy : MonoCache{
 	public event Action OnSpawn;
 	public event Action OnDie;
 
-	private IHealthHandler _health;
-
-	private void Awake(){
-		_health = GetComponent<IHealthHandler>();
-	}
-
 	protected override void OnEnabled(){
-		_health.OnDied += HandleDeath;
+		var healthHandler = GetComponent<IHealthHandler>();
+		if (healthHandler != null){
+            healthHandler.OnDied += HandleDeath;
+		}
+		
+		var dieOnHit = GetComponent<DieOnHit>();
+		if (dieOnHit){
+		  dieOnHit.OnDied += HandleDeath;
+		}
+
+        gameObject.AddComponent<Birth>();
 
 		OnSpawn?.Invoke();
 	}
 
 	protected override void OnDisabled(){
-		_health.OnDied -= HandleDeath;
+		var healthHandler = GetComponent<IHealthHandler>();
+		if (healthHandler != null){
+            healthHandler.OnDied -= HandleDeath;
+		}
+		
+		var dieOnHit = GetComponent<DieOnHit>();
+		if (dieOnHit){
+		  dieOnHit.OnDied -= HandleDeath;
+		}
 	}
 
 	private void HandleDeath(){

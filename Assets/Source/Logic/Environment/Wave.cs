@@ -7,9 +7,15 @@ using UnityEngine.Assertions;
 public class Wave : MonoCache
 {
 	public enum EnemyType{
+	    Spider,
+	    Shield,
+	    Shooter,
 		Jumping,
 		Eyes,
-		Centipede
+		Centipede,
+		CentipedeShort,
+		CentipedeLong,
+        OldShield
 	}
 
 	[Serializable]
@@ -18,39 +24,69 @@ public class Wave : MonoCache
 		public Transform point;
 		public float spawnDelay;
 		[Header("ЕСЛИ ВРАГ УЖЕ ТУТ И ЕГО НУЖНО ПРОСТО ВКЛЮЧИТЬ")]
-		public Enemy onSceneEnemy;
+		public Enemy[] onSceneEnemies;
+		public GameObject[] objectsToEnable;
+	}
+	
+	[Serializable]
+	public struct BlockData{
+	   public int index;
+	   public float distance;
+	   public float time;
 	}
 
     [SerializeField] private SpawnData[] _spawns;
+    [SerializeField] private BlockData[] _blocks;
 
     public event Action OnEnded;
 
     private int _aliveCount;
 	private bool _spawnedAll;
 
-	private Enemy _jumpingPrefab, _eyesSpawnerPrefab, _centipedePrefab;
+	private Enemy _jumpingPrefab, _eyesSpawnerPrefab, _centipedePrefab, _centipedeShortPrefab,
+			_centipedeLongPrefab, _oldShieldPrefab;
+	private Enemy _shield, _shooter, _spider;
 
 	private void Awake(){
 		_jumpingPrefab = (Resources.Load(ResPath.Enemies + "JumpEnemy/JumpingEnemy") as GameObject).GetComponent<Enemy>();
 		_centipedePrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemy") as GameObject).GetComponent<Enemy>();
+		_centipedeShortPrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemyShort") as GameObject).GetComponent<Enemy>();
+		_centipedeLongPrefab = (Resources.Load(ResPath.Enemies + "CentipedeEnemy/CentipedeEnemyLong") as GameObject).GetComponent<Enemy>();
 		_eyesSpawnerPrefab = (Resources.Load(ResPath.Enemies + "EyeEnemy/EyeEnemySpawner") as GameObject).GetComponent<Enemy>();
+		_oldShieldPrefab = (Resources.Load(ResPath.Enemies + "ShieldEnemy/ShieldEnemy") as GameObject).GetComponent<Enemy>();
+		_shield = (Resources.Load("Prefabs/NewLife/Shitovik") as GameObject).GetComponent<Enemy>();
+		_shooter = (Resources.Load("Prefabs/NewLife/Shooter") as GameObject).GetComponent<Enemy>();
+		_spider = (Resources.Load("Prefabs/NewLife/Spider") as GameObject).GetComponent<Enemy>();
 	}
 
     public async void StartWave(){
+        for (int i = 0; i < _blocks.Length; i++){
+            Grid.Instance.MoveBlock(_blocks[i].index, _blocks[i].distance, _blocks[i].time);
+        }
+        
 		for (var i = 0; i < _spawns.Length; i++){
 			await Task.Delay((int)(_spawns[i].spawnDelay * 1000));
 
-			if (_spawns[i].onSceneEnemy){
-				_spawns[i].onSceneEnemy.gameObject.SetActive(true);
-				_spawns[i].onSceneEnemy.OnDie += HandleEnemyKilled;
+            for (int o = 0; o < _spawns[i].objectsToEnable.Length; o++){
+                _spawns[i].objectsToEnable[o].SetActive(true);
+            }
+
+			if (_spawns[i].onSceneEnemies.Length > 0){
+			    for (int e = 0; e < _spawns[i].onSceneEnemies.Length; e++){
+    			    var enemyOnScene = _spawns[i].onSceneEnemies[e];
+    			    var enemy = Instantiate(enemyOnScene, enemyOnScene.transform.position, enemyOnScene.transform.rotation);
+    			    enemy.gameObject.SetActive(true);
+    				enemy.OnDie += HandleEnemyKilled;
+					_aliveCount++;
+			    }
 			}else{
 				var enemy = Instantiate(GetEnemyPrefabByType(_spawns[i].enemy), _spawns[i].point.position, Quaternion.identity);
 				enemy.OnDie += HandleEnemyKilled;
+				_aliveCount++;
 			}
 
-			_aliveCount++;
 		}
-
+		
 		_spawnedAll = true;
     }
 
@@ -66,6 +102,15 @@ public class Wave : MonoCache
 
 	private Enemy GetEnemyPrefabByType(EnemyType type){
 		switch (type){
+			case EnemyType.Shield:
+				return _shield;
+				break;
+			case EnemyType.Spider:
+				return _spider;
+				break;
+			case EnemyType.Shooter:
+				return _shooter;
+				break;
 			case EnemyType.Jumping:
 				return _jumpingPrefab;
 				break;
@@ -75,6 +120,15 @@ public class Wave : MonoCache
 			case EnemyType.Centipede:
 				return _centipedePrefab;
 				break;
+			case EnemyType.CentipedeShort:
+				return _centipedeShortPrefab;
+				break;
+			case EnemyType.CentipedeLong:
+				return _centipedeLongPrefab;
+				break;
+			case EnemyType.OldShield:
+				return _oldShieldPrefab;
+				break;
 		}
 
 		return null;
@@ -82,6 +136,13 @@ public class Wave : MonoCache
 
 	private void HandleAllEnemiesKilled(){
 		Log("All enemies truly died");
+		
+		for (int i = 0; i < _spawns.Length; i++){ 
+            for (int o = 0; o < _spawns[i].objectsToEnable.Length; o++){
+                _spawns[i].objectsToEnable[o].SetActive(false);
+            }
+		}
+		
 		OnEnded?.Invoke();
 	}
 }

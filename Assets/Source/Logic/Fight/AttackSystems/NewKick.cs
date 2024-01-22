@@ -11,8 +11,11 @@ public class NewKick : MonoCache, IMeleeAttacker
     [SerializeField] private Vector3 envHitBoxSize;
 
     [Header("Impact")]
-    [SerializeField] private int damage = 1;
+    [SerializeField] private int damage = 5;
     [SerializeField] private float kickPushForce = 50;
+    [SerializeField] private float ballHitAddVelocity = 50;
+    [SerializeField] private float hitRecoil = 50;
+    [SerializeField] private float enemyHitRecoil = 50;
 
     [Header("Timers")]
     [SerializeField] private float preparingTime;
@@ -29,11 +32,14 @@ public class NewKick : MonoCache, IMeleeAttacker
     private bool _canAttack = true;
     private bool _attackInput;
     private bool _isHitAnything;
+    private bool _recoilMade;
 
     private float _timer;
     private float _baseKickDashForce;
 
     private MeleeAttackStates _attackState = MeleeAttackStates.Resting;
+
+    private IMover _mover;
 
     public event Action OnStartPreparingAttack;
     public event Action OnStartAttack;
@@ -43,6 +49,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
     private void Awake()
     {
+        _mover = GetComponent<IMover>();
     }
 
     /*protected override void OnEnabled()
@@ -65,7 +72,7 @@ public class NewKick : MonoCache, IMeleeAttacker
 
         if (GetCurrentAttackState() == MeleeAttackStates.Attacking)
         {
-            PerformAttack(Layers.EnemyHurtBox, hitBoxSize);
+            PerformAttack(Layers.Hitable, hitBoxSize);
 
             if (_timer >= attackDuration / 2)
                 PerformAttack(Layers.Environment, envHitBoxSize);
@@ -111,12 +118,44 @@ public class NewKick : MonoCache, IMeleeAttacker
             _attackHitsContainer[i].GetComponentInParent<IMover>()?.AddForce(GetAttackDirection() * kickPushForce);
             _attackHitsContainer[i].GetComponentInParent<IInStun>()?.StartStun();
 
-            _attackHitsContainer[i].GetComponent<PlayerBigBall>()?.HandleKick(GetAttackDirection());
-
-
             if (_attackHitsContainer[i].TryGetComponent<Rigidbody>(out var rb))
             {
-                rb.AddForce(GetAttackDirection() * kickPushForce * 5, ForceMode.Impulse);
+                var rbUnit = rb.gameObject.GetComponentInParent<RbUnit>();
+                if (rbUnit){
+                    rbUnit.SetVelocity(GetAttackDirection() * kickPushForce);
+                } else{
+                    rb.AddForce(GetAttackDirection() * kickPushForce * 5, ForceMode.Impulse);
+                }
+
+                //rb.velocity = GetAttackDirection() * kickPushForce;
+            }
+
+
+            var ball = _attackHitsContainer[i].GetComponent<PlayerBigBall>();
+            var realBall = _attackHitsContainer[i].GetComponent<RealBall>();
+            if (ball){
+                ball.HandleKick(GetAttackDirection());
+                _mover.AddVelocity(Vector3.up * ballHitAddVelocity);
+                //There was dash on hit ball, maybe later, maybe not
+                // var dir = GetAttackDirection().normalized;
+                // dir.y = 1.5f;
+                // _mover.SetVelocity(dir.normalized * ballHitAddVelocity);
+                // _recoilMade = true;
+            } else if (realBall){
+                realBall.HandleKick(GetAttackDirection());
+                _mover.AddVelocity(Vector3.up * ballHitAddVelocity);
+            } else if (!_recoilMade && _attackHitsContainer[i].GetComponent<ITakeHit>() != null){
+                var dir = -GetAttackDirection().normalized;
+                dir.y = 5;
+                _mover.SetVelocity(dir.normalized * enemyHitRecoil);
+                _recoilMade = true;
+            } else if (!_recoilMade){
+                _mover.SetVelocity(-GetAttackDirection() * hitRecoil);
+            }
+
+            //Interactables
+            if (_attackHitsContainer[i].TryGetComponent<DashHitTrigger>(out var dashTrigger)){
+                _mover.SetVelocity(GetAttackDirection() * dashTrigger.dashPower);
             }
         }
 
@@ -157,6 +196,7 @@ public class NewKick : MonoCache, IMeleeAttacker
                 _objectsAlreadyTakeHit.Clear();
                 _timer = GetAttackCooldown();
                 _isHitAnything = false;
+                _recoilMade = false;
                 break;
         }
     }

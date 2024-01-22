@@ -1,4 +1,5 @@
-﻿using NTC.Global.Cache;
+﻿using System;
+using NTC.Global.Cache;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder.Shapes;
@@ -7,9 +8,13 @@ using UnityTemplateProjects;
 [RequireComponent(typeof(PlayerUnit))]
 public class PlayerInputHandler : MonoCache
 {
+    public event Action DebugButtonClicked;
+    
     [SerializeField] private Transform lookRotationTransform;
     [SerializeField] private float jumpContinueInput = 0.1f;
     [SerializeField] private bool autoJump;
+
+    [SerializeField] private DebugConsoleController debugConsoleController;
 
     private float _jumpInputTimer;
 
@@ -29,6 +34,9 @@ public class PlayerInputHandler : MonoCache
     //private Thrower _thrower;
     
     private PlayerInput _playerInput;
+
+    private bool _isMoveEnabled;
+    private bool _isDebugClicked;
 
     private void Awake()
     {
@@ -51,6 +59,18 @@ public class PlayerInputHandler : MonoCache
         if (!_responseToInput)
             return;
 
+        if (_playerInput.actions["DebugToggle"].IsPressed() && !_isDebugClicked)
+        {
+            DebugButtonClicked?.Invoke();
+        }
+
+        _isDebugClicked = _playerInput.actions["DebugToggle"].IsPressed();
+
+        if (!_isMoveEnabled)
+        {
+            return;
+        }
+        
         if (_mover != null)
         {
             _mover.SetInput(_playerInput.actions["Move"].ReadValue<Vector2>());
@@ -99,11 +119,13 @@ public class PlayerInputHandler : MonoCache
             _hook.SetInput(_playerInput.actions["Hook"].IsInProgress());
         }
 
+/*
         if (_sphereShooter)
         {
             _sphereShooter.SetInput(_playerInput.actions["LeftAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
+            _sphereShooter.SetAttractInput(_playerInput.actions["RightAttack"].IsInProgress() && _canShoot && !TimeController.Instance.IsPaused);
         }
-
+*/
         if (_flyCam != null && Input.GetKeyDown(KeyCode.I))
         {
             var noclipEnabled = _flyCam.enabled;
@@ -144,5 +166,10 @@ public class PlayerInputHandler : MonoCache
     public void SetShootInputResponse(bool canShoot)
     {
         _canShoot = canShoot;
+    }
+
+    public void SetActiveMoved(bool value)
+    {
+        _isMoveEnabled = value;
     }
 }

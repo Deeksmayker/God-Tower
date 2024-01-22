@@ -3,12 +3,18 @@ using UnityEngine;
 
 public class PlayerLocator : MonoCache
 {
+    public static PlayerLocator Instance;
+
     [SerializeField] private float locatePlayerRange;
 
     private PlayerTargetPoint _targetPoint;
 
     private void Awake()
     {
+        if (!Instance){
+            Instance = this;
+        }
+    
         _targetPoint = FindObjectOfType<PlayerTargetPoint>();
     }
 
@@ -35,6 +41,10 @@ public class PlayerLocator : MonoCache
 	{
 		return _targetPoint.transform.position;
 	}
+
+    public Vector3 GetVectorFromPoint(Vector3 point){
+        return _targetPoint.transform.position - point;
+    }
 
     private void OnDrawGizmosSelected()
     {

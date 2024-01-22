@@ -11,6 +11,9 @@ public class CameraService : MonoCache
     private StressReceiver _stressReceiver;
 
     private bool _shaking;
+    
+    private float _targetFov;
+    private float _baseFov;
 
     private void Awake()
     {
@@ -20,7 +23,17 @@ public class CameraService : MonoCache
         }
 
         _stressReceiver = GetComponent<StressReceiver>();
+        _baseFov = Camera.main.fieldOfView;
         Instance = this;
+    }
+    
+    private void Update(){
+        if (_targetFov - 5 > Camera.main.fieldOfView){
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, _targetFov, Time.deltaTime * 10);
+        } else{
+            _targetFov = _baseFov;
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, _targetFov, Time.deltaTime * 3);
+        }
     }
 
     public void ShakeCamera(float stress)
@@ -45,6 +58,10 @@ public class CameraService : MonoCache
         {
             AnimationShortCuts.ShakeRotationAnimation(transform, shakeSettings).OnKill(() => _shaking = false);
         }*/
+    }
+    
+    public void AddFovOnTime(float value){
+        _targetFov = Camera.main.fieldOfView + value;
     }
 
     public Tween ShakeCameraPosition(ShakePreset shakePreset)

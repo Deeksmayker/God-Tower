@@ -14,6 +14,9 @@
         },
         {
             "m_Id": "2b15c232cdae47d88914880ab54fff17"
+        },
+        {
+            "m_Id": "e332b5ee99cd49c596d448ead9e3ca1d"
         }
     ],
     "m_Keywords": [],
@@ -1478,6 +1481,36 @@
 }
 
 {
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "e332b5ee99cd49c596d448ead9e3ca1d",
+    "m_Guid": {
+        "m_GuidSerialized": "e3bf1844-a90d-45a6-93e6-3e93112dd09b"
+    },
+    "m_Name": "EmissionColor",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "EmissionColor",
+    "m_DefaultReferenceName": "_EmissionColor",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "e3678eb2f20d4ec1ab87cc22475ec9cf",
@@ -1642,6 +1675,9 @@
         },
         {
             "m_Id": "2b15c232cdae47d88914880ab54fff17"
+        },
+        {
+            "m_Id": "e332b5ee99cd49c596d448ead9e3ca1d"
         }
     ]
 }

@@ -34,6 +34,7 @@ public class FOVController : MonoCache
         _currentFov = _baseFov;
     }
 
+/*
     protected override void LateRun()
     {
         if (_mover.GetVelocityMagnitude() < speedThreshold)
@@ -47,4 +48,5 @@ public class FOVController : MonoCache
         _currentFov = Mathf.Lerp(_currentFov, _desiredFov, fovChangeRate * Time.deltaTime);
         _camera.fieldOfView = _currentFov;
     }
+*/
 }
